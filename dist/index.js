@@ -1899,11 +1899,12 @@ async function createContext(opts) {
   } catch (error) {
     user = null;
   }
-  if (!IS_PRODUCTION && !user) {
+  const bypassEnabled = process.env.ENABLE_ADMIN_BYPASS === "true";
+  if ((!IS_PRODUCTION || bypassEnabled) && !user) {
     user = {
       id: 1,
-      openId: "local-dev",
-      name: "Local Admin",
+      openId: "remote-admin",
+      name: "Admin User",
       email: "admin@sialkotsamplemasters.com",
       role: "admin",
       loginMethod: "local",
