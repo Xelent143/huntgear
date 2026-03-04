@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { z } from "zod";
-import * as argon2 from "argon2";
+import * as crypto from "crypto";
 import { SignJWT } from "jose";
-import db from "./db";
+import { getDb } from "./db";
 import { users } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { getSessionCookieOptions } from "./_core/cookies";
@@ -13,6 +13,20 @@ const JWT_SECRET = new TextEncoder().encode(
     process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
 );
 
+// Hashing helper using native crypto
+function hashPassword(password: string): string {
+    const salt = crypto.randomBytes(16).toString("hex");
+    const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+    return `${salt}:${derivedKey}`;
+}
+
+function verifyPassword(password: string, hash: string): boolean {
+    const [salt, key] = hash.split(":");
+    if (!salt || !key) return false;
+    const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+    return key === derivedKey;
+}
+
 // Auto-create default admin if none exists
 async function ensureDefaultAdmin() {
     const db = await getDb();
@@ -20,7 +34,7 @@ async function ensureDefaultAdmin() {
     const adminUsers = await db.select().from(users).where(eq(users.role, "admin"));
     if (adminUsers.length === 0) {
         console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
-        const hashedPassword = await argon2.hash("admin123");
+        const hashedPassword = hashPassword("admin123");
         await db.insert(users).values({
             openId: "admin-" + Date.now(),
             name: "Super Admin",
@@ -58,7 +72,7 @@ authLocalRouter.post("/api/admin/login", async (req, res) => {
             return res.status(401).json({ error: "Invalid credentials or not an admin." });
         }
 
-        const isValid = await argon2.verify(user.password, password);
+        const isValid = verifyPassword(password, user.password);
         if (!isValid) {
             return res.status(401).json({ error: "Invalid credentials." });
         }
