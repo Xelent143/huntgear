@@ -41,7 +41,7 @@ export async function chatWithProductAgent(
 ): Promise<string> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.0-flash",
+        model: "gemini-2.5-flash",
         systemInstruction: systemPrompt,
         safetySettings,
     });
@@ -88,7 +88,7 @@ export async function generateProductData(
 ): Promise<GeneratedProductData> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.0-flash",
+        model: "gemini-2.5-flash",
         safetySettings,
         generationConfig: {
             responseMimeType: "application/json",
@@ -142,7 +142,7 @@ export async function generateProductImageBase64(
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
 
-    const model = client.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const parts: any[] = [
         {

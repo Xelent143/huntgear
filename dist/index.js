@@ -1205,7 +1205,7 @@ var safetySettings = [
 async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey) {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     systemInstruction: systemPrompt,
     safetySettings
   });
@@ -1221,7 +1221,7 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
 async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey) {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     safetySettings,
     generationConfig: {
       responseMimeType: "application/json"
@@ -1261,7 +1261,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
 }
 async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey) {
   const client = getClient(apiKey);
-  const model = client.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
   const parts = [
     {
       text: `Generate a professional, high-quality e-commerce product photo. ${imagePrompt}. 
