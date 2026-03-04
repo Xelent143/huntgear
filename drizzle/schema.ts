@@ -1,0 +1,302 @@
+import {
+  int,
+  mysqlEnum,
+  mysqlTable,
+  text,
+  timestamp,
+  varchar,
+  boolean,
+  decimal,
+  json,
+} from "drizzle-orm/mysql-core";
+
+// ─── Users ────────────────────────────────────────────────────────────────────
+
+export const users = mysqlTable("users", {
+  id: int("id").autoincrement().primaryKey(),
+  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  name: text("name"),
+  email: varchar("email", { length: 320 }),
+  loginMethod: varchar("loginMethod", { length: 64 }),
+  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+});
+
+export type User = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+export const products = mysqlTable("products", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  title: varchar("title", { length: 500 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  description: text("description"),
+  shortDescription: varchar("shortDescription", { length: 500 }),
+  mainImage: varchar("mainImage", { length: 1000 }),
+  samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
+  weight: decimal("weight", { precision: 8, scale: 3 }), // kg per unit, for shipping calc
+  availableSizes: text("availableSizes"), // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
+  availableColors: text("availableColors"), // JSON array of color names
+  material: varchar("material", { length: 255 }),
+  isFeatured: boolean("isFeatured").default(false).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  freeShipping: boolean("freeShipping").default(false).notNull(),
+  // SEO fields
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = typeof products.$inferInsert;
+
+// ─── Product Images ───────────────────────────────────────────────────────────
+
+export const productImages = mysqlTable("product_images", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull(),
+  imageUrl: varchar("imageUrl", { length: 1000 }).notNull(),
+  altText: varchar("altText", { length: 255 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ProductImage = typeof productImages.$inferSelect;
+export type InsertProductImage = typeof productImages.$inferInsert;
+
+// ─── Slab Prices (MOQ tiers) ──────────────────────────────────────────────────
+
+export const slabPrices = mysqlTable("slab_prices", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull(),
+  minQty: int("minQty").notNull(),
+  maxQty: int("maxQty"), // null = unlimited (e.g. 500+)
+  pricePerUnit: decimal("pricePerUnit", { precision: 10, scale: 2 }).notNull(),
+  label: varchar("label", { length: 100 }), // e.g. "Bulk Discount", "Best Value"
+  sortOrder: int("sortOrder").default(0).notNull(),
+});
+
+export type SlabPrice = typeof slabPrices.$inferSelect;
+export type InsertSlabPrice = typeof slabPrices.$inferInsert;
+
+// ─── Size Charts ──────────────────────────────────────────────────────────────
+
+export const sizeCharts = mysqlTable("size_charts", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull().unique(),
+  // chartData: JSON array of rows, each row: { size, chest, waist, hip, length, ... }
+  chartData: text("chartData").notNull(), // JSON
+  unit: mysqlEnum("unit", ["inches", "cm"]).default("inches").notNull(),
+  notes: text("notes"),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SizeChart = typeof sizeCharts.$inferSelect;
+export type InsertSizeChart = typeof sizeCharts.$inferInsert;
+
+// ─── Shipping Zones ───────────────────────────────────────────────────────────
+
+export const shippingZones = mysqlTable("shipping_zones", {
+  id: int("id").autoincrement().primaryKey(),
+  zoneName: varchar("zoneName", { length: 100 }).notNull(), // e.g. "North America", "Europe"
+  countries: text("countries").notNull(), // JSON array of ISO country codes
+  baseRate: decimal("baseRate", { precision: 10, scale: 2 }).notNull(), // base shipping cost in USD
+  perUnitRate: decimal("perUnitRate", { precision: 10, scale: 2 }).default("0.00").notNull(), // extra per unit
+  perKgRate: decimal("perKgRate", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  minDays: int("minDays").default(7).notNull(),
+  maxDays: int("maxDays").default(21).notNull(),
+  currency: varchar("currency", { length: 10 }).default("USD").notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ShippingZone = typeof shippingZones.$inferSelect;
+export type InsertShippingZone = typeof shippingZones.$inferInsert;
+
+// ─── Cart Items ───────────────────────────────────────────────────────────────
+
+export const cartItems = mysqlTable("cart_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sessionId: varchar("sessionId", { length: 128 }).notNull(), // anonymous cart support
+  userId: int("userId"), // null for guests
+  productId: int("productId").notNull(),
+  quantity: int("quantity").notNull().default(1),
+  selectedSize: varchar("selectedSize", { length: 50 }),
+  selectedColor: varchar("selectedColor", { length: 100 }),
+  addedAt: timestamp("addedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CartItem = typeof cartItems.$inferSelect;
+export type InsertCartItem = typeof cartItems.$inferInsert;
+
+// ─── Orders ───────────────────────────────────────────────────────────────────
+
+export const orders = mysqlTable("orders", {
+  id: int("id").autoincrement().primaryKey(),
+  orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
+  userId: int("userId"),
+  sessionId: varchar("sessionId", { length: 128 }),
+  // Customer info
+  customerName: varchar("customerName", { length: 255 }).notNull(),
+  customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
+  customerPhone: varchar("customerPhone", { length: 64 }),
+  companyName: varchar("companyName", { length: 255 }),
+  // Shipping address
+  addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
+  addressLine2: varchar("addressLine2", { length: 500 }),
+  city: varchar("city", { length: 100 }).notNull(),
+  state: varchar("state", { length: 100 }),
+  postalCode: varchar("postalCode", { length: 20 }),
+  country: varchar("country", { length: 100 }).notNull(),
+  countryCode: varchar("countryCode", { length: 10 }).notNull(),
+  // Financials (in USD)
+  subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
+  shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
+  // Items snapshot (JSON)
+  items: text("items").notNull(), // JSON array of { productId, title, qty, size, color, unitPrice }
+  // Stripe
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  stripeSessionId: varchar("stripeSessionId", { length: 255 }),
+  status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Order = typeof orders.$inferSelect;
+export type InsertOrder = typeof orders.$inferInsert;
+
+// ─── RFQ Submissions ──────────────────────────────────────────────────────────
+
+export const rfqSubmissions = mysqlTable("rfq_submissions", {
+  id: int("id").autoincrement().primaryKey(),
+  companyName: varchar("companyName", { length: 255 }).notNull(),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 64 }),
+  country: varchar("country", { length: 100 }),
+  website: varchar("website", { length: 255 }),
+  productType: varchar("productType", { length: 100 }).notNull(),
+  quantity: varchar("quantity", { length: 100 }).notNull(),
+  customization: text("customization"),
+  fabricPreference: varchar("fabricPreference", { length: 255 }),
+  timeline: varchar("timeline", { length: 100 }),
+  budget: varchar("budget", { length: 100 }),
+  additionalNotes: text("additionalNotes"),
+  designImageUrl: text("designImageUrl"),
+  garmentType: varchar("garmentType", { length: 100 }),
+  status: mysqlEnum("status", ["new", "reviewed", "quoted", "closed"]).default("new").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RfqSubmission = typeof rfqSubmissions.$inferSelect;
+export type InsertRfqSubmission = typeof rfqSubmissions.$inferInsert;
+
+// ─── Blog Posts ───────────────────────────────────────────────────────────────
+
+export const blogPosts = mysqlTable("blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  title: varchar("title", { length: 500 }).notNull(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  category: varchar("category", { length: 100 }),
+  tags: text("tags"),
+  featuredImage: varchar("featuredImage", { length: 500 }),
+  metaTitle: varchar("metaTitle", { length: 255 }),
+  metaDescription: text("metaDescription"),
+  published: boolean("published").default(false).notNull(),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = typeof blogPosts.$inferInsert;
+
+// ─── Portfolio Items ──────────────────────────────────────────────────────────
+
+export const portfolioItems = mysqlTable("portfolio_items", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  description: text("description"),
+  tags: text("tags"),           // JSON array of tag strings
+  coverImage: varchar("coverImage", { length: 1000 }), // first/hero image URL
+  // SEO & Geo fields
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  geoTarget: varchar("geoTarget", { length: 255 }), // e.g. "US, UK, Canada"
+  ogImage: varchar("ogImage", { length: 1000 }),    // Open Graph image URL
+  // Display controls
+  isFeatured: boolean("isFeatured").default(false).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PortfolioItem = typeof portfolioItems.$inferSelect;
+export type InsertPortfolioItem = typeof portfolioItems.$inferInsert;
+
+// ─── Portfolio Images ─────────────────────────────────────────────────────────
+
+export const portfolioImages = mysqlTable("portfolio_images", {
+  id: int("id").autoincrement().primaryKey(),
+  portfolioItemId: int("portfolioItemId").notNull(),
+  imageUrl: varchar("imageUrl", { length: 1000 }).notNull(),
+  fileKey: varchar("fileKey", { length: 500 }),     // S3 key for deletion
+  altText: varchar("altText", { length: 500 }),     // SEO alt text
+  caption: varchar("caption", { length: 500 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PortfolioImage = typeof portfolioImages.$inferSelect;
+export type InsertPortfolioImage = typeof portfolioImages.$inferInsert;
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+export const testimonials = mysqlTable("testimonials", {
+  id: int("id").autoincrement().primaryKey(),
+  clientName: varchar("clientName", { length: 255 }).notNull(),
+  clientTitle: varchar("clientTitle", { length: 255 }),
+  companyName: varchar("companyName", { length: 255 }),
+  country: varchar("country", { length: 100 }),
+  rating: int("rating").default(5),
+  testimonial: text("testimonial").notNull(),
+  avatar: varchar("avatar", { length: 500 }),
+  featured: boolean("featured").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Testimonial = typeof testimonials.$inferSelect;
+export type InsertTestimonial = typeof testimonials.$inferInsert;
+
+// ─── Contact Submissions ──────────────────────────────────────────────────────
+
+export const contactSubmissions = mysqlTable("contact_submissions", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  company: varchar("company", { length: 255 }),
+  phone: varchar("phone", { length: 64 }),
+  subject: varchar("subject", { length: 500 }),
+  message: text("message").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
