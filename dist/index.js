@@ -1,22 +1,48 @@
-// server/_core/index.ts
-import "dotenv/config";
-import express2 from "express";
-import { createServer } from "http";
-import net from "net";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-
-// shared/const.ts
-var COOKIE_NAME = "app_session_id";
-var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
-var AXIOS_TIMEOUT_MS = 3e4;
-var UNAUTHED_ERR_MSG = "Please login (10001)";
-var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
-
-// server/db.ts
-import { and, desc, eq, like, or, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined") return require.apply(this, arguments);
+  throw Error('Dynamic require of "' + x + '" is not supported');
+});
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc2) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc2 = __getOwnPropDesc(from, key)) || desc2.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // drizzle/schema.ts
+var schema_exports = {};
+__export(schema_exports, {
+  blogPosts: () => blogPosts,
+  cartItems: () => cartItems,
+  contactSubmissions: () => contactSubmissions,
+  orders: () => orders,
+  portfolioImages: () => portfolioImages,
+  portfolioItems: () => portfolioItems,
+  productImages: () => productImages,
+  products: () => products,
+  rfqSubmissions: () => rfqSubmissions,
+  shippingZones: () => shippingZones,
+  sizeCharts: () => sizeCharts,
+  slabPrices: () => slabPrices,
+  testimonials: () => testimonials,
+  users: () => users
+});
 import {
   int,
   mysqlEnum,
@@ -27,249 +53,319 @@ import {
   boolean,
   decimal
 } from "drizzle-orm/mysql-core";
-var users = mysqlTable("users", {
-  id: int("id").autoincrement().primaryKey(),
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
-  name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
-});
-var products = mysqlTable("products", {
-  id: int("id").autoincrement().primaryKey(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  title: varchar("title", { length: 500 }).notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
-  description: text("description"),
-  shortDescription: varchar("shortDescription", { length: 500 }),
-  mainImage: varchar("mainImage", { length: 1e3 }),
-  samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
-  weight: decimal("weight", { precision: 8, scale: 3 }),
-  // kg per unit, for shipping calc
-  availableSizes: text("availableSizes"),
-  // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
-  availableColors: text("availableColors"),
-  // JSON array of color names
-  material: varchar("material", { length: 255 }),
-  isFeatured: boolean("isFeatured").default(false).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  freeShipping: boolean("freeShipping").default(false).notNull(),
-  // SEO fields
-  seoTitle: varchar("seoTitle", { length: 255 }),
-  seoDescription: text("seoDescription"),
-  seoKeywords: text("seoKeywords"),
-  sortOrder: int("sortOrder").default(0).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var productImages = mysqlTable("product_images", {
-  id: int("id").autoincrement().primaryKey(),
-  productId: int("productId").notNull(),
-  imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
-  altText: varchar("altText", { length: 255 }),
-  sortOrder: int("sortOrder").default(0).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull()
-});
-var slabPrices = mysqlTable("slab_prices", {
-  id: int("id").autoincrement().primaryKey(),
-  productId: int("productId").notNull(),
-  minQty: int("minQty").notNull(),
-  maxQty: int("maxQty"),
-  // null = unlimited (e.g. 500+)
-  pricePerUnit: decimal("pricePerUnit", { precision: 10, scale: 2 }).notNull(),
-  label: varchar("label", { length: 100 }),
-  // e.g. "Bulk Discount", "Best Value"
-  sortOrder: int("sortOrder").default(0).notNull()
-});
-var sizeCharts = mysqlTable("size_charts", {
-  id: int("id").autoincrement().primaryKey(),
-  productId: int("productId").notNull().unique(),
-  // chartData: JSON array of rows, each row: { size, chest, waist, hip, length, ... }
-  chartData: text("chartData").notNull(),
-  // JSON
-  unit: mysqlEnum("unit", ["inches", "cm"]).default("inches").notNull(),
-  notes: text("notes"),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var shippingZones = mysqlTable("shipping_zones", {
-  id: int("id").autoincrement().primaryKey(),
-  zoneName: varchar("zoneName", { length: 100 }).notNull(),
-  // e.g. "North America", "Europe"
-  countries: text("countries").notNull(),
-  // JSON array of ISO country codes
-  baseRate: decimal("baseRate", { precision: 10, scale: 2 }).notNull(),
-  // base shipping cost in USD
-  perUnitRate: decimal("perUnitRate", { precision: 10, scale: 2 }).default("0.00").notNull(),
-  // extra per unit
-  perKgRate: decimal("perKgRate", { precision: 10, scale: 2 }).default("0.00").notNull(),
-  minDays: int("minDays").default(7).notNull(),
-  maxDays: int("maxDays").default(21).notNull(),
-  currency: varchar("currency", { length: 10 }).default("USD").notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var cartItems = mysqlTable("cart_items", {
-  id: int("id").autoincrement().primaryKey(),
-  sessionId: varchar("sessionId", { length: 128 }).notNull(),
-  // anonymous cart support
-  userId: int("userId"),
-  // null for guests
-  productId: int("productId").notNull(),
-  quantity: int("quantity").notNull().default(1),
-  selectedSize: varchar("selectedSize", { length: 50 }),
-  selectedColor: varchar("selectedColor", { length: 100 }),
-  addedAt: timestamp("addedAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var orders = mysqlTable("orders", {
-  id: int("id").autoincrement().primaryKey(),
-  orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
-  userId: int("userId"),
-  sessionId: varchar("sessionId", { length: 128 }),
-  // Customer info
-  customerName: varchar("customerName", { length: 255 }).notNull(),
-  customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
-  customerPhone: varchar("customerPhone", { length: 64 }),
-  companyName: varchar("companyName", { length: 255 }),
-  // Shipping address
-  addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
-  addressLine2: varchar("addressLine2", { length: 500 }),
-  city: varchar("city", { length: 100 }).notNull(),
-  state: varchar("state", { length: 100 }),
-  postalCode: varchar("postalCode", { length: 20 }),
-  country: varchar("country", { length: 100 }).notNull(),
-  countryCode: varchar("countryCode", { length: 10 }).notNull(),
-  // Financials (in USD)
-  subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
-  shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
-  totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
-  // Items snapshot (JSON)
-  items: text("items").notNull(),
-  // JSON array of { productId, title, qty, size, color, unitPrice }
-  // Stripe
-  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
-  stripeSessionId: varchar("stripeSessionId", { length: 255 }),
-  status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
-  notes: text("notes"),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var rfqSubmissions = mysqlTable("rfq_submissions", {
-  id: int("id").autoincrement().primaryKey(),
-  companyName: varchar("companyName", { length: 255 }).notNull(),
-  contactName: varchar("contactName", { length: 255 }).notNull(),
-  email: varchar("email", { length: 320 }).notNull(),
-  phone: varchar("phone", { length: 64 }),
-  country: varchar("country", { length: 100 }),
-  website: varchar("website", { length: 255 }),
-  productType: varchar("productType", { length: 100 }).notNull(),
-  quantity: varchar("quantity", { length: 100 }).notNull(),
-  customization: text("customization"),
-  fabricPreference: varchar("fabricPreference", { length: 255 }),
-  timeline: varchar("timeline", { length: 100 }),
-  budget: varchar("budget", { length: 100 }),
-  additionalNotes: text("additionalNotes"),
-  designImageUrl: text("designImageUrl"),
-  garmentType: varchar("garmentType", { length: 100 }),
-  status: mysqlEnum("status", ["new", "reviewed", "quoted", "closed"]).default("new").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var blogPosts = mysqlTable("blog_posts", {
-  id: int("id").autoincrement().primaryKey(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  title: varchar("title", { length: 500 }).notNull(),
-  excerpt: text("excerpt"),
-  content: text("content"),
-  category: varchar("category", { length: 100 }),
-  tags: text("tags"),
-  featuredImage: varchar("featuredImage", { length: 500 }),
-  metaTitle: varchar("metaTitle", { length: 255 }),
-  metaDescription: text("metaDescription"),
-  published: boolean("published").default(false).notNull(),
-  publishedAt: timestamp("publishedAt"),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var portfolioItems = mysqlTable("portfolio_items", {
-  id: int("id").autoincrement().primaryKey(),
-  title: varchar("title", { length: 500 }).notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
-  description: text("description"),
-  tags: text("tags"),
-  // JSON array of tag strings
-  coverImage: varchar("coverImage", { length: 1e3 }),
-  // first/hero image URL
-  // SEO & Geo fields
-  seoTitle: varchar("seoTitle", { length: 255 }),
-  seoDescription: text("seoDescription"),
-  seoKeywords: text("seoKeywords"),
-  geoTarget: varchar("geoTarget", { length: 255 }),
-  // e.g. "US, UK, Canada"
-  ogImage: varchar("ogImage", { length: 1e3 }),
-  // Open Graph image URL
-  // Display controls
-  isFeatured: boolean("isFeatured").default(false).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  sortOrder: int("sortOrder").default(0).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var portfolioImages = mysqlTable("portfolio_images", {
-  id: int("id").autoincrement().primaryKey(),
-  portfolioItemId: int("portfolioItemId").notNull(),
-  imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
-  fileKey: varchar("fileKey", { length: 500 }),
-  // S3 key for deletion
-  altText: varchar("altText", { length: 500 }),
-  // SEO alt text
-  caption: varchar("caption", { length: 500 }),
-  sortOrder: int("sortOrder").default(0).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull()
-});
-var testimonials = mysqlTable("testimonials", {
-  id: int("id").autoincrement().primaryKey(),
-  clientName: varchar("clientName", { length: 255 }).notNull(),
-  clientTitle: varchar("clientTitle", { length: 255 }),
-  companyName: varchar("companyName", { length: 255 }),
-  country: varchar("country", { length: 100 }),
-  rating: int("rating").default(5),
-  testimonial: text("testimonial").notNull(),
-  avatar: varchar("avatar", { length: 500 }),
-  featured: boolean("featured").default(false).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull()
-});
-var contactSubmissions = mysqlTable("contact_submissions", {
-  id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 320 }).notNull(),
-  company: varchar("company", { length: 255 }),
-  phone: varchar("phone", { length: 64 }),
-  subject: varchar("subject", { length: 500 }),
-  message: text("message").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull()
+var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions;
+var init_schema = __esm({
+  "drizzle/schema.ts"() {
+    "use strict";
+    users = mysqlTable("users", {
+      id: int("id").autoincrement().primaryKey(),
+      openId: varchar("openId", { length: 64 }).notNull().unique(),
+      name: text("name"),
+      email: varchar("email", { length: 320 }),
+      loginMethod: varchar("loginMethod", { length: 64 }),
+      password: varchar("password", { length: 255 }),
+      // new: for local email/pass auth
+      role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
+    });
+    products = mysqlTable("products", {
+      id: int("id").autoincrement().primaryKey(),
+      slug: varchar("slug", { length: 255 }).notNull().unique(),
+      title: varchar("title", { length: 500 }).notNull(),
+      category: varchar("category", { length: 100 }).notNull(),
+      description: text("description"),
+      shortDescription: varchar("shortDescription", { length: 500 }),
+      mainImage: varchar("mainImage", { length: 1e3 }),
+      samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
+      weight: decimal("weight", { precision: 8, scale: 3 }),
+      // kg per unit, for shipping calc
+      availableSizes: text("availableSizes"),
+      // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
+      availableColors: text("availableColors"),
+      // JSON array of color names
+      material: varchar("material", { length: 255 }),
+      isFeatured: boolean("isFeatured").default(false).notNull(),
+      isActive: boolean("isActive").default(true).notNull(),
+      freeShipping: boolean("freeShipping").default(false).notNull(),
+      // SEO fields
+      seoTitle: varchar("seoTitle", { length: 255 }),
+      seoDescription: text("seoDescription"),
+      seoKeywords: text("seoKeywords"),
+      sortOrder: int("sortOrder").default(0).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    productImages = mysqlTable("product_images", {
+      id: int("id").autoincrement().primaryKey(),
+      productId: int("productId").notNull(),
+      imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
+      altText: varchar("altText", { length: 255 }),
+      sortOrder: int("sortOrder").default(0).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
+    slabPrices = mysqlTable("slab_prices", {
+      id: int("id").autoincrement().primaryKey(),
+      productId: int("productId").notNull(),
+      minQty: int("minQty").notNull(),
+      maxQty: int("maxQty"),
+      // null = unlimited (e.g. 500+)
+      pricePerUnit: decimal("pricePerUnit", { precision: 10, scale: 2 }).notNull(),
+      label: varchar("label", { length: 100 }),
+      // e.g. "Bulk Discount", "Best Value"
+      sortOrder: int("sortOrder").default(0).notNull()
+    });
+    sizeCharts = mysqlTable("size_charts", {
+      id: int("id").autoincrement().primaryKey(),
+      productId: int("productId").notNull().unique(),
+      // chartData: JSON array of rows, each row: { size, chest, waist, hip, length, ... }
+      chartData: text("chartData").notNull(),
+      // JSON
+      unit: mysqlEnum("unit", ["inches", "cm"]).default("inches").notNull(),
+      notes: text("notes"),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    shippingZones = mysqlTable("shipping_zones", {
+      id: int("id").autoincrement().primaryKey(),
+      zoneName: varchar("zoneName", { length: 100 }).notNull(),
+      // e.g. "North America", "Europe"
+      countries: text("countries").notNull(),
+      // JSON array of ISO country codes
+      baseRate: decimal("baseRate", { precision: 10, scale: 2 }).notNull(),
+      // base shipping cost in USD
+      perUnitRate: decimal("perUnitRate", { precision: 10, scale: 2 }).default("0.00").notNull(),
+      // extra per unit
+      perKgRate: decimal("perKgRate", { precision: 10, scale: 2 }).default("0.00").notNull(),
+      minDays: int("minDays").default(7).notNull(),
+      maxDays: int("maxDays").default(21).notNull(),
+      currency: varchar("currency", { length: 10 }).default("USD").notNull(),
+      isActive: boolean("isActive").default(true).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    cartItems = mysqlTable("cart_items", {
+      id: int("id").autoincrement().primaryKey(),
+      sessionId: varchar("sessionId", { length: 128 }).notNull(),
+      // anonymous cart support
+      userId: int("userId"),
+      // null for guests
+      productId: int("productId").notNull(),
+      quantity: int("quantity").notNull().default(1),
+      selectedSize: varchar("selectedSize", { length: 50 }),
+      selectedColor: varchar("selectedColor", { length: 100 }),
+      addedAt: timestamp("addedAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    orders = mysqlTable("orders", {
+      id: int("id").autoincrement().primaryKey(),
+      orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
+      userId: int("userId"),
+      sessionId: varchar("sessionId", { length: 128 }),
+      // Customer info
+      customerName: varchar("customerName", { length: 255 }).notNull(),
+      customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
+      customerPhone: varchar("customerPhone", { length: 64 }),
+      companyName: varchar("companyName", { length: 255 }),
+      // Shipping address
+      addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
+      addressLine2: varchar("addressLine2", { length: 500 }),
+      city: varchar("city", { length: 100 }).notNull(),
+      state: varchar("state", { length: 100 }),
+      postalCode: varchar("postalCode", { length: 20 }),
+      country: varchar("country", { length: 100 }).notNull(),
+      countryCode: varchar("countryCode", { length: 10 }).notNull(),
+      // Financials (in USD)
+      subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
+      shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
+      totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
+      // Items snapshot (JSON)
+      items: text("items").notNull(),
+      // JSON array of { productId, title, qty, size, color, unitPrice }
+      // Stripe
+      stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+      stripeSessionId: varchar("stripeSessionId", { length: 255 }),
+      status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
+      notes: text("notes"),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    rfqSubmissions = mysqlTable("rfq_submissions", {
+      id: int("id").autoincrement().primaryKey(),
+      companyName: varchar("companyName", { length: 255 }).notNull(),
+      contactName: varchar("contactName", { length: 255 }).notNull(),
+      email: varchar("email", { length: 320 }).notNull(),
+      phone: varchar("phone", { length: 64 }),
+      country: varchar("country", { length: 100 }),
+      website: varchar("website", { length: 255 }),
+      productType: varchar("productType", { length: 100 }).notNull(),
+      quantity: varchar("quantity", { length: 100 }).notNull(),
+      customization: text("customization"),
+      fabricPreference: varchar("fabricPreference", { length: 255 }),
+      timeline: varchar("timeline", { length: 100 }),
+      budget: varchar("budget", { length: 100 }),
+      additionalNotes: text("additionalNotes"),
+      designImageUrl: text("designImageUrl"),
+      garmentType: varchar("garmentType", { length: 100 }),
+      status: mysqlEnum("status", ["new", "reviewed", "quoted", "closed"]).default("new").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    blogPosts = mysqlTable("blog_posts", {
+      id: int("id").autoincrement().primaryKey(),
+      slug: varchar("slug", { length: 255 }).notNull().unique(),
+      title: varchar("title", { length: 500 }).notNull(),
+      excerpt: text("excerpt"),
+      content: text("content"),
+      category: varchar("category", { length: 100 }),
+      tags: text("tags"),
+      featuredImage: varchar("featuredImage", { length: 500 }),
+      metaTitle: varchar("metaTitle", { length: 255 }),
+      metaDescription: text("metaDescription"),
+      published: boolean("published").default(false).notNull(),
+      publishedAt: timestamp("publishedAt"),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    portfolioItems = mysqlTable("portfolio_items", {
+      id: int("id").autoincrement().primaryKey(),
+      title: varchar("title", { length: 500 }).notNull(),
+      category: varchar("category", { length: 100 }).notNull(),
+      description: text("description"),
+      tags: text("tags"),
+      // JSON array of tag strings
+      coverImage: varchar("coverImage", { length: 1e3 }),
+      // first/hero image URL
+      // SEO & Geo fields
+      seoTitle: varchar("seoTitle", { length: 255 }),
+      seoDescription: text("seoDescription"),
+      seoKeywords: text("seoKeywords"),
+      geoTarget: varchar("geoTarget", { length: 255 }),
+      // e.g. "US, UK, Canada"
+      ogImage: varchar("ogImage", { length: 1e3 }),
+      // Open Graph image URL
+      // Display controls
+      isFeatured: boolean("isFeatured").default(false).notNull(),
+      isActive: boolean("isActive").default(true).notNull(),
+      sortOrder: int("sortOrder").default(0).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    portfolioImages = mysqlTable("portfolio_images", {
+      id: int("id").autoincrement().primaryKey(),
+      portfolioItemId: int("portfolioItemId").notNull(),
+      imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
+      fileKey: varchar("fileKey", { length: 500 }),
+      // S3 key for deletion
+      altText: varchar("altText", { length: 500 }),
+      // SEO alt text
+      caption: varchar("caption", { length: 500 }),
+      sortOrder: int("sortOrder").default(0).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
+    testimonials = mysqlTable("testimonials", {
+      id: int("id").autoincrement().primaryKey(),
+      clientName: varchar("clientName", { length: 255 }).notNull(),
+      clientTitle: varchar("clientTitle", { length: 255 }),
+      companyName: varchar("companyName", { length: 255 }),
+      country: varchar("country", { length: 100 }),
+      rating: int("rating").default(5),
+      testimonial: text("testimonial").notNull(),
+      avatar: varchar("avatar", { length: 500 }),
+      featured: boolean("featured").default(false).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
+    contactSubmissions = mysqlTable("contact_submissions", {
+      id: int("id").autoincrement().primaryKey(),
+      name: varchar("name", { length: 255 }).notNull(),
+      email: varchar("email", { length: 320 }).notNull(),
+      company: varchar("company", { length: 255 }),
+      phone: varchar("phone", { length: 64 }),
+      subject: varchar("subject", { length: 500 }),
+      message: text("message").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
+  }
 });
 
 // server/_core/env.ts
-var ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
-  cookieSecret: process.env.JWT_SECRET ?? "",
-  databaseUrl: process.env.DATABASE_URL ?? "",
-  oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
-  ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
-  isProduction: process.env.NODE_ENV === "production",
-  forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
-  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
-  geminiApiKey: process.env.GEMINI_API_KEY ?? ""
-};
+var ENV;
+var init_env = __esm({
+  "server/_core/env.ts"() {
+    "use strict";
+    ENV = {
+      appId: process.env.VITE_APP_ID ?? "",
+      cookieSecret: process.env.JWT_SECRET ?? "",
+      databaseUrl: process.env.DATABASE_URL ?? "",
+      oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
+      ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
+      isProduction: process.env.NODE_ENV === "production",
+      forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
+      forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+      geminiApiKey: process.env.GEMINI_API_KEY ?? ""
+    };
+  }
+});
 
 // server/db.ts
-var _db = null;
-async function getDb() {
+var db_exports = {};
+__export(db_exports, {
+  addPortfolioImage: () => addPortfolioImage,
+  addProductImage: () => addProductImage,
+  clearCart: () => clearCart,
+  createContactSubmission: () => createContactSubmission,
+  createOrder: () => createOrder,
+  createPortfolioItem: () => createPortfolioItem,
+  createProduct: () => createProduct,
+  createRfqSubmission: () => createRfqSubmission,
+  createShippingZone: () => createShippingZone,
+  deletePortfolioImage: () => deletePortfolioImage,
+  deletePortfolioItem: () => deletePortfolioItem,
+  deleteProduct: () => deleteProduct,
+  deleteProductImage: () => deleteProductImage,
+  deleteShippingZone: () => deleteShippingZone,
+  findShippingZoneForCountry: () => findShippingZoneForCountry,
+  getActiveProducts: () => getActiveProducts,
+  getActiveShippingZones: () => getActiveShippingZones,
+  getAllOrders: () => getAllOrders,
+  getAllProducts: () => getAllProducts,
+  getAllRfqSubmissions: () => getAllRfqSubmissions,
+  getAllShippingZones: () => getAllShippingZones,
+  getBlogPostBySlug: () => getBlogPostBySlug,
+  getCartItems: () => getCartItems,
+  getDb: () => getDb2,
+  getFeaturedPortfolioItems: () => getFeaturedPortfolioItems,
+  getFeaturedProducts: () => getFeaturedProducts,
+  getFeaturedTestimonials: () => getFeaturedTestimonials,
+  getOrderByNumber: () => getOrderByNumber,
+  getPortfolioCategories: () => getPortfolioCategories,
+  getPortfolioImagesForItem: () => getPortfolioImagesForItem,
+  getPortfolioItemWithImages: () => getPortfolioItemWithImages,
+  getPortfolioItems: () => getPortfolioItems,
+  getProductById: () => getProductById,
+  getProductBySlug: () => getProductBySlug,
+  getProductImages: () => getProductImages,
+  getPublishedBlogPosts: () => getPublishedBlogPosts,
+  getSizeChart: () => getSizeChart,
+  getSlabPrices: () => getSlabPrices,
+  getUserByOpenId: () => getUserByOpenId,
+  listPortfolioItems: () => listPortfolioItems,
+  removeCartItem: () => removeCartItem,
+  reorderPortfolioImages: () => reorderPortfolioImages,
+  reorderProductImages: () => reorderProductImages,
+  setSlabPrices: () => setSlabPrices,
+  updateCartItemQty: () => updateCartItemQty,
+  updateOrderStatus: () => updateOrderStatus,
+  updatePortfolioItem: () => updatePortfolioItem,
+  updateProduct: () => updateProduct,
+  updateShippingZone: () => updateShippingZone,
+  upsertCartItem: () => upsertCartItem,
+  upsertSizeChart: () => upsertSizeChart,
+  upsertUser: () => upsertUser
+});
+import { and, desc, eq, like, or, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/mysql2";
+async function getDb2() {
   if (!_db && process.env.DATABASE_URL) {
     try {
       _db = drizzle(process.env.DATABASE_URL);
@@ -282,7 +378,7 @@ async function getDb() {
 }
 async function upsertUser(user) {
   if (!user.openId) throw new Error("User openId is required for upsert");
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) {
     console.warn("[Database] Cannot upsert user: database not available");
     return;
@@ -319,13 +415,13 @@ async function upsertUser(user) {
   }
 }
 async function getUserByOpenId(openId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : void 0;
 }
 async function getActiveProducts(opts) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   const conditions = [eq(products.isActive, true)];
   if (opts?.category && opts.category !== "all") conditions.push(eq(products.category, opts.category));
@@ -341,73 +437,73 @@ async function getActiveProducts(opts) {
   return db.select().from(products).where(and(...conditions)).orderBy(products.sortOrder, desc(products.createdAt)).limit(opts?.limit ?? 50).offset(opts?.offset ?? 0);
 }
 async function getAllProducts() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(products).orderBy(products.sortOrder, desc(products.createdAt));
 }
 async function getProductBySlug(slug) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
   return result[0];
 }
 async function getProductById(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(products).where(eq(products.id, id)).limit(1);
   return result[0];
 }
 async function createProduct(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(products).values(data);
   const result = await db.select().from(products).where(eq(products.slug, data.slug)).limit(1);
   return result[0];
 }
 async function updateProduct(id, data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.update(products).set(data).where(eq(products.id, id));
 }
 async function deleteProduct(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(products).where(eq(products.id, id));
 }
 async function getFeaturedProducts() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(products).where(and(eq(products.isFeatured, true), eq(products.isActive, true))).orderBy(products.sortOrder).limit(8);
 }
 async function getProductImages(productId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(productImages).where(eq(productImages.productId, productId)).orderBy(productImages.sortOrder);
 }
 async function addProductImage(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(productImages).values(data);
 }
 async function deleteProductImage(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(productImages).where(eq(productImages.id, id));
 }
 async function reorderProductImages(updates) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   for (const u of updates) {
     await db.update(productImages).set({ sortOrder: u.sortOrder }).where(eq(productImages.id, u.id));
   }
 }
 async function getSlabPrices(productId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(slabPrices).where(eq(slabPrices.productId, productId)).orderBy(slabPrices.sortOrder);
 }
 async function setSlabPrices(productId, slabs) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(slabPrices).where(eq(slabPrices.productId, productId));
   if (slabs.length > 0) {
@@ -415,13 +511,13 @@ async function setSlabPrices(productId, slabs) {
   }
 }
 async function getSizeChart(productId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(sizeCharts).where(eq(sizeCharts.productId, productId)).limit(1);
   return result[0];
 }
 async function upsertSizeChart(productId, data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   const existing = await getSizeChart(productId);
   if (existing) {
@@ -431,27 +527,27 @@ async function upsertSizeChart(productId, data) {
   }
 }
 async function getActiveShippingZones() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(shippingZones).where(eq(shippingZones.isActive, true));
 }
 async function getAllShippingZones() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(shippingZones).orderBy(shippingZones.zoneName);
 }
 async function createShippingZone(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(shippingZones).values(data);
 }
 async function updateShippingZone(id, data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.update(shippingZones).set(data).where(eq(shippingZones.id, id));
 }
 async function deleteShippingZone(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(shippingZones).where(eq(shippingZones.id, id));
 }
@@ -467,12 +563,12 @@ async function findShippingZoneForCountry(countryCode) {
   return null;
 }
 async function getCartItems(sessionId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(cartItems).where(eq(cartItems.sessionId, sessionId));
 }
 async function upsertCartItem(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   const existing = await db.select().from(cartItems).where(and(
     eq(cartItems.sessionId, data.sessionId),
@@ -486,7 +582,7 @@ async function upsertCartItem(data) {
   }
 }
 async function updateCartItemQty(id, quantity) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   if (quantity <= 0) {
     await db.delete(cartItems).where(eq(cartItems.id, id));
@@ -495,71 +591,81 @@ async function updateCartItemQty(id, quantity) {
   }
 }
 async function removeCartItem(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(cartItems).where(eq(cartItems.id, id));
 }
 async function clearCart(sessionId) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
 }
 async function createOrder(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(orders).values(data);
   const result = await db.select().from(orders).where(eq(orders.orderNumber, data.orderNumber)).limit(1);
   return result[0];
 }
 async function getOrderByNumber(orderNumber) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1);
   return result[0];
 }
 async function getAllOrders() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(orders).orderBy(desc(orders.createdAt));
 }
 async function updateOrderStatus(id, status) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.update(orders).set({ status, updatedAt: /* @__PURE__ */ new Date() }).where(eq(orders.id, id));
 }
 async function createRfqSubmission(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(rfqSubmissions).values(data);
 }
 async function getAllRfqSubmissions() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(rfqSubmissions).orderBy(desc(rfqSubmissions.createdAt));
 }
 async function getPublishedBlogPosts() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(blogPosts).where(eq(blogPosts.published, true)).orderBy(desc(blogPosts.publishedAt));
 }
 async function getBlogPostBySlug(slug) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return void 0;
   const result = await db.select().from(blogPosts).where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true))).limit(1);
   return result[0];
 }
+async function getPortfolioItems() {
+  const db = await getDb2();
+  if (!db) return [];
+  return db.select().from(portfolioItems).orderBy(desc(portfolioItems.createdAt));
+}
+async function getFeaturedPortfolioItems() {
+  const db = await getDb2();
+  if (!db) return [];
+  return db.select().from(portfolioItems).where(eq(portfolioItems.isFeatured, true)).orderBy(desc(portfolioItems.createdAt)).limit(6);
+}
 async function getFeaturedTestimonials() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   return db.select().from(testimonials).where(eq(testimonials.featured, true)).orderBy(desc(testimonials.createdAt)).limit(6);
 }
 async function createContactSubmission(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.insert(contactSubmissions).values(data);
 }
 async function listPortfolioItems(opts) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   const rows = await db.select().from(portfolioItems).orderBy(portfolioItems.sortOrder, desc(portfolioItems.createdAt));
   return rows.filter((r) => {
@@ -570,56 +676,70 @@ async function listPortfolioItems(opts) {
   });
 }
 async function getPortfolioItemWithImages(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return null;
   const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.id, id)).limit(1);
   if (!item) return null;
   const images = await db.select().from(portfolioImages).where(eq(portfolioImages.portfolioItemId, id)).orderBy(portfolioImages.sortOrder);
   return { ...item, images };
 }
+async function getPortfolioImagesForItem(itemId) {
+  const db = await getDb2();
+  if (!db) return [];
+  return db.select().from(portfolioImages).where(eq(portfolioImages.portfolioItemId, itemId)).orderBy(portfolioImages.sortOrder);
+}
 async function createPortfolioItem(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   const [result] = await db.insert(portfolioItems).values(data).$returningId();
   const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.id, result.id)).limit(1);
   return item;
 }
 async function updatePortfolioItem(id, data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.update(portfolioItems).set({ ...data, updatedAt: /* @__PURE__ */ new Date() }).where(eq(portfolioItems.id, id));
 }
 async function deletePortfolioItem(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(portfolioImages).where(eq(portfolioImages.portfolioItemId, id));
   await db.delete(portfolioItems).where(eq(portfolioItems.id, id));
 }
 async function addPortfolioImage(data) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   const [result] = await db.insert(portfolioImages).values(data).$returningId();
   const [img] = await db.select().from(portfolioImages).where(eq(portfolioImages.id, result.id)).limit(1);
   return img;
 }
 async function deletePortfolioImage(id) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   await db.delete(portfolioImages).where(eq(portfolioImages.id, id));
 }
 async function reorderPortfolioImages(updates) {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) throw new Error("Database not available");
   for (const u of updates) {
     await db.update(portfolioImages).set({ sortOrder: u.sortOrder }).where(eq(portfolioImages.id, u.id));
   }
 }
 async function getPortfolioCategories() {
-  const db = await getDb();
+  const db = await getDb2();
   if (!db) return [];
   const rows = await db.select({ category: portfolioItems.category }).from(portfolioItems).where(eq(portfolioItems.isActive, true));
   return Array.from(new Set(rows.map((r) => r.category).filter(Boolean)));
 }
+var _db;
+var init_db = __esm({
+  "server/db.ts"() {
+    "use strict";
+    init_schema();
+    init_env();
+    _db = null;
+  }
+});
 
 // server/_core/cookies.ts
 function isSecureRequest(req) {
@@ -637,6 +757,106 @@ function getSessionCookieOptions(req) {
     secure: isSecureRequest(req)
   };
 }
+var init_cookies = __esm({
+  "server/_core/cookies.ts"() {
+    "use strict";
+  }
+});
+
+// server/auth.local.ts
+var auth_local_exports = {};
+__export(auth_local_exports, {
+  authLocalRouter: () => authLocalRouter
+});
+import { Router } from "express";
+import { z as z4 } from "zod";
+import * as argon2 from "argon2";
+import { SignJWT as SignJWT2 } from "jose";
+import { eq as eq2 } from "drizzle-orm";
+async function ensureDefaultAdmin() {
+  const db = await getDb();
+  if (!db) return;
+  const adminUsers = await db.select().from(users).where(eq2(users.role, "admin"));
+  if (adminUsers.length === 0) {
+    console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
+    const hashedPassword = await argon2.hash("admin123");
+    await db.insert(users).values({
+      openId: "admin-" + Date.now(),
+      name: "Super Admin",
+      email: "admin@sialkotsamplemasters.com",
+      role: "admin",
+      loginMethod: "local",
+      password: hashedPassword
+    });
+  }
+}
+var authLocalRouter, JWT_SECRET;
+var init_auth_local = __esm({
+  "server/auth.local.ts"() {
+    "use strict";
+    init_schema();
+    init_cookies();
+    authLocalRouter = Router();
+    JWT_SECRET = new TextEncoder().encode(
+      process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+    );
+    ensureDefaultAdmin().catch(console.error);
+    authLocalRouter.post("/api/admin/login", async (req, res) => {
+      try {
+        const db = await getDb();
+        if (!db) return res.status(500).json({ error: "Database temporarily unavailable." });
+        const schema = z4.object({
+          email: z4.string().email(),
+          password: z4.string().min(1)
+        });
+        const result = schema.safeParse(req.body);
+        if (!result.success) {
+          return res.status(400).json({ error: "Invalid email or password format." });
+        }
+        const { email, password } = result.data;
+        const [user] = await db.select().from(users).where(eq2(users.email, email)).limit(1);
+        if (!user || user.role !== "admin" || !user.password) {
+          return res.status(401).json({ error: "Invalid credentials or not an admin." });
+        }
+        const isValid = await argon2.verify(user.password, password);
+        if (!isValid) {
+          return res.status(401).json({ error: "Invalid credentials." });
+        }
+        await db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq2(users.id, user.id));
+        const token = await new SignJWT2({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET);
+        const cookieOptions = getSessionCookieOptions(req);
+        res.cookie("admin_token", token, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1e3 });
+        return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
+      } catch (err) {
+        console.error("[Login Error]", err);
+        return res.status(500).json({ error: "Internal server error during login." });
+      }
+    });
+    authLocalRouter.post("/api/admin/logout", (req, res) => {
+      const cookieOptions = getSessionCookieOptions(req);
+      res.clearCookie("admin_token", cookieOptions);
+      return res.json({ success: true });
+    });
+  }
+});
+
+// server/_core/index.ts
+import "dotenv/config";
+import express2 from "express";
+import { createServer } from "http";
+import net from "net";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+
+// shared/const.ts
+var COOKIE_NAME = "app_session_id";
+var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
+var AXIOS_TIMEOUT_MS = 3e4;
+var UNAUTHED_ERR_MSG = "Please login (10001)";
+var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
+
+// server/_core/oauth.ts
+init_db();
+init_cookies();
 
 // shared/_core/errors.ts
 var HttpError = class extends Error {
@@ -649,6 +869,8 @@ var HttpError = class extends Error {
 var ForbiddenError = (msg) => new HttpError(403, msg);
 
 // server/_core/sdk.ts
+init_db();
+init_env();
 import axios from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import { SignJWT, jwtVerify } from "jose";
@@ -909,11 +1131,13 @@ function registerOAuthRoutes(app) {
 // server/routers.ts
 import { TRPCError as TRPCError4 } from "@trpc/server";
 import { z as z3 } from "zod";
+init_cookies();
 
 // server/_core/systemRouter.ts
 import { z } from "zod";
 
 // server/_core/notification.ts
+init_env();
 import { TRPCError } from "@trpc/server";
 var TITLE_MAX_LENGTH = 1200;
 var CONTENT_MAX_LENGTH = 2e4;
@@ -1058,6 +1282,7 @@ import { TRPCError as TRPCError3 } from "@trpc/server";
 import { z as z2 } from "zod";
 
 // server/ai/gemini.ts
+init_env();
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 var _client = null;
 function getClient() {
@@ -1176,6 +1401,7 @@ async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType)
 }
 
 // server/storage.ts
+init_env();
 function getStorageConfig() {
   const baseUrl = ENV.forgeApiUrl;
   const apiKey = ENV.forgeApiKey;
@@ -1333,6 +1559,7 @@ var aiAgentRouter = router({
 });
 
 // server/routers.ts
+init_db();
 import { nanoid as nanoid2 } from "nanoid";
 var adminProcedure2 = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
@@ -1897,7 +2124,29 @@ async function createContext(opts) {
   try {
     user = await sdk.authenticateRequest(opts.req);
   } catch (error) {
-    user = null;
+    const cookieHeader = opts.req.headers.cookie || "";
+    const cookies = __require("cookie").parse(cookieHeader);
+    const token = cookies["admin_token"];
+    if (token) {
+      try {
+        const { jwtVerify: jwtVerify2 } = __require("jose");
+        const JWT_SECRET2 = new TextEncoder().encode(
+          process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+        );
+        const { payload } = await jwtVerify2(token, JWT_SECRET2);
+        const { db } = (init_db(), __toCommonJS(db_exports));
+        const { users: users2 } = (init_schema(), __toCommonJS(schema_exports));
+        const { eq: eq3 } = __require("drizzle-orm");
+        const [adminUser] = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
+        if (adminUser) {
+          user = adminUser;
+        }
+      } catch (err) {
+        user = null;
+      }
+    } else {
+      user = null;
+    }
   }
   const bypassEnabled = process.env.ENABLE_ADMIN_BYPASS === "true";
   if ((!IS_PRODUCTION || bypassEnabled) && !user) {
@@ -2194,6 +2443,8 @@ async function startServer() {
     }
   });
   registerOAuthRoutes(app);
+  const { authLocalRouter: authLocalRouter2 } = await Promise.resolve().then(() => (init_auth_local(), auth_local_exports));
+  app.use(authLocalRouter2);
   app.use(
     "/api/trpc",
     createExpressMiddleware({

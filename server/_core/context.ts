@@ -16,10 +16,37 @@ export async function createContext(
   let user: User | null = null;
 
   try {
+    // 1. First try OAuth
     user = await sdk.authenticateRequest(opts.req);
   } catch (error) {
-    // Authentication is optional for public procedures.
-    user = null;
+    // 2. If OAuth fails, try our local admin JWT
+    const cookieHeader = opts.req.headers.cookie || "";
+    const cookies = require("cookie").parse(cookieHeader);
+    const token = cookies["admin_token"];
+
+    if (token) {
+      try {
+        const { jwtVerify } = require("jose");
+        const JWT_SECRET = new TextEncoder().encode(
+          process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+        );
+        const { payload } = await jwtVerify(token, JWT_SECRET);
+
+        // Fetch full user from DB
+        const { db } = require("../db");
+        const { users } = require("../../drizzle/schema");
+        const { eq } = require("drizzle-orm");
+
+        const [adminUser] = await db.select().from(users).where(eq(users.id, payload.userId as number)).limit(1);
+        if (adminUser) {
+          user = adminUser;
+        }
+      } catch (err) {
+        user = null; // invalid local token
+      }
+    } else {
+      user = null;
+    }
   }
 
   // --- LOCAL DEV BYPASS (disabled in production unless explicitly enabled via env) ---

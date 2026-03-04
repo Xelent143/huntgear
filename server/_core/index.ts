@@ -73,6 +73,10 @@ async function startServer() {
 
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  // Local auth logic for Sialkot Sample Masters Admin
+  const { authLocalRouter } = await import("../auth.local");
+  app.use(authLocalRouter);
+
   // tRPC API
   app.use(
     "/api/trpc",

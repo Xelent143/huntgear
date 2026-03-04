@@ -1455,8 +1455,21 @@ export default function Admin() {
             <p className="text-muted-foreground text-sm">Sialkot Sample Masters Store Management</p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-muted-foreground">Logged in as <strong className="text-foreground">{user.name}</strong></span>
-            <a href="/" className="text-xs text-gold hover:text-gold-light transition-colors">← Back to Site</a>
+            <span className="text-xs text-muted-foreground hidden sm:inline-block">
+              Logged in as <strong className="text-foreground">{user.name}</strong>
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={async () => {
+                await fetch("/api/admin/logout", { method: "POST" });
+                window.location.href = "/";
+              }}
+              className="text-xs h-8"
+            >
+              Sign Out
+            </Button>
+            <a href="/" className="text-xs text-gold hover:text-gold-light transition-colors ml-2 hidden sm:inline-block">← Back to Site</a>
           </div>
         </div>
       </div>
