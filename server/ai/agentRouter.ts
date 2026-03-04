@@ -138,4 +138,31 @@ export const aiAgentRouter = router({
                 });
             }
         }),
+
+    // Analyze a manually uploaded image for SEO optimization (rename, alt, caption)
+    optimizeImage: adminProcedure
+        .input(z.object({
+            base64: z.string(),
+            mimeType: z.string(),
+            apiKey: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { analyzeImageForSeo } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const seoData = await analyzeImageForSeo(input.base64, input.mimeType, key);
+                return { seoData, success: true };
+            } catch (err: any) {
+                if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
+                    throw new TRPCError({
+                        code: "INTERNAL_SERVER_ERROR",
+                        message: "Gemini API key not configured. Please add your API key in the AI Agent settings.",
+                    });
+                }
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Image optimization failed: ${err.message}`,
+                });
+            }
+        }),
 });

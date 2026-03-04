@@ -726,6 +726,171 @@ var init_db = __esm({
   }
 });
 
+// server/ai/gemini.ts
+var gemini_exports = {};
+__export(gemini_exports, {
+  analyzeImageForSeo: () => analyzeImageForSeo,
+  chatWithProductAgent: () => chatWithProductAgent,
+  generateProductData: () => generateProductData,
+  generateProductImageBase64: () => generateProductImageBase64
+});
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+function getClient(apiKey) {
+  const key = apiKey || ENV.geminiApiKey;
+  if (!key || key === "your_gemini_api_key_here") {
+    throw new Error("GEMINI_API_KEY is not configured. Please set your Gemini API key in the AI Agent settings.");
+  }
+  if (!_clientCache.has(key)) {
+    _clientCache.set(key, new GoogleGenerativeAI(key));
+  }
+  return _clientCache.get(key);
+}
+async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey) {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    systemInstruction: systemPrompt,
+    safetySettings
+  });
+  const chat = model.startChat({
+    history: conversationHistory.map((m) => ({
+      role: m.role,
+      parts: [{ text: m.text }]
+    }))
+  });
+  const result = await chat.sendMessage(userMessage);
+  return result.response.text();
+}
+async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey) {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    safetySettings,
+    generationConfig: {
+      responseMimeType: "application/json"
+    }
+  });
+  const prompt = `You are an expert B2B apparel product listing consultant. Generate a complete, SEO and GEO-optimized product listing for: "${userDescription}"
+
+Brand context: ${brandContext}
+
+Return a JSON object with exactly these fields:
+{
+  "title": "Professional product title (under 70 chars)",
+  "slug": "url-safe-slug-lowercase-hyphens",
+  "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
+  "shortDescription": "Compelling 1-2 sentence summary for product cards (under 160 chars)",
+  "description": "Full detailed 3-5 paragraph product description covering features, materials, customization options, and B2B benefits. Rich and keyword-focused.",
+  "material": "Specific fabric/material description (e.g. '280GSM Ring-Spun Cotton / Polyester Blend')",
+  "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
+  "availableColors": ["Black", "Navy", "White", "Olive"],
+  "samplePrice": "Price as string e.g. '25.00'",
+  "seoTitle": "SEO title under 60 chars, include brand and main keyword",
+  "seoDescription": "Meta description 120-155 chars, compelling, include CTA",
+  "seoKeywords": "10-15 comma-separated keywords including GEO targets like 'Pakistan manufacturer', 'Sialkot wholesale', etc.",
+  "moqSlabs": [
+    { "minQty": 50, "maxQty": 99, "pricePerUnit": "18.00", "label": "Starter" },
+    { "minQty": 100, "maxQty": 299, "pricePerUnit": "15.00", "label": "Popular" },
+    { "minQty": 300, "maxQty": null, "pricePerUnit": "12.00", "label": "Wholesale" }
+  ],
+  "imagePrompt": "A detailed prompt to generate a professional product photo of this item, suitable for e-commerce, on a clean background, high quality"
+}
+
+Important: Return ONLY valid JSON, no markdown, no explanation.`;
+  const result = await model.generateContent(prompt);
+  const text2 = result.response.text().trim();
+  const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
+  return JSON.parse(jsonText);
+}
+async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey) {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const parts = [
+    {
+      text: `Generate a professional, high-quality e-commerce product photo. ${imagePrompt}. 
+      Studio lighting, clean white or dark background, professional photography style, 
+      ultra-realistic, 4K quality. The image should look like it belongs on a premium B2B apparel website.
+      ${logoBase64 ? "Incorporate the provided logo prominently but tastefully on the garment." : ""}`
+    }
+  ];
+  if (logoBase64 && logoMimeType) {
+    parts.push({
+      inlineData: {
+        mimeType: logoMimeType,
+        data: logoBase64
+      }
+    });
+  }
+  try {
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts }],
+      generationConfig: {
+        responseModalities: ["image", "text"]
+      }
+    });
+    const response = result.response;
+    for (const candidate of response.candidates ?? []) {
+      for (const part of candidate.content?.parts ?? []) {
+        if (part.inlineData) {
+          return {
+            base64: part.inlineData.data,
+            mimeType: part.inlineData.mimeType ?? "image/png"
+          };
+        }
+      }
+    }
+    throw new Error("No image data in Gemini response");
+  } catch (err) {
+    throw new Error(`Image generation failed: ${String(err)}`);
+  }
+}
+async function analyzeImageForSeo(base64, mimeType, apiKey) {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    generationConfig: {
+      responseMimeType: "application/json"
+    }
+  });
+  const prompt = `You are an expert SEO and B2B apparel consultant for Sialkot Sample Masters, a premium Pakistan-based manufacturer.
+Analyze this raw image and return a JSON object with strictly these three properties:
+1. "filename": A highly SEO-optimized, lowercase, kebab-case filename (ending in .jpg) that describes the apparel item perfectly. Include localized B2B keywords where appropriate (e.g. "wholesale-bjj-kimono-manufacturer-pakistan.jpg"). Keep it under 60 characters if possible.
+2. "altText": Highly descriptive Alt Text for blind users and search bots. Describe exactly what the apparel item looks like (e.g. "White pearl weave Brazilian Jiu Jitsu Kimono jacket with custom embroidery on the shoulder").
+3. "caption": A short, marketing-focused caption summarizing the product, including GEO keywords (like "Sialkot manufacturer" or "Made in Pakistan").
+
+Important: Return ONLY valid JSON, no markdown, no explanation.`;
+  try {
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType,
+          data: base64
+        }
+      }
+    ]);
+    const text2 = result.response.text().trim();
+    const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
+    return JSON.parse(jsonText);
+  } catch (err) {
+    throw new Error(`Image analysis failed: ${String(err)}`);
+  }
+}
+var _clientCache, safetySettings;
+var init_gemini = __esm({
+  "server/ai/gemini.ts"() {
+    "use strict";
+    init_env();
+    _clientCache = /* @__PURE__ */ new Map();
+    safetySettings = [
+      { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
+    ];
+  }
+});
+
 // server/_core/index.ts
 import "dotenv/config";
 import express2 from "express";
@@ -1181,126 +1346,7 @@ var systemRouter = router({
 // server/ai/agentRouter.ts
 import { TRPCError as TRPCError3 } from "@trpc/server";
 import { z as z2 } from "zod";
-
-// server/ai/gemini.ts
-init_env();
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-var _clientCache = /* @__PURE__ */ new Map();
-function getClient(apiKey) {
-  const key = apiKey || ENV.geminiApiKey;
-  if (!key || key === "your_gemini_api_key_here") {
-    throw new Error("GEMINI_API_KEY is not configured. Please set your Gemini API key in the AI Agent settings.");
-  }
-  if (!_clientCache.has(key)) {
-    _clientCache.set(key, new GoogleGenerativeAI(key));
-  }
-  return _clientCache.get(key);
-}
-var safetySettings = [
-  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
-];
-async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey) {
-  const client = getClient(apiKey);
-  const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    systemInstruction: systemPrompt,
-    safetySettings
-  });
-  const chat = model.startChat({
-    history: conversationHistory.map((m) => ({
-      role: m.role,
-      parts: [{ text: m.text }]
-    }))
-  });
-  const result = await chat.sendMessage(userMessage);
-  return result.response.text();
-}
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey) {
-  const client = getClient(apiKey);
-  const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    safetySettings,
-    generationConfig: {
-      responseMimeType: "application/json"
-    }
-  });
-  const prompt = `You are an expert B2B apparel product listing consultant. Generate a complete, SEO and GEO-optimized product listing for: "${userDescription}"
-
-Brand context: ${brandContext}
-
-Return a JSON object with exactly these fields:
-{
-  "title": "Professional product title (under 70 chars)",
-  "slug": "url-safe-slug-lowercase-hyphens",
-  "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
-  "shortDescription": "Compelling 1-2 sentence summary for product cards (under 160 chars)",
-  "description": "Full detailed 3-5 paragraph product description covering features, materials, customization options, and B2B benefits. Rich and keyword-focused.",
-  "material": "Specific fabric/material description (e.g. '280GSM Ring-Spun Cotton / Polyester Blend')",
-  "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
-  "availableColors": ["Black", "Navy", "White", "Olive"],
-  "samplePrice": "Price as string e.g. '25.00'",
-  "seoTitle": "SEO title under 60 chars, include brand and main keyword",
-  "seoDescription": "Meta description 120-155 chars, compelling, include CTA",
-  "seoKeywords": "10-15 comma-separated keywords including GEO targets like 'Pakistan manufacturer', 'Sialkot wholesale', etc.",
-  "moqSlabs": [
-    { "minQty": 50, "maxQty": 99, "pricePerUnit": "18.00", "label": "Starter" },
-    { "minQty": 100, "maxQty": 299, "pricePerUnit": "15.00", "label": "Popular" },
-    { "minQty": 300, "maxQty": null, "pricePerUnit": "12.00", "label": "Wholesale" }
-  ],
-  "imagePrompt": "A detailed prompt to generate a professional product photo of this item, suitable for e-commerce, on a clean background, high quality"
-}
-
-Important: Return ONLY valid JSON, no markdown, no explanation.`;
-  const result = await model.generateContent(prompt);
-  const text2 = result.response.text().trim();
-  const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
-  return JSON.parse(jsonText);
-}
-async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey) {
-  const client = getClient(apiKey);
-  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
-  const parts = [
-    {
-      text: `Generate a professional, high-quality e-commerce product photo. ${imagePrompt}. 
-      Studio lighting, clean white or dark background, professional photography style, 
-      ultra-realistic, 4K quality. The image should look like it belongs on a premium B2B apparel website.
-      ${logoBase64 ? "Incorporate the provided logo prominently but tastefully on the garment." : ""}`
-    }
-  ];
-  if (logoBase64 && logoMimeType) {
-    parts.push({
-      inlineData: {
-        mimeType: logoMimeType,
-        data: logoBase64
-      }
-    });
-  }
-  try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig: {
-        responseModalities: ["image", "text"]
-      }
-    });
-    const response = result.response;
-    for (const candidate of response.candidates ?? []) {
-      for (const part of candidate.content?.parts ?? []) {
-        if (part.inlineData) {
-          return {
-            base64: part.inlineData.data,
-            mimeType: part.inlineData.mimeType ?? "image/png"
-          };
-        }
-      }
-    }
-    throw new Error("No image data in Gemini response");
-  } catch (err) {
-    throw new Error(`Image generation failed: ${String(err)}`);
-  }
-}
+init_gemini();
 
 // server/storage.ts
 init_env();
@@ -1469,6 +1515,30 @@ var aiAgentRouter = router({
       throw new TRPCError3({
         code: "INTERNAL_SERVER_ERROR",
         message: `Image generation failed: ${err.message}`
+      });
+    }
+  }),
+  // Analyze a manually uploaded image for SEO optimization (rename, alt, caption)
+  optimizeImage: adminProcedure2.input(z2.object({
+    base64: z2.string(),
+    mimeType: z2.string(),
+    apiKey: z2.string().optional()
+  })).mutation(async ({ input, ctx }) => {
+    try {
+      const { analyzeImageForSeo: analyzeImageForSeo2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
+      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const seoData = await analyzeImageForSeo2(input.base64, input.mimeType, key);
+      return { seoData, success: true };
+    } catch (err) {
+      if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
+        throw new TRPCError3({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gemini API key not configured. Please add your API key in the AI Agent settings."
+        });
+      }
+      throw new TRPCError3({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Image optimization failed: ${err.message}`
       });
     }
   })

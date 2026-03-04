@@ -186,3 +186,51 @@ export async function generateProductImageBase64(
         throw new Error(`Image generation failed: ${String(err)}`);
     }
 }
+
+// ─── Image SEO Optimization ───────────────────────────────────────────────────
+
+export interface OptimizedImageData {
+    filename: string;
+    altText: string;
+    caption: string;
+}
+
+export async function analyzeImageForSeo(
+    base64: string,
+    mimeType: string,
+    apiKey?: string,
+): Promise<OptimizedImageData> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({
+        model: "gemini-2.5-flash",
+        generationConfig: {
+            responseMimeType: "application/json",
+        },
+    });
+
+    const prompt = `You are an expert SEO and B2B apparel consultant for Sialkot Sample Masters, a premium Pakistan-based manufacturer.
+Analyze this raw image and return a JSON object with strictly these three properties:
+1. "filename": A highly SEO-optimized, lowercase, kebab-case filename (ending in .jpg) that describes the apparel item perfectly. Include localized B2B keywords where appropriate (e.g. "wholesale-bjj-kimono-manufacturer-pakistan.jpg"). Keep it under 60 characters if possible.
+2. "altText": Highly descriptive Alt Text for blind users and search bots. Describe exactly what the apparel item looks like (e.g. "White pearl weave Brazilian Jiu Jitsu Kimono jacket with custom embroidery on the shoulder").
+3. "caption": A short, marketing-focused caption summarizing the product, including GEO keywords (like "Sialkot manufacturer" or "Made in Pakistan").
+
+Important: Return ONLY valid JSON, no markdown, no explanation.`;
+
+    try {
+        const result = await model.generateContent([
+            prompt,
+            {
+                inlineData: {
+                    mimeType,
+                    data: base64,
+                },
+            },
+        ]);
+
+        const text = result.response.text().trim();
+        const jsonText = text.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
+        return JSON.parse(jsonText) as OptimizedImageData;
+    } catch (err) {
+        throw new Error(`Image analysis failed: ${String(err)}`);
+    }
+}

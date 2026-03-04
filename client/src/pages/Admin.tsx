@@ -18,6 +18,7 @@ import {
   BarChart3, RefreshCw, Images, ImagePlus, GripVertical, Tag, MapPin
 } from "lucide-react";
 import AIProductAgent from "@/components/admin/AIProductAgent";
+import AIImageOptimizer from "@/components/admin/AIImageOptimizer";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -1631,16 +1632,36 @@ export default function Admin() {
 
           {/* ── AI Agent Tab ── */}
           <TabsContent value="ai-agent" className="mt-0">
-            <div className="mb-4">
-              <h2 className="font-condensed font-bold text-xl uppercase tracking-wider text-foreground flex items-center gap-2">
-                <Bot className="w-5 h-5 text-gold" />
-                AI Product Creation Agent
-              </h2>
-              <p className="text-muted-foreground text-sm mt-1">
-                Describe any product in natural language and let AI generate a complete, SEO-optimized listing ready to post.
-              </p>
-            </div>
-            <AIProductAgent />
+            <Tabs defaultValue="generator" className="w-full">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="font-condensed font-bold text-xl uppercase tracking-wider text-foreground flex items-center gap-2">
+                    <Bot className="w-5 h-5 text-gold" />
+                    AI Assistant
+                  </h2>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Generate product listings or optimize images for SEO using Gemini AI.
+                  </p>
+                </div>
+
+                <TabsList className="bg-secondary/50 border border-border">
+                  <TabsTrigger value="generator" className="text-xs font-condensed uppercase tracking-wider gap-1.5 flex transition-colors data-[state=active]:bg-gold data-[state=active]:text-black">
+                    <Sparkles className="w-3.5 h-3.5" /> Product Generator
+                  </TabsTrigger>
+                  <TabsTrigger value="optimizer" className="text-xs font-condensed uppercase tracking-wider gap-1.5 flex transition-colors data-[state=active]:bg-gold data-[state=active]:text-black">
+                    <ImagePlus className="w-3.5 h-3.5" /> Image Optimizer
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="generator" className="mt-0 outline-none">
+                <AIProductAgent />
+              </TabsContent>
+
+              <TabsContent value="optimizer" className="mt-0 outline-none">
+                <AIImageOptimizer />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
       </div>
