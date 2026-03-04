@@ -2437,31 +2437,47 @@ async function startServer() {
     return res.json({ success: true });
   });
   app.get("/api/admin/debug", async (_req, res) => {
+    const info = { nodeVersion: process.version, dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET" };
     try {
       const debugDb = await getDbLocal();
-      if (!debugDb) return res.json({ error: "Database not connected", dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET" });
-      const { users: ut } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eqD } = await import("drizzle-orm");
-      const allAdmins = await debugDb.select().from(ut).where(eqD(ut.role, "admin"));
-      const adminInfo = allAdmins.map((a) => ({
-        id: a.id,
-        email: a.email,
-        hasPassword: !!a.password,
-        passwordLength: a.password?.length || 0,
-        passwordFormat: a.password ? a.password.includes(":") ? "scrypt" : "unknown" : "none",
-        role: a.role,
-        openId: a.openId
-      }));
-      return res.json({
-        status: "ok",
-        dbConnected: true,
-        adminCount: allAdmins.length,
-        admins: adminInfo,
-        nodeVersion: process.version,
-        jwtSecret: process.env.JWT_SECRET ? "SET" : "NOT SET (using fallback)"
-      });
+      if (!debugDb) {
+        info.error = "Database not connected";
+        return res.json(info);
+      }
+      info.dbConnected = true;
+      try {
+        const rawResult = await debugDb.execute({ sql: "SELECT id, email, role, password FROM users LIMIT 5", params: [] });
+        info.rawQuery = "SUCCESS";
+        info.rawRows = rawResult;
+      } catch (rawErr) {
+        info.rawQuery = "FAILED";
+        info.rawError = rawErr?.message;
+        info.rawCause = rawErr?.cause?.message || rawErr?.cause?.sqlMessage || String(rawErr?.cause);
+        info.rawCode = rawErr?.cause?.code;
+        info.rawErrno = rawErr?.cause?.errno;
+      }
+      try {
+        const { users: ut } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+        const allUsers = await debugDb.select().from(ut).limit(3);
+        info.drizzleQuery = "SUCCESS";
+        info.userCount = allUsers.length;
+        info.users = allUsers.map((u) => ({
+          id: u.id,
+          email: u.email,
+          role: u.role,
+          hasPassword: !!u.password,
+          pwdFormat: u.password ? u.password.includes(":") ? "scrypt" : "other_" + u.password.substring(0, 10) : "none"
+        }));
+      } catch (ormErr) {
+        info.drizzleQuery = "FAILED";
+        info.drizzleError = ormErr?.message;
+        info.drizzleCause = ormErr?.cause?.message || ormErr?.cause?.sqlMessage || String(ormErr?.cause);
+      }
+      return res.json(info);
     } catch (err) {
-      return res.json({ error: "Debug error: " + (err?.message || "unknown") });
+      info.error = err?.message;
+      info.cause = err?.cause?.message || String(err?.cause);
+      return res.json(info);
     }
   });
   app.use(
