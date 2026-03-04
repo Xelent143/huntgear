@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { authLocalRouter } from "../auth.local";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -74,7 +75,6 @@ async function startServer() {
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   // Local auth logic for Sialkot Sample Masters Admin
-  const { authLocalRouter } = await import("../auth.local");
   app.use(authLocalRouter);
 
   // tRPC API

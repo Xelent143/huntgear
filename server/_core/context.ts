@@ -33,13 +33,16 @@ export async function createContext(
         const { payload } = await jwtVerify(token, JWT_SECRET);
 
         // Fetch full user from DB
-        const { db } = require("../db");
+        const { getDb } = require("../db");
         const { users } = require("../../drizzle/schema");
         const { eq } = require("drizzle-orm");
 
-        const [adminUser] = await db.select().from(users).where(eq(users.id, payload.userId as number)).limit(1);
-        if (adminUser) {
-          user = adminUser;
+        const db = await getDb();
+        if (db) {
+          const [adminUser] = await db.select().from(users).where(eq(users.id, payload.userId as number)).limit(1);
+          if (adminUser) {
+            user = adminUser;
+          }
         }
       } catch (err) {
         user = null; // invalid local token

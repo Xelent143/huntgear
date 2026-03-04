@@ -741,117 +741,6 @@ var init_db = __esm({
   }
 });
 
-// server/_core/cookies.ts
-function isSecureRequest(req) {
-  if (req.protocol === "https") return true;
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  if (!forwardedProto) return false;
-  const protoList = Array.isArray(forwardedProto) ? forwardedProto : forwardedProto.split(",");
-  return protoList.some((proto) => proto.trim().toLowerCase() === "https");
-}
-function getSessionCookieOptions(req) {
-  return {
-    httpOnly: true,
-    path: "/",
-    sameSite: "none",
-    secure: isSecureRequest(req)
-  };
-}
-var init_cookies = __esm({
-  "server/_core/cookies.ts"() {
-    "use strict";
-  }
-});
-
-// server/auth.local.ts
-var auth_local_exports = {};
-__export(auth_local_exports, {
-  authLocalRouter: () => authLocalRouter
-});
-import { Router } from "express";
-import { z as z4 } from "zod";
-import * as crypto from "crypto";
-import { SignJWT as SignJWT2 } from "jose";
-import { eq as eq2 } from "drizzle-orm";
-function hashPassword(password) {
-  const salt = crypto.randomBytes(16).toString("hex");
-  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
-  return `${salt}:${derivedKey}`;
-}
-function verifyPassword(password, hash) {
-  const [salt, key] = hash.split(":");
-  if (!salt || !key) return false;
-  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
-  return key === derivedKey;
-}
-async function ensureDefaultAdmin() {
-  const db = await getDb();
-  if (!db) return;
-  const adminUsers = await db.select().from(users).where(eq2(users.role, "admin"));
-  if (adminUsers.length === 0) {
-    console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
-    const hashedPassword = hashPassword("admin123");
-    await db.insert(users).values({
-      openId: "admin-" + Date.now(),
-      name: "Super Admin",
-      email: "admin@sialkotsamplemasters.com",
-      role: "admin",
-      loginMethod: "local",
-      password: hashedPassword
-    });
-  }
-}
-var authLocalRouter, JWT_SECRET;
-var init_auth_local = __esm({
-  "server/auth.local.ts"() {
-    "use strict";
-    init_db();
-    init_schema();
-    init_cookies();
-    authLocalRouter = Router();
-    JWT_SECRET = new TextEncoder().encode(
-      process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
-    );
-    ensureDefaultAdmin().catch(console.error);
-    authLocalRouter.post("/api/admin/login", async (req, res) => {
-      try {
-        const db = await getDb();
-        if (!db) return res.status(500).json({ error: "Database temporarily unavailable." });
-        const schema = z4.object({
-          email: z4.string().email(),
-          password: z4.string().min(1)
-        });
-        const result = schema.safeParse(req.body);
-        if (!result.success) {
-          return res.status(400).json({ error: "Invalid email or password format." });
-        }
-        const { email, password } = result.data;
-        const [user] = await db.select().from(users).where(eq2(users.email, email)).limit(1);
-        if (!user || user.role !== "admin" || !user.password) {
-          return res.status(401).json({ error: "Invalid credentials or not an admin." });
-        }
-        const isValid = verifyPassword(password, user.password);
-        if (!isValid) {
-          return res.status(401).json({ error: "Invalid credentials." });
-        }
-        await db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq2(users.id, user.id));
-        const token = await new SignJWT2({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET);
-        const cookieOptions = getSessionCookieOptions(req);
-        res.cookie("admin_token", token, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1e3 });
-        return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
-      } catch (err) {
-        console.error("[Login Error]", err);
-        return res.status(500).json({ error: "Internal server error during login." });
-      }
-    });
-    authLocalRouter.post("/api/admin/logout", (req, res) => {
-      const cookieOptions = getSessionCookieOptions(req);
-      res.clearCookie("admin_token", cookieOptions);
-      return res.json({ success: true });
-    });
-  }
-});
-
 // server/_core/index.ts
 import "dotenv/config";
 import express2 from "express";
@@ -868,7 +757,23 @@ var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
 
 // server/_core/oauth.ts
 init_db();
-init_cookies();
+
+// server/_core/cookies.ts
+function isSecureRequest(req) {
+  if (req.protocol === "https") return true;
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  if (!forwardedProto) return false;
+  const protoList = Array.isArray(forwardedProto) ? forwardedProto : forwardedProto.split(",");
+  return protoList.some((proto) => proto.trim().toLowerCase() === "https");
+}
+function getSessionCookieOptions(req) {
+  return {
+    httpOnly: true,
+    path: "/",
+    sameSite: "none",
+    secure: isSecureRequest(req)
+  };
+}
 
 // shared/_core/errors.ts
 var HttpError = class extends Error {
@@ -1143,7 +1048,6 @@ function registerOAuthRoutes(app) {
 // server/routers.ts
 import { TRPCError as TRPCError4 } from "@trpc/server";
 import { z as z3 } from "zod";
-init_cookies();
 
 // server/_core/systemRouter.ts
 import { z } from "zod";
@@ -2146,12 +2050,15 @@ async function createContext(opts) {
           process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
         );
         const { payload } = await jwtVerify2(token, JWT_SECRET2);
-        const { db } = (init_db(), __toCommonJS(db_exports));
+        const { getDb: getDb2 } = (init_db(), __toCommonJS(db_exports));
         const { users: users2 } = (init_schema(), __toCommonJS(schema_exports));
         const { eq: eq3 } = __require("drizzle-orm");
-        const [adminUser] = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
-        if (adminUser) {
-          user = adminUser;
+        const db = await getDb2();
+        if (db) {
+          const [adminUser] = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
+          if (adminUser) {
+            user = adminUser;
+          }
         }
       } catch (err) {
         user = null;
@@ -2387,6 +2294,84 @@ function serveStatic(app) {
   });
 }
 
+// server/auth.local.ts
+init_db();
+init_schema();
+import { Router } from "express";
+import { z as z4 } from "zod";
+import * as crypto from "crypto";
+import { SignJWT as SignJWT2 } from "jose";
+import { eq as eq2 } from "drizzle-orm";
+var authLocalRouter = Router();
+var JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+);
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${derivedKey}`;
+}
+function verifyPassword(password, hash) {
+  const [salt, key] = hash.split(":");
+  if (!salt || !key) return false;
+  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+  return key === derivedKey;
+}
+async function ensureDefaultAdmin() {
+  const db = await getDb();
+  if (!db) return;
+  const adminUsers = await db.select().from(users).where(eq2(users.role, "admin"));
+  if (adminUsers.length === 0) {
+    console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
+    const hashedPassword = hashPassword("admin123");
+    await db.insert(users).values({
+      openId: "admin-" + Date.now(),
+      name: "Super Admin",
+      email: "admin@sialkotsamplemasters.com",
+      role: "admin",
+      loginMethod: "local",
+      password: hashedPassword
+    });
+  }
+}
+ensureDefaultAdmin().catch(console.error);
+authLocalRouter.post("/api/admin/login", async (req, res) => {
+  try {
+    const db = await getDb();
+    if (!db) return res.status(500).json({ error: "Database temporarily unavailable." });
+    const schema = z4.object({
+      email: z4.string().email(),
+      password: z4.string().min(1)
+    });
+    const result = schema.safeParse(req.body);
+    if (!result.success) {
+      return res.status(400).json({ error: "Invalid email or password format." });
+    }
+    const { email, password } = result.data;
+    const [user] = await db.select().from(users).where(eq2(users.email, email)).limit(1);
+    if (!user || user.role !== "admin" || !user.password) {
+      return res.status(401).json({ error: "Invalid credentials or not an admin." });
+    }
+    const isValid = verifyPassword(password, user.password);
+    if (!isValid) {
+      return res.status(401).json({ error: "Invalid credentials." });
+    }
+    await db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq2(users.id, user.id));
+    const token = await new SignJWT2({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET);
+    const cookieOptions = getSessionCookieOptions(req);
+    res.cookie("admin_token", token, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1e3 });
+    return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
+  } catch (err) {
+    console.error("[Login Error]", err);
+    return res.status(500).json({ error: "Internal server error during login." });
+  }
+});
+authLocalRouter.post("/api/admin/logout", (req, res) => {
+  const cookieOptions = getSessionCookieOptions(req);
+  res.clearCookie("admin_token", cookieOptions);
+  return res.json({ success: true });
+});
+
 // server/_core/index.ts
 function isPortAvailable(port) {
   return new Promise((resolve) => {
@@ -2455,8 +2440,7 @@ async function startServer() {
     }
   });
   registerOAuthRoutes(app);
-  const { authLocalRouter: authLocalRouter2 } = await Promise.resolve().then(() => (init_auth_local(), auth_local_exports));
-  app.use(authLocalRouter2);
+  app.use(authLocalRouter);
   app.use(
     "/api/trpc",
     createExpressMiddleware({
