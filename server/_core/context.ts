@@ -18,42 +18,45 @@ export async function createContext(
   try {
     // 1. First try OAuth
     user = await sdk.authenticateRequest(opts.req);
-  } catch (error) {
-    // 2. If OAuth fails, try our local admin JWT
-    const cookieHeader = opts.req.headers.cookie || "";
-    const cookies = require("cookie").parse(cookieHeader);
-    const token = cookies["admin_token"];
+  } catch (_oauthError) {
+    // OAuth failed — try local admin JWT
+  }
 
-    if (token) {
-      try {
-        const { jwtVerify } = require("jose");
+  // 2. If OAuth didn't work, check for our admin_token cookie
+  if (!user) {
+    try {
+      const cookieHeader = opts.req.headers.cookie || "";
+      // Simple cookie parser — no external dependency needed
+      const tokenMatch = cookieHeader.match(/admin_token=([^;]+)/);
+      const token = tokenMatch ? tokenMatch[1] : null;
+
+      if (token) {
+        const { jwtVerify } = await import("jose");
         const JWT_SECRET = new TextEncoder().encode(
           process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
         );
         const { payload } = await jwtVerify(token, JWT_SECRET);
 
-        // Fetch full user from DB
-        const { getDb } = require("../db");
-        const { users } = require("../../drizzle/schema");
-        const { eq } = require("drizzle-orm");
+        if (payload.userId) {
+          const { getDb } = await import("../db");
+          const { users } = await import("../../drizzle/schema");
+          const { eq } = await import("drizzle-orm");
 
-        const db = await getDb();
-        if (db) {
-          const [adminUser] = await db.select().from(users).where(eq(users.id, payload.userId as number)).limit(1);
-          if (adminUser) {
-            user = adminUser;
+          const db = await getDb();
+          if (db) {
+            const results = await db.select().from(users).where(eq(users.id, payload.userId as number)).limit(1);
+            if (results[0]) {
+              user = results[0];
+            }
           }
         }
-      } catch (err) {
-        user = null; // invalid local token
       }
-    } else {
-      user = null;
+    } catch (_jwtError) {
+      // Invalid JWT or DB error — stay unauthenticated
     }
   }
 
-  // --- LOCAL DEV BYPASS (disabled in production unless explicitly enabled via env) ---
-  // Allows admin access locally without needing OAuth.
+  // 3. LOCAL DEV BYPASS (disabled in production unless explicitly enabled)
   const bypassEnabled = process.env.ENABLE_ADMIN_BYPASS === "true";
   if ((!IS_PRODUCTION || bypassEnabled) && !user) {
     user = {
