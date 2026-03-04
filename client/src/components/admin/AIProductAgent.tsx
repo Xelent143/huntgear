@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import {
     Bot, Send, Sparkles, Upload, Package, Loader2,
-    ImagePlus, CheckCircle, RefreshCw, X, ChevronDown, ChevronUp, Eye
+    ImagePlus, CheckCircle, RefreshCw, X, ChevronDown, ChevronUp, Eye,
+    Key, Save, EyeOff, Settings
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -200,9 +201,39 @@ export default function AIProductAgent() {
     const [isPosting, setIsPosting] = useState(false);
     const [isGeneratingImage, setIsGeneratingImage] = useState(false);
     const [lastDescription, setLastDescription] = useState("");
+    const [showSettings, setShowSettings] = useState(false);
+    const [apiKeyInput, setApiKeyInput] = useState("");
+    const [showKey, setShowKey] = useState(false);
+    const [isSavingKey, setIsSavingKey] = useState(false);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // API Key management
+    const apiKeyQuery = trpc.adminSettings.getApiKey.useQuery(undefined, { retry: false });
+    const saveApiKeyMutation = trpc.adminSettings.saveApiKey.useMutation({
+        onSuccess: () => {
+            toast.success("API key saved!");
+            apiKeyQuery.refetch();
+            setIsSavingKey(false);
+            setApiKeyInput("");
+        },
+        onError: (e) => {
+            toast.error("Failed to save API key", { description: e.message });
+            setIsSavingKey(false);
+        },
+    });
+
+    const handleSaveApiKey = () => {
+        if (!apiKeyInput.trim()) return;
+        setIsSavingKey(true);
+        saveApiKeyMutation.mutate({ apiKey: apiKeyInput.trim() });
+    };
+
+    const handleClearApiKey = () => {
+        setIsSavingKey(true);
+        saveApiKeyMutation.mutate({ apiKey: "" });
+    };
 
     const chatMutation = trpc.aiAgent.chat.useMutation();
     const generateProductMutation = trpc.aiAgent.generateProduct.useMutation();
@@ -244,7 +275,7 @@ export default function AIProductAgent() {
             .map((m) => ({ role: m.role as "user" | "model", text: m.text }));
 
         try {
-            const { reply } = await chatMutation.mutateAsync({ history, message: trimmed });
+            const { reply } = await chatMutation.mutateAsync({ history, message: trimmed, apiKey: apiKeyInput || undefined });
             addMessage("model", reply);
         } catch (err: any) {
             addMessage("model", `❌ Error: ${err.message}. Please check that your GEMINI_API_KEY is set in .env`);
@@ -262,7 +293,7 @@ export default function AIProductAgent() {
         addMessage("model", "🚀 Generating your complete product listing... This may take a few seconds.");
 
         try {
-            const { product } = await generateProductMutation.mutateAsync({ description: lastDescription });
+            const { product } = await generateProductMutation.mutateAsync({ description: lastDescription, apiKey: apiKeyInput || undefined });
             setGeneratedProduct(product);
             addMessage("model", `✅ Product listing generated for **"${product.title}"**!\n\nI've created:\n- Full SEO-optimized title and description\n- ${product.moqSlabs.length} MOQ price tiers\n- ${product.availableSizes.length} sizes and ${product.availableColors.length} colors\n- Complete meta tags and keywords\n\nReview the product card below. You can post it directly or generate an AI product image first (upload your logo for a branded result!)`);
         } catch (err: any) {
@@ -281,6 +312,7 @@ export default function AIProductAgent() {
                 imagePrompt: generatedProduct.imagePrompt,
                 logoBase64: logoFile?.base64,
                 logoMimeType: logoFile?.mimeType,
+                apiKey: apiKeyInput || undefined,
             });
             setGeneratedProduct((prev) => prev ? { ...prev, generatedImageUrl: imageUrl } : prev);
             addMessage("model", `🖼️ Product image generated${logoFile ? " with your logo" : ""}!\n\nThe image has been added to your product preview above. You can now post the complete listing to your website.`);
@@ -383,6 +415,17 @@ export default function AIProductAgent() {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
+                    {/* API Key status indicator */}
+                    <button
+                        onClick={() => setShowSettings(!showSettings)}
+                        className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs border transition-colors ${apiKeyQuery.data?.hasKey
+                                ? "bg-green-500/10 text-green-500 border-green-500/30 hover:bg-green-500/20"
+                                : "bg-orange-500/10 text-orange-500 border-orange-500/30 hover:bg-orange-500/20"
+                            }`}
+                    >
+                        <Key className="w-3 h-3" />
+                        {apiKeyQuery.data?.hasKey ? "Key Set" : "Set API Key"}
+                    </button>
                     {logoFile && (
                         <div className="flex items-center gap-1.5 bg-secondary border border-border rounded-full px-2 py-1 text-xs">
                             <span className="text-muted-foreground truncate max-w-24">{logoFile.name}</span>
@@ -403,6 +446,64 @@ export default function AIProductAgent() {
                     </Button>
                 </div>
             </div>
+
+            {/* API Key Settings Panel */}
+            {showSettings && (
+                <div className="px-5 py-4 border-b border-border bg-secondary/20 space-y-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <Settings className="w-4 h-4 text-muted-foreground" />
+                            <span className="font-condensed font-bold uppercase tracking-wider text-xs text-foreground">Gemini API Key Settings</span>
+                        </div>
+                        <button onClick={() => setShowSettings(false)} className="text-muted-foreground hover:text-foreground">
+                            <X className="w-4 h-4" />
+                        </button>
+                    </div>
+
+                    {apiKeyQuery.data?.hasKey && (
+                        <div className="flex items-center gap-2 text-xs">
+                            <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                            <span className="text-green-500 font-medium">API Key configured:</span>
+                            <code className="bg-secondary px-2 py-0.5 rounded text-muted-foreground">{apiKeyQuery.data.maskedKey}</code>
+                            <Button size="sm" variant="ghost" className="h-6 text-xs text-destructive hover:text-destructive" onClick={handleClearApiKey} disabled={isSavingKey}>
+                                Remove
+                            </Button>
+                        </div>
+                    )}
+
+                    <div className="flex gap-2">
+                        <div className="relative flex-1">
+                            <Input
+                                type={showKey ? "text" : "password"}
+                                placeholder="Paste your Gemini API key here..."
+                                value={apiKeyInput}
+                                onChange={(e) => setApiKeyInput(e.target.value)}
+                                className="h-9 text-xs pr-8 bg-background"
+                            />
+                            <button
+                                onClick={() => setShowKey(!showKey)}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            >
+                                {showKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                            </button>
+                        </div>
+                        <Button
+                            size="sm"
+                            className="h-9 bg-gold text-black hover:bg-gold/90 text-xs gap-1.5"
+                            onClick={handleSaveApiKey}
+                            disabled={!apiKeyInput.trim() || isSavingKey}
+                        >
+                            {isSavingKey ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                            Save Key
+                        </Button>
+                    </div>
+
+                    <p className="text-[10px] text-muted-foreground">
+                        Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="text-gold hover:underline">Google AI Studio</a>.
+                        Your key is encrypted and stored securely. Each admin has their own key.
+                    </p>
+                </div>
+            )}
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">

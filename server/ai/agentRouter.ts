@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { publicProcedure, router } from "../_core/trpc";
+import { protectedProcedure, router } from "../_core/trpc";
 import { chatWithProductAgent, generateProductData, generateProductImageBase64 } from "./gemini";
 import { storagePut } from "../storage";
 import { nanoid } from "nanoid";
@@ -37,31 +37,43 @@ Help admin users create complete, professional product listings by:
 - Size charts should be realistic for international buyers (XS-3XL typically)
 - Prices should reflect Pakistan manufacturing rates (very competitive globally)`;
 
+// ─── Admin guard ──────────────────────────────────────────────────────────────
+
+const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+    if (ctx.user.role !== "admin") {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+    }
+    return next({ ctx });
+});
+
 // ─── AI Agent Router ──────────────────────────────────────────────────────────
 
 export const aiAgentRouter = router({
     // Multi-turn chat with the product consultant
-    chat: publicProcedure
+    chat: adminProcedure
         .input(z.object({
             history: z.array(z.object({
                 role: z.enum(["user", "model"]),
                 text: z.string(),
             })),
             message: z.string().min(1).max(2000),
+            apiKey: z.string().optional(),
         }))
-        .mutation(async ({ input }) => {
+        .mutation(async ({ input, ctx }) => {
             try {
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
                 const reply = await chatWithProductAgent(
                     input.history,
                     input.message,
                     AGENT_SYSTEM_PROMPT,
+                    key,
                 );
                 return { reply, success: true };
             } catch (err: any) {
-                if (err.message?.includes("GEMINI_API_KEY")) {
+                if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
                     throw new TRPCError({
                         code: "INTERNAL_SERVER_ERROR",
-                        message: "Gemini API key not configured. Please add GEMINI_API_KEY to your .env file.",
+                        message: "Gemini API key not configured. Please add your API key in the AI Agent settings.",
                     });
                 }
                 throw new TRPCError({
@@ -72,19 +84,21 @@ export const aiAgentRouter = router({
         }),
 
     // Generate full structured product data from a description
-    generateProduct: publicProcedure
+    generateProduct: adminProcedure
         .input(z.object({
             description: z.string().min(5).max(1000),
+            apiKey: z.string().optional(),
         }))
-        .mutation(async ({ input }) => {
+        .mutation(async ({ input, ctx }) => {
             try {
-                const productData = await generateProductData(input.description);
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const productData = await generateProductData(input.description, undefined, key);
                 return { product: productData, success: true };
             } catch (err: any) {
-                if (err.message?.includes("GEMINI_API_KEY")) {
+                if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
                     throw new TRPCError({
                         code: "INTERNAL_SERVER_ERROR",
-                        message: "Gemini API key not configured. Please add GEMINI_API_KEY to your .env file.",
+                        message: "Gemini API key not configured. Please add your API key in the AI Agent settings.",
                     });
                 }
                 throw new TRPCError({
@@ -95,24 +109,27 @@ export const aiAgentRouter = router({
         }),
 
     // Generate a product image with optional logo, upload to storage, return URL
-    generateProductImage: publicProcedure
+    generateProductImage: adminProcedure
         .input(z.object({
             imagePrompt: z.string().min(5).max(1000),
             logoBase64: z.string().optional(),
             logoMimeType: z.string().optional(),
+            apiKey: z.string().optional(),
         }))
-        .mutation(async ({ input }) => {
+        .mutation(async ({ input, ctx }) => {
             try {
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
                 const { base64, mimeType } = await generateProductImageBase64(
                     input.imagePrompt,
                     input.logoBase64,
                     input.logoMimeType,
+                    key,
                 );
                 // Upload to storage
                 const buffer = Buffer.from(base64, "base64");
                 const ext = mimeType.split("/")[1] ?? "png";
-                const key = `ai-generated/${nanoid(12)}.${ext}`;
-                const { url } = await storagePut(key, buffer, mimeType);
+                const storageKey = `ai-generated/${nanoid(12)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, mimeType);
                 return { imageUrl: url, success: true };
             } catch (err: any) {
                 throw new TRPCError({

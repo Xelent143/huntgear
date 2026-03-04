@@ -3,16 +3,18 @@ import { ENV } from "../_core/env";
 
 // ─── Gemini Client ────────────────────────────────────────────────────────────
 
-let _client: GoogleGenerativeAI | null = null;
+// Cache clients by API key to avoid re-creating on every call
+const _clientCache = new Map<string, GoogleGenerativeAI>();
 
-function getClient(): GoogleGenerativeAI {
-    if (!_client) {
-        if (!ENV.geminiApiKey || ENV.geminiApiKey === "your_gemini_api_key_here") {
-            throw new Error("GEMINI_API_KEY is not configured. Please set it in the .env file.");
-        }
-        _client = new GoogleGenerativeAI(ENV.geminiApiKey);
+function getClient(apiKey?: string): GoogleGenerativeAI {
+    const key = apiKey || ENV.geminiApiKey;
+    if (!key || key === "your_gemini_api_key_here") {
+        throw new Error("GEMINI_API_KEY is not configured. Please set your Gemini API key in the AI Agent settings.");
     }
-    return _client;
+    if (!_clientCache.has(key)) {
+        _clientCache.set(key, new GoogleGenerativeAI(key));
+    }
+    return _clientCache.get(key)!;
 }
 
 // ─── Safety Settings ──────────────────────────────────────────────────────────
@@ -34,11 +36,12 @@ export interface ChatMessage {
 export async function chatWithProductAgent(
     conversationHistory: ChatMessage[],
     userMessage: string,
-    systemPrompt: string
+    systemPrompt: string,
+    apiKey?: string,
 ): Promise<string> {
-    const client = getClient();
+    const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-2.0-flash",
         systemInstruction: systemPrompt,
         safetySettings,
     });
@@ -80,11 +83,12 @@ export interface GeneratedProductData {
 
 export async function generateProductData(
     userDescription: string,
-    brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan"
+    brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
+    apiKey?: string,
 ): Promise<GeneratedProductData> {
-    const client = getClient();
+    const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-2.0-flash",
         safetySettings,
         generationConfig: {
             responseMimeType: "application/json",
@@ -133,12 +137,12 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
 export async function generateProductImageBase64(
     imagePrompt: string,
     logoBase64?: string,
-    logoMimeType?: string
+    logoMimeType?: string,
+    apiKey?: string,
 ): Promise<{ base64: string; mimeType: string }> {
-    const client = getClient();
+    const client = getClient(apiKey);
 
-    // Use gemini-2.0-flash with inlined image model for generation
-    const model = client.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
+    const model = client.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const parts: any[] = [
         {
@@ -179,7 +183,6 @@ export async function generateProductImageBase64(
         }
         throw new Error("No image data in Gemini response");
     } catch (err) {
-        // Fallback: return a placeholder if image generation fails
         throw new Error(`Image generation failed: ${String(err)}`);
     }
 }

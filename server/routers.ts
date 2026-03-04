@@ -741,6 +741,32 @@ export const appRouter = router({
   testimonials: testimonialsRouter,
   contact: contactRouter,
   aiAgent: aiAgentRouter,
+  adminSettings: router({
+    getApiKey: adminProcedure.query(async ({ ctx }) => {
+      const { getDb: getDatabase } = await import("./db");
+      const { users } = await import("../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      const db = await getDatabase();
+      if (!db) return { hasKey: false, maskedKey: "" };
+      const [user] = await db.select().from(users).where(eq(users.id, ctx.user.id)).limit(1);
+      const key = (user as any)?.geminiApiKey || "";
+      return {
+        hasKey: !!key,
+        maskedKey: key ? key.substring(0, 6) + "..." + key.substring(key.length - 4) : "",
+      };
+    }),
+    saveApiKey: adminProcedure
+      .input(z.object({ apiKey: z.string().max(255) }))
+      .mutation(async ({ input, ctx }) => {
+        const { getDb: getDatabase } = await import("./db");
+        const { users } = await import("../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+        const db = await getDatabase();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        await db.update(users).set({ geminiApiKey: input.apiKey || null } as any).where(eq(users.id, ctx.user.id));
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

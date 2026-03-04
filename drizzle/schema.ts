@@ -19,6 +19,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   password: varchar("password", { length: 255 }), // new: for local email/pass auth
+  geminiApiKey: varchar("geminiApiKey", { length: 255 }), // per-client Gemini AI key
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

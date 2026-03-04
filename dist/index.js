@@ -48,6 +48,8 @@ var init_schema = __esm({
       loginMethod: varchar("loginMethod", { length: 64 }),
       password: varchar("password", { length: 255 }),
       // new: for local email/pass auth
+      geminiApiKey: varchar("geminiApiKey", { length: 255 }),
+      // per-client Gemini AI key
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -1183,15 +1185,16 @@ import { z as z2 } from "zod";
 // server/ai/gemini.ts
 init_env();
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
-var _client = null;
-function getClient() {
-  if (!_client) {
-    if (!ENV.geminiApiKey || ENV.geminiApiKey === "your_gemini_api_key_here") {
-      throw new Error("GEMINI_API_KEY is not configured. Please set it in the .env file.");
-    }
-    _client = new GoogleGenerativeAI(ENV.geminiApiKey);
+var _clientCache = /* @__PURE__ */ new Map();
+function getClient(apiKey) {
+  const key = apiKey || ENV.geminiApiKey;
+  if (!key || key === "your_gemini_api_key_here") {
+    throw new Error("GEMINI_API_KEY is not configured. Please set your Gemini API key in the AI Agent settings.");
   }
-  return _client;
+  if (!_clientCache.has(key)) {
+    _clientCache.set(key, new GoogleGenerativeAI(key));
+  }
+  return _clientCache.get(key);
 }
 var safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
@@ -1199,10 +1202,10 @@ var safetySettings = [
   { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
   { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
 ];
-async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt) {
-  const client = getClient();
+async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey) {
+  const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-3.1-pro-preview",
+    model: "gemini-2.0-flash",
     systemInstruction: systemPrompt,
     safetySettings
   });
@@ -1215,10 +1218,10 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
   const result = await chat.sendMessage(userMessage);
   return result.response.text();
 }
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan") {
-  const client = getClient();
+async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey) {
+  const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-3.1-pro-preview",
+    model: "gemini-2.0-flash",
     safetySettings,
     generationConfig: {
       responseMimeType: "application/json"
@@ -1256,9 +1259,9 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
   const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
   return JSON.parse(jsonText);
 }
-async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType) {
-  const client = getClient();
-  const model = client.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
+async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey) {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({ model: "gemini-2.0-flash" });
   const parts = [
     {
       text: `Generate a professional, high-quality e-commerce product photo. ${imagePrompt}. 
@@ -1382,27 +1385,36 @@ Help admin users create complete, professional product listings by:
 - Always suggest at least 3 MOQ price tiers (e.g. 50-99 pcs, 100-299 pcs, 300+ pcs)
 - Size charts should be realistic for international buyers (XS-3XL typically)
 - Prices should reflect Pakistan manufacturing rates (very competitive globally)`;
+var adminProcedure2 = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.user.role !== "admin") {
+    throw new TRPCError3({ code: "FORBIDDEN", message: "Admin access required" });
+  }
+  return next({ ctx });
+});
 var aiAgentRouter = router({
   // Multi-turn chat with the product consultant
-  chat: publicProcedure.input(z2.object({
+  chat: adminProcedure2.input(z2.object({
     history: z2.array(z2.object({
       role: z2.enum(["user", "model"]),
       text: z2.string()
     })),
-    message: z2.string().min(1).max(2e3)
-  })).mutation(async ({ input }) => {
+    message: z2.string().min(1).max(2e3),
+    apiKey: z2.string().optional()
+  })).mutation(async ({ input, ctx }) => {
     try {
+      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
       const reply = await chatWithProductAgent(
         input.history,
         input.message,
-        AGENT_SYSTEM_PROMPT
+        AGENT_SYSTEM_PROMPT,
+        key
       );
       return { reply, success: true };
     } catch (err) {
-      if (err.message?.includes("GEMINI_API_KEY")) {
+      if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
         throw new TRPCError3({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Gemini API key not configured. Please add GEMINI_API_KEY to your .env file."
+          message: "Gemini API key not configured. Please add your API key in the AI Agent settings."
         });
       }
       throw new TRPCError3({
@@ -1412,17 +1424,19 @@ var aiAgentRouter = router({
     }
   }),
   // Generate full structured product data from a description
-  generateProduct: publicProcedure.input(z2.object({
-    description: z2.string().min(5).max(1e3)
-  })).mutation(async ({ input }) => {
+  generateProduct: adminProcedure2.input(z2.object({
+    description: z2.string().min(5).max(1e3),
+    apiKey: z2.string().optional()
+  })).mutation(async ({ input, ctx }) => {
     try {
-      const productData = await generateProductData(input.description);
+      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const productData = await generateProductData(input.description, void 0, key);
       return { product: productData, success: true };
     } catch (err) {
-      if (err.message?.includes("GEMINI_API_KEY")) {
+      if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
         throw new TRPCError3({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Gemini API key not configured. Please add GEMINI_API_KEY to your .env file."
+          message: "Gemini API key not configured. Please add your API key in the AI Agent settings."
         });
       }
       throw new TRPCError3({
@@ -1432,21 +1446,24 @@ var aiAgentRouter = router({
     }
   }),
   // Generate a product image with optional logo, upload to storage, return URL
-  generateProductImage: publicProcedure.input(z2.object({
+  generateProductImage: adminProcedure2.input(z2.object({
     imagePrompt: z2.string().min(5).max(1e3),
     logoBase64: z2.string().optional(),
-    logoMimeType: z2.string().optional()
-  })).mutation(async ({ input }) => {
+    logoMimeType: z2.string().optional(),
+    apiKey: z2.string().optional()
+  })).mutation(async ({ input, ctx }) => {
     try {
+      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
       const { base64, mimeType } = await generateProductImageBase64(
         input.imagePrompt,
         input.logoBase64,
-        input.logoMimeType
+        input.logoMimeType,
+        key
       );
       const buffer = Buffer.from(base64, "base64");
       const ext = mimeType.split("/")[1] ?? "png";
-      const key = `ai-generated/${nanoid(12)}.${ext}`;
-      const { url } = await storagePut(key, buffer, mimeType);
+      const storageKey = `ai-generated/${nanoid(12)}.${ext}`;
+      const { url } = await storagePut(storageKey, buffer, mimeType);
       return { imageUrl: url, success: true };
     } catch (err) {
       throw new TRPCError3({
@@ -1460,7 +1477,7 @@ var aiAgentRouter = router({
 // server/routers.ts
 init_db();
 import { nanoid as nanoid2 } from "nanoid";
-var adminProcedure2 = protectedProcedure.use(({ ctx, next }) => {
+var adminProcedure3 = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
     throw new TRPCError4({ code: "FORBIDDEN", message: "Admin access required" });
   }
@@ -1499,8 +1516,8 @@ var productRouter = router({
     return { ...product, images, slabs, sizeChart: sizeChart ?? null };
   }),
   // Admin: full list including inactive
-  adminList: adminProcedure2.query(() => getAllProducts()),
-  create: adminProcedure2.input(z3.object({
+  adminList: adminProcedure3.query(() => getAllProducts()),
+  create: adminProcedure3.input(z3.object({
     title: z3.string().min(1).max(500),
     slug: z3.string().min(1).max(255).regex(/^[a-z0-9-]+$/),
     category: z3.string().min(1).max(100),
@@ -1535,7 +1552,7 @@ var productRouter = router({
     if (sizeChart) await upsertSizeChart(product.id, sizeChart);
     return product;
   }),
-  update: adminProcedure2.input(z3.object({
+  update: adminProcedure3.input(z3.object({
     id: z3.number().int().positive(),
     title: z3.string().min(1).max(500).optional(),
     slug: z3.string().min(1).max(255).regex(/^[a-z0-9-]+$/).optional(),
@@ -1568,11 +1585,11 @@ var productRouter = router({
     if (sizeChart) await upsertSizeChart(id, sizeChart);
     return { success: true };
   }),
-  delete: adminProcedure2.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+  delete: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
     await deleteProduct(input.id);
     return { success: true };
   }),
-  uploadImage: adminProcedure2.input(z3.object({
+  uploadImage: adminProcedure3.input(z3.object({
     productId: z3.number().int().positive(),
     imageBase64: z3.string(),
     mimeType: z3.string().default("image/jpeg"),
@@ -1591,18 +1608,18 @@ var productRouter = router({
     });
     return { url };
   }),
-  deleteImage: adminProcedure2.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+  deleteImage: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
     await deleteProductImage(input.id);
     return { success: true };
   }),
-  reorderImages: adminProcedure2.input(z3.array(z3.object({ id: z3.number(), sortOrder: z3.number() }))).mutation(async ({ input }) => {
+  reorderImages: adminProcedure3.input(z3.array(z3.object({ id: z3.number(), sortOrder: z3.number() }))).mutation(async ({ input }) => {
     await reorderProductImages(input);
     return { success: true };
   })
 });
 var shippingRouter = router({
   zones: publicProcedure.query(() => getActiveShippingZones()),
-  adminZones: adminProcedure2.query(() => getAllShippingZones()),
+  adminZones: adminProcedure3.query(() => getAllShippingZones()),
   calculate: publicProcedure.input(z3.object({
     countryCode: z3.string().length(2),
     items: z3.array(z3.object({
@@ -1638,7 +1655,7 @@ var shippingRouter = router({
       zoneName: zone.zoneName
     };
   }),
-  createZone: adminProcedure2.input(z3.object({
+  createZone: adminProcedure3.input(z3.object({
     zoneName: z3.string().min(1).max(100),
     countries: z3.string(),
     // JSON array of ISO codes
@@ -1653,7 +1670,7 @@ var shippingRouter = router({
     await createShippingZone(input);
     return { success: true };
   }),
-  updateZone: adminProcedure2.input(z3.object({
+  updateZone: adminProcedure3.input(z3.object({
     id: z3.number().int().positive(),
     zoneName: z3.string().min(1).max(100).optional(),
     countries: z3.string().optional(),
@@ -1669,7 +1686,7 @@ var shippingRouter = router({
     await updateShippingZone(id, data);
     return { success: true };
   }),
-  deleteZone: adminProcedure2.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+  deleteZone: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
     await deleteShippingZone(input.id);
     return { success: true };
   })
@@ -1771,8 +1788,8 @@ var orderRouter = router({
     return { success: true, orderNumber };
   }),
   byNumber: publicProcedure.input(z3.object({ orderNumber: z3.string() })).query(async ({ input }) => getOrderByNumber(input.orderNumber)),
-  adminList: adminProcedure2.query(() => getAllOrders()),
-  updateStatus: adminProcedure2.input(z3.object({
+  adminList: adminProcedure3.query(() => getAllOrders()),
+  updateStatus: adminProcedure3.input(z3.object({
     id: z3.number().int().positive(),
     status: z3.enum(["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"])
   })).mutation(async ({ input }) => {
@@ -2013,7 +2030,31 @@ var appRouter = router({
   portfolio: portfolioRouter,
   testimonials: testimonialsRouter,
   contact: contactRouter,
-  aiAgent: aiAgentRouter
+  aiAgent: aiAgentRouter,
+  adminSettings: router({
+    getApiKey: adminProcedure3.query(async ({ ctx }) => {
+      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eq2 } = await import("drizzle-orm");
+      const db = await getDatabase();
+      if (!db) return { hasKey: false, maskedKey: "" };
+      const [user] = await db.select().from(users2).where(eq2(users2.id, ctx.user.id)).limit(1);
+      const key = user?.geminiApiKey || "";
+      return {
+        hasKey: !!key,
+        maskedKey: key ? key.substring(0, 6) + "..." + key.substring(key.length - 4) : ""
+      };
+    }),
+    saveApiKey: adminProcedure3.input(z3.object({ apiKey: z3.string().max(255) })).mutation(async ({ input, ctx }) => {
+      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eq2 } = await import("drizzle-orm");
+      const db = await getDatabase();
+      if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+      await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq2(users2.id, ctx.user.id));
+      return { success: true };
+    })
+  })
 });
 
 // server/_core/context.ts
