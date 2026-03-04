@@ -333,7 +333,7 @@ __export(db_exports, {
   getAllShippingZones: () => getAllShippingZones,
   getBlogPostBySlug: () => getBlogPostBySlug,
   getCartItems: () => getCartItems,
-  getDb: () => getDb2,
+  getDb: () => getDb,
   getFeaturedPortfolioItems: () => getFeaturedPortfolioItems,
   getFeaturedProducts: () => getFeaturedProducts,
   getFeaturedTestimonials: () => getFeaturedTestimonials,
@@ -365,7 +365,7 @@ __export(db_exports, {
 });
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-async function getDb2() {
+async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
       _db = drizzle(process.env.DATABASE_URL);
@@ -378,7 +378,7 @@ async function getDb2() {
 }
 async function upsertUser(user) {
   if (!user.openId) throw new Error("User openId is required for upsert");
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) {
     console.warn("[Database] Cannot upsert user: database not available");
     return;
@@ -415,13 +415,13 @@ async function upsertUser(user) {
   }
 }
 async function getUserByOpenId(openId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : void 0;
 }
 async function getActiveProducts(opts) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true)];
   if (opts?.category && opts.category !== "all") conditions.push(eq(products.category, opts.category));
@@ -437,73 +437,73 @@ async function getActiveProducts(opts) {
   return db.select().from(products).where(and(...conditions)).orderBy(products.sortOrder, desc(products.createdAt)).limit(opts?.limit ?? 50).offset(opts?.offset ?? 0);
 }
 async function getAllProducts() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(products).orderBy(products.sortOrder, desc(products.createdAt));
 }
 async function getProductBySlug(slug) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
   return result[0];
 }
 async function getProductById(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(products).where(eq(products.id, id)).limit(1);
   return result[0];
 }
 async function createProduct(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(products).values(data);
   const result = await db.select().from(products).where(eq(products.slug, data.slug)).limit(1);
   return result[0];
 }
 async function updateProduct(id, data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(products).set(data).where(eq(products.id, id));
 }
 async function deleteProduct(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(products).where(eq(products.id, id));
 }
 async function getFeaturedProducts() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(products).where(and(eq(products.isFeatured, true), eq(products.isActive, true))).orderBy(products.sortOrder).limit(8);
 }
 async function getProductImages(productId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(productImages).where(eq(productImages.productId, productId)).orderBy(productImages.sortOrder);
 }
 async function addProductImage(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(productImages).values(data);
 }
 async function deleteProductImage(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(productImages).where(eq(productImages.id, id));
 }
 async function reorderProductImages(updates) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   for (const u of updates) {
     await db.update(productImages).set({ sortOrder: u.sortOrder }).where(eq(productImages.id, u.id));
   }
 }
 async function getSlabPrices(productId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(slabPrices).where(eq(slabPrices.productId, productId)).orderBy(slabPrices.sortOrder);
 }
 async function setSlabPrices(productId, slabs) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(slabPrices).where(eq(slabPrices.productId, productId));
   if (slabs.length > 0) {
@@ -511,13 +511,13 @@ async function setSlabPrices(productId, slabs) {
   }
 }
 async function getSizeChart(productId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(sizeCharts).where(eq(sizeCharts.productId, productId)).limit(1);
   return result[0];
 }
 async function upsertSizeChart(productId, data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   const existing = await getSizeChart(productId);
   if (existing) {
@@ -527,27 +527,27 @@ async function upsertSizeChart(productId, data) {
   }
 }
 async function getActiveShippingZones() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(shippingZones).where(eq(shippingZones.isActive, true));
 }
 async function getAllShippingZones() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(shippingZones).orderBy(shippingZones.zoneName);
 }
 async function createShippingZone(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(shippingZones).values(data);
 }
 async function updateShippingZone(id, data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(shippingZones).set(data).where(eq(shippingZones.id, id));
 }
 async function deleteShippingZone(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(shippingZones).where(eq(shippingZones.id, id));
 }
@@ -563,12 +563,12 @@ async function findShippingZoneForCountry(countryCode) {
   return null;
 }
 async function getCartItems(sessionId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(cartItems).where(eq(cartItems.sessionId, sessionId));
 }
 async function upsertCartItem(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   const existing = await db.select().from(cartItems).where(and(
     eq(cartItems.sessionId, data.sessionId),
@@ -582,7 +582,7 @@ async function upsertCartItem(data) {
   }
 }
 async function updateCartItemQty(id, quantity) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   if (quantity <= 0) {
     await db.delete(cartItems).where(eq(cartItems.id, id));
@@ -591,81 +591,81 @@ async function updateCartItemQty(id, quantity) {
   }
 }
 async function removeCartItem(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(cartItems).where(eq(cartItems.id, id));
 }
 async function clearCart(sessionId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
 }
 async function createOrder(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(orders).values(data);
   const result = await db.select().from(orders).where(eq(orders.orderNumber, data.orderNumber)).limit(1);
   return result[0];
 }
 async function getOrderByNumber(orderNumber) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1);
   return result[0];
 }
 async function getAllOrders() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(orders).orderBy(desc(orders.createdAt));
 }
 async function updateOrderStatus(id, status) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(orders).set({ status, updatedAt: /* @__PURE__ */ new Date() }).where(eq(orders.id, id));
 }
 async function createRfqSubmission(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(rfqSubmissions).values(data);
 }
 async function getAllRfqSubmissions() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(rfqSubmissions).orderBy(desc(rfqSubmissions.createdAt));
 }
 async function getPublishedBlogPosts() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(blogPosts).where(eq(blogPosts.published, true)).orderBy(desc(blogPosts.publishedAt));
 }
 async function getBlogPostBySlug(slug) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return void 0;
   const result = await db.select().from(blogPosts).where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true))).limit(1);
   return result[0];
 }
 async function getPortfolioItems() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(portfolioItems).orderBy(desc(portfolioItems.createdAt));
 }
 async function getFeaturedPortfolioItems() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(portfolioItems).where(eq(portfolioItems.isFeatured, true)).orderBy(desc(portfolioItems.createdAt)).limit(6);
 }
 async function getFeaturedTestimonials() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(testimonials).where(eq(testimonials.featured, true)).orderBy(desc(testimonials.createdAt)).limit(6);
 }
 async function createContactSubmission(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.insert(contactSubmissions).values(data);
 }
 async function listPortfolioItems(opts) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   const rows = await db.select().from(portfolioItems).orderBy(portfolioItems.sortOrder, desc(portfolioItems.createdAt));
   return rows.filter((r) => {
@@ -676,7 +676,7 @@ async function listPortfolioItems(opts) {
   });
 }
 async function getPortfolioItemWithImages(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return null;
   const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.id, id)).limit(1);
   if (!item) return null;
@@ -684,49 +684,49 @@ async function getPortfolioItemWithImages(id) {
   return { ...item, images };
 }
 async function getPortfolioImagesForItem(itemId) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   return db.select().from(portfolioImages).where(eq(portfolioImages.portfolioItemId, itemId)).orderBy(portfolioImages.sortOrder);
 }
 async function createPortfolioItem(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   const [result] = await db.insert(portfolioItems).values(data).$returningId();
   const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.id, result.id)).limit(1);
   return item;
 }
 async function updatePortfolioItem(id, data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(portfolioItems).set({ ...data, updatedAt: /* @__PURE__ */ new Date() }).where(eq(portfolioItems.id, id));
 }
 async function deletePortfolioItem(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(portfolioImages).where(eq(portfolioImages.portfolioItemId, id));
   await db.delete(portfolioItems).where(eq(portfolioItems.id, id));
 }
 async function addPortfolioImage(data) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   const [result] = await db.insert(portfolioImages).values(data).$returningId();
   const [img] = await db.select().from(portfolioImages).where(eq(portfolioImages.id, result.id)).limit(1);
   return img;
 }
 async function deletePortfolioImage(id) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(portfolioImages).where(eq(portfolioImages.id, id));
 }
 async function reorderPortfolioImages(updates) {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) throw new Error("Database not available");
   for (const u of updates) {
     await db.update(portfolioImages).set({ sortOrder: u.sortOrder }).where(eq(portfolioImages.id, u.id));
   }
 }
 async function getPortfolioCategories() {
-  const db = await getDb2();
+  const db = await getDb();
   if (!db) return [];
   const rows = await db.select({ category: portfolioItems.category }).from(portfolioItems).where(eq(portfolioItems.isActive, true));
   return Array.from(new Set(rows.map((r) => r.category).filter(Boolean)));
@@ -770,16 +770,27 @@ __export(auth_local_exports, {
 });
 import { Router } from "express";
 import { z as z4 } from "zod";
-import * as argon2 from "argon2";
+import * as crypto from "crypto";
 import { SignJWT as SignJWT2 } from "jose";
 import { eq as eq2 } from "drizzle-orm";
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${derivedKey}`;
+}
+function verifyPassword(password, hash) {
+  const [salt, key] = hash.split(":");
+  if (!salt || !key) return false;
+  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+  return key === derivedKey;
+}
 async function ensureDefaultAdmin() {
   const db = await getDb();
   if (!db) return;
   const adminUsers = await db.select().from(users).where(eq2(users.role, "admin"));
   if (adminUsers.length === 0) {
     console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
-    const hashedPassword = await argon2.hash("admin123");
+    const hashedPassword = hashPassword("admin123");
     await db.insert(users).values({
       openId: "admin-" + Date.now(),
       name: "Super Admin",
@@ -794,6 +805,7 @@ var authLocalRouter, JWT_SECRET;
 var init_auth_local = __esm({
   "server/auth.local.ts"() {
     "use strict";
+    init_db();
     init_schema();
     init_cookies();
     authLocalRouter = Router();
@@ -818,7 +830,7 @@ var init_auth_local = __esm({
         if (!user || user.role !== "admin" || !user.password) {
           return res.status(401).json({ error: "Invalid credentials or not an admin." });
         }
-        const isValid = await argon2.verify(user.password, password);
+        const isValid = verifyPassword(password, user.password);
         if (!isValid) {
           return res.status(401).json({ error: "Invalid credentials." });
         }
