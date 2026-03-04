@@ -2031,17 +2031,17 @@ async function createContext(opts) {
       const token = tokenMatch ? tokenMatch[1] : null;
       if (token) {
         const { jwtVerify: jwtVerify2 } = await import("jose");
-        const JWT_SECRET2 = new TextEncoder().encode(
+        const JWT_SECRET = new TextEncoder().encode(
           process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
         );
-        const { payload } = await jwtVerify2(token, JWT_SECRET2);
+        const { payload } = await jwtVerify2(token, JWT_SECRET);
         if (payload.userId) {
           const { getDb: getDb2 } = await Promise.resolve().then(() => (init_db(), db_exports));
           const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-          const { eq: eq3 } = await import("drizzle-orm");
+          const { eq: eq2 } = await import("drizzle-orm");
           const db = await getDb2();
           if (db) {
-            const results = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
+            const results = await db.select().from(users2).where(eq2(users2.id, payload.userId)).limit(1);
             if (results[0]) {
               user = results[0];
             }
@@ -2278,134 +2278,6 @@ function serveStatic(app) {
   });
 }
 
-// server/auth.local.ts
-init_db();
-init_schema();
-import { Router } from "express";
-import { z as z4 } from "zod";
-import * as crypto from "crypto";
-import { SignJWT as SignJWT2 } from "jose";
-import { eq as eq2 } from "drizzle-orm";
-var authLocalRouter = Router();
-var JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
-);
-function hashPassword(password) {
-  const salt = crypto.randomBytes(16).toString("hex");
-  const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
-  return `${salt}:${derivedKey}`;
-}
-function verifyPassword(password, hash) {
-  try {
-    const [salt, key] = hash.split(":");
-    if (!salt || !key) return false;
-    const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
-    return key === derivedKey;
-  } catch {
-    return false;
-  }
-}
-async function ensureDefaultAdmin() {
-  try {
-    const db = await getDb();
-    if (!db) {
-      console.log("[Auth] DB not ready, skipping admin seed");
-      return;
-    }
-    const allAdmins = await db.select().from(users).where(eq2(users.role, "admin"));
-    const adminWithPassword = allAdmins.find((a) => a.password && a.password.includes(":"));
-    if (adminWithPassword) {
-      console.log("[Auth] Admin with password already exists:", adminWithPassword.email);
-      return;
-    }
-    const adminWithoutPassword = allAdmins.find((a) => !a.password || !a.password.includes(":"));
-    if (adminWithoutPassword) {
-      console.log("[Auth] Found admin without password, updating:", adminWithoutPassword.email);
-      const hashedPassword2 = hashPassword("admin123");
-      await db.update(users).set({ password: hashedPassword2, email: "admin@sialkotsamplemasters.com" }).where(eq2(users.id, adminWithoutPassword.id));
-      console.log("[Auth] Updated admin password successfully");
-      return;
-    }
-    console.log("[Auth] No admin found. Creating default admin: admin@sialkotsamplemasters.com / admin123");
-    const hashedPassword = hashPassword("admin123");
-    await db.insert(users).values({
-      openId: "local-admin-" + Date.now(),
-      name: "Super Admin",
-      email: "admin@sialkotsamplemasters.com",
-      role: "admin",
-      loginMethod: "local",
-      password: hashedPassword
-    });
-    console.log("[Auth] Default admin created successfully");
-  } catch (err) {
-    console.error("[Auth] ensureDefaultAdmin error:", err);
-  }
-}
-ensureDefaultAdmin();
-authLocalRouter.post("/api/admin/login", async (req, res) => {
-  try {
-    console.log("[Login] Attempt received");
-    const db = await getDb();
-    if (!db) {
-      console.error("[Login] Database not available");
-      return res.status(500).json({ error: "Database not available" });
-    }
-    const schema = z4.object({
-      email: z4.string().email(),
-      password: z4.string().min(1)
-    });
-    const parsed = schema.safeParse(req.body);
-    if (!parsed.success) {
-      console.log("[Login] Invalid input:", parsed.error.message);
-      return res.status(400).json({ error: "Invalid email or password format." });
-    }
-    const { email, password } = parsed.data;
-    console.log("[Login] Looking up user:", email);
-    const results = await db.select().from(users).where(eq2(users.email, email)).limit(1);
-    const user = results[0];
-    if (!user) {
-      console.log("[Login] No user found with that email");
-      return res.status(401).json({ error: "Invalid credentials." });
-    }
-    if (user.role !== "admin") {
-      console.log("[Login] User is not admin, role:", user.role);
-      return res.status(401).json({ error: "Not an admin account." });
-    }
-    if (!user.password) {
-      console.log("[Login] User has no password set");
-      return res.status(401).json({ error: "Password not configured for this account." });
-    }
-    console.log("[Login] Verifying password...");
-    const isValid = verifyPassword(password, user.password);
-    if (!isValid) {
-      console.log("[Login] Password verification failed");
-      return res.status(401).json({ error: "Invalid credentials." });
-    }
-    console.log("[Login] Password OK, creating JWT...");
-    db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq2(users.id, user.id)).catch(() => {
-    });
-    const token = await new SignJWT2({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET);
-    res.cookie("admin_token", token, {
-      httpOnly: true,
-      path: "/",
-      sameSite: "lax",
-      secure: req.protocol === "https" || req.headers["x-forwarded-proto"] === "https",
-      maxAge: 7 * 24 * 60 * 60 * 1e3
-      // 7 days
-    });
-    console.log("[Login] Success! User:", user.email);
-    return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
-  } catch (err) {
-    console.error("[Login] UNEXPECTED ERROR:", err?.message || err);
-    console.error("[Login] Stack:", err?.stack);
-    return res.status(500).json({ error: "Internal server error during login." });
-  }
-});
-authLocalRouter.post("/api/admin/logout", (_req, res) => {
-  res.clearCookie("admin_token", { path: "/" });
-  return res.json({ success: true });
-});
-
 // server/_core/index.ts
 function isPortAvailable(port) {
   return new Promise((resolve) => {
@@ -2474,7 +2346,96 @@ async function startServer() {
     }
   });
   registerOAuthRoutes(app);
-  app.use(authLocalRouter);
+  const crypto = await import("crypto");
+  const { SignJWT: SignJWTLocal } = await import("jose");
+  const { getDb: getDbLocal } = await Promise.resolve().then(() => (init_db(), db_exports));
+  const JWT_SECRET_LOCAL = new TextEncoder().encode(
+    process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+  );
+  function hashPwd(password) {
+    const salt = crypto.randomBytes(16).toString("hex");
+    const key = crypto.scryptSync(password, salt, 64).toString("hex");
+    return `${salt}:${key}`;
+  }
+  function verifyPwd(password, hash) {
+    try {
+      const [salt, key] = hash.split(":");
+      if (!salt || !key) return false;
+      return crypto.scryptSync(password, salt, 64).toString("hex") === key;
+    } catch {
+      return false;
+    }
+  }
+  try {
+    const seedDb = await getDbLocal();
+    if (seedDb) {
+      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eqOp } = await import("drizzle-orm");
+      const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
+      const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
+      if (!hasValidAdmin) {
+        const noPasswordAdmin = allAdmins.find((a) => !a.password || !a.password.includes(":"));
+        if (noPasswordAdmin) {
+          console.log("[Auth] Updating admin password for:", noPasswordAdmin.email);
+          await seedDb.update(usersTable).set({ password: hashPwd("admin123"), email: "admin@sialkotsamplemasters.com" }).where(eqOp(usersTable.id, noPasswordAdmin.id));
+        } else {
+          console.log("[Auth] Creating default admin: admin@sialkotsamplemasters.com / admin123");
+          await seedDb.insert(usersTable).values({
+            openId: "local-admin-" + Date.now(),
+            name: "Super Admin",
+            email: "admin@sialkotsamplemasters.com",
+            role: "admin",
+            loginMethod: "local",
+            password: hashPwd("admin123")
+          });
+        }
+      } else {
+        console.log("[Auth] Admin with valid password exists");
+      }
+    }
+  } catch (seedErr) {
+    console.error("[Auth] Admin seed error:", seedErr);
+  }
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      console.log("[Login] Attempt received");
+      const loginDb = await getDbLocal();
+      if (!loginDb) return res.status(500).json({ error: "Database not available" });
+      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eqOp } = await import("drizzle-orm");
+      const { email, password } = req.body || {};
+      if (!email || !password) return res.status(400).json({ error: "Email and password required" });
+      console.log("[Login] Looking up:", email);
+      const results = await loginDb.select().from(usersTable).where(eqOp(usersTable.email, email)).limit(1);
+      const user = results[0];
+      if (!user) return res.status(401).json({ error: "Invalid credentials." });
+      if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
+      if (!user.password) return res.status(401).json({ error: "Password not set." });
+      if (!verifyPwd(password, user.password)) {
+        return res.status(401).json({ error: "Invalid credentials." });
+      }
+      console.log("[Login] Password OK, creating JWT...");
+      loginDb.update(usersTable).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eqOp(usersTable.id, user.id)).catch(() => {
+      });
+      const token = await new SignJWTLocal({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET_LOCAL);
+      res.cookie("admin_token", token, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "lax",
+        secure: req.protocol === "https" || req.headers["x-forwarded-proto"] === "https",
+        maxAge: 7 * 24 * 60 * 60 * 1e3
+      });
+      console.log("[Login] Success!", user.email);
+      return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
+    } catch (err) {
+      console.error("[Login] ERROR:", err?.message, err?.stack);
+      return res.status(500).json({ error: "Internal server error during login." });
+    }
+  });
+  app.post("/api/admin/logout", (_req, res) => {
+    res.clearCookie("admin_token", { path: "/" });
+    return res.json({ success: true });
+  });
   app.use(
     "/api/trpc",
     createExpressMiddleware({
