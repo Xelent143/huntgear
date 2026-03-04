@@ -174,7 +174,7 @@ async function startServer() {
       return res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
     } catch (err: any) {
       console.error("[Login] ERROR:", err?.message, err?.stack);
-      return res.status(500).json({ error: "Internal server error during login." });
+      return res.status(500).json({ error: "Login error: " + (err?.message || "unknown") });
     }
   });
 
@@ -182,6 +182,39 @@ async function startServer() {
   app.post("/api/admin/logout", (_req, res) => {
     res.clearCookie("admin_token", { path: "/" });
     return res.json({ success: true });
+  });
+
+  // GET /api/admin/debug — TEMPORARY diagnostic endpoint
+  app.get("/api/admin/debug", async (_req, res) => {
+    try {
+      const debugDb = await getDbLocal();
+      if (!debugDb) return res.json({ error: "Database not connected", dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET" });
+
+      const { users: ut } = await import("../../drizzle/schema");
+      const { eq: eqD } = await import("drizzle-orm");
+
+      const allAdmins = await debugDb.select().from(ut).where(eqD(ut.role, "admin"));
+      const adminInfo = allAdmins.map((a: any) => ({
+        id: a.id,
+        email: a.email,
+        hasPassword: !!a.password,
+        passwordLength: a.password?.length || 0,
+        passwordFormat: a.password ? (a.password.includes(":") ? "scrypt" : "unknown") : "none",
+        role: a.role,
+        openId: a.openId,
+      }));
+
+      return res.json({
+        status: "ok",
+        dbConnected: true,
+        adminCount: allAdmins.length,
+        admins: adminInfo,
+        nodeVersion: process.version,
+        jwtSecret: process.env.JWT_SECRET ? "SET" : "NOT SET (using fallback)",
+      });
+    } catch (err: any) {
+      return res.json({ error: "Debug error: " + (err?.message || "unknown") });
+    }
   });
 
   // tRPC API
