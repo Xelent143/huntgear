@@ -70,6 +70,7 @@ export interface GeneratedProductData {
     availableSizes: string[];
     availableColors: string[];
     samplePrice: string;
+    weight: string; // kg
     seoTitle: string;
     seoDescription: string;
     seoKeywords: string;
@@ -112,9 +113,10 @@ Return a JSON object with exactly these fields:
   "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
   "availableColors": ["Black", "Navy", "White", "Olive"],
   "samplePrice": "Price as string e.g. '25.00'",
+  "weight": "Estimated weight in kg as string e.g. '0.750'",
   "seoTitle": "SEO title under 60 chars, include brand and main keyword",
   "seoDescription": "Meta description 120-155 chars, compelling, include CTA",
-  "seoKeywords": "10-15 comma-separated keywords including GEO targets like 'Pakistan manufacturer', 'Sialkot wholesale', etc.",
+  "seoKeywords": "10-15 comma-separated keywords (STRICTLY UNDER 250 CHARS TOTAL) including GEO targets",
   "moqSlabs": [
     { "minQty": 50, "maxQty": 99, "pricePerUnit": "18.00", "label": "Starter" },
     { "minQty": 100, "maxQty": 299, "pricePerUnit": "15.00", "label": "Popular" },

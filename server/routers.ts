@@ -127,8 +127,13 @@ const productRouter = router({
     }))
     .mutation(async ({ input }) => {
       const { slabs, sizeChart, ...productData } = input;
+
+      // Sanitize empty strings to avoid MySQL strict DECIMAL errors
+      if (productData.samplePrice === "") productData.samplePrice = undefined;
+      if (productData.weight === "") productData.weight = undefined;
+
       const product = await createProduct(productData);
-      if (!product) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      if (!product) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to insert product" });
       if (slabs && slabs.length > 0) await setSlabPrices(product.id, slabs);
       if (sizeChart) await upsertSizeChart(product.id, sizeChart);
       return product;
@@ -164,6 +169,11 @@ const productRouter = router({
     }))
     .mutation(async ({ input }) => {
       const { id, slabs, sizeChart, ...data } = input;
+
+      // Sanitize empty strings to avoid MySQL strict DECIMAL errors
+      if (data.samplePrice === "") data.samplePrice = undefined;
+      if (data.weight === "") data.weight = undefined;
+
       await updateProduct(id, data);
       if (slabs !== undefined) await setSlabPrices(id, slabs);
       if (sizeChart) await upsertSizeChart(id, sizeChart);

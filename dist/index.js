@@ -788,9 +788,10 @@ Return a JSON object with exactly these fields:
   "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
   "availableColors": ["Black", "Navy", "White", "Olive"],
   "samplePrice": "Price as string e.g. '25.00'",
+  "weight": "Estimated weight in kg as string e.g. '0.750'",
   "seoTitle": "SEO title under 60 chars, include brand and main keyword",
   "seoDescription": "Meta description 120-155 chars, compelling, include CTA",
-  "seoKeywords": "10-15 comma-separated keywords including GEO targets like 'Pakistan manufacturer', 'Sialkot wholesale', etc.",
+  "seoKeywords": "10-15 comma-separated keywords (STRICTLY UNDER 250 CHARS TOTAL) including GEO targets",
   "moqSlabs": [
     { "minQty": 50, "maxQty": 99, "pricePerUnit": "18.00", "label": "Starter" },
     { "minQty": 100, "maxQty": 299, "pricePerUnit": "15.00", "label": "Popular" },
@@ -1886,8 +1887,10 @@ var productRouter = router({
     }).optional()
   })).mutation(async ({ input }) => {
     const { slabs, sizeChart, ...productData } = input;
+    if (productData.samplePrice === "") productData.samplePrice = void 0;
+    if (productData.weight === "") productData.weight = void 0;
     const product = await createProduct(productData);
-    if (!product) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR" });
+    if (!product) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Failed to insert product" });
     if (slabs && slabs.length > 0) await setSlabPrices(product.id, slabs);
     if (sizeChart) await upsertSizeChart(product.id, sizeChart);
     return product;
@@ -1920,6 +1923,8 @@ var productRouter = router({
     }).optional()
   })).mutation(async ({ input }) => {
     const { id, slabs, sizeChart, ...data } = input;
+    if (data.samplePrice === "") data.samplePrice = void 0;
+    if (data.weight === "") data.weight = void 0;
     await updateProduct(id, data);
     if (slabs !== void 0) await setSlabPrices(id, slabs);
     if (sizeChart) await upsertSizeChart(id, sizeChart);

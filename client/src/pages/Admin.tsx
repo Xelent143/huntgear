@@ -204,6 +204,7 @@ function ProductFormDialog({ open, onClose, editProduct }: {
     description: editProduct?.description ?? "",
     mainImage: editProduct?.mainImage ?? "",
     samplePrice: editProduct?.samplePrice ?? "",
+    weight: editProduct?.weight ?? "",
     material: editProduct?.material ?? "",
     availableSizes: editProduct?.availableSizes ?? JSON.stringify(["S", "M", "L", "XL", "2XL"]),
     availableColors: editProduct?.availableColors ?? JSON.stringify(["Black", "White", "Navy"]),
@@ -301,17 +302,18 @@ function ProductFormDialog({ open, onClose, editProduct }: {
       };
       setForm(f => ({
         ...f,
-        slug: autoSlug(product.slug || product.title),
-        category: product.category || f.category,
-        shortDescription: product.shortDescription || f.shortDescription,
+        slug: autoSlug(product.slug || product.title).substring(0, 250),
+        category: (product.category || f.category).substring(0, 100),
+        shortDescription: (product.shortDescription || f.shortDescription).substring(0, 500),
         description: product.description || f.description,
-        material: product.material || f.material,
+        material: (product.material || f.material).substring(0, 250),
         availableSizes: Array.isArray(product.availableSizes) ? JSON.stringify(product.availableSizes) : f.availableSizes,
         availableColors: Array.isArray(product.availableColors) ? JSON.stringify(product.availableColors) : f.availableColors,
         samplePrice: sanitizePrice(product.samplePrice) || f.samplePrice,
-        seoTitle: product.seoTitle || f.seoTitle,
+        weight: sanitizePrice(product.weight) || f.weight,
+        seoTitle: (product.seoTitle || f.seoTitle).substring(0, 250),
         seoDescription: product.seoDescription || f.seoDescription,
-        seoKeywords: product.seoKeywords || f.seoKeywords,
+        seoKeywords: (product.seoKeywords || f.seoKeywords).substring(0, 250),
       }));
       if (product.moqSlabs?.length) {
         setSlabs(product.moqSlabs.map((s: any, i: number) => ({
@@ -335,7 +337,14 @@ function ProductFormDialog({ open, onClose, editProduct }: {
       toast.error("Title, slug, and category are required");
       return;
     }
-    const payload = { ...form, slabs, sizeChart };
+    const payload = {
+      ...form,
+      slabs,
+      sizeChart,
+      // Map empty strings to undefined for MySQL decimals
+      samplePrice: form.samplePrice === "" ? undefined : form.samplePrice,
+      weight: form.weight === "" ? undefined : form.weight
+    };
     if (isEdit) {
       updateMutation.mutate({ id: editProduct.id, ...payload });
     } else {
@@ -467,6 +476,15 @@ function ProductFormDialog({ open, onClose, editProduct }: {
                   value={form.material}
                   onChange={e => setForm(f => ({ ...f, material: e.target.value }))}
                   placeholder="280GSM Ring-Spun Cotton"
+                  className="bg-secondary border-border"
+                />
+              </div>
+              <div>
+                <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Weight (kg)</Label>
+                <Input
+                  value={form.weight}
+                  onChange={e => setForm(f => ({ ...f, weight: e.target.value }))}
+                  placeholder="0.750"
                   className="bg-secondary border-border"
                 />
               </div>
