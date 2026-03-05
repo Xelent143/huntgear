@@ -191,6 +191,7 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
   const uploadImageMutation = trpc.product.uploadImage.useMutation();
+  const mainImagePatchMutation = trpc.product.update.useMutation();
 
   const [pendingImages, setPendingImages] = useState<{ file: File; preview: string; altText: string; sortOrder: number }[]>([]);
   const [uploadingImages, setUploadingImages] = useState(false);
@@ -261,8 +262,8 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const createMutation = trpc.product.create.useMutation({
     onSuccess: async (product) => {
       const newMainImage = await handleImagesUpload(product.id);
-      if (newMainImage !== product.mainImage) {
-        await trpc.product.update.useMutation().mutateAsync({ id: product.id, mainImage: newMainImage });
+      if (newMainImage && newMainImage !== product.mainImage) {
+        await mainImagePatchMutation.mutateAsync({ id: product.id, mainImage: newMainImage });
       }
       utils.product.adminList.invalidate();
       toast.success("Product created!");
@@ -274,8 +275,8 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const updateMutation = trpc.product.update.useMutation({
     onSuccess: async (_, variables) => {
       const newMainImage = await handleImagesUpload(variables.id);
-      if (newMainImage !== variables.mainImage && newMainImage !== form.mainImage) {
-        await trpc.product.update.useMutation().mutateAsync({ id: variables.id, mainImage: newMainImage });
+      if (newMainImage && newMainImage !== variables.mainImage && newMainImage !== form.mainImage) {
+        await mainImagePatchMutation.mutateAsync({ id: variables.id, mainImage: newMainImage });
       }
       utils.product.adminList.invalidate();
       toast.success("Product updated!");
@@ -380,6 +381,9 @@ function ProductFormDialog({ open, onClose, editProduct }: {
           <DialogTitle className="font-serif text-xl text-foreground">
             {isEdit ? "Edit Product" : "Add New Product"}
           </DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Fill out the details below to {isEdit ? "update the existing" : "create a new"} product listing.
+          </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="basic" className="mt-2">
