@@ -183,9 +183,16 @@ export default function ProductDetail() {
   const slabs = product?.slabs ?? [];
   const sizeChart = (product as any)?.sizeChart ?? null;
 
-  const allImages = images.length > 0
-    ? images
-    : [{ id: 0, imageUrl: product?.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=90", altText: product?.title ?? "", sortOrder: 0 }];
+  const allImages: any[] = [];
+  if (product?.mainImage) {
+    allImages.push({ id: "main", imageUrl: product.mainImage, altText: product.title, sortOrder: -1 });
+  }
+  if (images && images.length > 0) {
+    allImages.push(...images.filter((img: any) => img.imageUrl && img.imageUrl.trim() !== ""));
+  }
+  if (allImages.length === 0) {
+    allImages.push({ id: 0, imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=90", altText: product?.title ?? "", sortOrder: 0 });
+  }
 
   const activeImage = allImages[activeImageIdx] ?? allImages[0];
 

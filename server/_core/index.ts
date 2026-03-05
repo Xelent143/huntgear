@@ -254,6 +254,10 @@ async function startServer() {
   }
 
   app.use("/uploads", express.static(uploadsPath));
+  // Specific handler for missing uploads so they don't fall through to the SPA index.html (which causes 422 image errors)
+  app.use("/uploads", (req, res) => {
+    res.status(404).send("File not found");
+  });
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);

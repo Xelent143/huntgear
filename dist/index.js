@@ -2918,6 +2918,9 @@ async function startServer() {
     fs4.mkdirSync(uploadsPath, { recursive: true });
   }
   app.use("/uploads", express2.static(uploadsPath));
+  app.use("/uploads", (req, res) => {
+    res.status(404).send("File not found");
+  });
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
