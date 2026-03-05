@@ -324,29 +324,41 @@ STRICT INSTRUCTIONS:
 5. No watermarks or text. High-end 4K commercial lighting.`,
     });
 
-    try {
-        const result = await model.generateContent({
-            contents: [{ role: "user", parts }],
-            generationConfig: {
-                responseModalities: ["image", "text"],
-            } as any,
-        });
+    let lastError = new Error("Unknown error");
+    const maxRetries = 3;
 
-        const response = result.response;
-        for (const candidate of response.candidates ?? []) {
-            for (const part of candidate.content?.parts ?? []) {
-                if ((part as any).inlineData) {
-                    return {
-                        base64: (part as any).inlineData.data,
-                        mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
-                    };
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts }],
+                generationConfig: {
+                    responseModalities: ["image", "text"],
+                } as any,
+            });
+
+            const response = result.response;
+            for (const candidate of response.candidates ?? []) {
+                for (const part of candidate.content?.parts ?? []) {
+                    if ((part as any).inlineData) {
+                        return {
+                            base64: (part as any).inlineData.data,
+                            mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                        };
+                    }
                 }
             }
+            throw new Error(`Attempt ${attempt}: No image data in Gemini response (model likely returned text/apology)`);
+        } catch (err: any) {
+            console.error(`[Individual View Gen] Attempt ${attempt} failed for ${viewType}:`, err.message);
+            lastError = err;
+            // Wait slightly before retrying
+            if (attempt < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+            }
         }
-        throw new Error("No image data in Gemini response");
-    } catch (err) {
-        throw new Error(`Individual view generation failed: ${viewType} - ${String(err)}`);
     }
+
+    throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
 
 export async function prefillProductDataFromGrid(

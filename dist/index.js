@@ -944,28 +944,37 @@ STRICT INSTRUCTIONS:
 4. The background MUST be solid white.
 5. No watermarks or text. High-end 4K commercial lighting.`
   });
-  try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig: {
-        responseModalities: ["image", "text"]
-      }
-    });
-    const response = result.response;
-    for (const candidate of response.candidates ?? []) {
-      for (const part of candidate.content?.parts ?? []) {
-        if (part.inlineData) {
-          return {
-            base64: part.inlineData.data,
-            mimeType: part.inlineData.mimeType ?? "image/jpeg"
-          };
+  let lastError = new Error("Unknown error");
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig: {
+          responseModalities: ["image", "text"]
+        }
+      });
+      const response = result.response;
+      for (const candidate of response.candidates ?? []) {
+        for (const part of candidate.content?.parts ?? []) {
+          if (part.inlineData) {
+            return {
+              base64: part.inlineData.data,
+              mimeType: part.inlineData.mimeType ?? "image/jpeg"
+            };
+          }
         }
       }
+      throw new Error(`Attempt ${attempt}: No image data in Gemini response (model likely returned text/apology)`);
+    } catch (err) {
+      console.error(`[Individual View Gen] Attempt ${attempt} failed for ${viewType}:`, err.message);
+      lastError = err;
+      if (attempt < maxRetries) {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
     }
-    throw new Error("No image data in Gemini response");
-  } catch (err) {
-    throw new Error(`Individual view generation failed: ${viewType} - ${String(err)}`);
   }
+  throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
 async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
