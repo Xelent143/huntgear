@@ -101,7 +101,7 @@ export default function FashionDesignerStudio() {
         });
 
         // 1. Trigger all image generations in parallel
-        const views = ["front", "back", "side", "close-up", "model"] as const;
+        const views = ["front", "back", "left-side", "right-side", "close-up", "model"] as const;
 
         views.forEach(async (viewType) => {
             try {

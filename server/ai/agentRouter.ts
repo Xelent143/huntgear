@@ -199,7 +199,7 @@ export const aiAgentRouter = router({
     generateIndividualView: adminProcedure
         .input(z.object({
             basePrompt: z.string().min(5).max(1000),
-            viewType: z.enum(["front", "back", "side", "close-up", "model"]),
+            viewType: z.enum(["front", "back", "left-side", "right-side", "side", "close-up", "model"]),
             apiKey: z.string().optional(),
             modelId: z.string().optional(),
         }))

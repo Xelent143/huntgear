@@ -886,11 +886,12 @@ async function generateDesignerGrid(prompt, apiKey, modelId = "gemini-2.5-flash"
     {
       text: `Act as a senior high-end fashion designer and professional photographer.
 Generate a complete multi-view fashion photography grid of a single apparel item: ${prompt}. 
-The image MUST be a 2x2 or composite grid showing exactly these views:
-1. Front View
-2. Back View
-3. Side/Angled View
-4. Close-up texture/material detail
+The image MUST be a 2x2 or composite grid showing strictly these 4 DISTINCT views:
+1. Full Front View
+2. Full Back View
+3. Full Left Profile/Side View
+4. Full Right Profile/Side View
+Ensure all 4 views are unique and show different angles. NO DUPLICATE VIEWS.
 Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B catalog style. DO NOT include text in the image.`
     }
   ];
@@ -1709,7 +1710,7 @@ var aiAgentRouter = router({
   // Premium: Generate individual high-res view
   generateIndividualView: adminProcedure2.input(z2.object({
     basePrompt: z2.string().min(5).max(1e3),
-    viewType: z2.enum(["front", "back", "side", "close-up", "model"]),
+    viewType: z2.enum(["front", "back", "left-side", "right-side", "side", "close-up", "model"]),
     apiKey: z2.string().optional(),
     modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
@@ -2805,7 +2806,8 @@ async function startServer() {
       createContext
     })
   );
-  const uploadsPath = path4.resolve(import.meta.dirname, "..", "..", "uploads");
+  const isProd = process.env.NODE_ENV === "production";
+  const uploadsPath = isProd ? path4.resolve(import.meta.dirname, "..", "uploads") : path4.resolve(import.meta.dirname, "..", "..", "uploads");
   app.use("/uploads", express2.static(uploadsPath));
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);

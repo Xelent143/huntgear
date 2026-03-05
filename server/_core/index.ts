@@ -241,7 +241,12 @@ async function startServer() {
   );
 
   // Serve local uploads
-  const uploadsPath = path.resolve(import.meta.dirname, "..", "..", "uploads");
+  // In dev (tsx index.ts): import.meta.dirname is server/_core/ -> ../../uploads is root/uploads
+  // In prod (bundled dist/index.js): import.meta.dirname is dist/ -> ../uploads is root/uploads
+  const isProd = process.env.NODE_ENV === "production";
+  const uploadsPath = isProd
+    ? path.resolve(import.meta.dirname, "..", "uploads")
+    : path.resolve(import.meta.dirname, "..", "..", "uploads");
   app.use("/uploads", express.static(uploadsPath));
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
