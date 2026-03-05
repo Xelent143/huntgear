@@ -1035,6 +1035,7 @@ var init_gemini = __esm({
 import "dotenv/config";
 import express2 from "express";
 import path4 from "path";
+import fs4 from "fs";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
@@ -1491,7 +1492,7 @@ init_gemini();
 
 // server/storage.ts
 init_env();
-import fs2 from "fs";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 function getStorageConfig() {
@@ -1532,11 +1533,11 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     const uploadDir = path.join(rootPath, "uploads");
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
-    if (!fs2.existsSync(fileDir)) {
-      fs2.mkdirSync(fileDir, { recursive: true });
+    if (!fs.existsSync(fileDir)) {
+      fs.mkdirSync(fileDir, { recursive: true });
     }
     const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
-    await fs2.promises.writeFile(filePath, buffer);
+    await fs.promises.writeFile(filePath, buffer);
     return { key, url: `/uploads/${key}` };
   }
   const { baseUrl, apiKey } = config;
@@ -2416,7 +2417,7 @@ async function createContext(opts) {
 
 // server/_core/vite.ts
 import express from "express";
-import fs4 from "fs";
+import fs3 from "fs";
 import { nanoid as nanoid3 } from "nanoid";
 import path3 from "path";
 import { createServer as createViteServer } from "vite";
@@ -2425,7 +2426,7 @@ import { createServer as createViteServer } from "vite";
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import fs3 from "node:fs";
+import fs2 from "node:fs";
 import path2 from "node:path";
 import { defineConfig } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
@@ -2434,16 +2435,16 @@ var LOG_DIR = path2.join(PROJECT_ROOT, ".manus-logs");
 var MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
 var TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
 function ensureLogDir() {
-  if (!fs3.existsSync(LOG_DIR)) {
-    fs3.mkdirSync(LOG_DIR, { recursive: true });
+  if (!fs2.existsSync(LOG_DIR)) {
+    fs2.mkdirSync(LOG_DIR, { recursive: true });
   }
 }
 function trimLogFile(logPath, maxSize) {
   try {
-    if (!fs3.existsSync(logPath) || fs3.statSync(logPath).size <= maxSize) {
+    if (!fs2.existsSync(logPath) || fs2.statSync(logPath).size <= maxSize) {
       return;
     }
-    const lines = fs3.readFileSync(logPath, "utf-8").split("\n");
+    const lines = fs2.readFileSync(logPath, "utf-8").split("\n");
     const keptLines = [];
     let keptBytes = 0;
     const targetSize = TRIM_TARGET_BYTES;
@@ -2454,7 +2455,7 @@ function trimLogFile(logPath, maxSize) {
       keptLines.unshift(lines[i]);
       keptBytes += lineBytes;
     }
-    fs3.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
+    fs2.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
   } catch {
   }
 }
@@ -2466,7 +2467,7 @@ function writeToLogFile(source, entries) {
     const ts = (/* @__PURE__ */ new Date()).toISOString();
     return `[${ts}] ${JSON.stringify(entry)}`;
   });
-  fs3.appendFileSync(logPath, `${lines.join("\n")}
+  fs2.appendFileSync(logPath, `${lines.join("\n")}
 `, "utf-8");
   trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
 }
@@ -2594,7 +2595,7 @@ async function setupVite(app, server) {
         "client",
         "index.html"
       );
-      let template = await fs4.promises.readFile(clientTemplate, "utf-8");
+      let template = await fs3.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid3()}"`
@@ -2609,7 +2610,7 @@ async function setupVite(app, server) {
 }
 function serveStatic(app) {
   const distPath = process.env.NODE_ENV === "development" ? path3.resolve(import.meta.dirname, "../..", "dist", "public") : path3.resolve(import.meta.dirname, "public");
-  if (!fs4.existsSync(distPath)) {
+  if (!fs3.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
@@ -2832,9 +2833,9 @@ async function startServer() {
   const isProd = process.env.NODE_ENV === "production";
   const uploadsPath = isProd ? path4.resolve(import.meta.dirname, "..", "uploads") : path4.resolve(import.meta.dirname, "..", "..", "uploads");
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
-  if (!fs.existsSync(uploadsPath)) {
+  if (!fs4.existsSync(uploadsPath)) {
     console.log(`[Storage] Creating uploads directory...`);
-    fs.mkdirSync(uploadsPath, { recursive: true });
+    fs4.mkdirSync(uploadsPath, { recursive: true });
   }
   app.use("/uploads", express2.static(uploadsPath));
   if (process.env.NODE_ENV === "development") {
