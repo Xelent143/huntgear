@@ -173,6 +173,14 @@ function SizeChartEditor({ value, onChange }: {
 
 // ─── Product Form Dialog ──────────────────────────────────────────────────────
 
+const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve((reader.result as string).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
 function ProductFormDialog({ open, onClose, editProduct }: {
   open: boolean;
   onClose: () => void;
@@ -182,6 +190,11 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const isEdit = !!editProduct;
   const [isAiLoading, setIsAiLoading] = useState(false);
   const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
+  const uploadImageMutation = trpc.product.uploadImage.useMutation();
+
+  const [pendingImages, setPendingImages] = useState<{ file: File; preview: string; altText: string; sortOrder: number }[]>([]);
+  const [uploadingImages, setUploadingImages] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
     title: editProduct?.title ?? "",
@@ -217,13 +230,56 @@ function ProductFormDialog({ open, onClose, editProduct }: {
     notes: editProduct?.sizeChart?.notes ?? "",
   });
 
+  const handleImagesUpload = async (productId: number) => {
+    if (pendingImages.length === 0) return form.mainImage; // Fallback to existing or empty
+
+    setUploadingImages(true);
+    let firstUploadedUrl = form.mainImage;
+
+    try {
+      for (let i = 0; i < pendingImages.length; i++) {
+        const p = pendingImages[i];
+        const base64 = await fileToBase64(p.file);
+        const { url } = await uploadImageMutation.mutateAsync({
+          productId: productId,
+          imageBase64: base64,
+          mimeType: p.file.type || "image/jpeg",
+          altText: p.altText || form.title,
+          sortOrder: p.sortOrder,
+        });
+        if (i === 0 && !form.mainImage) {
+          firstUploadedUrl = url;
+        }
+      }
+    } finally {
+      setUploadingImages(false);
+    }
+    return firstUploadedUrl;
+  };
+
   const createMutation = trpc.product.create.useMutation({
-    onSuccess: () => { utils.product.adminList.invalidate(); toast.success("Product created!"); onClose(); },
+    onSuccess: async (product) => {
+      const newMainImage = await handleImagesUpload(product.id);
+      if (newMainImage !== product.mainImage) {
+        await trpc.product.update.useMutation().mutateAsync({ id: product.id, mainImage: newMainImage });
+      }
+      utils.product.adminList.invalidate();
+      toast.success("Product created!");
+      onClose();
+    },
     onError: (e) => toast.error("Failed to create product", { description: e.message }),
   });
 
   const updateMutation = trpc.product.update.useMutation({
-    onSuccess: () => { utils.product.adminList.invalidate(); toast.success("Product updated!"); onClose(); },
+    onSuccess: async (_, variables) => {
+      const newMainImage = await handleImagesUpload(variables.id);
+      if (newMainImage !== variables.mainImage && newMainImage !== form.mainImage) {
+        await trpc.product.update.useMutation().mutateAsync({ id: variables.id, mainImage: newMainImage });
+      }
+      utils.product.adminList.invalidate();
+      toast.success("Product updated!");
+      onClose();
+    },
     onError: (e) => toast.error("Failed to update product", { description: e.message }),
   });
 
@@ -287,7 +343,24 @@ function ProductFormDialog({ open, onClose, editProduct }: {
     }
   };
 
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files).map((f, i) => ({
+        file: f,
+        preview: URL.createObjectURL(f),
+        altText: "",
+        sortOrder: pendingImages.length + i,
+      }));
+      setPendingImages(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removePendingImage = (index: number) => {
+    setPendingImages(prev => prev.filter((_, i) => i !== index));
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const isPending = createMutation.isPending || updateMutation.isPending || uploadingImages;
 
   const CATEGORIES = ["Hunting Wear", "Sports Wear", "Ski Wear", "Tech Wear", "Streetwear", "Martial Arts Wear"];
 
@@ -303,6 +376,7 @@ function ProductFormDialog({ open, onClose, editProduct }: {
         <Tabs defaultValue="basic" className="mt-2">
           <TabsList className="bg-secondary">
             <TabsTrigger value="basic">Basic Info</TabsTrigger>
+            <TabsTrigger value="images">Images</TabsTrigger>
             <TabsTrigger value="pricing">Pricing</TabsTrigger>
             <TabsTrigger value="sizes">Size Chart</TabsTrigger>
             <TabsTrigger value="seo">SEO</TabsTrigger>
@@ -376,14 +450,16 @@ function ProductFormDialog({ open, onClose, editProduct }: {
                   className="bg-secondary border-border resize-none"
                 />
               </div>
-              <div>
+              <div className="col-span-2">
                 <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Main Image URL</Label>
-                <Input
-                  value={form.mainImage}
-                  onChange={e => setForm(f => ({ ...f, mainImage: e.target.value }))}
-                  placeholder="https://..."
-                  className="bg-secondary border-border"
-                />
+                <div className="flex gap-2">
+                  <Input
+                    value={form.mainImage}
+                    onChange={e => setForm(f => ({ ...f, mainImage: e.target.value }))}
+                    placeholder="Auto-filled from images tab if left blank"
+                    className="bg-secondary border-border"
+                  />
+                </div>
               </div>
               <div>
                 <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Material</Label>
@@ -432,6 +508,53 @@ function ProductFormDialog({ open, onClose, editProduct }: {
                 </div>
               ))}
             </div>
+          </TabsContent>
+
+          {/* Images Tab */}
+          <TabsContent value="images" className="space-y-4 mt-4">
+            <div className="p-4 rounded-lg border border-dashed border-border bg-secondary/30 flex flex-col items-center justify-center text-center">
+              <Upload className="w-8 h-8 text-gold mb-2 opacity-80" />
+              <p className="text-sm font-condensed font-bold text-foreground">Upload Local Images</p>
+              <p className="text-xs text-muted-foreground mb-4">Select photos of your product from your device. First image uploads as main image.</p>
+              <input
+                type="file" multiple accept="image/*"
+                className="hidden" ref={fileInputRef} onChange={handleFileSelect}
+              />
+              <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()} className="bg-background">
+                Browse Files
+              </Button>
+            </div>
+
+            {pendingImages.length > 0 && (
+              <div className="space-y-2">
+                <Label className="text-xs text-muted-foreground uppercase tracking-wider">Images to Upload</Label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {pendingImages.map((img, i) => (
+                    <div key={i} className="relative group rounded border border-border overflow-hidden bg-background aspect-square">
+                      <img src={img.preview} alt={`Preview ${i}`} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <Button type="button" size="icon" variant="ghost" className="h-7 w-7 text-white hover:text-red-400" onClick={() => removePendingImage(i)}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {isEdit && editProduct?.images?.length > 0 && (
+              <div className="space-y-2 mt-4 pt-4 border-t border-border">
+                <Label className="text-xs text-muted-foreground uppercase tracking-wider">Current Images</Label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {editProduct.images.map((img: any) => (
+                    <div key={img.id} className="relative rounded border border-border overflow-hidden bg-background aspect-square">
+                      <img src={img.imageUrl} alt={img.altText || "Product Image"} className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </TabsContent>
 
           {/* Pricing */}
@@ -493,7 +616,7 @@ function ProductFormDialog({ open, onClose, editProduct }: {
           <Button variant="outline" onClick={onClose} disabled={isPending}>Cancel</Button>
           <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider">
             {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-            {isEdit ? "Save Changes" : "Create Product"}
+            {uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"}
           </Button>
         </DialogFooter>
       </DialogContent>
