@@ -1691,7 +1691,7 @@ export default function Admin() {
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
                             <img
-                              src={product.mainImage ?? "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=60&q=70"}
+                              src={product.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=60&q=70"}
                               alt={product.title}
                               className="w-10 h-10 object-cover rounded shrink-0"
                             />

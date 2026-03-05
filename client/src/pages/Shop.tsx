@@ -33,7 +33,7 @@ function ProductCard({ product }: { product: typeof DEMO_PRODUCTS[0] }) {
           {/* Image container */}
           <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
             <img
-              src={product.mainImage ?? "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80"}
+              src={product.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80"}
               alt={product.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"

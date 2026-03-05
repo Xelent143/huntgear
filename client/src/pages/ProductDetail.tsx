@@ -185,7 +185,7 @@ export default function ProductDetail() {
 
   const allImages = images.length > 0
     ? images
-    : [{ id: 0, imageUrl: product?.mainImage ?? "", altText: product?.title ?? "", sortOrder: 0 }];
+    : [{ id: 0, imageUrl: product?.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=90", altText: product?.title ?? "", sortOrder: 0 }];
 
   const activeImage = allImages[activeImageIdx] ?? allImages[0];
 
