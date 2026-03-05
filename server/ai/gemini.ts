@@ -254,11 +254,11 @@ export async function generateDesignerGrid(
             text: `Act as a senior high-end fashion designer and professional photographer.
 Generate a complete multi-view fashion photography grid of a single apparel item: ${prompt}. 
 The image MUST be a 2x2 or composite grid showing strictly these 4 DISTINCT views:
-1. Full Front View
-2. Full Back View
-3. Full Left Profile/Side View
-4. Full Right Profile/Side View
-Ensure all 4 views are unique and show different angles. NO DUPLICATE VIEWS.
+1. Full Front View (facing forward)
+2. Full Back View (facing away)
+3. Full Left Profile View (the clothing item is seen from its left side, facing left)
+4. Full Right Profile View (the clothing item is seen from its right side, facing right)
+CRITICAL: The Left Profile and Right Profile MUST be different. They are the two opposite sides of the garment. Ensure the orientation is correct. NO DUPLICATE VIEWS.
 Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B catalog style. DO NOT include text in the image.`,
         },
     ];
