@@ -38,7 +38,7 @@ export async function chatWithProductAgent(
     userMessage: string,
     systemPrompt: string,
     apiKey?: string,
-    modelId: string = "gemini-2.1-flash",
+    modelId: string = "gemini-2.5-flash",
 ): Promise<string> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
@@ -86,7 +86,7 @@ export async function generateProductData(
     userDescription: string,
     brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
     apiKey?: string,
-    modelId: string = "gemini-2.1-flash",
+    modelId: string = "gemini-2.5-flash",
 ): Promise<GeneratedProductData> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
@@ -141,7 +141,7 @@ export async function generateProductImageBase64(
     logoBase64?: string,
     logoMimeType?: string,
     apiKey?: string,
-    modelId: string = "gemini-2.1-flash",
+    modelId: string = "gemini-2.5-flash",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
 

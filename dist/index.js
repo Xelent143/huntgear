@@ -748,7 +748,7 @@ function getClient(apiKey) {
   }
   return _clientCache.get(key);
 }
-async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey, modelId = "gemini-2.1-flash") {
+async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -764,7 +764,7 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
   const result = await chat.sendMessage(userMessage);
   return result.response.text();
 }
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-2.1-flash") {
+async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -805,7 +805,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
   const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
   return JSON.parse(jsonText);
 }
-async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey, modelId = "gemini-2.1-flash") {
+async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [
