@@ -918,16 +918,32 @@ Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B
     throw new Error(`Grid image generation failed: ${String(err)}`);
   }
 }
-async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-2.5-flash") {
+async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-2.5-flash", referenceImage) {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
-  const parts = [
-    {
-      text: `Generate a professional, high-quality e-commerce product photo: ${basePrompt}. 
-CRITICAL: This specific image must ONLY show the **${viewType.toUpperCase()} VIEW** of the apparel. 
-Studio lighting, clean white or neutral background, ultra-realistic, 4K quality. It should look like part of a seamless premium catalog. DO NOT include text.`
-    }
-  ];
+  const parts = [];
+  if (referenceImage) {
+    parts.push({
+      inlineData: {
+        data: referenceImage.base64,
+        mimeType: referenceImage.mimeType
+      }
+    });
+  }
+  parts.push({
+    text: `Act as a senior high-end fashion designer and professional photographer.
+Generate a high-resolution, professional studio photography quality image of the EXACT APPAREL shown in the reference image, but focused ONLY on the ${viewType} view. 
+
+Product Description: ${basePrompt}
+View Needed: ${viewType}
+
+STRICT INSTRUCTIONS:
+1. The design (colors, patterns, materials, construction) MUST MATCH the reference image perfectly.
+2. If the view is "left-side", show the item from its left side (facing left). 
+3. If the view is "right-side", show the item from its right side (facing right).
+4. The background MUST be solid white.
+5. No watermarks or text. High-end 4K commercial lighting.`
+  });
   try {
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
@@ -1475,7 +1491,7 @@ init_gemini();
 
 // server/storage.ts
 init_env();
-import fs from "fs";
+import fs2 from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 function getStorageConfig() {
@@ -1516,11 +1532,11 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     const uploadDir = path.join(rootPath, "uploads");
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
-    if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir, { recursive: true });
+    if (!fs2.existsSync(fileDir)) {
+      fs2.mkdirSync(fileDir, { recursive: true });
     }
     const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
-    await fs.promises.writeFile(filePath, buffer);
+    await fs2.promises.writeFile(filePath, buffer);
     return { key, url: `/uploads/${key}` };
   }
   const { baseUrl, apiKey } = config;
@@ -1712,12 +1728,19 @@ var aiAgentRouter = router({
     basePrompt: z2.string().min(5).max(1e3),
     viewType: z2.enum(["front", "back", "left-side", "right-side", "side", "close-up", "model"]),
     apiKey: z2.string().optional(),
-    modelId: z2.string().optional()
+    modelId: z2.string().optional(),
+    referenceImage: z2.object({ base64: z2.string(), mimeType: z2.string() }).optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateIndividualView: generateIndividualView2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const { base64, mimeType } = await generateIndividualView2(input.basePrompt, input.viewType, key, input.modelId);
+      const { base64, mimeType } = await generateIndividualView2(
+        input.basePrompt,
+        input.viewType,
+        key,
+        input.modelId,
+        input.referenceImage
+      );
       const buffer = Buffer.from(base64, "base64");
       const ext = mimeType.split("/")[1] ?? "jpeg";
       const storageKey = `portfolio/designer-${input.viewType}-${nanoid(10)}.${ext}`;
@@ -2393,7 +2416,7 @@ async function createContext(opts) {
 
 // server/_core/vite.ts
 import express from "express";
-import fs3 from "fs";
+import fs4 from "fs";
 import { nanoid as nanoid3 } from "nanoid";
 import path3 from "path";
 import { createServer as createViteServer } from "vite";
@@ -2402,7 +2425,7 @@ import { createServer as createViteServer } from "vite";
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import fs2 from "node:fs";
+import fs3 from "node:fs";
 import path2 from "node:path";
 import { defineConfig } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
@@ -2411,16 +2434,16 @@ var LOG_DIR = path2.join(PROJECT_ROOT, ".manus-logs");
 var MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
 var TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
 function ensureLogDir() {
-  if (!fs2.existsSync(LOG_DIR)) {
-    fs2.mkdirSync(LOG_DIR, { recursive: true });
+  if (!fs3.existsSync(LOG_DIR)) {
+    fs3.mkdirSync(LOG_DIR, { recursive: true });
   }
 }
 function trimLogFile(logPath, maxSize) {
   try {
-    if (!fs2.existsSync(logPath) || fs2.statSync(logPath).size <= maxSize) {
+    if (!fs3.existsSync(logPath) || fs3.statSync(logPath).size <= maxSize) {
       return;
     }
-    const lines = fs2.readFileSync(logPath, "utf-8").split("\n");
+    const lines = fs3.readFileSync(logPath, "utf-8").split("\n");
     const keptLines = [];
     let keptBytes = 0;
     const targetSize = TRIM_TARGET_BYTES;
@@ -2431,7 +2454,7 @@ function trimLogFile(logPath, maxSize) {
       keptLines.unshift(lines[i]);
       keptBytes += lineBytes;
     }
-    fs2.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
+    fs3.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
   } catch {
   }
 }
@@ -2443,7 +2466,7 @@ function writeToLogFile(source, entries) {
     const ts = (/* @__PURE__ */ new Date()).toISOString();
     return `[${ts}] ${JSON.stringify(entry)}`;
   });
-  fs2.appendFileSync(logPath, `${lines.join("\n")}
+  fs3.appendFileSync(logPath, `${lines.join("\n")}
 `, "utf-8");
   trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
 }
@@ -2571,7 +2594,7 @@ async function setupVite(app, server) {
         "client",
         "index.html"
       );
-      let template = await fs3.promises.readFile(clientTemplate, "utf-8");
+      let template = await fs4.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid3()}"`
@@ -2586,7 +2609,7 @@ async function setupVite(app, server) {
 }
 function serveStatic(app) {
   const distPath = process.env.NODE_ENV === "development" ? path3.resolve(import.meta.dirname, "../..", "dist", "public") : path3.resolve(import.meta.dirname, "public");
-  if (!fs3.existsSync(distPath)) {
+  if (!fs4.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
@@ -2808,6 +2831,11 @@ async function startServer() {
   );
   const isProd = process.env.NODE_ENV === "production";
   const uploadsPath = isProd ? path4.resolve(import.meta.dirname, "..", "uploads") : path4.resolve(import.meta.dirname, "..", "..", "uploads");
+  console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
+  if (!fs.existsSync(uploadsPath)) {
+    console.log(`[Storage] Creating uploads directory...`);
+    fs.mkdirSync(uploadsPath, { recursive: true });
+  }
   app.use("/uploads", express2.static(uploadsPath));
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);

@@ -293,17 +293,36 @@ export async function generateIndividualView(
     viewType: string,
     apiKey?: string,
     modelId: string = "gemini-2.5-flash",
+    referenceImage?: { base64: string; mimeType: string },
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({ model: modelId });
 
-    const parts: any[] = [
-        {
-            text: `Generate a professional, high-quality e-commerce product photo: ${basePrompt}. 
-CRITICAL: This specific image must ONLY show the **${viewType.toUpperCase()} VIEW** of the apparel. 
-Studio lighting, clean white or neutral background, ultra-realistic, 4K quality. It should look like part of a seamless premium catalog. DO NOT include text.`,
-        },
-    ];
+    const parts: any[] = [];
+
+    if (referenceImage) {
+        parts.push({
+            inlineData: {
+                data: referenceImage.base64,
+                mimeType: referenceImage.mimeType,
+            },
+        });
+    }
+
+    parts.push({
+        text: `Act as a senior high-end fashion designer and professional photographer.
+Generate a high-resolution, professional studio photography quality image of the EXACT APPAREL shown in the reference image, but focused ONLY on the ${viewType} view. 
+
+Product Description: ${basePrompt}
+View Needed: ${viewType}
+
+STRICT INSTRUCTIONS:
+1. The design (colors, patterns, materials, construction) MUST MATCH the reference image perfectly.
+2. If the view is "left-side", show the item from its left side (facing left). 
+3. If the view is "right-side", show the item from its right side (facing right).
+4. The background MUST be solid white.
+5. No watermarks or text. High-end 4K commercial lighting.`,
+    });
 
     try {
         const result = await model.generateContent({

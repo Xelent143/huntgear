@@ -33,7 +33,8 @@ export default function FashionDesignerStudio() {
     const [generatedViews, setGeneratedViews] = useState<{
         front?: string;
         back?: string;
-        side?: string;
+        "left-side"?: string;
+        "right-side"?: string;
         "close-up"?: string;
         model?: string;
     }>({});
@@ -42,12 +43,13 @@ export default function FashionDesignerStudio() {
     const [loadingViews, setLoadingViews] = useState<{
         front: boolean;
         back: boolean;
-        side: boolean;
+        "left-side": boolean;
+        "right-side": boolean;
         "close-up": boolean;
         model: boolean;
         prefill: boolean;
     }>({
-        front: false, back: false, side: false, "close-up": false, model: false, prefill: false
+        front: false, back: false, "left-side": false, "right-side": false, "close-up": false, model: false, prefill: false
     });
 
     const gridMutation = trpc.aiAgent.generateDesignerGrid.useMutation();
@@ -97,7 +99,7 @@ export default function FashionDesignerStudio() {
         // Reset state
         setGeneratedViews({});
         setLoadingViews({
-            front: true, back: true, side: true, "close-up": true, model: true, prefill: true
+            front: true, back: true, "left-side": true, "right-side": true, "close-up": true, model: true, prefill: true
         });
 
         // 1. Trigger all image generations in parallel
@@ -105,7 +107,12 @@ export default function FashionDesignerStudio() {
 
         views.forEach(async (viewType) => {
             try {
-                const { imageUrl } = await viewMutation.mutateAsync({ basePrompt: prompt, viewType, modelId });
+                const { imageUrl } = await viewMutation.mutateAsync({
+                    basePrompt: prompt,
+                    viewType,
+                    modelId,
+                    referenceImage: gridImage
+                });
                 setGeneratedViews(prev => ({ ...prev, [viewType]: imageUrl }));
             } catch (err) {
                 toast.error(`Failed to generate ${viewType} view`);
@@ -149,7 +156,8 @@ export default function FashionDesignerStudio() {
         const imagesToUpload = [
             generatedViews.front,
             generatedViews.back,
-            generatedViews.side,
+            generatedViews["left-side"],
+            generatedViews["right-side"],
             generatedViews["close-up"],
             generatedViews.model
         ].filter(Boolean) as string[];
@@ -349,12 +357,12 @@ export default function FashionDesignerStudio() {
                                     High-Res Views
                                 </h4>
                                 <div className="grid grid-cols-2 gap-4">
-                                    {["front", "back", "side", "close-up", "model"].map((view) => (
+                                    {["front", "back", "left-side", "right-side", "close-up", "model"].map((view) => (
                                         <div key={view} className="relative aspect-square rounded-xl bg-secondary/50 border border-border overflow-hidden flex flex-col items-center justify-center">
                                             {loadingViews[view as keyof typeof loadingViews] ? (
-                                                <div className="flex flex-col items-center text-muted-foreground">
+                                                <div className="flex flex-col items-center text-muted-foreground p-4 text-center">
                                                     <Loader2 className="w-6 h-6 animate-spin mb-2 text-gold/50" />
-                                                    <span className="text-xs uppercase font-condensed tracking-wider">Generating {view}</span>
+                                                    <span className="text-[10px] uppercase font-condensed tracking-wider leading-tight">Generating {view.replace('-', ' ')}</span>
                                                 </div>
                                             ) : generatedViews[view as keyof typeof generatedViews] ? (
                                                 <>
@@ -364,7 +372,7 @@ export default function FashionDesignerStudio() {
                                                         alt={view}
                                                     />
                                                     <div className="absolute top-2 left-2 bg-black/60 backdrop-blur text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
-                                                        {view}
+                                                        {view.replace('-', ' ')}
                                                     </div>
                                                 </>
                                             ) : null}

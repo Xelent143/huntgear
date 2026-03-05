@@ -202,12 +202,19 @@ export const aiAgentRouter = router({
             viewType: z.enum(["front", "back", "left-side", "right-side", "side", "close-up", "model"]),
             apiKey: z.string().optional(),
             modelId: z.string().optional(),
+            referenceImage: z.object({ base64: z.string(), mimeType: z.string() }).optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const { generateIndividualView } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const { base64, mimeType } = await generateIndividualView(input.basePrompt, input.viewType, key, input.modelId);
+                const { base64, mimeType } = await generateIndividualView(
+                    input.basePrompt,
+                    input.viewType,
+                    key,
+                    input.modelId,
+                    input.referenceImage
+                );
 
                 // Upload this to storage because it's a final individual product image
                 const buffer = Buffer.from(base64, "base64");

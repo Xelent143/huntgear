@@ -247,6 +247,13 @@ async function startServer() {
   const uploadsPath = isProd
     ? path.resolve(import.meta.dirname, "..", "uploads")
     : path.resolve(import.meta.dirname, "..", "..", "uploads");
+
+  console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
+  if (!fs.existsSync(uploadsPath)) {
+    console.log(`[Storage] Creating uploads directory...`);
+    fs.mkdirSync(uploadsPath, { recursive: true });
+  }
+
   app.use("/uploads", express.static(uploadsPath));
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
