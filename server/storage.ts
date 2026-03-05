@@ -79,20 +79,21 @@ export async function storagePut(
 
   if (!config) {
     // Local Fallback: Save to root 'uploads' directory
-    const isProd = process.env.NODE_ENV === "production";
-    const uploadDir = isProd
-      ? path.resolve(process.cwd(), 'uploads')
-      : path.resolve(process.cwd(), 'uploads');
+    const uploadDir = path.join(process.cwd(), 'uploads');
 
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
 
-    if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir, { recursive: true });
+    try {
+      if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir, { recursive: true });
+      }
+      const buffer = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
+      await fs.promises.writeFile(filePath, buffer);
+    } catch (e) {
+      console.error("Storage fallback save error:", e);
+      // Continue but it will likely result in a broken image, at least it won't crash the server
     }
-
-    const buffer = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
-    await fs.promises.writeFile(filePath, buffer);
 
     // Return a relative URL starting with /uploads/
     return { key, url: `/uploads/${key}` };

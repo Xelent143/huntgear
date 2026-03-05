@@ -102,34 +102,13 @@ export default function FashionDesignerStudio() {
             front: true, back: true, "left-side": true, "right-side": true, "close-up": true, model: true, prefill: true
         });
 
-        // 1. Trigger all image generations in parallel
-        const views = ["front", "back", "left-side", "right-side", "close-up", "model"] as const;
-
-        views.forEach(async (viewType) => {
-            try {
-                const { imageUrl } = await viewMutation.mutateAsync({
-                    basePrompt: prompt,
-                    viewType,
-                    modelId,
-                    referenceImage: gridImage
-                });
-                setGeneratedViews(prev => ({ ...prev, [viewType]: imageUrl }));
-            } catch (err) {
-                toast.error(`Failed to generate ${viewType} view`);
-            } finally {
-                setLoadingViews(prev => ({ ...prev, [viewType]: false }));
-            }
-        });
-
-        // 2. Trigger SEO Prefill in parallel
-        try {
-            const { productData } = await prefillMutation.mutateAsync({
-                prompt,
-                base64: gridImage.base64,
-                mimeType: gridImage.mimeType,
-                modelId: "gemini-3.1-pro-preview" // Use Pro for prefill by default
-            });
-
+        // 1. Trigger SEO Prefill first (parallel to the first image starting)
+        const prefillPromise = prefillMutation.mutateAsync({
+            prompt,
+            base64: gridImage.base64,
+            mimeType: gridImage.mimeType,
+            modelId: "gemini-3.1-pro-preview"
+        }).then(({ productData }) => {
             form.reset({
                 title: productData.title,
                 category: productData.category,
@@ -144,11 +123,32 @@ export default function FashionDesignerStudio() {
                 isFeatured: true,
             });
             toast.success("SEO details auto-filled by AI");
-        } catch (err) {
+        }).catch(() => {
             toast.error("Failed to auto-fill product details");
-        } finally {
+        }).finally(() => {
             setLoadingViews(prev => ({ ...prev, prefill: false }));
+        });
+
+        // 2. Trigger image generations SEQUENTIALLY to avoid crashing limited server memory
+        const views = ["front", "back", "left-side", "right-side", "close-up", "model"] as const;
+
+        for (const viewType of views) {
+            try {
+                const { imageUrl } = await viewMutation.mutateAsync({
+                    basePrompt: prompt,
+                    viewType,
+                    modelId,
+                    referenceImage: gridImage
+                });
+                setGeneratedViews(prev => ({ ...prev, [viewType]: imageUrl }));
+            } catch (err) {
+                toast.error(`Failed to generate ${viewType} view`);
+            } finally {
+                setLoadingViews(prev => ({ ...prev, [viewType]: false }));
+            }
         }
+
+        await prefillPromise;
     };
 
     const handlePublishProduct = async (data: any) => {
