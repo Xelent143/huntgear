@@ -108,8 +108,7 @@ export default function Canvas2D({ width = 600, height = 700 }: Canvas2DProps) {
                 const par = el.parentElement;
                 const cont = par?.parentElement ?? par;
                 if (!cont || !fabricRef.current) return;
-                fabricRef.current.setWidth(cont.clientWidth);
-                fabricRef.current.setHeight(cont.clientHeight);
+                fabricRef.current.setDimensions({ width: cont.clientWidth, height: cont.clientHeight });
                 fabricRef.current.renderAll();
             };
             window.addEventListener('resize', onResize);
@@ -614,7 +613,7 @@ export default function Canvas2D({ width = 600, height = 700 }: Canvas2DProps) {
             } else {
                 // SVG mode: match by fabric object
                 if (t) {
-                    for (const [pid, objs] of partsMapRef.current) {
+                    for (const [pid, objs] of Array.from(partsMapRef.current.entries())) {
                         if (objs.includes(t)) { clickedPartId = pid; break; }
                     }
                 }

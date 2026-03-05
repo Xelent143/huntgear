@@ -16,7 +16,7 @@
  * that part (via HSL proximity matching) and builds a mask for each.
  */
 
-import type { PartColorDef } from '../utils/RasterEngine';
+import type { PartColorDef } from './utils/RasterEngine';
 
 export interface RasterTemplate {
     id: number;

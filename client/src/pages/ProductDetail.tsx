@@ -181,7 +181,7 @@ export default function ProductDetail() {
 
   const images = product?.images ?? [];
   const slabs = product?.slabs ?? [];
-  const sizeChart = product?.sizeChart ?? null;
+  const sizeChart = (product as any)?.sizeChart ?? null;
 
   const allImages = images.length > 0
     ? images
@@ -275,9 +275,9 @@ export default function ProductDetail() {
   return (
     <>
       <SEOHead
-        title={product.seoTitle ?? `${product.title} | Sialkot Sample Masters`}
-        description={product.seoDescription ?? product.shortDescription ?? ""}
-        keywords={product.seoKeywords ?? ""}
+        title={(product as any).seoTitle ?? `${product.title} | Sialkot Sample Masters`}
+        description={(product as any).seoDescription ?? product.shortDescription ?? ""}
+        keywords={(product as any).seoKeywords ?? ""}
         ogType="product"
         ogImage={allImages[0]?.imageUrl}
         product={{
@@ -348,7 +348,7 @@ export default function ProductDetail() {
               {/* Main zoomable image */}
               <ZoomableImage
                 src={activeImage?.imageUrl ?? ""}
-                alt={activeImage?.altText ?? product.title}
+                alt={(activeImage as any)?.altText ?? product.title}
               />
 
               {/* Thumbnail strip */}
@@ -363,7 +363,7 @@ export default function ProductDetail() {
                     >
                       <img
                         src={img.imageUrl}
-                        alt={img.altText ?? `Image ${idx + 1}`}
+                        alt={(img as any).altText ?? `Image ${idx + 1}`}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />

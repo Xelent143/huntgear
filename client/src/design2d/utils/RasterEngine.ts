@@ -107,7 +107,7 @@ export class RasterEngine {
         }
 
         console.log('[RasterEngine] Masks built:');
-        for (const [id, mask] of this._masks) {
+        for (const [id, mask] of Array.from(this._masks.entries())) {
             console.log(`  ${id}: ${mask.length} pixels`);
         }
     }
