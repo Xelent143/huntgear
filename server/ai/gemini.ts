@@ -230,7 +230,141 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
         const text = result.response.text().trim();
         const jsonText = text.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
         return JSON.parse(jsonText) as OptimizedImageData;
+    } catch (err: any) {
+        throw new Error(`SEO analysis failed: ${err.message}`);
+    }
+}
+
+// ─── Premium Fashion Designer Studio ──────────────────────────────────────────
+
+export async function generateDesignerGrid(prompt: string, apiKey?: string): Promise<{ base64: string; mimeType: string }> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+    const parts: any[] = [
+        {
+            text: `Act as a senior high-end fashion designer and professional photographer.
+Generate a complete multi-view fashion photography grid of a single apparel item: ${prompt}. 
+The image MUST be a 2x2 or composite grid showing exactly these views:
+1. Front View
+2. Back View
+3. Side/Angled View
+4. Close-up texture/material detail
+Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B catalog style. DO NOT include text in the image.`,
+        },
+    ];
+
+    try {
+        const result = await model.generateContent({
+            contents: [{ role: "user", parts }],
+            generationConfig: {
+                responseModalities: ["image", "text"],
+            } as any,
+        });
+
+        const response = result.response;
+        for (const candidate of response.candidates ?? []) {
+            for (const part of candidate.content?.parts ?? []) {
+                if ((part as any).inlineData) {
+                    return {
+                        base64: (part as any).inlineData.data,
+                        mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                    };
+                }
+            }
+        }
+        throw new Error("No image data in Gemini response");
     } catch (err) {
-        throw new Error(`Image analysis failed: ${String(err)}`);
+        throw new Error(`Grid image generation failed: ${String(err)}`);
+    }
+}
+
+export async function generateIndividualView(basePrompt: string, viewType: string, apiKey?: string): Promise<{ base64: string; mimeType: string }> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+    const parts: any[] = [
+        {
+            text: `Generate a professional, high-quality e-commerce product photo: ${basePrompt}. 
+CRITICAL: This specific image must ONLY show the **${viewType.toUpperCase()} VIEW** of the apparel. 
+Studio lighting, clean white or neutral background, ultra-realistic, 4K quality. It should look like part of a seamless premium catalog. DO NOT include text.`,
+        },
+    ];
+
+    try {
+        const result = await model.generateContent({
+            contents: [{ role: "user", parts }],
+            generationConfig: {
+                responseModalities: ["image", "text"],
+            } as any,
+        });
+
+        const response = result.response;
+        for (const candidate of response.candidates ?? []) {
+            for (const part of candidate.content?.parts ?? []) {
+                if ((part as any).inlineData) {
+                    return {
+                        base64: (part as any).inlineData.data,
+                        mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                    };
+                }
+            }
+        }
+        throw new Error("No image data in Gemini response");
+    } catch (err) {
+        throw new Error(`Individual view generation failed: ${viewType} - ${String(err)}`);
+    }
+}
+
+export async function prefillProductDataFromGrid(imagePrompt: string, base64: string, mimeType: string, apiKey?: string) {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({
+        model: "gemini-2.5-flash",
+        generationConfig: {
+            responseMimeType: "application/json",
+            temperature: 0.7,
+        },
+    });
+
+    const prompt = `Act as an elite SEO Expert and E-commerce Manager for Sialkot Sample Masters (a premium B2B custom apparel manufacturer in Pakistan).
+I am providing you the original design prompt ("${imagePrompt}") and the generated multi-view design grid image.
+Generate a complete, highly-optimized product listing based on this apparel item.
+Return ONLY valid JSON matching this exact structure:
+{
+  "title": "A highly descriptive, SEO-optimized product title (e.g. 'Premium Custom BJJ Kimono - Wholesale')",
+  "category": "The most appropriate category (e.g. 'Martial Arts', 'Activewear', 'Outerwear')",
+  "description": "A long, persuasive description focusing on material quality, B2B wholesale benefits, customization options, and premium feel.",
+  "shortDescription": "A 1-2 sentence quick summary for catalog views.",
+  "seoTitle": "Optimal title for Google Search (under 60 chars)",
+  "seoDescription": "Meta description for Google (under 160 chars)",
+  "seoKeywords": "Comma-separated SEO/GEO keywords (e.g. 'custom jiu jitsu gi, bjj gear bulk, pakistan manufacturer, sialkot custom apparel')",
+  "material": "Estimated premium material composition based on the image (e.g. '450gsm Pearl Weave Cotton')",
+  "samplePrice": "Estimated expensive sample price (e.g. '85.00')",
+  "weight": "Estimated weight in kg (e.g. '1.500')",
+  "availableSizes": "JSON array of sizes like [\\"S\\", \\"M\\", \\"L\\", \\"XL\\"]",
+  "availableColors": "JSON array of 2-3 most likely requested colors",
+  "slabs": [
+    { "minQty": 50, "pricePerUnit": "45.00", "label": "Starter Tier" },
+    { "minQty": 100, "pricePerUnit": "40.00", "label": "Popular" },
+    { "minQty": 500, "pricePerUnit": "35.00", "label": "Wholesale Leader" }
+  ]
+}`;
+
+    try {
+        const result = await model.generateContent([
+            prompt,
+            {
+                inlineData: {
+                    mimeType,
+                    data: base64,
+                },
+            },
+        ]);
+
+        const text = result.response.text().trim();
+        const jsonText = text.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
+        return JSON.parse(jsonText);
+    } catch (err) {
+        throw new Error(`Data prefill failed: ${String(err)}`);
     }
 }

@@ -15,10 +15,11 @@ import { getLoginUrl } from "@/const";
 import {
   Plus, Trash2, Edit, Eye, EyeOff, Star, Truck, Package, Bot, Sparkles,
   Upload, X, ChevronUp, ChevronDown, Globe, ShoppingBag, Loader2,
-  BarChart3, RefreshCw, Images, ImagePlus, GripVertical, Tag, MapPin
+  BarChart3, RefreshCw, Images, ImagePlus, GripVertical, Tag, MapPin, Crown
 } from "lucide-react";
 import AIProductAgent from "@/components/admin/AIProductAgent";
 import AIImageOptimizer from "@/components/admin/AIImageOptimizer";
+import FashionDesignerStudio from "@/components/admin/FashionDesignerStudio";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -1645,6 +1646,11 @@ export default function Admin() {
                 </div>
 
                 <TabsList className="bg-secondary/50 border border-border">
+                  <TabsTrigger value="studio" className="text-xs font-condensed uppercase tracking-wider gap-1.5 flex transition-colors data-[state=active]:bg-gold data-[state=active]:text-black relative overflow-hidden group">
+                    <Crown className="w-3.5 h-3.5 text-gold group-data-[state=active]:text-black" />
+                    Premium Studio
+                    <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                  </TabsTrigger>
                   <TabsTrigger value="generator" className="text-xs font-condensed uppercase tracking-wider gap-1.5 flex transition-colors data-[state=active]:bg-gold data-[state=active]:text-black">
                     <Sparkles className="w-3.5 h-3.5" /> Product Generator
                   </TabsTrigger>
@@ -1653,6 +1659,10 @@ export default function Admin() {
                   </TabsTrigger>
                 </TabsList>
               </div>
+
+              <TabsContent value="studio" className="mt-0 outline-none">
+                <FashionDesignerStudio />
+              </TabsContent>
 
               <TabsContent value="generator" className="mt-0 outline-none">
                 <AIProductAgent />

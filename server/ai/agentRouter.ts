@@ -165,4 +165,76 @@ export const aiAgentRouter = router({
                 });
             }
         }),
+
+    // Premium: Generate a 4-view design concept grid
+    generateDesignerGrid: adminProcedure
+        .input(z.object({
+            prompt: z.string().min(5).max(1000),
+            apiKey: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { generateDesignerGrid } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const { base64, mimeType } = await generateDesignerGrid(input.prompt, key);
+
+                // Return base64 directly to save storage space (since it's just for approval preview)
+                return { base64, mimeType, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Grid generation failed: ${err.message}`,
+                });
+            }
+        }),
+
+    // Premium: Generate individual high-res view
+    generateIndividualView: adminProcedure
+        .input(z.object({
+            basePrompt: z.string().min(5).max(1000),
+            viewType: z.enum(["front", "back", "side", "close-up", "model"]),
+            apiKey: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { generateIndividualView } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const { base64, mimeType } = await generateIndividualView(input.basePrompt, input.viewType, key);
+
+                // Upload this to storage because it's a final individual product image
+                const buffer = Buffer.from(base64, "base64");
+                const ext = mimeType.split("/")[1] ?? "jpeg";
+                const storageKey = `portfolio/designer-${input.viewType}-${nanoid(10)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, mimeType);
+
+                return { imageUrl: url, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Individual view generation failed: ${err.message}`,
+                });
+            }
+        }),
+
+    // Premium: Auto-fill product form based on grid image
+    prefillProductFromGrid: adminProcedure
+        .input(z.object({
+            prompt: z.string(),
+            base64: z.string(),
+            mimeType: z.string(),
+            apiKey: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { prefillProductDataFromGrid } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const productData = await prefillProductDataFromGrid(input.prompt, input.base64, input.mimeType, key);
+                return { productData, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Product prefill failed: ${err.message}`,
+                });
+            }
+        }),
 });
