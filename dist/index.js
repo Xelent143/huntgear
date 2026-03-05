@@ -895,28 +895,37 @@ CRITICAL: The Left Profile and Right Profile MUST be different. They are the two
 Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B catalog style. DO NOT include text in the image.`
     }
   ];
-  try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig: {
-        responseModalities: ["image", "text"]
-      }
-    });
-    const response = result.response;
-    for (const candidate of response.candidates ?? []) {
-      for (const part of candidate.content?.parts ?? []) {
-        if (part.inlineData) {
-          return {
-            base64: part.inlineData.data,
-            mimeType: part.inlineData.mimeType ?? "image/jpeg"
-          };
+  let lastError = new Error("Unknown error");
+  const maxRetries = 2;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig: {
+          responseModalities: ["image", "text"]
+        }
+      });
+      const response = result.response;
+      for (const candidate of response.candidates ?? []) {
+        for (const part of candidate.content?.parts ?? []) {
+          if (part.inlineData) {
+            return {
+              base64: part.inlineData.data,
+              mimeType: part.inlineData.mimeType ?? "image/jpeg"
+            };
+          }
         }
       }
+      throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+    } catch (err) {
+      console.error(`[Grid Gen] Attempt ${attempt} failed:`, err.message);
+      lastError = err;
+      if (attempt < maxRetries) {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
     }
-    throw new Error("No image data in Gemini response");
-  } catch (err) {
-    throw new Error(`Grid image generation failed: ${String(err)}`);
   }
+  throw new Error(`Grid image generation failed after ${maxRetries} attempts: ${lastError.message}`);
 }
 async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-2.5-flash", referenceImage) {
   const client = getClient(apiKey);
@@ -1536,16 +1545,20 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   const config = getStorageConfig();
   const key = normalizeKey(relKey);
   if (!config) {
-    const isProd = process.env.NODE_ENV === "production";
-    const uploadDir = isProd ? path.resolve(process.cwd(), "uploads") : path.resolve(process.cwd(), "uploads");
+    const uploadDir = path.join(process.cwd(), "uploads");
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
-    if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir, { recursive: true });
+    try {
+      if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir, { recursive: true });
+      }
+      const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
+      await fs.promises.writeFile(filePath, buffer);
+    } catch (e) {
+      console.error("Storage fallback save error:", e);
     }
-    const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
-    await fs.promises.writeFile(filePath, buffer);
-    return { key, url: `/uploads/${key}` };
+    const safeKey = key.startsWith("/") ? key.substring(1) : key;
+    return { key: safeKey, url: `/uploads/${safeKey}` };
   }
   const { baseUrl, apiKey } = config;
   const uploadUrl = buildUploadUrl(baseUrl, key);

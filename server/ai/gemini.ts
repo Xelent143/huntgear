@@ -263,29 +263,41 @@ Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B
         },
     ];
 
-    try {
-        const result = await model.generateContent({
-            contents: [{ role: "user", parts }],
-            generationConfig: {
-                responseModalities: ["image", "text"],
-            } as any,
-        });
+    let lastError: Error = new Error("Unknown error");
+    const maxRetries = 2; // Two attempts to keep it under strict proxy timeout limits
 
-        const response = result.response;
-        for (const candidate of response.candidates ?? []) {
-            for (const part of candidate.content?.parts ?? []) {
-                if ((part as any).inlineData) {
-                    return {
-                        base64: (part as any).inlineData.data,
-                        mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
-                    };
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts }],
+                generationConfig: {
+                    responseModalities: ["image", "text"],
+                } as any,
+            });
+
+            const response = result.response;
+            for (const candidate of response.candidates ?? []) {
+                for (const part of candidate.content?.parts ?? []) {
+                    if ((part as any).inlineData) {
+                        return {
+                            base64: (part as any).inlineData.data,
+                            mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                        };
+                    }
                 }
             }
+            throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+        } catch (err: any) {
+            console.error(`[Grid Gen] Attempt ${attempt} failed:`, err.message);
+            lastError = err;
+            if (attempt < maxRetries) {
+                // Short wait before retry
+                await new Promise(resolve => setTimeout(resolve, 1500));
+            }
         }
-        throw new Error("No image data in Gemini response");
-    } catch (err) {
-        throw new Error(`Grid image generation failed: ${String(err)}`);
     }
+
+    throw new Error(`Grid image generation failed after ${maxRetries} attempts: ${lastError.message}`);
 }
 
 export async function generateIndividualView(

@@ -96,7 +96,8 @@ export async function storagePut(
     }
 
     // Return a relative URL starting with /uploads/
-    return { key, url: `/uploads/${key}` };
+    const safeKey = key.startsWith('/') ? key.substring(1) : key;
+    return { key: safeKey, url: `/uploads/${safeKey}` };
   }
 
   const { baseUrl, apiKey } = config;
