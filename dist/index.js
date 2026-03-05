@@ -441,14 +441,51 @@ async function getProductById(id) {
 async function createProduct(data) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.insert(products).values(data);
+  try {
+    await db.insert(products).values(data);
+  } catch (err) {
+    const causeCode = err.cause?.code || err.code;
+    const causeMsg = err.cause?.message || err.message;
+    if (causeCode === "ER_DUP_ENTRY" && causeMsg.includes("slug")) {
+      data.slug = data.slug + "-" + Math.random().toString(36).substring(2, 6);
+      try {
+        await db.insert(products).values(data);
+      } catch (retryErr) {
+        throw new Error("DB Insert Failed after slug retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else if (causeCode === "ER_BAD_FIELD_ERROR" && causeMsg.includes("weight")) {
+      delete data.weight;
+      try {
+        await db.insert(products).values(data);
+      } catch (retryErr) {
+        throw new Error("DB Insert Failed after weight retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else {
+      throw new Error("DB Insert Failed: " + causeMsg);
+    }
+  }
   const result = await db.select().from(products).where(eq(products.slug, data.slug)).limit(1);
   return result[0];
 }
 async function updateProduct(id, data) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.update(products).set(data).where(eq(products.id, id));
+  try {
+    await db.update(products).set(data).where(eq(products.id, id));
+  } catch (err) {
+    const causeCode = err.cause?.code || err.code;
+    const causeMsg = err.cause?.message || err.message;
+    if (causeCode === "ER_BAD_FIELD_ERROR" && causeMsg.includes("weight")) {
+      delete data.weight;
+      try {
+        await db.update(products).set(data).where(eq(products.id, id));
+      } catch (retryErr) {
+        throw new Error("DB Update Failed after weight retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else {
+      throw new Error("DB Update Failed: " + causeMsg);
+    }
+  }
 }
 async function deleteProduct(id) {
   const db = await getDb();

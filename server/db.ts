@@ -113,7 +113,35 @@ export async function getProductById(id: number) {
 export async function createProduct(data: InsertProduct) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.insert(products).values(data);
+
+  try {
+    await db.insert(products).values(data);
+  } catch (err: any) {
+    const causeCode = err.cause?.code || err.code;
+    const causeMsg = err.cause?.message || err.message;
+
+    if (causeCode === "ER_DUP_ENTRY" && causeMsg.includes("slug")) {
+      // Auto-recover from duplicate slugs by appending a short random string
+      data.slug = data.slug + "-" + Math.random().toString(36).substring(2, 6);
+      try {
+        await db.insert(products).values(data);
+      } catch (retryErr: any) {
+        throw new Error("DB Insert Failed after slug retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else if (causeCode === "ER_BAD_FIELD_ERROR" && causeMsg.includes("weight")) {
+      // Auto-recover if the database schema is slightly older and missing the `weight` column
+      delete (data as any).weight;
+      try {
+        await db.insert(products).values(data);
+      } catch (retryErr: any) {
+        throw new Error("DB Insert Failed after weight retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else {
+      // Unmask the exact MySQL error to the frontend instead of generic Drizzle query string
+      throw new Error("DB Insert Failed: " + causeMsg);
+    }
+  }
+
   const result = await db.select().from(products).where(eq(products.slug, data.slug)).limit(1);
   return result[0];
 }
@@ -121,7 +149,24 @@ export async function createProduct(data: InsertProduct) {
 export async function updateProduct(id: number, data: Partial<InsertProduct>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  await db.update(products).set(data).where(eq(products.id, id));
+
+  try {
+    await db.update(products).set(data).where(eq(products.id, id));
+  } catch (err: any) {
+    const causeCode = err.cause?.code || err.code;
+    const causeMsg = err.cause?.message || err.message;
+
+    if (causeCode === "ER_BAD_FIELD_ERROR" && causeMsg.includes("weight")) {
+      delete (data as any).weight;
+      try {
+        await db.update(products).set(data).where(eq(products.id, id));
+      } catch (retryErr: any) {
+        throw new Error("DB Update Failed after weight retry: " + (retryErr.cause?.message || retryErr.message));
+      }
+    } else {
+      throw new Error("DB Update Failed: " + causeMsg);
+    }
+  }
 }
 
 export async function deleteProduct(id: number) {
