@@ -321,7 +321,8 @@ STRICT INSTRUCTIONS:
 2. If the view is "left-side", show the item from its left side (facing left). 
 3. If the view is "right-side", show the item from its right side (facing right).
 4. The background MUST be solid white.
-5. No watermarks or text. High-end 4K commercial lighting.`,
+5. No watermarks or text. High-end 4K commercial lighting.
+6. CRITICAL: Generate EXACTLY ONE person/mannequin/item in the image. DO NOT generate multiple angles, split screens, reflections, or front-and-back views together. ONLY show the single requested view.`,
     });
 
     let lastError = new Error("Unknown error");
