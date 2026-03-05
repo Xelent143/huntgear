@@ -242,12 +242,10 @@ async function startServer() {
   );
 
   // Serve local uploads
-  // In dev (tsx index.ts): import.meta.dirname is server/_core/ -> ../../uploads is root/uploads
-  // In prod (bundled dist/index.js): import.meta.dirname is dist/ -> ../uploads is root/uploads
   const isProd = process.env.NODE_ENV === "production";
   const uploadsPath = isProd
-    ? path.resolve(import.meta.dirname, "..", "uploads")
-    : path.resolve(import.meta.dirname, "..", "..", "uploads");
+    ? path.resolve(process.cwd(), 'uploads')
+    : path.resolve(process.cwd(), 'uploads');
 
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs.existsSync(uploadsPath)) {

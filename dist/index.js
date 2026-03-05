@@ -942,7 +942,8 @@ STRICT INSTRUCTIONS:
 2. If the view is "left-side", show the item from its left side (facing left). 
 3. If the view is "right-side", show the item from its right side (facing right).
 4. The background MUST be solid white.
-5. No watermarks or text. High-end 4K commercial lighting.`
+5. No watermarks or text. High-end 4K commercial lighting.
+6. CRITICAL: Generate EXACTLY ONE person/mannequin/item in the image. DO NOT generate multiple angles, split screens, reflections, or front-and-back views together. ONLY show the single requested view.`
   });
   let lastError = new Error("Unknown error");
   const maxRetries = 3;
@@ -1503,7 +1504,6 @@ init_gemini();
 init_env();
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 function getStorageConfig() {
   const baseUrl = ENV.forgeApiUrl;
   const apiKey = ENV.forgeApiKey;
@@ -1536,10 +1536,8 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   const config = getStorageConfig();
   const key = normalizeKey(relKey);
   if (!config) {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const rootPath = path.resolve(__dirname, "..");
-    const uploadDir = path.join(rootPath, "uploads");
+    const isProd = process.env.NODE_ENV === "production";
+    const uploadDir = isProd ? path.resolve(process.cwd(), "uploads") : path.resolve(process.cwd(), "uploads");
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
     if (!fs.existsSync(fileDir)) {
@@ -2840,7 +2838,7 @@ async function startServer() {
     })
   );
   const isProd = process.env.NODE_ENV === "production";
-  const uploadsPath = isProd ? path4.resolve(import.meta.dirname, "..", "uploads") : path4.resolve(import.meta.dirname, "..", "..", "uploads");
+  const uploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs4.existsSync(uploadsPath)) {
     console.log(`[Storage] Creating uploads directory...`);

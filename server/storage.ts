@@ -79,10 +79,10 @@ export async function storagePut(
 
   if (!config) {
     // Local Fallback: Save to root 'uploads' directory
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const rootPath = path.resolve(__dirname, '..');
-    const uploadDir = path.join(rootPath, 'uploads');
+    const isProd = process.env.NODE_ENV === "production";
+    const uploadDir = isProd
+      ? path.resolve(process.cwd(), 'uploads')
+      : path.resolve(process.cwd(), 'uploads');
 
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
