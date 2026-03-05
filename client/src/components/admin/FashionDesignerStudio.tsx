@@ -2,22 +2,17 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Sparkles, Loader2, Eye, Paintbrush, ArrowRight, CheckCircle, Package } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
     Form,
     FormControl,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from "@/components/ui/form";
-import { Switch } from "@/components/ui/switch";
 
 type StudioState = "conception" | "generating_grid" | "review_grid" | "producing" | "success";
 
@@ -29,31 +24,12 @@ export default function FashionDesignerStudio() {
     // Grid State
     const [gridImage, setGridImage] = useState<{ base64: string, mimeType: string } | null>(null);
 
-    // Individual Views State
-    const [generatedViews, setGeneratedViews] = useState<{
-        front?: string;
-        back?: string;
-        "left-side"?: string;
-        "right-side"?: string;
-        "close-up"?: string;
-        model?: string;
-    }>({});
-
-    // Loading states for individual views
-    const [loadingViews, setLoadingViews] = useState<{
-        front: boolean;
-        back: boolean;
-        "left-side": boolean;
-        "right-side": boolean;
-        "close-up": boolean;
-        model: boolean;
-        prefill: boolean;
-    }>({
-        front: false, back: false, "left-side": false, "right-side": false, "close-up": false, model: false, prefill: false
-    });
+    // Final Published State
+    const [finalImageUrl, setFinalImageUrl] = useState("");
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const gridMutation = trpc.aiAgent.generateDesignerGrid.useMutation();
-    const viewMutation = trpc.aiAgent.generateIndividualView.useMutation();
+    const saveImageMutation = trpc.aiAgent.saveStudioImage.useMutation();
     const prefillMutation = trpc.aiAgent.prefillProductFromGrid.useMutation();
     const createProductMutation = trpc.product.create.useMutation();
 
@@ -95,20 +71,18 @@ export default function FashionDesignerStudio() {
         if (!gridImage) return;
 
         setStep("producing");
+        setIsProcessing(true);
 
-        // Reset state
-        setGeneratedViews({});
-        setLoadingViews({
-            front: true, back: true, "left-side": true, "right-side": true, "close-up": true, model: true, prefill: true
-        });
+        try {
+            // 1. Save Image to Local Hostinger Storage AND Analyze for SEO Parallel
+            const [savedImage, prefillData] = await Promise.all([
+                saveImageMutation.mutateAsync({ base64: gridImage.base64, mimeType: gridImage.mimeType }),
+                prefillMutation.mutateAsync({ prompt, base64: gridImage.base64, mimeType: gridImage.mimeType, modelId: "gemini-3.1-pro-preview" })
+            ]);
 
-        // 1. Trigger SEO Prefill first (parallel to the first image starting)
-        const prefillPromise = prefillMutation.mutateAsync({
-            prompt,
-            base64: gridImage.base64,
-            mimeType: gridImage.mimeType,
-            modelId: "gemini-3.1-pro-preview"
-        }).then(({ productData }) => {
+            setFinalImageUrl(savedImage.imageUrl);
+
+            const productData = prefillData.productData;
             form.reset({
                 title: productData.title,
                 category: productData.category,
@@ -122,48 +96,19 @@ export default function FashionDesignerStudio() {
                 seoKeywords: productData.seoKeywords,
                 isFeatured: true,
             });
-            toast.success("SEO details auto-filled by AI");
-        }).catch(() => {
-            toast.error("Failed to auto-fill product details");
-        }).finally(() => {
-            setLoadingViews(prev => ({ ...prev, prefill: false }));
-        });
 
-        // 2. Trigger image generations SEQUENTIALLY to avoid crashing limited server memory
-        const views = ["front", "back", "left-side", "right-side", "close-up", "model"] as const;
-
-        for (const viewType of views) {
-            try {
-                const { imageUrl } = await viewMutation.mutateAsync({
-                    basePrompt: prompt,
-                    viewType,
-                    modelId,
-                    referenceImage: gridImage
-                });
-                setGeneratedViews(prev => ({ ...prev, [viewType]: imageUrl }));
-            } catch (err) {
-                toast.error(`Failed to generate ${viewType} view`);
-            } finally {
-                setLoadingViews(prev => ({ ...prev, [viewType]: false }));
-            }
+            toast.success("Design finalized and SEO details auto-filled by AI.");
+        } catch (err: any) {
+            toast.error("Failed to process the final digital asset", { description: err.message });
+            setStep("review_grid"); // go back to retry
+        } finally {
+            setIsProcessing(false);
         }
-
-        await prefillPromise;
     };
 
     const handlePublishProduct = async (data: any) => {
-        // Collect all generated images
-        const imagesToUpload = [
-            generatedViews.front,
-            generatedViews.back,
-            generatedViews["left-side"],
-            generatedViews["right-side"],
-            generatedViews["close-up"],
-            generatedViews.model
-        ].filter(Boolean) as string[];
-
-        if (imagesToUpload.length === 0) {
-            toast.error("Please wait for at least one image to finish generating.");
+        if (!finalImageUrl) {
+            toast.error("Image asset is missing.");
             return;
         }
 
@@ -171,13 +116,9 @@ export default function FashionDesignerStudio() {
             await createProductMutation.mutateAsync({
                 ...data,
                 slug: data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
-                mainImage: imagesToUpload[0], // First image goes to mainImage
-                // The rest of the images would ideally go to the product images table, 
-                // but this MVP handles the primary insert.
+                mainImage: finalImageUrl,
             });
             toast.success("Product published successfully!");
-
-            // Reset state
             setStep("success");
         } catch (err: any) {
             toast.error("Publish failed", { description: err.message });
@@ -196,7 +137,7 @@ export default function FashionDesignerStudio() {
                         <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
                             Premium Fashion Designer Studio
                         </h3>
-                        <p className="text-muted-foreground text-xs">High-end multi-view generative AI</p>
+                        <p className="text-muted-foreground text-xs">High-end Single-Shot Design Composite</p>
                     </div>
                 </div>
 
@@ -218,8 +159,8 @@ export default function FashionDesignerStudio() {
                         <div className="text-center space-y-2 mb-8">
                             <Sparkles className="w-12 h-12 text-gold/60 mx-auto mb-4" />
                             <h2 className="text-2xl font-condensed font-bold uppercase tracking-wider">Design Your Next Collection</h2>
-                            <p className="text-muted-foreground text-sm">
-                                Enter your design prompt. The AI will act as a senior fashion designer to create a multi-view layout grid for your approval before generating the full product suite.
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                                Enter your design prompt. The AI will act as a senior fashion designer to create a beautiful single-composite image showcasing all angles, designed specifically to sidestep slow proxy timeout limitations.
                             </p>
                         </div>
 
@@ -272,12 +213,12 @@ export default function FashionDesignerStudio() {
                             {step === "generating_grid" ? (
                                 <>
                                     <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                                    Reviewing Design Concepts...
+                                    Drafting Studio Composite...
                                 </>
                             ) : (
                                 <>
                                     <Eye className="w-5 h-5 mr-3" />
-                                    Generate Concept Grid
+                                    Generate Studio Composite
                                 </>
                             )}
                         </Button>
@@ -288,16 +229,16 @@ export default function FashionDesignerStudio() {
                 {step === "review_grid" && gridImage && (
                     <div className="w-full max-w-5xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="text-center">
-                            <h2 className="text-2xl font-condensed font-bold uppercase tracking-wider mb-2">Review Concept Grid</h2>
+                            <h2 className="text-2xl font-condensed font-bold uppercase tracking-wider mb-2">Review Digital Asset</h2>
                             <p className="text-muted-foreground text-sm">
-                                This is a single image containing front, back, side, and detail views. If you like the style, approve it, and the AI will split and generate all high-res angles separately for the store.
+                                If you approve this high-resolution composite, the AI will package it as the primary display image and scrape all visual details to construct your SEO listing automatically.
                             </p>
                         </div>
 
-                        <div className="max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-white/10 relative group">
+                        <div className="max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-white/10 relative group bg-secondary/20">
                             <img
                                 src={`data:${gridImage.mimeType};base64,${gridImage.base64}`}
-                                alt="Generated Grid"
+                                alt="Generated Composite"
                                 className="w-full h-auto object-contain"
                             />
                             <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
@@ -315,7 +256,7 @@ export default function FashionDesignerStudio() {
                                 onClick={() => setStep("conception")}
                                 className="w-48 font-condensed uppercase tracking-wider"
                             >
-                                Try Again
+                                Re-Roll Prompt
                             </Button>
                             <Button
                                 size="lg"
@@ -323,7 +264,7 @@ export default function FashionDesignerStudio() {
                                 className="w-64 bg-gold text-black hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider shadow-lg"
                             >
                                 <CheckCircle className="w-5 h-5 mr-2" />
-                                Approve Design
+                                Approve Asset
                             </Button>
                         </div>
                     </div>
@@ -334,60 +275,43 @@ export default function FashionDesignerStudio() {
                     <div className="w-full space-y-8">
                         {/* Header Status */}
                         <div className="flex items-center gap-4 bg-secondary/30 p-4 rounded-xl border border-border">
-                            {Object.values(loadingViews).some(v => v) ? (
+                            {isProcessing ? (
                                 <Loader2 className="w-6 h-6 text-gold animate-spin" />
                             ) : (
                                 <CheckCircle className="w-6 h-6 text-green-500" />
                             )}
                             <div>
                                 <h3 className="font-condensed font-bold uppercase tracking-wider text-base">
-                                    {Object.values(loadingViews).some(v => v) ? "Production In Progress..." : "Ready to Publish"}
+                                    {isProcessing ? "Finalizing Studio Asset..." : "Asset Ready for Publishing"}
                                 </h3>
                                 <p className="text-sm text-muted-foreground">
-                                    Generating individual high-res views and auto-filling SEO product data.
+                                    Processing the final digital asset and structuring SEO listings using Gemini text extraction.
                                 </p>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                            {/* Left Side: Images */}
                             <div className="space-y-4">
                                 <h4 className="font-condensed font-bold uppercase tracking-wider text-sm text-muted-foreground border-b border-border pb-2">
-                                    High-Res Views
+                                    Digital Asset Review
                                 </h4>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {["front", "back", "left-side", "right-side", "close-up", "model"].map((view) => (
-                                        <div key={view} className="relative aspect-square rounded-xl bg-secondary/50 border border-border overflow-hidden flex flex-col items-center justify-center">
-                                            {loadingViews[view as keyof typeof loadingViews] ? (
-                                                <div className="flex flex-col items-center text-muted-foreground p-4 text-center">
-                                                    <Loader2 className="w-6 h-6 animate-spin mb-2 text-gold/50" />
-                                                    <span className="text-[10px] uppercase font-condensed tracking-wider leading-tight">Generating {view.replace('-', ' ')}</span>
-                                                </div>
-                                            ) : generatedViews[view as keyof typeof generatedViews] ? (
-                                                <>
-                                                    <img
-                                                        src={generatedViews[view as keyof typeof generatedViews]}
-                                                        className="w-full h-full object-cover"
-                                                        alt={view}
-                                                    />
-                                                    <div className="absolute top-2 left-2 bg-black/60 backdrop-blur text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
-                                                        {view.replace('-', ' ')}
-                                                    </div>
-                                                </>
-                                            ) : null}
+                                <div className="relative rounded-xl border border-border overflow-hidden bg-secondary/20 block aspect-square">
+                                    {gridImage ? (
+                                        <img src={`data:${gridImage.mimeType};base64,${gridImage.base64}`} className="w-full h-full object-contain" alt="Composite Grid" />
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
+                                            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2 text-gold/40" />
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
                             </div>
 
-                            {/* Right Side: Auto-Filled Form */}
                             <div className="space-y-4 bg-secondary/30 p-5 rounded-xl border border-border flex flex-col">
                                 <h4 className="font-condensed font-bold uppercase tracking-wider text-sm text-muted-foreground border-b border-border pb-2 flex justify-between items-center">
-                                    <span>Product Details</span>
-                                    {loadingViews.prefill && (
-                                        <span className="flex items-center text-gold text-xs">
-                                            <Loader2 className="w-3 h-3 animate-spin mr-1.5" /> Auto-filling via AI...
+                                    <span>Product Context</span>
+                                    {isProcessing && (
+                                        <span className="flex items-center text-gold text-xs font-condensed">
+                                            <Loader2 className="w-3 h-3 animate-spin mr-1.5" /> Drafting Catalog Matrix...
                                         </span>
                                     )}
                                 </h4>
@@ -396,29 +320,29 @@ export default function FashionDesignerStudio() {
                                     <form onSubmit={form.handleSubmit(handlePublishProduct)} className="space-y-5 flex-1 relative flex flex-col justify-between">
                                         <div className="space-y-4">
                                             <FormField control={form.control} name="title" render={({ field }) => (
-                                                <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} disabled={loadingViews.prefill} /></FormControl></FormItem>
+                                                <FormItem><FormLabel>Product Title</FormLabel><FormControl><Input {...field} disabled={isProcessing} /></FormControl></FormItem>
                                             )} />
                                             <FormField control={form.control} name="shortDescription" render={({ field }) => (
-                                                <FormItem><FormLabel>Short SEO Desc</FormLabel><FormControl><Textarea className="h-20 resize-none text-xs" {...field} disabled={loadingViews.prefill} /></FormControl></FormItem>
+                                                <FormItem><FormLabel>Matrix SEO Summary</FormLabel><FormControl><Textarea className="h-24 resize-none text-xs" {...field} disabled={isProcessing} /></FormControl></FormItem>
                                             )} />
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <FormField control={form.control} name="material" render={({ field }) => (
-                                                    <FormItem><FormLabel>Material</FormLabel><FormControl><Input {...field} disabled={loadingViews.prefill} /></FormControl></FormItem>
+                                                    <FormItem><FormLabel>Textile Build</FormLabel><FormControl><Input {...field} disabled={isProcessing} /></FormControl></FormItem>
                                                 )} />
                                                 <FormField control={form.control} name="samplePrice" render={({ field }) => (
-                                                    <FormItem><FormLabel>Sample Price ($)</FormLabel><FormControl><Input {...field} disabled={loadingViews.prefill} /></FormControl></FormItem>
+                                                    <FormItem><FormLabel>Sample Blueprint ($)</FormLabel><FormControl><Input {...field} disabled={isProcessing} /></FormControl></FormItem>
                                                 )} />
                                             </div>
                                         </div>
 
                                         <Button
                                             type="submit"
-                                            disabled={Object.values(loadingViews).some(v => v)}
+                                            disabled={isProcessing}
                                             className="w-full mt-6 bg-gold text-black hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider shadow-lg h-12"
                                         >
                                             <Package className="w-5 h-5 mr-2" />
-                                            Publish to Website
+                                            Deploy to Catalog
                                         </Button>
                                     </form>
                                 </Form>
@@ -433,18 +357,18 @@ export default function FashionDesignerStudio() {
                         <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-6 border border-green-500/20">
                             <CheckCircle className="w-10 h-10 text-green-500" />
                         </div>
-                        <h2 className="text-3xl font-condensed font-bold uppercase tracking-wider mb-3">Product Published Successfully</h2>
+                        <h2 className="text-3xl font-condensed font-bold uppercase tracking-wider mb-3">Asset Deployed Successfully</h2>
                         <p className="text-muted-foreground mb-8">
-                            Premium images from all angles and expert SEO data have been pushed to your database seamlessly.
+                            Premium studio composite and structured SEO catalog metadata are live in the system pipeline.
                         </p>
                         <Button
                             onClick={() => {
                                 setPrompt("");
                                 setStep("conception");
                             }}
-                            className="bg-secondary text-foreground hover:bg-secondary/80 font-condensed font-bold uppercase tracking-wider px-8"
+                            className="bg-secondary text-foreground hover:bg-secondary/80 font-condensed font-bold uppercase tracking-wider px-8 h-12"
                         >
-                            Design Next Product
+                            Draft Next Asset
                         </Button>
                     </div>
                 )}

@@ -253,4 +253,25 @@ export const aiAgentRouter = router({
                 });
             }
         }),
+
+    // Premium: Save the final approved grid design to storage
+    saveStudioImage: adminProcedure
+        .input(z.object({
+            base64: z.string(),
+            mimeType: z.string(),
+        }))
+        .mutation(async ({ input }) => {
+            try {
+                const buffer = Buffer.from(input.base64, "base64");
+                const ext = input.mimeType.split("/")[1] ?? "jpeg";
+                const storageKey = `portfolio/studio-concept-${nanoid(10)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, input.mimeType);
+                return { imageUrl: url, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Failed to save studio image: ${err.message}`,
+                });
+            }
+        }),
 });

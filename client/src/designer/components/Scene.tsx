@@ -169,7 +169,7 @@ export const Scene: React.FC<SceneProps> = ({ isDrawerOpen }) => {
             <directionalLight position={[0, 5, -5]} intensity={0.4} />
 
             {/* Environment for subtle reflections only, very low blur/intensity */}
-            <Environment preset="city" blur={1} background={false} environmentIntensity={0.2} />
+            <Environment files="/potsdamer_platz_1k.hdr" blur={1} background={false} environmentIntensity={0.2} />
 
             {/* Reference Floor Grid */}
             <primitive object={new THREE.GridHelper(10, 20, 0x2a2a2a, 0x1a1a1a)} position={[0, -1.2, 0]} />

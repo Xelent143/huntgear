@@ -1793,6 +1793,24 @@ var aiAgentRouter = router({
         message: `Product prefill failed: ${err.message}`
       });
     }
+  }),
+  // Premium: Save the final approved grid design to storage
+  saveStudioImage: adminProcedure2.input(z2.object({
+    base64: z2.string(),
+    mimeType: z2.string()
+  })).mutation(async ({ input }) => {
+    try {
+      const buffer = Buffer.from(input.base64, "base64");
+      const ext = input.mimeType.split("/")[1] ?? "jpeg";
+      const storageKey = `portfolio/studio-concept-${nanoid(10)}.${ext}`;
+      const { url } = await storagePut(storageKey, buffer, input.mimeType);
+      return { imageUrl: url, success: true };
+    } catch (err) {
+      throw new TRPCError3({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Failed to save studio image: ${err.message}`
+      });
+    }
   })
 });
 
