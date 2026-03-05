@@ -14,7 +14,7 @@ const contactInfo = [
     icon: MapPin,
     title: "Factory Location",
     lines: ["Sialkot Industrial Zone", "Punjab, Pakistan 51310"],
-    link: "https://maps.google.com/?q=Sialkot+Industrial+Zone+Punjab+Pakistan",
+    link: "https://share.google/q0X4Posm06xeNvJ3k",
     linkText: "Get Directions",
   },
   {
@@ -226,7 +226,7 @@ export default function Contact() {
                 <div className="mt-5 rounded-sm overflow-hidden border border-border aspect-[4/3]">
                   <iframe
                     title="Sialkot Sample Masters Factory Location - Sialkot, Pakistan"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108960.2!2d74.4229!3d32.4945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391ef5e9b7c5f0f1%3A0x5c5c5c5c5c5c5c5c!2sSialkot%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+                    src="https://maps.google.com/maps?q=Sialkot+Sample+Masters,+Sialkot,+Pakistan&t=&z=14&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

@@ -358,46 +358,63 @@ export default function Navbar() {
           {isOpen && (
             <motion.div
               key="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="lg:hidden bg-card border-t border-border overflow-hidden"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="lg:hidden absolute top-full left-0 w-full bg-background border-t border-border shadow-2xl h-[calc(100vh-80px)] overflow-y-auto"
             >
-              <div className="px-4 py-4 space-y-1">
+              <div className="px-6 py-8 space-y-8 pb-32">
                 {/* Company section */}
-                <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Company</p>
-                {companyLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <Link key={link.href} href={link.href} className="flex items-center gap-3 px-3 py-2.5 rounded-sm hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
-                      <Icon className="w-4 h-4 text-gold shrink-0" />
-                      <span className="text-sm font-medium">{link.label}</span>
-                    </Link>
-                  );
-                })}
-                <div className="pt-2 border-t border-border">
-                  <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Quick Links</p>
-                  {[
-                    { label: "Home", href: "/" },
-                    { label: "Shop", href: "/shop" },
-                    { label: "3D Design", href: "/customize" },
-                    { label: "Contact", href: "/contact" },
-                  ].map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`block px-3 py-2.5 text-sm font-medium uppercase tracking-wide transition-colors ${location === link.href ? "text-gold" : "text-muted-foreground hover:text-foreground"
-                        }`}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
+                <div className="space-y-4">
+                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3">Company</p>
+                  <div className="grid gap-2">
+                    {companyLinks.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className="flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 text-foreground transition-all group active:scale-[0.98]">
+                          <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shrink-0 group-hover:bg-gold/10 transition-colors shadow-inner">
+                            <Icon className="w-5 h-5 text-gold" />
+                          </div>
+                          <div>
+                            <span className="block text-sm font-black uppercase tracking-widest group-hover:text-gold transition-colors">{link.label}</span>
+                            <span className="block text-xs text-muted-foreground mt-1 opacity-80">{link.desc}</span>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="pt-3 border-t border-border">
-                  <Link href="/rfq">
-                    <Button className="w-full bg-gold text-background hover:bg-gold/90 font-condensed font-semibold tracking-widest uppercase text-sm rounded-sm">
-                      Get a Quote
+
+                {/* Quick Links */}
+                <div className="space-y-4 pt-4">
+                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3">Quick Links</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { label: "Home", href: "/" },
+                      { label: "Shop", href: "/shop" },
+                      { label: "Products", href: "/products" },
+                      { label: "3D Design", href: "/customize" },
+                      { label: "Contact", href: "/contact" },
+                    ].map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex justify-center items-center text-center p-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-gold/10 text-gold border border-gold/20" : "bg-card border border-border/50 hover:border-gold/30 hover:bg-secondary text-foreground"
+                          }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="pt-6">
+                  <Link href="/rfq" onClick={() => setIsOpen(false)}>
+                    <Button className="w-full h-14 bg-gold text-black hover:bg-gold/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]">
+                      Get a Free Quote
                     </Button>
                   </Link>
                 </div>
