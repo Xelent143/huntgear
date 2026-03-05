@@ -58,6 +58,7 @@ export const aiAgentRouter = router({
             })),
             message: z.string().min(1).max(2000),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
@@ -67,6 +68,7 @@ export const aiAgentRouter = router({
                     input.message,
                     AGENT_SYSTEM_PROMPT,
                     key,
+                    input.modelId,
                 );
                 return { reply, success: true };
             } catch (err: any) {
@@ -88,11 +90,12 @@ export const aiAgentRouter = router({
         .input(z.object({
             description: z.string().min(5).max(1000),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const productData = await generateProductData(input.description, undefined, key);
+                const productData = await generateProductData(input.description, undefined, key, input.modelId);
                 return { product: productData, success: true };
             } catch (err: any) {
                 if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -115,6 +118,7 @@ export const aiAgentRouter = router({
             logoBase64: z.string().optional(),
             logoMimeType: z.string().optional(),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
@@ -124,6 +128,7 @@ export const aiAgentRouter = router({
                     input.logoBase64,
                     input.logoMimeType,
                     key,
+                    input.modelId,
                 );
                 // Upload to storage
                 const buffer = Buffer.from(base64, "base64");
@@ -145,12 +150,13 @@ export const aiAgentRouter = router({
             base64: z.string(),
             mimeType: z.string(),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const { analyzeImageForSeo } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const seoData = await analyzeImageForSeo(input.base64, input.mimeType, key);
+                const seoData = await analyzeImageForSeo(input.base64, input.mimeType, key, input.modelId);
                 return { seoData, success: true };
             } catch (err: any) {
                 if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -171,12 +177,13 @@ export const aiAgentRouter = router({
         .input(z.object({
             prompt: z.string().min(5).max(1000),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const { generateDesignerGrid } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const { base64, mimeType } = await generateDesignerGrid(input.prompt, key);
+                const { base64, mimeType } = await generateDesignerGrid(input.prompt, key, input.modelId);
 
                 // Return base64 directly to save storage space (since it's just for approval preview)
                 return { base64, mimeType, success: true };
@@ -194,12 +201,13 @@ export const aiAgentRouter = router({
             basePrompt: z.string().min(5).max(1000),
             viewType: z.enum(["front", "back", "side", "close-up", "model"]),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const { generateIndividualView } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const { base64, mimeType } = await generateIndividualView(input.basePrompt, input.viewType, key);
+                const { base64, mimeType } = await generateIndividualView(input.basePrompt, input.viewType, key, input.modelId);
 
                 // Upload this to storage because it's a final individual product image
                 const buffer = Buffer.from(base64, "base64");
@@ -223,12 +231,13 @@ export const aiAgentRouter = router({
             base64: z.string(),
             mimeType: z.string(),
             apiKey: z.string().optional(),
+            modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
                 const { prefillProductDataFromGrid } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const productData = await prefillProductDataFromGrid(input.prompt, input.base64, input.mimeType, key);
+                const productData = await prefillProductDataFromGrid(input.prompt, input.base64, input.mimeType, key, input.modelId);
                 return { productData, success: true };
             } catch (err: any) {
                 throw new TRPCError({

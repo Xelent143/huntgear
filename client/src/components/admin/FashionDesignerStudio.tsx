@@ -24,6 +24,7 @@ type StudioState = "conception" | "generating_grid" | "review_grid" | "producing
 export default function FashionDesignerStudio() {
     const [step, setStep] = useState<StudioState>("conception");
     const [prompt, setPrompt] = useState("");
+    const [modelId, setModelId] = useState("gemini-3.1-flash-image-preview"); // Default to Nano Banana 2
 
     // Grid State
     const [gridImage, setGridImage] = useState<{ base64: string, mimeType: string } | null>(null);
@@ -78,7 +79,7 @@ export default function FashionDesignerStudio() {
 
         setStep("generating_grid");
         try {
-            const { base64, mimeType } = await gridMutation.mutateAsync({ prompt });
+            const { base64, mimeType } = await gridMutation.mutateAsync({ prompt, modelId });
             setGridImage({ base64, mimeType });
             setStep("review_grid");
             toast.success("Design grid ready for review.");
@@ -104,7 +105,7 @@ export default function FashionDesignerStudio() {
 
         views.forEach(async (viewType) => {
             try {
-                const { imageUrl } = await viewMutation.mutateAsync({ basePrompt: prompt, viewType });
+                const { imageUrl } = await viewMutation.mutateAsync({ basePrompt: prompt, viewType, modelId });
                 setGeneratedViews(prev => ({ ...prev, [viewType]: imageUrl }));
             } catch (err) {
                 toast.error(`Failed to generate ${viewType} view`);
@@ -118,7 +119,8 @@ export default function FashionDesignerStudio() {
             const { productData } = await prefillMutation.mutateAsync({
                 prompt,
                 base64: gridImage.base64,
-                mimeType: gridImage.mimeType
+                mimeType: gridImage.mimeType,
+                modelId: "gemini-3.1-pro-preview" // Use Pro for prefill by default
             });
 
             form.reset({
@@ -213,14 +215,45 @@ export default function FashionDesignerStudio() {
                             </p>
                         </div>
 
-                        <div className="relative">
-                            <Textarea
-                                placeholder="Describe the apparel in extreme detail. e.g. 'Premium custom BJJ Kimono, 450gsm pearl weave, black with gold stitching, sleek athletic fit, minimal branding on the left shoulder.'"
-                                value={prompt}
-                                onChange={(e) => setPrompt(e.target.value)}
-                                className="min-h-[140px] text-base p-5 pr-4 border-2 border-border focus:border-gold/50 rounded-xl resize-none transition-all shadow-sm"
-                                disabled={step === "generating_grid"}
-                            />
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-xs font-condensed uppercase tracking-widest text-gold/80 flex items-center gap-2">
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                    AI Model (Visual Style)
+                                </label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button
+                                        onClick={() => setModelId("gemini-3.1-flash-image-preview")}
+                                        className={`px-3 py-2 rounded border text-xs font-condensed uppercase transition-all flex flex-col items-center gap-1 ${modelId === "gemini-3.1-flash-image-preview"
+                                            ? "bg-gold text-black border-gold shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                                            : "bg-secondary/50 border-border text-muted-foreground hover:border-gold/50"
+                                            }`}
+                                    >
+                                        <span>Nano Banana 2</span>
+                                        <span className="opacity-60 text-[8px]">3.1 Flash Image</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setModelId("gemini-2.5-flash-image")}
+                                        className={`px-3 py-2 rounded border text-xs font-condensed uppercase transition-all flex flex-col items-center gap-1 ${modelId === "gemini-2.5-flash-image"
+                                            ? "bg-gold text-black border-gold shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                                            : "bg-secondary/50 border-border text-muted-foreground hover:border-gold/50"
+                                            }`}
+                                    >
+                                        <span>Nano Banana</span>
+                                        <span className="opacity-60 text-[8px]">2.5 Flash Image</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="relative">
+                                <Textarea
+                                    placeholder="Describe the apparel in extreme detail. e.g. 'Premium custom BJJ Kimono, 450gsm pearl weave, black with gold stitching, sleek athletic fit, minimal branding on the left shoulder.'"
+                                    value={prompt}
+                                    onChange={(e) => setPrompt(e.target.value)}
+                                    className="min-h-[140px] text-base p-5 pr-4 border-2 border-border focus:border-gold/50 rounded-xl resize-none transition-all shadow-sm"
+                                    disabled={step === "generating_grid"}
+                                />
+                            </div>
                         </div>
 
                         <Button

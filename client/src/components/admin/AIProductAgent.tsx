@@ -205,6 +205,8 @@ export default function AIProductAgent() {
     const [apiKeyInput, setApiKeyInput] = useState("");
     const [showKey, setShowKey] = useState(false);
     const [isSavingKey, setIsSavingKey] = useState(false);
+    const [modelId, setModelId] = useState("gemini-2.1-flash"); // Default for chat
+    const [researchModelId, setResearchModelId] = useState("gemini-3.1-pro-preview"); // Pro for data generation
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -275,7 +277,12 @@ export default function AIProductAgent() {
             .map((m) => ({ role: m.role as "user" | "model", text: m.text }));
 
         try {
-            const { reply } = await chatMutation.mutateAsync({ history, message: trimmed, apiKey: apiKeyInput || undefined });
+            const { reply } = await chatMutation.mutateAsync({
+                history,
+                message: trimmed,
+                apiKey: apiKeyInput || undefined,
+                modelId: modelId
+            });
             addMessage("model", reply);
         } catch (err: any) {
             addMessage("model", `❌ Error: ${err.message}. Please check that your GEMINI_API_KEY is set in .env`);
@@ -293,7 +300,11 @@ export default function AIProductAgent() {
         addMessage("model", "🚀 Generating your complete product listing... This may take a few seconds.");
 
         try {
-            const { product } = await generateProductMutation.mutateAsync({ description: lastDescription, apiKey: apiKeyInput || undefined });
+            const { product } = await generateProductMutation.mutateAsync({
+                description: lastDescription,
+                apiKey: apiKeyInput || undefined,
+                modelId: researchModelId
+            });
             setGeneratedProduct(product);
             addMessage("model", `✅ Product listing generated for **"${product.title}"**!\n\nI've created:\n- Full SEO-optimized title and description\n- ${product.moqSlabs.length} MOQ price tiers\n- ${product.availableSizes.length} sizes and ${product.availableColors.length} colors\n- Complete meta tags and keywords\n\nReview the product card below. You can post it directly or generate an AI product image first (upload your logo for a branded result!)`);
         } catch (err: any) {
@@ -419,8 +430,8 @@ export default function AIProductAgent() {
                     <button
                         onClick={() => setShowSettings(!showSettings)}
                         className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs border transition-colors ${apiKeyQuery.data?.hasKey
-                                ? "bg-green-500/10 text-green-500 border-green-500/30 hover:bg-green-500/20"
-                                : "bg-orange-500/10 text-orange-500 border-orange-500/30 hover:bg-orange-500/20"
+                            ? "bg-green-500/10 text-green-500 border-green-500/30 hover:bg-green-500/20"
+                            : "bg-orange-500/10 text-orange-500 border-orange-500/30 hover:bg-orange-500/20"
                             }`}
                     >
                         <Key className="w-3 h-3" />
@@ -507,6 +518,52 @@ export default function AIProductAgent() {
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {/* Model Selection Banner */}
+                <div className="flex items-center justify-between p-3 bg-secondary/30 rounded-xl border border-border/50 backdrop-blur-sm mb-2">
+                    <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-gold" />
+                        <div>
+                            <span className="text-[10px] font-condensed uppercase tracking-widest text-muted-foreground block leading-none mb-1">Research Engine</span>
+                            <div className="flex bg-background/50 p-0.5 rounded border border-border">
+                                <button
+                                    onClick={() => setResearchModelId("gemini-3.1-pro-preview")}
+                                    className={`px-3 py-1 rounded text-[9px] font-bold uppercase transition-all ${researchModelId === "gemini-3.1-pro-preview" ? "bg-gold text-black shadow-inner" : "text-muted-foreground hover:text-foreground"}`}
+                                >
+                                    Gemini 3.1 Pro
+                                </button>
+                                <button
+                                    onClick={() => setResearchModelId("gemini-2.1-flash")}
+                                    className={`px-3 py-1 rounded text-[9px] font-bold uppercase transition-all ${researchModelId === "gemini-2.1-flash" ? "bg-gold text-black shadow-inner" : "text-muted-foreground hover:text-foreground"}`}
+                                >
+                                    2.1 Flash
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="h-8 w-px bg-border/50 mx-2" />
+
+                    <div className="flex items-center gap-2">
+                        <div>
+                            <span className="text-[10px] font-condensed uppercase tracking-widest text-muted-foreground block leading-none mb-1 text-right">Chat Model</span>
+                            <div className="flex bg-background/50 p-0.5 rounded border border-border">
+                                <button
+                                    onClick={() => setModelId("gemini-1.5-pro")}
+                                    className={`px-3 py-1 rounded text-[9px] font-bold uppercase transition-all ${modelId === "gemini-1.5-pro" ? "bg-gold text-black shadow-inner" : "text-muted-foreground hover:text-foreground"}`}
+                                >
+                                    Pro
+                                </button>
+                                <button
+                                    onClick={() => setModelId("gemini-2.1-flash")}
+                                    className={`px-3 py-1 rounded text-[9px] font-bold uppercase transition-all ${modelId === "gemini-2.1-flash" ? "bg-gold text-black shadow-inner" : "text-muted-foreground hover:text-foreground"}`}
+                                >
+                                    Flash
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {messages.map((msg, idx) => (
                     <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                         <div className={`max-w-[85%] ${msg.role === "user" ? "order-2" : "order-1"}`}>

@@ -38,10 +38,11 @@ export async function chatWithProductAgent(
     userMessage: string,
     systemPrompt: string,
     apiKey?: string,
+    modelId: string = "gemini-2.1-flash",
 ): Promise<string> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.5-flash",
+        model: modelId,
         systemInstruction: systemPrompt,
         safetySettings,
     });
@@ -85,10 +86,11 @@ export async function generateProductData(
     userDescription: string,
     brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
     apiKey?: string,
+    modelId: string = "gemini-2.1-flash",
 ): Promise<GeneratedProductData> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.5-flash",
+        model: modelId,
         safetySettings,
         generationConfig: {
             responseMimeType: "application/json",
@@ -139,10 +141,11 @@ export async function generateProductImageBase64(
     logoBase64?: string,
     logoMimeType?: string,
     apiKey?: string,
+    modelId: string = "gemini-2.1-flash",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
 
-    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = client.getGenerativeModel({ model: modelId });
 
     const parts: any[] = [
         {
@@ -199,10 +202,11 @@ export async function analyzeImageForSeo(
     base64: string,
     mimeType: string,
     apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
 ): Promise<OptimizedImageData> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.5-flash",
+        model: modelId,
         generationConfig: {
             responseMimeType: "application/json",
         },
@@ -237,9 +241,13 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
 
 // ─── Premium Fashion Designer Studio ──────────────────────────────────────────
 
-export async function generateDesignerGrid(prompt: string, apiKey?: string): Promise<{ base64: string; mimeType: string }> {
+export async function generateDesignerGrid(
+    prompt: string,
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
-    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = client.getGenerativeModel({ model: modelId });
 
     const parts: any[] = [
         {
@@ -279,9 +287,14 @@ Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B
     }
 }
 
-export async function generateIndividualView(basePrompt: string, viewType: string, apiKey?: string): Promise<{ base64: string; mimeType: string }> {
+export async function generateIndividualView(
+    basePrompt: string,
+    viewType: string,
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
-    const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = client.getGenerativeModel({ model: modelId });
 
     const parts: any[] = [
         {
@@ -316,10 +329,16 @@ Studio lighting, clean white or neutral background, ultra-realistic, 4K quality.
     }
 }
 
-export async function prefillProductDataFromGrid(imagePrompt: string, base64: string, mimeType: string, apiKey?: string) {
+export async function prefillProductDataFromGrid(
+    imagePrompt: string,
+    base64: string,
+    mimeType: string,
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<any> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({
-        model: "gemini-2.5-flash",
+        model: modelId,
         generationConfig: {
             responseMimeType: "application/json",
             temperature: 0.7,

@@ -748,10 +748,10 @@ function getClient(apiKey) {
   }
   return _clientCache.get(key);
 }
-async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey) {
+async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey, modelId = "gemini-2.1-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: modelId,
     systemInstruction: systemPrompt,
     safetySettings
   });
@@ -764,10 +764,10 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
   const result = await chat.sendMessage(userMessage);
   return result.response.text();
 }
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey) {
+async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-2.1-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: modelId,
     safetySettings,
     generationConfig: {
       responseMimeType: "application/json"
@@ -805,9 +805,9 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
   const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
   return JSON.parse(jsonText);
 }
-async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey) {
+async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey, modelId = "gemini-2.1-flash") {
   const client = getClient(apiKey);
-  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const model = client.getGenerativeModel({ model: modelId });
   const parts = [
     {
       text: `Generate a professional, high-quality e-commerce product photo. ${imagePrompt}. 
@@ -847,10 +847,10 @@ async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType,
     throw new Error(`Image generation failed: ${String(err)}`);
   }
 }
-async function analyzeImageForSeo(base64, mimeType, apiKey) {
+async function analyzeImageForSeo(base64, mimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: modelId,
     generationConfig: {
       responseMimeType: "application/json"
     }
@@ -879,9 +879,9 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
     throw new Error(`SEO analysis failed: ${err.message}`);
   }
 }
-async function generateDesignerGrid(prompt, apiKey) {
+async function generateDesignerGrid(prompt, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
-  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const model = client.getGenerativeModel({ model: modelId });
   const parts = [
     {
       text: `Act as a senior high-end fashion designer and professional photographer.
@@ -917,9 +917,9 @@ Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B
     throw new Error(`Grid image generation failed: ${String(err)}`);
   }
 }
-async function generateIndividualView(basePrompt, viewType, apiKey) {
+async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
-  const model = client.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const model = client.getGenerativeModel({ model: modelId });
   const parts = [
     {
       text: `Generate a professional, high-quality e-commerce product photo: ${basePrompt}. 
@@ -950,10 +950,10 @@ Studio lighting, clean white or neutral background, ultra-realistic, 4K quality.
     throw new Error(`Individual view generation failed: ${viewType} - ${String(err)}`);
   }
 }
-async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey) {
+async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: modelId,
     generationConfig: {
       responseMimeType: "application/json",
       temperature: 0.7
@@ -1568,7 +1568,8 @@ var aiAgentRouter = router({
       text: z2.string()
     })),
     message: z2.string().min(1).max(2e3),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
@@ -1576,7 +1577,8 @@ var aiAgentRouter = router({
         input.history,
         input.message,
         AGENT_SYSTEM_PROMPT,
-        key
+        key,
+        input.modelId
       );
       return { reply, success: true };
     } catch (err) {
@@ -1595,11 +1597,12 @@ var aiAgentRouter = router({
   // Generate full structured product data from a description
   generateProduct: adminProcedure2.input(z2.object({
     description: z2.string().min(5).max(1e3),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const productData = await generateProductData(input.description, void 0, key);
+      const productData = await generateProductData(input.description, void 0, key, input.modelId);
       return { product: productData, success: true };
     } catch (err) {
       if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -1619,7 +1622,8 @@ var aiAgentRouter = router({
     imagePrompt: z2.string().min(5).max(1e3),
     logoBase64: z2.string().optional(),
     logoMimeType: z2.string().optional(),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
@@ -1627,7 +1631,8 @@ var aiAgentRouter = router({
         input.imagePrompt,
         input.logoBase64,
         input.logoMimeType,
-        key
+        key,
+        input.modelId
       );
       const buffer = Buffer.from(base64, "base64");
       const ext = mimeType.split("/")[1] ?? "png";
@@ -1645,12 +1650,13 @@ var aiAgentRouter = router({
   optimizeImage: adminProcedure2.input(z2.object({
     base64: z2.string(),
     mimeType: z2.string(),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const { analyzeImageForSeo: analyzeImageForSeo2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const seoData = await analyzeImageForSeo2(input.base64, input.mimeType, key);
+      const seoData = await analyzeImageForSeo2(input.base64, input.mimeType, key, input.modelId);
       return { seoData, success: true };
     } catch (err) {
       if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -1668,12 +1674,13 @@ var aiAgentRouter = router({
   // Premium: Generate a 4-view design concept grid
   generateDesignerGrid: adminProcedure2.input(z2.object({
     prompt: z2.string().min(5).max(1e3),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateDesignerGrid: generateDesignerGrid2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const { base64, mimeType } = await generateDesignerGrid2(input.prompt, key);
+      const { base64, mimeType } = await generateDesignerGrid2(input.prompt, key, input.modelId);
       return { base64, mimeType, success: true };
     } catch (err) {
       throw new TRPCError3({
@@ -1686,12 +1693,13 @@ var aiAgentRouter = router({
   generateIndividualView: adminProcedure2.input(z2.object({
     basePrompt: z2.string().min(5).max(1e3),
     viewType: z2.enum(["front", "back", "side", "close-up", "model"]),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateIndividualView: generateIndividualView2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const { base64, mimeType } = await generateIndividualView2(input.basePrompt, input.viewType, key);
+      const { base64, mimeType } = await generateIndividualView2(input.basePrompt, input.viewType, key, input.modelId);
       const buffer = Buffer.from(base64, "base64");
       const ext = mimeType.split("/")[1] ?? "jpeg";
       const storageKey = `portfolio/designer-${input.viewType}-${nanoid(10)}.${ext}`;
@@ -1709,12 +1717,13 @@ var aiAgentRouter = router({
     prompt: z2.string(),
     base64: z2.string(),
     mimeType: z2.string(),
-    apiKey: z2.string().optional()
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
       const { prefillProductDataFromGrid: prefillProductDataFromGrid2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const productData = await prefillProductDataFromGrid2(input.prompt, input.base64, input.mimeType, key);
+      const productData = await prefillProductDataFromGrid2(input.prompt, input.base64, input.mimeType, key, input.modelId);
       return { productData, success: true };
     } catch (err) {
       throw new TRPCError3({
