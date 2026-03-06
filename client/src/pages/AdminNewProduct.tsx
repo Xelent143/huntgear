@@ -335,7 +335,8 @@ export default function AdminNewProduct() {
 
                 if (product.moqSlabs && product.moqSlabs.length > 0) {
                     setSlabs(product.moqSlabs.map((s: any, idx: number) => ({
-                        ...s,
+                        minQty: Number(s.minQty) || 1,
+                        maxQty: s.maxQty != null ? Number(s.maxQty) : null,
                         pricePerUnit: sanitizePrice(s.pricePerUnit) || "0.00",
                         sortOrder: idx,
                         label: s.label || "",
@@ -455,6 +456,11 @@ export default function AdminNewProduct() {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        {form.slug && (
+                            <Button variant="secondary" onClick={() => window.open(`/shop/${form.slug}`, '_blank')} disabled={isPending} title="Save changes first before previewing if you made edits." className="hidden sm:inline-flex">
+                                <Eye className="w-4 h-4 mr-2" /> Preview
+                            </Button>
+                        )}
                         <Button variant="outline" onClick={() => setLocation("/admin")} disabled={isPending}>
                             Cancel
                         </Button>
