@@ -190,6 +190,7 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const isEdit = !!editProduct;
   const [isAiLoading, setIsAiLoading] = useState(false);
   const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
+  const aiAnalyzeImageMutation = trpc.aiAgent.analyzeUploadedProductImage.useMutation();
   const uploadImageMutation = trpc.product.uploadImage.useMutation();
   const mainImagePatchMutation = trpc.product.update.useMutation();
 
@@ -288,8 +289,64 @@ function ProductFormDialog({ open, onClose, editProduct }: {
   const autoSlug = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
   const handleAiFill = async () => {
+    // If we have an image uploaded, we can analyze the image instead of just using the title
+    if (pendingImages.length > 0) {
+      setIsAiLoading(true);
+      toast.info("AI is analyzing your product image...", { id: "ai-fill" });
+      try {
+        const firstImage = pendingImages[0].file;
+        const base64 = await fileToBase64(firstImage);
+
+        // Use the new image analysis endpoint
+        const { product } = await aiAnalyzeImageMutation.mutateAsync({
+          base64,
+          mimeType: firstImage.type || "image/jpeg"
+        });
+
+        const sanitizePrice = (p: string | undefined) => {
+          if (!p) return "";
+          const n = parseFloat(String(p).replace(/[^0-9.]/g, ""));
+          return isNaN(n) ? "" : n.toFixed(2);
+        };
+
+        setForm(prev => ({
+          ...prev,
+          title: product.title || prev.title,
+          category: product.category || prev.category,
+          shortDescription: product.shortDescription || prev.shortDescription,
+          description: product.description || prev.description,
+          material: product.material || prev.material,
+          weight: product.weight || prev.weight,
+          availableSizes: JSON.stringify(product.availableSizes || ["S", "M", "L", "XL"]),
+          availableColors: JSON.stringify(product.availableColors || []),
+          samplePrice: sanitizePrice(product.samplePrice) || prev.samplePrice,
+          seoTitle: product.seoTitle || prev.seoTitle,
+          seoDescription: product.seoDescription || prev.seoDescription,
+          seoKeywords: product.seoKeywords || prev.seoKeywords,
+        }));
+
+        if (product.moqSlabs && product.moqSlabs.length > 0) {
+          setSlabs(product.moqSlabs.map((s: any, idx: number) => ({
+            ...s,
+            pricePerUnit: sanitizePrice(s.pricePerUnit) || "0.00",
+            sortOrder: idx,
+            label: s.label || "",
+          })));
+        }
+
+        toast.success("Image analyzed and details filled!", { id: "ai-fill" });
+      } catch (e: any) {
+        console.error(e);
+        toast.error(e.message || "Failed to analyze image", { id: "ai-fill" });
+      } finally {
+        setIsAiLoading(false);
+      }
+      return;
+    }
+
+    // Fallback if no image is uploaded: use the text title
     if (!form.title.trim()) {
-      toast.error("Enter a product title first");
+      toast.error("Enter a product title or upload an image first");
       return;
     }
     setIsAiLoading(true);
@@ -409,15 +466,13 @@ function ProductFormDialog({ open, onClose, editProduct }: {
                   />
                   <Button
                     type="button"
+                    variant="outline"
                     onClick={handleAiFill}
-                    disabled={isAiLoading || !form.title.trim()}
-                    className="shrink-0 bg-gold text-black hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider text-xs px-3 h-10 gap-1.5"
-                    title="Let AI research this product and fill all fields automatically"
+                    disabled={isAiLoading || (!form.title.trim() && pendingImages.length === 0)}
+                    className="flex-1 border-primary/40 text-primary hover:bg-primary/10 gap-2 font-condensed tracking-wider"
                   >
-                    {isAiLoading
-                      ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Researching...</>
-                      : <><Sparkles className="w-3.5 h-3.5" /> AI Fill All Fields</>
-                    }
+                    <Wand2 className={`w-4 h-4 ${isAiLoading ? "animate-spin" : ""}`} />
+                    {isAiLoading ? "Generating..." : pendingImages.length > 0 ? "Generate from Image" : "Generate Listing with AI"}
                   </Button>
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-1">

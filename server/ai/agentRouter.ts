@@ -144,6 +144,34 @@ export const aiAgentRouter = router({
             }
         }),
 
+    // Analyze an uploaded image to generate a full product listing
+    analyzeUploadedProductImage: adminProcedure
+        .input(z.object({
+            base64: z.string(),
+            mimeType: z.string(),
+            apiKey: z.string().optional(),
+            modelId: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { analyzeUploadedProductImageBase64 } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const productData = await analyzeUploadedProductImageBase64(input.base64, input.mimeType, undefined, key, input.modelId);
+                return { product: productData, success: true };
+            } catch (err: any) {
+                if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
+                    throw new TRPCError({
+                        code: "INTERNAL_SERVER_ERROR",
+                        message: "Gemini API key not configured. Please add your API key in the AI Agent settings.",
+                    });
+                }
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Product image analysis failed: ${err.message}`,
+                });
+            }
+        }),
+
     // Analyze a manually uploaded image for SEO optimization (rename, alt, caption)
     optimizeImage: adminProcedure
         .input(z.object({

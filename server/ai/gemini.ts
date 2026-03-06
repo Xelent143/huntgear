@@ -241,6 +241,69 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
     }
 }
 
+export async function analyzeUploadedProductImageBase64(
+    base64: string,
+    mimeType: string,
+    brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<GeneratedProductData> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({
+        model: modelId,
+        safetySettings,
+        generationConfig: {
+            responseMimeType: "application/json",
+        },
+    });
+
+    const prompt = `You are an expert B2B apparel product listing consultant. I am providing you with an image of a garment. 
+Analyze the uploaded image and generate a complete, SEO and GEO-optimized product listing tailored to this specific item.
+
+Brand context: ${brandContext}
+
+Return a JSON object with exactly these fields based on the visual attributes of the garment:
+{
+  "title": "Professional product title describing the item (under 70 chars)",
+  "slug": "url-safe-slug-lowercase-hyphens",
+  "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
+  "shortDescription": "Compelling 1-2 sentence summary covering its visible style/features (under 160 chars)",
+  "description": "Full detailed 3-5 paragraph product description covering visible features, likely materials, customization options, and B2B wholesale benefits. Rich and keyword-focused.",
+  "material": "Specific fabric/material description that matches the look (e.g. 'Heavyweight Cotton Blend')",
+  "availableSizes": ["S", "M", "L", "XL", "2XL"],
+  "availableColors": ["Black", "Navy", "Gray", "Custom"],
+  "samplePrice": "Reasonable sample price as a string e.g. '35.00'",
+  "weight": "Estimated weight in kg as a string based on garment type (e.g. '0.450')",
+  "seoTitle": "SEO title under 60 chars, include brand and main keyword",
+  "seoDescription": "Meta description 120-155 chars, compelling, include CTA",
+  "seoKeywords": "10-15 comma-separated keywords (STRICTLY UNDER 250 CHARS TOTAL) including GEO targets like Pakistan wholesale",
+  "moqSlabs": [
+    { "minQty": 50, "maxQty": 99, "pricePerUnit": "18.00", "label": "Starter" },
+    { "minQty": 100, "maxQty": 299, "pricePerUnit": "15.00", "label": "Popular" },
+    { "minQty": 300, "maxQty": null, "pricePerUnit": "12.00", "label": "Wholesale" }
+  ],
+  "imagePrompt": "Leave empty"
+}
+
+Important: Return ONLY valid JSON matching the exact structure above, no markdown, no explanation.`;
+
+    const result = await model.generateContent([
+        prompt,
+        {
+            inlineData: {
+                mimeType,
+                data: base64,
+            },
+        },
+    ]);
+    const text = result.response.text().trim();
+
+    // Strip markdown code fences if present
+    const jsonText = text.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
+
+    return JSON.parse(jsonText) as GeneratedProductData;
+}
+
 // ─── Premium Fashion Designer Studio ──────────────────────────────────────────
 
 export async function generateDesignerGrid(
