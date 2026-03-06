@@ -124,6 +124,8 @@ const productRouter = router({
       availableSizes: z.string().optional(), // JSON
       availableColors: z.string().optional(), // JSON
       material: z.string().max(255).optional(),
+      manufacturingStory: z.string().optional(),
+      manufacturingInfographic: z.string().optional(),
       isFeatured: z.boolean().default(false),
       isActive: z.boolean().default(true),
       freeShipping: z.boolean().default(false),
@@ -166,6 +168,8 @@ const productRouter = router({
       availableSizes: z.string().optional(),
       availableColors: z.string().optional(),
       material: z.string().max(255).optional(),
+      manufacturingStory: z.string().optional(),
+      manufacturingInfographic: z.string().optional(),
       isFeatured: z.boolean().optional(),
       isActive: z.boolean().optional(),
       freeShipping: z.boolean().optional(),

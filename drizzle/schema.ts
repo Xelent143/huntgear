@@ -44,6 +44,8 @@ export const products = mysqlTable("products", {
   availableSizes: text("availableSizes"), // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
   availableColors: text("availableColors"), // JSON array of color names
   material: varchar("material", { length: 255 }),
+  manufacturingStory: text("manufacturingStory"), // SEO/GEO driven manufacturing details
+  manufacturingInfographic: varchar("manufacturingInfographic", { length: 1000 }), // Infographic image URL
   isFeatured: boolean("isFeatured").default(false).notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   freeShipping: boolean("freeShipping").default(false).notNull(),

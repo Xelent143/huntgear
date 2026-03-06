@@ -66,6 +66,8 @@ export interface GeneratedProductData {
     category: string;
     shortDescription: string;
     description: string;
+    manufacturingStory: string;
+    infographicPrompt: string;
     material: string;
     availableSizes: string[];
     availableColors: string[];
@@ -109,6 +111,8 @@ Return a JSON object with exactly these fields:
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary for product cards (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering features, materials, customization options, and B2B benefits. Rich and keyword-focused.",
+  "manufacturingStory": "A professional 2-3 paragraph SEO and GEO-friendly narrative detailing the manufacturing process, stitching techniques, fabric composition, and embellishments (e.g., embroidery, screen printing). Make it sound artisanal and premium.",
+  "infographicPrompt": "A detailed DALL-E/Midjourney style prompt to clearly illustrate the manufacturing process described in the story as a clean, illustrative vector-style infographic on a solid background.",
   "material": "Specific fabric/material description (e.g. '280GSM Ring-Spun Cotton / Polyester Blend')",
   "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
   "availableColors": ["Black", "Navy", "White", "Olive"],
@@ -192,6 +196,61 @@ export async function generateProductImageBase64(
     }
 }
 
+// ─── Infographic Image Generation ─────────────────────────────────────────────
+
+export async function generateInfographicImageBase64(
+    prompt: string,
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<{ base64: string; mimeType: string }> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({ model: modelId });
+
+    const parts: any[] = [
+        {
+            text: `Act as a senior graphic designer specializing in vector illustrations and B2B infographics.
+            Please generate a clean, modern, flat-design infographic based strictly on this prompt: "${prompt}".
+            The infographic should NOT contain complex sentences or spelled-out words, but rather iconic, illustrative representations of the manufacturing processes, stitching, or fabrics.
+            Background MUST be a solid color (e.g., pure white or slightly off-white). No watermarks. High quality.`,
+        },
+    ];
+
+    let lastError: Error = new Error("Unknown error");
+    const maxRetries = 2;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts }],
+                generationConfig: {
+                    responseModalities: ["image", "text"],
+                } as any,
+            });
+
+            const response = result.response;
+            for (const candidate of response.candidates ?? []) {
+                for (const part of candidate.content?.parts ?? []) {
+                    if ((part as any).inlineData) {
+                        return {
+                            base64: (part as any).inlineData.data,
+                            mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                        };
+                    }
+                }
+            }
+            throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+        } catch (err: any) {
+            console.error(`[Infographic Gen] Attempt ${attempt} failed:`, err.message);
+            lastError = err;
+            if (attempt < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+            }
+        }
+    }
+
+    throw new Error(`Infographic image generation failed after ${maxRetries} attempts: ${lastError.message}`);
+}
+
 // ─── Image SEO Optimization ───────────────────────────────────────────────────
 
 export interface OptimizedImageData {
@@ -269,6 +328,8 @@ Return a JSON object with exactly these fields based on the visual attributes of
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary covering its visible style/features (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering visible features, likely materials, customization options, and B2B wholesale benefits. Rich and keyword-focused.",
+  "manufacturingStory": "A professional 2-3 paragraph SEO and GEO-friendly narrative detailing the manufacturing process, stitching techniques, fabric composition, and embellishments (e.g., embroidery, screen printing). Evaluate based on the visible craftsmanship.",
+  "infographicPrompt": "Leave empty",
   "material": "Specific fabric/material description that matches the look (e.g. 'Heavyweight Cotton Blend')",
   "availableSizes": ["S", "M", "L", "XL", "2XL"],
   "availableColors": ["Black", "Navy", "Gray", "Custom"],
@@ -463,6 +524,8 @@ Return ONLY valid JSON matching this exact structure:
   "title": "A highly descriptive, SEO-optimized product title (e.g. 'Premium Custom BJJ Kimono - Wholesale')",
   "category": "The most appropriate category (e.g. 'Martial Arts', 'Activewear', 'Outerwear')",
   "description": "A long, persuasive description focusing on material quality, B2B wholesale benefits, customization options, and premium feel.",
+  "manufacturingStory": "A professional 2-3 paragraph SEO/GEO narrative detailing the artisanal manufacturing process, stitching, fabrics, and embellishments based on the design.",
+  "infographicPrompt": "A detailed DALL-E/Midjourney style prompt to clearly illustrate the manufacturing process described in the story as a clean, illustrative vector-style infographic on a solid background.",
   "shortDescription": "A 1-2 sentence quick summary for catalog views.",
   "seoTitle": "Optimal title for Google Search (under 60 chars)",
   "seoDescription": "Meta description for Google (under 160 chars)",

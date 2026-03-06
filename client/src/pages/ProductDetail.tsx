@@ -9,7 +9,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { toast } from "sonner";
 import {
   ChevronLeft, ChevronRight, ZoomIn, ShoppingCart, Zap,
-  Ruler, Package, Truck, Shield, Star, Check, Info, ChevronDown, Tag, Palette
+  Ruler, Package, Truck, Shield, Star, Check, Info, ChevronDown, Tag, Palette,
+  Factory
 } from "lucide-react";
 import { useCartStore } from "@/lib/cartStore";
 
@@ -578,11 +579,36 @@ export default function ProductDetail() {
               {/* Description */}
               {product.description && (
                 <div className="border-t border-border pt-6">
-                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground mb-3">
+                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground mb-3 flex items-center gap-2">
+                    <Info className="w-4 h-4 text-gold" />
                     Product Description
                   </h3>
                   <div className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">
                     {product.description}
+                  </div>
+                </div>
+              )}
+
+              {/* Manufacturing Story */}
+              {(product as any).manufacturingStory && (
+                <div className="border border-gold/30 bg-gold/5 rounded-lg p-5 mt-6">
+                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground mb-4 flex items-center gap-2">
+                    <Factory className="w-4 h-4 text-gold" />
+                    The Manufacturing Story
+                  </h3>
+                  <div className={`grid gap-6 items-center ${(product as any).manufacturingInfographic ? 'lg:grid-cols-2' : 'grid-cols-1'}`}>
+                    <div className="text-foreground/90 text-sm leading-relaxed whitespace-pre-line italic">
+                      {(product as any).manufacturingStory}
+                    </div>
+                    {(product as any).manufacturingInfographic && (
+                      <div className="flex justify-center border border-border rounded-lg bg-white overflow-hidden shadow-sm">
+                        <img
+                          src={(product as any).manufacturingInfographic}
+                          alt="Manufacturing Process Infographic"
+                          className="w-full h-auto max-h-[300px] object-contain object-center mix-blend-multiply p-2"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

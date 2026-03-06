@@ -5,6 +5,7 @@ export const IMAGES = {
   logoWhite: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/OKGnXKsAOnAKhDrP.png",
   // Page backgrounds
   heroBg: "/ssm_hero_custom.jpeg",
+  eliteHeroBg: "/elite_hero_bg.png",
   aboutBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/JYGBAsGCNzVzuDTI.jpg",
   servicesBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/dMREAYpbMfTSeLWW.jpg",
   portfolioBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/XGPJvpmbANrHQhiI.jpg",

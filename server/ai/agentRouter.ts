@@ -144,6 +144,36 @@ export const aiAgentRouter = router({
             }
         }),
 
+    // Generate an illustrative infographic based on the manufacturing story
+    generateInfographic: adminProcedure
+        .input(z.object({
+            prompt: z.string().min(5),
+            apiKey: z.string().optional(),
+            modelId: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { generateInfographicImageBase64 } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const { base64, mimeType } = await generateInfographicImageBase64(
+                    input.prompt,
+                    key,
+                    input.modelId,
+                );
+                // Upload to storage
+                const buffer = Buffer.from(base64, "base64");
+                const ext = mimeType.split("/")[1] ?? "png";
+                const storageKey = `ai-infographics/${nanoid(12)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, mimeType);
+                return { imageUrl: url, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Infographic generation failed: ${err.message}`,
+                });
+            }
+        }),
+
     // Analyze an uploaded image to generate a full product listing
     analyzeUploadedProductImage: adminProcedure
         .input(z.object({

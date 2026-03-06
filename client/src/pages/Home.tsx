@@ -130,6 +130,14 @@ const esgPillars = [
 ];
 
 export default function Home() {
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <PageWrapper>
       <SEOHead
@@ -139,106 +147,130 @@ export default function Home() {
         canonical="/"
       />
 
-      {/* ── Hero Section ── */}
+      {/* ── Elite Hero Section ── */}
       <section
-        className="relative min-h-[100dvh] flex flex-col items-center justify-between overflow-hidden pt-36 pb-12"
-        style={{
-          backgroundImage: `url(${IMAGES.heroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-32 pb-12 group cursor-default"
+        onMouseMove={handleMouseMove}
       >
-        {/* Parallax overlay */}
+        {/* Parallax Background */}
         <motion.div
-          className="absolute inset-0 bg-black/60"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
+          className="absolute inset-0 z-0 origin-center"
+          initial={{ scale: 1.0 }}
+          animate={{ scale: 1.05 }}
+          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+          style={{
+            backgroundImage: `url(${IMAGES.eliteHeroBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent" />
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 text-center flex-1 flex flex-col justify-between">
-          <div className="mt-32 sm:mt-48 lg:mt-80">
 
-            {/* Headline */}
-            <motion.h1
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-            >
-              Craft Your Brand's
-              <br />
-              <span className="text-gradient-gold italic">Streetwear Vision</span>
-            </motion.h1>
-          </div>
+        {/* Cinematic Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-transparent z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_50%,transparent_0%,black_100%)] opacity-40 z-0 pointer-events-none" />
 
-          <div className="mt-8 mb-[-1rem] sm:mb-0 transform translate-y-6 sm:translate-y-12 lg:translate-y-[82px]">
-            {/* Subheading */}
-            <motion.p
-              className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-6 leading-relaxed"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: "easeOut" }}
-            >
-              We engineer premium custom apparel for the world's leading brands. From sportswear and streetwear to tactical garments, powered by eco-friendly manufacturing at an industrial scale.
-            </motion.p>
+        {/* Cursor Spotlight Effect (CSS overlay) */}
+        <div
+          className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+          style={{
+            background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.08), transparent 40%)`
+          }}
+        />
 
-            {/* CTAs */}
+        <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center pt-24 pb-32">
+          <div className="max-w-3xl">
+            {/* Eyebrow */}
             <motion.div
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+              className="text-gold font-condensed font-bold tracking-[0.3em] text-xs sm:text-sm uppercase mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
             >
-              <Link href="/rfq">
-                <Button className="bg-gold text-white hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-4 h-auto rounded-sm group shadow-lg shadow-black/20">
-                  Request a Free Quote
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/portfolio">
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/5 hover:border-gold hover:text-gold font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-4 h-auto rounded-sm bg-black/20 backdrop-blur-sm">
-                  View Our Work
-                </Button>
-              </Link>
+              Est. 2010 — Sialkot, Pakistan
             </motion.div>
 
-            {/* Trust Badges */}
-            <motion.div
-              className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-white/70 text-xs sm:text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
+            {/* Headline */}
+            <div className="overflow-hidden mb-8 py-2">
+              <motion.h1
+                className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-bold text-white leading-[1.05] tracking-tight"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
+              >
+                Architects of<br />
+                <span className="text-gradient-gold italic pr-4">Premium</span> Apparel
+              </motion.h1>
+            </div>
+
+            {/* Subheadline */}
+            <motion.p
+              className="text-white/70 text-lg sm:text-xl max-w-xl leading-relaxed border-l-2 border-gold/50 pl-6 mb-12"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
             >
-              {["ISO 9001 Certified", "15+ Years Experience", "500+ Global Brands", "40+ Countries"].map((badge, i) => (
-                <motion.div
-                  key={badge}
-                  className="flex items-center gap-2"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.9 + i * 0.08 }}
-                >
-                  <CheckCircle className="w-4 h-4 text-gold" />
-                  <span>{badge}</span>
-                </motion.div>
-              ))}
+              Engineering precision streetwear for the world's leading independent brands. Where industrial scale meets artisanal craftsmanship.
+            </motion.p>
+
+            {/* Interactive CTAs */}
+            <motion.div
+              className="flex flex-col sm:flex-row items-center sm:items-stretch gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
+            >
+              <Link href="/rfq">
+                <Button className="relative overflow-hidden bg-gold text-black hover:bg-white transition-colors duration-500 font-condensed font-bold tracking-[0.15em] uppercase text-sm px-10 py-6 h-auto rounded-none group shadow-[0_0_40px_rgba(212,175,55,0.2)]">
+                  <span className="relative z-10 flex items-center gap-3">
+                    INITIATE PRODUCTION
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  {/* Subtle sweep effect */}
+                  <span className="absolute inset-0 w-20 h-full -translate-x-[150%] skew-x-[-20deg] bg-white/40 group-hover:animate-[sweep_1s_ease-in-out_forwards]" />
+                </Button>
+              </Link>
+
+              <Link href="/portfolio">
+                <Button variant="ghost" className="text-white hover:text-gold hover:bg-transparent font-condensed font-medium tracking-[0.1em] text-sm px-4 py-6 h-auto rounded-none group">
+                  Explore Our Capabilities
+                  <motion.span
+                    className="inline-block ml-3 group-hover:translate-x-2 transition-transform duration-300"
+                  >
+                    ⟶
+                  </motion.span>
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Interactive Trust Bar */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.4 }}
+          className="absolute bottom-0 left-0 right-0 z-20 border-t border-white/5 bg-black/20 backdrop-blur-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.2 }}
         >
-          <motion.div
-            className="w-px h-8 bg-gradient-to-b from-gold/60 to-transparent"
-            animate={{ scaleY: [1, 0.6, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <div className="w-1 h-1 rounded-full bg-gold/60" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex justify-between items-center text-white/60 text-xs sm:text-sm font-condensed tracking-widest uppercase">
+            <div className="flex gap-8 sm:gap-12 overflow-x-auto no-scrollbar whitespace-nowrap mask-edges max-w-full">
+              <span className="flex items-center gap-2"><CheckCircle className="w-3.5 h-3.5 text-gold/80" /> 15+ Years Excellence</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-3.5 h-3.5 text-gold/80" /> ISO 9001 Certified</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-3.5 h-3.5 text-gold/80" /> 80% Solar Powered</span>
+              <span className="hidden sm:flex items-center gap-2"><CheckCircle className="w-3.5 h-3.5 text-gold/80" /> 500+ Global Brands</span>
+            </div>
+
+            {/* Scroll indicator */}
+            <div className="hidden lg:flex items-center gap-4 pl-8 border-l border-white/10 h-[24px]">
+              <span className="text-[10px] text-white/40">SCROLL</span>
+              <div className="w-px h-8 bg-white/10 relative overflow-hidden">
+                <motion.div
+                  className="absolute top-0 left-0 w-full h-1/2 bg-gold"
+                  animate={{ y: ["-100%", "200%"] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
+            </div>
+          </div>
         </motion.div>
       </section>
 

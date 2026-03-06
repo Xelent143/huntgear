@@ -26,6 +26,7 @@ interface GeneratedProduct {
     category: string;
     shortDescription: string;
     description: string;
+    manufacturingStory: string;
     material: string;
     availableSizes: string[];
     availableColors: string[];
@@ -40,7 +41,9 @@ interface GeneratedProduct {
         label: string;
     }>;
     imagePrompt: string;
+    infographicPrompt: string;
     generatedImageUrl?: string;
+    generatedInfographicUrl?: string;
 }
 
 // ─── Product Preview Card ─────────────────────────────────────────────────────
@@ -55,8 +58,10 @@ function ProductPreview({
     product: GeneratedProduct;
     onPost: (product: GeneratedProduct) => void;
     onGenerateImage: () => void;
+    onGenerateInfographic: () => void;
     isPosting: boolean;
     isGeneratingImage: boolean;
+    isGeneratingInfographic: boolean;
 }) {
     const [expanded, setExpanded] = useState(false);
 
@@ -75,13 +80,22 @@ function ProductPreview({
 
             {/* Main Info */}
             <div className="p-4 space-y-3">
-                {product.generatedImageUrl && (
-                    <img
-                        src={product.generatedImageUrl}
-                        alt={product.title}
-                        className="w-full max-h-48 object-cover rounded-lg border border-border"
-                    />
-                )}
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                    {product.generatedImageUrl && (
+                        <img
+                            src={product.generatedImageUrl}
+                            alt={product.title}
+                            className="w-full max-w-[200px] max-h-48 object-cover rounded-lg border border-border shrink-0"
+                        />
+                    )}
+                    {product.generatedInfographicUrl && (
+                        <img
+                            src={product.generatedInfographicUrl}
+                            alt="Manufacturing Story Infographic"
+                            className="w-full max-w-[200px] max-h-48 object-cover rounded-lg border border-border shrink-0"
+                        />
+                    )}
+                </div>
 
                 <div>
                     <h3 className="font-serif text-lg font-bold text-foreground">{product.title}</h3>
@@ -161,23 +175,34 @@ function ProductPreview({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-2 p-4 pt-0">
+            <div className="flex flex-col gap-2 p-4 pt-0">
+                <div className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        className="flex-1 text-xs h-9 font-condensed font-semibold uppercase tracking-wider border-border"
+                        onClick={onGenerateImage}
+                        disabled={isGeneratingImage}
+                    >
+                        {isGeneratingImage ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <ImagePlus className="w-3.5 h-3.5 mr-1.5" />}
+                        {isGeneratingImage ? "Gen Image" : "🖼️ Image"}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        className="flex-1 text-xs h-9 font-condensed font-semibold uppercase tracking-wider border-border"
+                        onClick={onGenerateInfographic}
+                        disabled={isGeneratingInfographic}
+                    >
+                        {isGeneratingInfographic ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 mr-1.5" />}
+                        {isGeneratingInfographic ? "Gen Info..." : "📊 Infographic"}
+                    </Button>
+                </div>
                 <Button
-                    className="flex-1 bg-gold text-black hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider text-xs h-9"
+                    className="w-full bg-gold text-black hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider text-xs h-9"
                     onClick={() => onPost(product)}
                     disabled={isPosting}
                 >
                     {isPosting ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <CheckCircle className="w-3.5 h-3.5 mr-1.5" />}
                     {isPosting ? "Posting..." : "✅ Post to Website"}
-                </Button>
-                <Button
-                    variant="outline"
-                    className="flex-1 text-xs h-9 font-condensed font-semibold uppercase tracking-wider border-border"
-                    onClick={onGenerateImage}
-                    disabled={isGeneratingImage}
-                >
-                    {isGeneratingImage ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <ImagePlus className="w-3.5 h-3.5 mr-1.5" />}
-                    {isGeneratingImage ? "Generating..." : "🖼️ Generate Image"}
                 </Button>
             </div>
         </div>
@@ -200,6 +225,7 @@ export default function AIProductAgent() {
     const [logoFile, setLogoFile] = useState<{ base64: string; mimeType: string; name: string } | null>(null);
     const [isPosting, setIsPosting] = useState(false);
     const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+    const [isGeneratingInfographic, setIsGeneratingInfographic] = useState(false);
     const [lastDescription, setLastDescription] = useState("");
     const [showSettings, setShowSettings] = useState(false);
     const [apiKeyInput, setApiKeyInput] = useState("");
@@ -240,6 +266,7 @@ export default function AIProductAgent() {
     const chatMutation = trpc.aiAgent.chat.useMutation();
     const generateProductMutation = trpc.aiAgent.generateProduct.useMutation();
     const generateImageMutation = trpc.aiAgent.generateProductImage.useMutation();
+    const generateInfographicMutation = trpc.aiAgent.generateInfographic.useMutation();
     const createProductMutation = trpc.product.create.useMutation({
         onSuccess: () => {
             toast.success("🎉 Product posted to the website!", {
@@ -306,7 +333,7 @@ export default function AIProductAgent() {
                 modelId: researchModelId
             });
             setGeneratedProduct(product);
-            addMessage("model", `✅ Product listing generated for **"${product.title}"**!\n\nI've created:\n- Full SEO-optimized title and description\n- ${product.moqSlabs.length} MOQ price tiers\n- ${product.availableSizes.length} sizes and ${product.availableColors.length} colors\n- Complete meta tags and keywords\n\nReview the product card below. You can post it directly or generate an AI product image first (upload your logo for a branded result!)`);
+            addMessage("model", `✅ Product listing generated for **"${product.title}"**!\n\nI've created:\n- Full SEO-optimized title and description\n- ${product.moqSlabs.length} MOQ price tiers\n- ${product.availableSizes.length} sizes and ${product.availableColors.length} colors\n- Complete meta tags and keywords\n\nReview the product card below. You can generate a main product image, and a matching manufacturing infographic!`);
         } catch (err: any) {
             addMessage("model", `❌ Generation failed: ${err.message}`);
         } finally {
@@ -334,6 +361,24 @@ export default function AIProductAgent() {
         }
     };
 
+    const handleGenerateInfographic = async () => {
+        if (!generatedProduct || !generatedProduct.infographicPrompt) return;
+        setIsGeneratingInfographic(true);
+
+        try {
+            const { imageUrl } = await generateInfographicMutation.mutateAsync({
+                prompt: generatedProduct.infographicPrompt,
+                apiKey: apiKeyInput || undefined,
+            });
+            setGeneratedProduct((prev) => prev ? { ...prev, generatedInfographicUrl: imageUrl } : prev);
+            addMessage("model", `📊 Manufacturing process infographic generated successfully!\n\nIt is now shown in your product preview and will be displayed alongside the story on your website.`);
+        } catch (err: any) {
+            toast.error("Infographic generation failed", { description: err.message });
+        } finally {
+            setIsGeneratingInfographic(false);
+        }
+    };
+
     const sanitizePrice = (price: string | undefined): string | undefined => {
         if (!price) return undefined;
         const cleaned = String(price).replace(/[^0-9.]/g, "");
@@ -354,6 +399,8 @@ export default function AIProductAgent() {
                 category: product.category,
                 shortDescription: product.shortDescription || undefined,
                 description: product.description,
+                manufacturingStory: product.manufacturingStory || undefined,
+                manufacturingInfographic: product.generatedInfographicUrl || undefined,
                 material: product.material || undefined,
                 availableSizes: JSON.stringify(
                     Array.isArray(product.availableSizes) ? product.availableSizes : ["S", "M", "L", "XL"]
@@ -588,8 +635,10 @@ export default function AIProductAgent() {
                                     product={generatedProduct}
                                     onPost={handlePostProduct}
                                     onGenerateImage={handleGenerateImage}
+                                    onGenerateInfographic={handleGenerateInfographic}
                                     isPosting={isPosting}
                                     isGeneratingImage={isGeneratingImage}
+                                    isGeneratingInfographic={isGeneratingInfographic}
                                 />
                             )}
                         </div>
