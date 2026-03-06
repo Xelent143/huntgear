@@ -22,6 +22,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
+import AdminNewProduct from "./pages/AdminNewProduct";
 import Customize from "./pages/Customize";
 
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
@@ -49,6 +50,8 @@ function Router() {
       {/* Admin */}
       <Route path="/admin" component={Admin} />
       <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/product/new" component={AdminNewProduct} />
+      <Route path="/admin/product/edit/:id" component={AdminNewProduct} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
