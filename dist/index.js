@@ -1974,6 +1974,16 @@ var productRouter = router({
   }),
   // Admin: full list including inactive
   adminList: adminProcedure3.query(() => getAllProducts()),
+  byId: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).query(async ({ input }) => {
+    const product = await getProductById(input.id);
+    if (!product) return null;
+    const [images, slabs, sizeChart] = await Promise.all([
+      getProductImages(product.id),
+      getSlabPrices(product.id),
+      getSizeChart(product.id)
+    ]);
+    return { ...product, images, slabs, sizeChart: sizeChart ?? null };
+  }),
   create: adminProcedure3.input(z3.object({
     title: z3.string().min(1).max(500),
     slug: z3.string().min(1).max(255).regex(/^[a-z0-9-]+$/),
@@ -2250,6 +2260,16 @@ var orderRouter = router({
   }),
   byNumber: publicProcedure.input(z3.object({ orderNumber: z3.string() })).query(async ({ input }) => getOrderByNumber(input.orderNumber)),
   adminList: adminProcedure3.query(() => getAllOrders()),
+  adminStats: adminProcedure3.query(async () => {
+    const all = await getAllOrders();
+    const paidOrders = all.filter((o) => ["paid", "processing", "shipped", "delivered"].includes(o.status));
+    const totalRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.totalAmount), 0);
+    return {
+      totalRevenue: totalRevenue.toFixed(2),
+      orderCount: all.length,
+      paidOrderCount: paidOrders.length
+    };
+  }),
   updateStatus: adminProcedure3.input(z3.object({
     id: z3.number().int().positive(),
     status: z3.enum(["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"])
@@ -2359,6 +2379,7 @@ var portfolioRouter = router({
   // Public queries
   list: publicProcedure.input(z3.object({ category: z3.string().optional() }).optional()).query(({ input }) => listPortfolioItems({ category: input?.category, onlyActive: true })),
   categories: publicProcedure.query(() => getPortfolioCategories()),
+  adminList: adminProcedure3.query(() => listPortfolioItems({ onlyActive: false })),
   byId: publicProcedure.input(z3.object({ id: z3.number() })).query(({ input }) => getPortfolioItemWithImages(input.id)),
   // Admin: create portfolio item
   create: protectedProcedure.input(z3.object({
@@ -2407,7 +2428,7 @@ var portfolioRouter = router({
   }),
   // Admin: upload image to S3 and attach to portfolio item
   uploadImage: protectedProcedure.input(z3.object({
-    portfolioItemId: z3.number(),
+    portfolioItemId: z3.number().optional(),
     imageBase64: z3.string(),
     mimeType: z3.string().default("image/jpeg"),
     altText: z3.string().optional(),
@@ -2417,21 +2438,24 @@ var portfolioRouter = router({
     if (ctx.user.role !== "admin") throw new TRPCError4({ code: "FORBIDDEN" });
     const buffer = Buffer.from(input.imageBase64, "base64");
     const ext = input.mimeType.split("/")[1] || "jpg";
-    const fileKey = `portfolio/${input.portfolioItemId}/${nanoid2(10)}.${ext}`;
+    const fileKey = input.portfolioItemId ? `portfolio/${input.portfolioItemId}/${nanoid2(10)}.${ext}` : `portfolio/temp/${nanoid2(10)}.${ext}`;
     const { url } = await storagePut(fileKey, buffer, input.mimeType);
-    const img = await addPortfolioImage({
-      portfolioItemId: input.portfolioItemId,
-      imageUrl: url,
-      fileKey,
-      altText: input.altText,
-      caption: input.caption,
-      sortOrder: input.sortOrder ?? 0
-    });
-    const existing = await getPortfolioItemWithImages(input.portfolioItemId);
-    if (existing && existing.images.length === 1) {
-      await updatePortfolioItem(input.portfolioItemId, { coverImage: url, ogImage: url });
+    if (input.portfolioItemId) {
+      const img = await addPortfolioImage({
+        portfolioItemId: input.portfolioItemId,
+        imageUrl: url,
+        fileKey,
+        altText: input.altText,
+        caption: input.caption,
+        sortOrder: input.sortOrder ?? 0
+      });
+      const existing = await getPortfolioItemWithImages(input.portfolioItemId);
+      if (existing && existing.images.length === 1) {
+        await updatePortfolioItem(input.portfolioItemId, { coverImage: url, ogImage: url });
+      }
+      return img;
     }
-    return img;
+    return { url };
   }),
   // Admin: delete a single image
   deleteImage: protectedProcedure.input(z3.object({ imageId: z3.number() })).mutation(async ({ ctx, input }) => {
