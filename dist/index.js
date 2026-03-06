@@ -1982,7 +1982,7 @@ var productRouter = router({
   })).mutation(async ({ input }) => {
     const buffer = Buffer.from(input.imageBase64, "base64");
     const ext = input.mimeType.split("/")[1] ?? "jpg";
-    const key = `products/${input.productId}/${nanoid2(10)}.${ext}`;
+    const key = `products-${input.productId}-${nanoid2(10)}.${ext}`;
     const { url } = await storagePut(key, buffer, input.mimeType);
     await addProductImage({
       productId: input.productId,
