@@ -167,6 +167,7 @@ export default function AdminNewProduct() {
     const [isAiLoading, setIsAiLoading] = useState(false);
     const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
     const aiAnalyzeImageMutation = trpc.aiAgent.analyzeUploadedProductImage.useMutation();
+    const generateInfographicMutation = trpc.aiAgent.generateInfographic.useMutation();
     const uploadImageMutation = trpc.product.uploadImage.useMutation();
     const mainImagePatchMutation = trpc.product.update.useMutation();
 
@@ -180,6 +181,8 @@ export default function AdminNewProduct() {
         category: "Streetwear",
         shortDescription: "",
         description: "",
+        manufacturingStory: "",
+        manufacturingInfographic: "",
         mainImage: "",
         samplePrice: "",
         weight: "",
@@ -221,6 +224,8 @@ export default function AdminNewProduct() {
                 category: editProduct.category ?? "Streetwear",
                 shortDescription: editProduct.shortDescription ?? "",
                 description: editProduct.description ?? "",
+                manufacturingStory: (editProduct as any).manufacturingStory ?? "",
+                manufacturingInfographic: (editProduct as any).manufacturingInfographic ?? "",
                 mainImage: editProduct.mainImage ?? "",
                 samplePrice: editProduct.samplePrice ?? "",
                 weight: editProduct.weight ?? "",
@@ -319,6 +324,15 @@ export default function AdminNewProduct() {
 
                 const { product } = await aiAnalyzeImageMutation.mutateAsync({ base64, mimeType: firstImage.type || "image/jpeg" });
 
+                let infographicUrl = "";
+                if (product.infographicPrompt) {
+                    toast.info("Generating manufacturing infographic...", { id: "ai-fill" });
+                    try {
+                        const infoRes = await generateInfographicMutation.mutateAsync({ prompt: product.infographicPrompt });
+                        infographicUrl = infoRes.imageUrl;
+                    } catch (err) { console.warn("Failed to generate infographic during auto-fill", err); }
+                }
+
                 const sanitizePrice = (p: string | undefined) => {
                     if (!p) return "";
                     const n = parseFloat(String(p).replace(/[^0-9.]/g, ""));
@@ -332,6 +346,8 @@ export default function AdminNewProduct() {
                     category: product.category || prev.category,
                     shortDescription: product.shortDescription || prev.shortDescription,
                     description: product.description || prev.description,
+                    manufacturingStory: product.manufacturingStory || prev.manufacturingStory,
+                    manufacturingInfographic: infographicUrl || prev.manufacturingInfographic,
                     material: product.material || prev.material,
                     weight: product.weight || prev.weight,
                     availableSizes: JSON.stringify(product.availableSizes || ["S", "M", "L", "XL"]),
@@ -370,6 +386,16 @@ export default function AdminNewProduct() {
         toast.info("AI is researching your product...", { id: "ai-fill" });
         try {
             const { product } = await aiGenerateMutation.mutateAsync({ description: form.title });
+
+            let infographicUrl = "";
+            if (product.infographicPrompt) {
+                toast.info("Generating manufacturing infographic...", { id: "ai-fill" });
+                try {
+                    const infoRes = await generateInfographicMutation.mutateAsync({ prompt: product.infographicPrompt });
+                    infographicUrl = infoRes.imageUrl;
+                } catch (err) { console.warn("Failed to generate infographic during auto-fill", err); }
+            }
+
             const sanitizePrice = (p: string | undefined) => {
                 if (!p) return "";
                 const n = parseFloat(String(p).replace(/[^0-9.]/g, ""));
@@ -381,6 +407,8 @@ export default function AdminNewProduct() {
                 category: (product.category || f.category).substring(0, 100),
                 shortDescription: (product.shortDescription || f.shortDescription).substring(0, 500),
                 description: product.description || f.description,
+                manufacturingStory: product.manufacturingStory || f.manufacturingStory,
+                manufacturingInfographic: infographicUrl || f.manufacturingInfographic,
                 material: (product.material || f.material).substring(0, 250),
                 availableSizes: Array.isArray(product.availableSizes) ? JSON.stringify(product.availableSizes) : f.availableSizes,
                 availableColors: Array.isArray(product.availableColors) ? JSON.stringify(product.availableColors) : f.availableColors,
@@ -607,6 +635,21 @@ export default function AdminNewProduct() {
                                 <div>
                                     <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Full Description</Label>
                                     <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={6} className="bg-background leading-relaxed" />
+                                </div>
+
+                                <div>
+                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Story</Label>
+                                    <Textarea value={form.manufacturingStory} onChange={e => setForm(f => ({ ...f, manufacturingStory: e.target.value }))} rows={4} className="bg-background leading-relaxed" />
+                                </div>
+
+                                <div>
+                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Infographic URL</Label>
+                                    <Input value={form.manufacturingInfographic} onChange={e => setForm(f => ({ ...f, manufacturingInfographic: e.target.value }))} placeholder="https://..." className="bg-background h-12" />
+                                    {form.manufacturingInfographic && (
+                                        <div className="mt-2">
+                                            <img src={form.manufacturingInfographic} alt="Infographic" className="max-h-32 rounded border border-border" />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </section>

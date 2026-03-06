@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
-import { FadeIn, StaggerChildren, AnimatedChild, HoverCard, PageWrapper } from "@/components/animations";
+import { FadeIn, PageWrapper } from "@/components/animations";
 
 const products = [
   {
@@ -166,34 +166,40 @@ export default function Products() {
         ]}
       />
 
-      {/* Hero */}
-      <section className="relative pt-16 pb-20 bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* ── Light Elite Hero ── */}
+      <section className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-[#F8F9FA] border-b border-border overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <FadeIn direction="down" delay={0.1}>
-            <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Product Catalog</p>
+            <div className="inline-flex items-center justify-center gap-4 mb-8">
+              <span className="w-10 h-px bg-gold" />
+              <p className="text-gold font-condensed font-bold tracking-[0.4em] uppercase text-[10px] sm:text-xs">
+                Production Capabilities
+              </p>
+              <span className="w-10 h-px bg-gold" />
+            </div>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6 speakable-title">
-              6 Specialist Categories,
+            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-[1.05] tracking-tighter speakable-title">
+              6 Specialist Divisions,
               <br />
-              <span className="text-gradient-gold italic">One Trusted Manufacturer</span>
+              <span className="text-gradient-gold italic font-light">One Master Facility</span>
             </h1>
             <p className="speakable-description hidden">Sialkot Sample Masters specializes in manufacturing custom hunting wear, sports wear, ski wear, tech wear, streetwear, and security uniforms in Pakistan.</p>
           </FadeIn>
           <FadeIn delay={0.3}>
-            <div className="gold-divider mx-auto" />
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-6">
-              From alpine ski shells to competition-grade gis — Sialkot Sample Masters manufactures across six high-demand performance and lifestyle categories, all from our facility in Sialkot, Pakistan.
+            <p className="text-foreground/70 font-light text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
+              From alpine ski shells to competition-grade gis — we engineer across six high-demand performance and lifestyle categories, all under one roof in Sialkot, Pakistan.
             </p>
           </FadeIn>
           {/* Category Quick Nav */}
           <FadeIn delay={0.4}>
-            <div className="flex flex-wrap justify-center gap-2 mt-8">
+            <div className="flex flex-wrap justify-center gap-3 mt-12">
               {products.map((p) => (
                 <a
                   key={p.id}
                   href={`#${p.id}`}
-                  className="text-xs font-condensed font-semibold tracking-widest uppercase px-4 py-2 border border-gold/30 text-gold hover:bg-gold/10 rounded-sm transition-colors"
+                  className="text-[10px] font-condensed font-bold tracking-[0.2em] uppercase px-6 py-3 border border-border bg-white text-foreground/70 shadow-sm hover:shadow-md hover:text-white hover:bg-foreground hover:border-foreground transition-all duration-300"
                 >
                   {p.name.replace("Custom ", "")}
                 </a>
@@ -203,74 +209,100 @@ export default function Products() {
         </div>
       </section>
 
-      {/* Products */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28">
+      {/* ── Light Elite Products Showcase ── */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-40">
           {products.map((product, i) => (
-            <FadeIn key={product.id} direction={i % 2 === 0 ? "left" : "right"}>
+            <FadeIn key={product.id} direction="up" delay={0.1}>
               <div
                 id={product.id}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center"
               >
-                {/* Image */}
-                <div className={`relative overflow-hidden rounded-sm aspect-square ${i % 2 !== 0 ? "lg:order-2" : ""}`}>
+                {/* Image Section */}
+                <div className={`relative w-full h-full min-h-[550px] overflow-hidden group border border-border shadow-sm hover:shadow-xl transition-shadow duration-700 ${i % 2 !== 0 ? "lg:col-span-5 lg:order-2" : "lg:col-span-7"}`}>
+                  <div className="absolute inset-0 bg-[#F8F9FA] z-0" />
                   <img
                     src={product.image}
                     alt={`${product.name} - Custom Manufacturer Pakistan | Sialkot Sample Masters`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-[2s] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-105 z-10"
                     loading="lazy"
                   />
+
+                  {/* Elite Image Overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent pointer-events-none z-20" />
+                  <div className="absolute inset-0 border border-border z-20 pointer-events-none" />
+
+                  {/* Category Tag */}
                   {product.tag && (
-                    <div className="absolute top-4 left-4 bg-gold text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
+                    <div className="absolute top-6 left-6 z-30 bg-white/95 backdrop-blur-md border border-border text-foreground text-[9px] font-condensed font-bold tracking-[0.3em] uppercase px-5 py-2.5 shadow-sm">
+                      <span className="text-gold mr-3">/</span>
                       {product.tag}
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent pointer-events-none" />
-                </div>
 
-                {/* Content */}
-                <div className={`${i % 2 !== 0 ? "lg:order-1" : ""} text-left`}>
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">{product.name}</h2>
-                  <div className="gold-divider" />
-                  <p className="text-muted-foreground leading-relaxed mt-4 mb-6">{product.description}</p>
-
-                  {/* Specs Table */}
-                  <div className="bg-card border border-border rounded-sm overflow-hidden mb-6 text-left">
-                    <div className="px-4 py-2.5 border-b border-border bg-background/50">
-                      <h3 className="font-condensed font-semibold text-foreground uppercase tracking-widest text-xs">Technical Specifications</h3>
-                    </div>
-                    <div className="divide-y divide-border">
-                      {product.specs.map((spec) => (
-                        <div key={spec.label} className="flex px-4 py-2.5">
-                          <span className="text-muted-foreground text-sm w-40 shrink-0 font-medium">{spec.label}</span>
-                          <span className="text-foreground text-sm">{spec.value}</span>
-                        </div>
-                      ))}
+                  {/* Floating Specs overlay on hover (Desktop) */}
+                  <div className="absolute bottom-6 left-6 right-6 z-30 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 hidden md:block">
+                    <div className="p-6 bg-white/95 backdrop-blur-md border border-border shadow-2xl grid grid-cols-2 gap-6">
+                      <div className="space-y-1.5">
+                        <p className="text-[9px] text-foreground/50 uppercase tracking-[0.3em]">Minimum Order</p>
+                        <p className="font-condensed font-bold text-foreground tracking-widest text-sm">{product.specs.find(s => s.label === "Minimum Order")?.value}</p>
+                      </div>
+                      <div className="space-y-1.5">
+                        <p className="text-[9px] text-foreground/50 uppercase tracking-[0.3em]">Lead Time</p>
+                        <p className="font-condensed font-bold text-gold tracking-widest text-sm">{product.specs.find(s => s.label === "Lead Time")?.value}</p>
+                      </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* Features */}
-                  <div className="mb-8 text-left">
-                    <h3 className="font-condensed font-semibold text-foreground uppercase tracking-widest text-xs mb-3">Key Features</h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Content Section */}
+                <div className={`flex flex-col text-left ${i % 2 !== 0 ? "lg:col-span-7 lg:order-1" : "lg:col-span-5"}`}>
+                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight">
+                    {product.name}
+                  </h2>
+                  <p className="text-foreground/70 font-light text-base leading-relaxed mb-10 border-l border-gold/40 pl-6">
+                    {product.description}
+                  </p>
+
+                  {/* Elite Bento Specs */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border mb-12 shadow-sm">
+                    {product.specs.map((spec) => (
+                      <div key={spec.label} className="bg-white p-6 hover:bg-[#FDFCFB] transition-colors duration-300">
+                        <span className="block text-gold text-[9px] font-bold uppercase tracking-[0.2em] mb-2">{spec.label}</span>
+                        <span className="block text-foreground text-xs leading-relaxed font-light">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Elite Features List */}
+                  <div className="mb-12">
+                    <h3 className="font-condensed font-bold text-foreground uppercase tracking-[0.3em] text-[10px] mb-6 flex items-center gap-4">
+                      <span className="w-6 h-px bg-gold" />
+                      Engineering Details
+                    </h3>
+                    <ul className="grid grid-cols-1 gap-5">
                       {product.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2.5">
+                        <li key={f} className="flex items-start gap-4">
                           <CheckCircle className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                          <span className="text-foreground text-sm">{f}</span>
+                          <span className="text-foreground/70 text-sm font-light leading-relaxed">{f}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="flex flex-wrap gap-3 justify-start">
+                  {/* Actions */}
+                  <div className="flex flex-wrap gap-4 pt-8 border-t border-border">
                     <Link href="/rfq">
-                      <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm">
-                        Get a Quote <ArrowRight className="ml-2 w-4 h-4" />
+                      <Button className="bg-foreground text-background hover:bg-gold hover:text-foreground transition-all duration-500 font-condensed font-bold tracking-[0.2em] uppercase text-[10px] px-8 py-7 h-auto rounded-none group/btn shadow-xl shadow-black/10">
+                        <span className="flex items-center gap-3">
+                          Initiate Technical Quote
+                          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-2 transition-transform" />
+                        </span>
                       </Button>
                     </Link>
-                    <Link href="/shop">
-                      <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent">
-                        View in Shop
+                    <Link href={`/shop?category=${encodeURIComponent(product.name.replace("Custom ", ""))}`}>
+                      <Button variant="outline" className="border-border text-foreground hover:bg-[#F8F9FA] hover:text-gold font-condensed font-bold tracking-[0.2em] uppercase text-[10px] px-8 py-7 h-auto rounded-none transition-all duration-300 shadow-sm hover:shadow-md bg-white">
+                        View Retail Catalog
                       </Button>
                     </Link>
                   </div>
@@ -281,25 +313,35 @@ export default function Products() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-card border-t border-border">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+      {/* ── Light Elite CTA ── */}
+      <section className="py-40 bg-[#F8F9FA] border-t border-border relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <FadeIn>
-            <h2 className="font-serif text-4xl font-bold text-foreground mb-4">
-              Need a Custom Category?
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              We manufacture beyond these six categories. If you have a specific product in mind, our design and production team will work with you from concept to delivery.
+            <p className="text-gold font-condensed font-bold uppercase tracking-[0.4em] text-[10px] mb-8 inline-block border border-gold px-6 py-2 bg-white shadow-sm">
+              Bespoke Manufacturing
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <h2 className="font-serif text-5xl sm:text-6xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter">
+              Require a Custom
+              <br />
+              <span className="text-gradient-gold italic font-light">Production Category?</span>
+            </h2>
+            <p className="text-foreground/60 font-light text-xl mb-14 max-w-2xl mx-auto leading-relaxed">
+              Our engineering capabilities extend beyond these core divisions. Engage our master pattern makers to architect your proprietary custom garment designs from ground up.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/rfq">
-                <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm">
-                  Request Custom Quote
+                <Button className="bg-foreground text-background hover:bg-gold hover:text-foreground transition-all duration-500 font-condensed font-bold tracking-[0.2em] uppercase text-[11px] px-12 py-7 h-auto rounded-none group shadow-2xl shadow-black/10">
+                  <span className="flex items-center gap-4">
+                    Submit Technical Pack
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                  </span>
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
-                  Contact Us
+                <Button variant="outline" className="border-border text-foreground hover:bg-white hover:text-gold font-condensed font-bold tracking-[0.2em] uppercase text-[11px] px-12 py-7 h-auto rounded-none transition-all duration-300 shadow-sm hover:shadow-md bg-transparent">
+                  Consult an Engineer
                 </Button>
               </Link>
             </div>

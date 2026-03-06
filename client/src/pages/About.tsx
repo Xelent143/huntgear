@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { CheckCircle, Award, Globe, Users, ArrowRight, Shield, Leaf, Clock } from "lucide-react";
+import { Award, Globe, Users, ArrowRight, Shield, Leaf, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
@@ -8,7 +8,6 @@ import {
   FadeIn,
   StaggerChildren,
   AnimatedChild,
-  HoverCard,
   PageWrapper,
   SectionHeading,
 } from "@/components/animations";
@@ -90,100 +89,104 @@ export default function About() {
         ]}
       />
 
-      {/* ── Hero ── */}
-      <section
-        className="relative pt-16 pb-20 overflow-hidden"
-        style={{ backgroundImage: `url(${IMAGES.aboutBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      >
-        <motion.div
-          className="absolute inset-0 bg-black/70"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+      {/* ── Light Elite Hero ── */}
+      <section className="relative pt-32 pb-32 lg:pt-48 lg:pb-40 overflow-hidden bg-white">
+        {/* Cinematic Parallax Background (Light) */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10s] ease-out scale-105 hover:scale-100 grayscale-[0.2]"
+          style={{ backgroundImage: `url(${IMAGES.aboutBg})` }}
         />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F8F9FA] via-transparent to-white/50" />
+
+        {/* Subtle geometric overlay (Light) */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <FadeIn direction="down" delay={0.1}>
-              <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">The Sialkot Sample Masters Advantage</p>
+              <div className="inline-flex items-center gap-4 mb-10">
+                <span className="w-10 h-px bg-gold" />
+                <p className="text-gold font-condensed font-bold tracking-[0.4em] uppercase text-[10px] sm:text-xs">
+                  The Vanguard of Sialkot
+                </p>
+              </div>
             </FadeIn>
+
             <FadeIn delay={0.2}>
-              <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight speakable-title">
-                Your Strategic Partner in
-                <br />
-                <span className="text-gradient-gold italic">Global Apparel Manufacturing</span>
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter">
+                Engineering <br />
+                <span className="text-gradient-gold italic font-light">Global Apparel</span>
               </h1>
-              <p className="speakable-description hidden">Sialkot Sample Masters is a trusted OEM/ODM partner for 500+ global brands, specializing in high-performance and luxury apparel manufacturing in Pakistan.</p>
             </FadeIn>
+
             <FadeIn delay={0.3}>
-              <div className="gold-divider" />
-              <p className="text-slate-200 text-lg leading-relaxed mt-6 max-w-2xl">
-                For over 15 years, Sialkot Sample Masters has been the trusted OEM/ODM partner for 500+ global brands. We bridge the gap between creative concept and retail-ready production with specialized expertise in high-performance and luxury apparel.
+              <p className="text-foreground/70 font-light text-lg sm:text-xl leading-relaxed max-w-2xl mb-12 border-l border-gold/30 pl-8">
+                For over a decade, we have operated as the silent architectural force behind 500+ premier brands. We bridge the critical gap between conceptual design and commercial-scale production.
               </p>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* ── SEO Trust Bar ── */}
-      <section className="bg-card border-b border-border py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div>
-              <p className="text-gold font-bold text-2xl">15+ Years</p>
-              <p className="text-muted-foreground text-xs uppercase tracking-widest">Industry Expertise</p>
+      {/* ── Light Elite Trust Bar ── */}
+      <section className="bg-[#F8F9FA] border-b border-border relative z-20 -mt-10 lg:-mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 bg-white border border-border shadow-2xl shadow-black/5">
+          {[
+            { stat: "15+", label: "Years Legacy" },
+            { stat: "500+", label: "Brand Partners" },
+            { stat: "ISO", label: "9001:2015" },
+            { stat: "80%", label: "Solar Powered" },
+          ].map((item, i) => (
+            <div key={i} className={`p-10 text-center ${i < 3 ? 'md:border-r md:border-border' : ''} ${i % 2 === 0 ? 'border-r border-border md:border-r-0' : ''} ${i < 2 ? 'border-b border-border md:border-b-0' : ''} hover:bg-secondary/20 transition-colors duration-500`}>
+              <p className="text-foreground font-serif italic text-4xl mb-3">{item.stat}</p>
+              <p className="text-gold font-condensed font-bold text-[10px] uppercase tracking-[0.3em]">{item.label}</p>
             </div>
-            <div>
-              <p className="text-gold font-bold text-2xl">500+ Brands</p>
-              <p className="text-muted-foreground text-xs uppercase tracking-widest">Global Partnerships</p>
-            </div>
-            <div>
-              <p className="text-gold font-bold text-2xl">ISO 9001</p>
-              <p className="text-muted-foreground text-xs uppercase tracking-widest">Certified Quality</p>
-            </div>
-            <div>
-              <p className="text-gold font-bold text-2xl">80% Solar</p>
-              <p className="text-muted-foreground text-xs uppercase tracking-widest">Renewable Energy</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ── Mission & Story ── */}
-      <section className="section-padding">
+      {/* ── Light Elite Mission & Story ── */}
+      <section className="py-32 bg-white relative border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <FadeIn direction="left">
-              <div>
-                <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Expertise & Heritage</p>
-                <h2 className="font-serif text-4xl font-bold text-foreground mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
+
+            <FadeIn direction="left" className="lg:col-span-6">
+              <div className="relative">
+                <p className="text-gold font-condensed font-bold tracking-[0.4em] uppercase text-[10px] sm:text-xs mb-8 flex items-center gap-4">
+                  <span className="w-10 h-px bg-gold" />
+                  Expertise & Heritage
+                </p>
+                <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-10 leading-[1.05] tracking-tight">
                   Sialkot’s Premier Specialist in
-                  <span className="text-gradient-gold italic"> High-Frequency Apparel</span>
+                  <br />
+                  <span className="text-gradient-gold italic font-light">High-Frequency Apparel</span>
                 </h2>
-                <div className="gold-divider" />
-                <div className="space-y-4 mt-6 text-muted-foreground leading-relaxed">
+
+                <div className="space-y-6 text-foreground/70 font-light text-sm sm:text-base leading-relaxed max-w-lg">
                   <p>
-                    Headquartered in Sialkot, Pakistan — the global epicenter of textile excellence — Sialkot Sample Masters specializes in the complex manufacturing requirements of modern apparel brands. We are not just a factory; we are an engineering-led production house equipped with over 50+ in-house specialized sewing machines and advanced pattern-drafting technology.
+                    Headquartered in Sialkot, Pakistan — the historic global epicenter of textile excellence — Sialkot Sample Masters engineers the complex manufacturing requirements of elite modern apparel brands. We are not a conventional factory; we are a specialized production atelier equipped with over 50+ cutting-edge industrial machines and proprietary pattern-drafting algorithms.
                   </p>
                   <p>
-                    Our facility is a vertically integrated hub for Sublimation, Screen Printing, DTF, and DTG, allowing us to maintain absolute quality control. We specialize in six critical categories: high-performance Sportswear, tactical Hunting Wear, premium Streetwear, professional Security Uniforms, functional Techwear, and technical Ski Wear.
+                    Our facility operates as a vertically integrated hub for Sublimation, Screen Printing, DTF, and DTG, ensuring absolute quality control across six critical domains: Sportswear, Hunting Wear, Streetwear, Security Uniforms, Techwear, and professional Ski Wear.
                   </p>
-                  <p>
-                    Sustainability as a Standard: We lead the industry in eco-conscious manufacturing. With 80% of our production powered by renewable solar energy, we help brands reduce their carbon footprint without compromising on the durability or performance of the final garment.
+                  <p className="pl-6 border-l-2 border-gold/30 italic text-foreground/60 mt-8 font-serif">
+                    "Sustainability engineered as standard: With 80% of our production powered by renewable solar energy, we reduce the carbon footprint of your supply chain without compromising technical performance."
                   </p>
                 </div>
               </div>
             </FadeIn>
 
-            <FadeIn direction="right" delay={0.1}>
-              <StaggerChildren className="grid grid-cols-2 gap-4" stagger={0.07}>
+            <FadeIn direction="right" delay={0.2} className="lg:col-span-5 lg:col-start-8">
+              <StaggerChildren className="grid grid-cols-2 gap-px bg-border border border-border" stagger={0.1}>
                 {capabilities.map((cap) => (
-                  <AnimatedChild key={cap.label} direction="scale">
-                    <HoverCard>
-                      <div className="bg-card border border-border rounded-sm p-4 hover:border-gold/30 transition-colors">
-                        <div className="text-2xl font-condensed font-bold text-gold mb-1">{cap.value}</div>
-                        <div className="text-muted-foreground text-xs uppercase tracking-wide">{cap.label}</div>
+                  <AnimatedChild key={cap.label} direction="up">
+                    <div className="bg-white p-8 hover:bg-[#FDFCFB] transition-colors duration-500 group relative overflow-hidden h-full flex flex-col justify-center">
+                      <div className="relative z-10">
+                        <div className="text-3xl font-serif italic text-foreground mb-3 group-hover:text-gold transition-colors duration-500">{cap.value}</div>
+                        <div className="text-foreground/40 font-condensed font-bold text-[9px] uppercase tracking-[0.3em] leading-tight">{cap.label}</div>
                       </div>
-                    </HoverCard>
+                    </div>
                   </AnimatedChild>
                 ))}
               </StaggerChildren>
@@ -192,43 +195,46 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Timeline ── */}
-      <section className="section-padding bg-card border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Light Elite Timeline ── */}
+      <section className="py-32 bg-[#F8F9FA] relative border-b border-border overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
-            label="Our Journey"
-            title="15 Years of Growth"
-            className="mb-16"
+            label="Corporate Archive"
+            title="15 Years of Evolution"
+            className="mb-24 text-center"
           />
 
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
-            <div className="space-y-8">
+          <div className="relative max-w-4xl mx-auto">
+            {/* Architectural Center Line (Light) */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
+
+            <div className="space-y-16">
               {milestones.map((m, i) => (
                 <motion.div
                   key={m.year}
-                  className={`relative flex flex-col md:flex-row gap-6 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-60px 0px" }}
-                  transition={{ duration: 0.55, delay: 0.05, ease: "easeOut" }}
+                  className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px 0px" }}
+                  transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="md:w-1/2 md:px-10 pl-10 md:pl-0">
-                    <HoverCard>
-                      <div className={`bg-background border border-border rounded-sm p-5 hover:border-gold/30 transition-colors ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                        <span className="text-gold font-condensed font-bold text-xl">{m.year}</span>
-                        <h3 className="text-foreground font-semibold mt-1 mb-2">{m.title}</h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{m.desc}</p>
-                      </div>
-                    </HoverCard>
+                  {/* Timeline Node (Light) */}
+                  <div className="absolute left-[20px] md:left-1/2 top-8 w-4 h-4 rounded-none bg-white border border-gold/50 md:-translate-x-1/2 rotate-45 z-20 flex items-center justify-center shadow-sm">
+                    <div className="w-1.5 h-1.5 bg-gold" />
                   </div>
-                  <motion.div
-                    className="absolute left-4 md:left-1/2 top-5 w-3 h-3 rounded-full bg-gold border-2 border-background md:-translate-x-1/2"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                  />
+
+                  {/* Content Panel (Light) */}
+                  <div className="md:w-1/2 pl-16 md:pl-0 md:px-12 w-full">
+                    <div className={`relative p-10 bg-white border border-border shadow-sm hover:shadow-xl hover:shadow-black/5 hover:border-gold/30 transition-all duration-500 group ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
+                      {/* Decorative Line linking to center node */}
+                      <div className={`absolute top-[42px] w-12 h-px bg-border group-hover:bg-gold/30 transition-colors duration-500 hidden md:block ${i % 2 === 0 ? "-right-12" : "-left-12"}`} />
+
+                      <span className="text-gold font-serif text-4xl italic leading-none mb-5 block group-hover:text-foreground transition-colors duration-500">{m.year}</span>
+                      <h3 className="text-foreground font-condensed font-bold text-sm tracking-[0.2em] uppercase mb-4">{m.title}</h3>
+                      <p className="text-foreground/60 font-light text-sm leading-relaxed">{m.desc}</p>
+                    </div>
+                  </div>
+
                   <div className="hidden md:block md:w-1/2" />
                 </motion.div>
               ))}
@@ -237,88 +243,98 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Values ── */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Light Elite Values ── */}
+      <section className="py-32 bg-white relative border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
-            label="Our Values"
-            title="What Drives Everything We Do"
-            className="mb-16"
+            label="Core Philosophy"
+            title="What Drives Our Production"
+            className="mb-24 text-center"
           />
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.1}>
+
+          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" stagger={0.1}>
             {values.map((v) => (
               <AnimatedChild key={v.title} direction="up">
-                <HoverCard className="h-full">
-                  <div className="bg-card border border-border rounded-sm p-6 hover:border-gold/30 transition-colors text-center h-full">
-                    <motion.div
-                      className="w-12 h-12 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-4"
-                      whileHover={{ rotate: 5, scale: 1.1, transition: { duration: 0.2 } }}
-                    >
-                      <v.icon className="w-6 h-6 text-gold" />
-                    </motion.div>
-                    <h3 className="font-condensed font-bold text-foreground uppercase tracking-wide mb-2">{v.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{v.desc}</p>
+                <div className="relative bg-[#FDFCFB] border border-border p-10 hover:border-gold/30 hover:bg-white transition-all duration-500 group h-full overflow-hidden hover:shadow-xl hover:shadow-black/5">
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-none border border-border flex items-center justify-center mb-8 group-hover:border-gold group-hover:bg-gold/5 transition-all duration-500">
+                      <v.icon className="w-6 h-6 text-foreground/30 group-hover:text-gold transition-colors duration-500" />
+                    </div>
+
+                    <h3 className="font-condensed font-bold text-foreground text-[11px] uppercase tracking-[0.2em] mb-4 group-hover:text-gold transition-colors duration-500">
+                      {v.title}
+                    </h3>
+
+                    <p className="text-foreground/60 font-light text-xs leading-relaxed group-hover:text-foreground/80 transition-colors duration-500">
+                      {v.desc}
+                    </p>
                   </div>
-                </HoverCard>
+                </div>
               </AnimatedChild>
             ))}
           </StaggerChildren>
         </div>
       </section>
 
-      {/* ── Certifications (Seal Style) ── */}
-      <section id="certifications" className="section-padding bg-black/5 border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Light Elite Certifications (Seal Style) ── */}
+      <section id="certifications" className="py-32 bg-[#F8F9FA] relative border-b border-border overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading
             label="Compliance & Standards"
             title="Internationally Certified Facility"
-            className="mb-12"
+            className="mb-24 text-center"
           />
-          <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-8" stagger={0.1}>
+          <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-12" stagger={0.15}>
             {certifications.map((cert) => (
               <AnimatedChild key={cert.name} direction="scale">
-                <motion.div
-                  className="flex flex-col items-center text-center group cursor-default"
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Circular seal */}
-                  <div className="cert-seal w-28 h-28 flex flex-col items-center justify-center mb-4 bg-card">
-                    <motion.div whileHover={{ rotate: -8, scale: 1.1, transition: { duration: 0.25 } }}>
-                      <cert.icon className="w-8 h-8 text-gold mb-1" />
-                    </motion.div>
-                    <span className="text-[9px] font-condensed font-bold text-gold/70 uppercase tracking-widest leading-tight px-2 text-center">{cert.name}</span>
+                <div className="flex flex-col items-center text-center group cursor-default">
+                  {/* Circular elite seal (Light) */}
+                  <div className="relative w-36 h-36 flex flex-col items-center justify-center mb-8 bg-white rounded-full shadow-sm hover:shadow-xl transition-shadow duration-700 border border-border">
+                    <div className="absolute inset-1 border border-border rounded-full group-hover:border-gold/30 group-hover:bg-gold/5 transition-all duration-700 ease-[var(--bezier-out)]" />
+
+                    <cert.icon className="w-8 h-8 text-gold mb-3 group-hover:scale-110 transition-transform duration-500 relative z-10" />
+
+                    <span className="text-[10px] font-condensed font-bold text-foreground uppercase tracking-[0.2em] leading-tight px-4 text-center transition-colors duration-500 relative z-10">
+                      {cert.name}
+                    </span>
                   </div>
-                  <div className="font-condensed font-bold text-foreground text-sm uppercase tracking-wide mb-1 group-hover:text-gold transition-colors">{cert.desc}</div>
-                  <div className="text-muted-foreground text-xs">{cert.detail}</div>
-                </motion.div>
+                  <div className="font-condensed font-bold text-foreground text-[11px] uppercase tracking-[0.2em] mb-2 group-hover:text-gold transition-colors duration-500">
+                    {cert.desc}
+                  </div>
+                  <div className="text-foreground/50 font-light text-xs">
+                    {cert.detail}
+                  </div>
+                </div>
               </AnimatedChild>
             ))}
           </StaggerChildren>
         </div>
       </section>
 
-      {/* ── Machine Inventory Strip ── */}
-      <section className="py-10 border-b border-border overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+      {/* ── Light Elite Machine Inventory Strip ── */}
+      <section className="py-16 bg-white border-b border-border overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
           <FadeIn>
-            <p className="text-center text-muted-foreground text-xs font-condensed font-semibold tracking-[0.25em] uppercase">
-              Our Industrial Machine Fleet — 50+ Specialized Units
+            <p className="text-center text-gold text-[10px] font-condensed font-bold tracking-[0.4em] uppercase flex items-center justify-center gap-4">
+              <span className="w-12 h-px bg-gold" />
+              Machine Fleet Archive — 50+ Specialized Units
+              <span className="w-12 h-px bg-gold" />
             </p>
           </FadeIn>
         </div>
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-          <div className="flex animate-marquee" aria-hidden="false">
-            {[...machines, ...machines].map((machine, i) => (
+        <div className="relative overflow-hidden flex">
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+          <div className="flex w-fit animate-marquee hover:[animation-play-state:paused] whitespace-nowrap">
+            {[...machines, ...machines, ...machines].map((machine, i) => (
               <div key={i} className="flex-shrink-0 mx-4">
-                <div className="bg-card border border-border rounded-sm px-4 py-2.5 min-w-[180px] hover:border-gold/25 transition-colors">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-sm">{machine.flag}</span>
-                    <span className="font-condensed font-bold text-sm text-foreground tracking-wide">{machine.brand}</span>
+                <div className="bg-[#F8F9FA] border border-border rounded-none px-8 py-5 min-w-[220px] hover:border-gold/40 hover:bg-white hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-base grayscale opacity-80 hover:grayscale-0 transition-all duration-300">{machine.flag}</span>
+                    <span className="font-condensed font-bold text-[11px] text-foreground tracking-[0.2em] uppercase">{machine.brand}</span>
                   </div>
-                  <p className="text-muted-foreground text-xs">{machine.type}</p>
+                  <p className="text-foreground/50 font-light text-xs">{machine.type}</p>
                 </div>
               </div>
             ))}
@@ -326,20 +342,24 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="section-padding">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+      {/* ── Light Elite Final CTA ── */}
+      <section className="relative py-40 bg-white overflow-hidden border-t border-border">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
           <FadeIn>
-            <h2 className="font-serif text-4xl font-bold text-foreground mb-4">
-              Ready to Partner
-              <span className="text-gradient-gold italic"> With Us?</span>
+            <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-[1.05] tracking-tighter">
+              Ready to Engineer Your
+              <br />
+              <span className="text-gradient-gold italic font-light">Next Collection?</span>
             </h2>
-            <p className="text-muted-foreground mb-8">
-              Join 500+ global brands who trust Sialkot Sample Masters for their custom streetwear manufacturing needs.
+            <p className="text-foreground/50 font-light text-xl mb-12 max-w-xl mx-auto leading-relaxed">
+              Engage our master pattern engineers and secure your production timeline. Capacity is limited for new brand partners.
             </p>
             <Link href="/rfq">
-              <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm">
-                Request a Quote <ArrowRight className="ml-2 w-4 h-4" />
+              <Button className="bg-foreground text-background hover:bg-gold hover:text-foreground transition-all duration-500 font-condensed font-bold tracking-[0.2em] uppercase text-[11px] px-14 py-7 h-auto rounded-none group shadow-2xl shadow-black/10">
+                <span className="flex items-center gap-4">
+                  Request Secure Quotation
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </span>
               </Button>
             </Link>
           </FadeIn>

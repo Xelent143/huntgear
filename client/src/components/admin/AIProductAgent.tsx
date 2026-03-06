@@ -147,6 +147,22 @@ function ProductPreview({
                     ))}
                 </div>
 
+                {/* Manufacturing Story Preview */}
+                <div className="border border-border rounded-lg overflow-hidden">
+                    <div className="px-3 py-1.5 bg-secondary text-xs font-condensed font-bold uppercase tracking-wider text-muted-foreground">
+                        Manufacturing Story
+                    </div>
+                    {product.manufacturingStory ? (
+                        <div className="px-3 py-2 text-xs text-foreground bg-secondary/20 italic whitespace-pre-wrap">
+                            {product.manufacturingStory}
+                        </div>
+                    ) : (
+                        <div className="px-3 py-2 text-xs text-muted-foreground">
+                            Not generated for this product.
+                        </div>
+                    )}
+                </div>
+
                 {/* Expanded SEO Info */}
                 <button
                     onClick={() => setExpanded(!expanded)}
