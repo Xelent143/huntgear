@@ -36,7 +36,7 @@ function ZoomableImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div
       ref={containerRef}
-      className="relative aspect-square overflow-hidden rounded-lg bg-secondary cursor-zoom-in select-none"
+      className="relative aspect-[2/3] overflow-hidden rounded-lg bg-secondary cursor-zoom-in select-none"
       onMouseEnter={() => setZoomed(true)}
       onMouseLeave={() => setZoomed(false)}
       onMouseMove={handleMouseMove}
@@ -44,7 +44,7 @@ function ZoomableImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-contain transition-transform duration-100"
+        className="w-full h-full object-cover transition-transform duration-100"
         style={zoomed ? {
           transform: "scale(2.2)",
           transformOrigin: `${position.x}% ${position.y}%`,
@@ -248,7 +248,7 @@ export default function ProductDetail() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-4">
-              <Skeleton className="aspect-square w-full rounded-lg" />
+              <Skeleton className="aspect-[2/3] w-full rounded-lg" />
               <div className="grid grid-cols-4 gap-2">
                 {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="aspect-square rounded" />)}
               </div>
