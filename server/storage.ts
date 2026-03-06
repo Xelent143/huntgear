@@ -86,12 +86,14 @@ export async function storagePut(
 
     try {
       if (!fs.existsSync(fileDir)) {
+        console.log(`[Storage] Creating nested directory: ${fileDir}`);
         fs.mkdirSync(fileDir, { recursive: true });
       }
       const buffer = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
       await fs.promises.writeFile(filePath, buffer);
-    } catch (e) {
-      console.error("Storage fallback save error:", e);
+      console.log(`[Storage] Successfully wrote ${buffer.length} bytes to ${filePath}`);
+    } catch (e: any) {
+      console.error(`[Storage] FATAL error writing to ${filePath}:`, e.message, e.stack);
       // Continue but it will likely result in a broken image, at least it won't crash the server
     }
 

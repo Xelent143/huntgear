@@ -1588,12 +1588,14 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     const fileDir = path.dirname(filePath);
     try {
       if (!fs.existsSync(fileDir)) {
+        console.log(`[Storage] Creating nested directory: ${fileDir}`);
         fs.mkdirSync(fileDir, { recursive: true });
       }
       const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
       await fs.promises.writeFile(filePath, buffer);
+      console.log(`[Storage] Successfully wrote ${buffer.length} bytes to ${filePath}`);
     } catch (e) {
-      console.error("Storage fallback save error:", e);
+      console.error(`[Storage] FATAL error writing to ${filePath}:`, e.message, e.stack);
     }
     const safeKey = key.startsWith("/") ? key.substring(1) : key;
     return { key: safeKey, url: `/uploads/${safeKey}` };
@@ -2862,6 +2864,7 @@ async function startServer() {
   app.get("/api/admin/debug", async (_req, res) => {
     const isProd2 = process.env.NODE_ENV === "production";
     const resolvedUploadsPath = isProd2 ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+    const productsUploadsPath = path4.join(resolvedUploadsPath, "products");
     const info = {
       nodeVersion: process.version,
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
@@ -2869,7 +2872,9 @@ async function startServer() {
       cwd: process.cwd(),
       dirname: typeof __dirname !== "undefined" ? __dirname : "undefined_in_esm",
       resolvedUploadsPath,
-      uploadsDirExists: fs4.existsSync(resolvedUploadsPath)
+      productsUploadsPath,
+      uploadsDirExists: fs4.existsSync(resolvedUploadsPath),
+      productsDirExists: fs4.existsSync(productsUploadsPath)
     };
     try {
       if (info.uploadsDirExists) {

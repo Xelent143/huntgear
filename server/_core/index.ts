@@ -193,6 +193,8 @@ async function startServer() {
       ? path.resolve(process.cwd(), 'uploads')
       : path.resolve(process.cwd(), 'uploads');
 
+    const productsUploadsPath = path.join(resolvedUploadsPath, 'products');
+
     const info: any = {
       nodeVersion: process.version,
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
@@ -200,7 +202,9 @@ async function startServer() {
       cwd: process.cwd(),
       dirname: typeof __dirname !== 'undefined' ? __dirname : "undefined_in_esm",
       resolvedUploadsPath,
-      uploadsDirExists: fs.existsSync(resolvedUploadsPath)
+      productsUploadsPath,
+      uploadsDirExists: fs.existsSync(resolvedUploadsPath),
+      productsDirExists: fs.existsSync(productsUploadsPath)
     };
 
     try {
