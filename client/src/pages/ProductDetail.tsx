@@ -44,7 +44,7 @@ function ZoomableImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-cover transition-transform duration-100"
+        className="w-full h-full object-contain transition-transform duration-100"
         style={zoomed ? {
           transform: "scale(2.2)",
           transformOrigin: `${position.x}% ${position.y}%`,
@@ -371,7 +371,7 @@ export default function ProductDetail() {
                       <img
                         src={img.imageUrl}
                         alt={(img as any).altText ?? `Image ${idx + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                         loading="lazy"
                       />
                     </button>
