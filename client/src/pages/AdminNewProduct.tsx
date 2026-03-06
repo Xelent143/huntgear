@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation, useRoute } from "wouter";
+import AdminLayout from "@/pages/layouts/AdminLayout";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -157,11 +158,11 @@ export default function AdminNewProduct() {
     const utils = trpc.useUtils();
 
     // Fetch existing product if editing
-    const { data: products } = trpc.product.adminList.useQuery(undefined, {
-        enabled: isEdit,
-    });
-
-    const editProduct = products?.find(p => p.id === productId);
+    // Fetch single product details if editing
+    const { data: editProduct } = trpc.product.byId.useQuery(
+        { id: productId! },
+        { enabled: isEdit && !!productId }
+    );
 
     const [isAiLoading, setIsAiLoading] = useState(false);
     const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
@@ -193,6 +194,12 @@ export default function AdminNewProduct() {
         seoDescription: "",
         seoKeywords: "",
     });
+    const [initialForm, setInitialForm] = useState(form);
+    const [isDirty, setIsDirty] = useState(false);
+
+    useEffect(() => {
+        setIsDirty(JSON.stringify(form) !== JSON.stringify(initialForm));
+    }, [form, initialForm]);
 
     const [slabs, setSlabs] = useState<SlabRow[]>([]);
     const [sizeChart, setSizeChart] = useState({
@@ -208,7 +215,7 @@ export default function AdminNewProduct() {
     // Populate form when edit data loads
     useEffect(() => {
         if (isEdit && editProduct) {
-            setForm({
+            const data = {
                 title: editProduct.title ?? "",
                 slug: editProduct.slug ?? "",
                 category: editProduct.category ?? "Streetwear",
@@ -220,26 +227,28 @@ export default function AdminNewProduct() {
                 material: editProduct.material ?? "",
                 availableSizes: editProduct.availableSizes ?? '["S", "M", "L", "XL", "2XL"]',
                 availableColors: editProduct.availableColors ?? '["Black", "White", "Navy"]',
-                isFeatured: editProduct.isFeatured ?? false,
-                isActive: editProduct.isActive ?? true,
-                freeShipping: editProduct.freeShipping ?? false,
+                isFeatured: !!editProduct.isFeatured,
+                isActive: !!editProduct.isActive,
+                freeShipping: !!editProduct.freeShipping,
                 sortOrder: editProduct.sortOrder ?? 0,
                 seoTitle: editProduct.seoTitle ?? "",
                 seoDescription: editProduct.seoDescription ?? "",
                 seoKeywords: editProduct.seoKeywords ?? "",
-            });
+            };
+            setForm(data);
+            setInitialForm(data);
 
-            if ((editProduct as any).slabs) {
-                setSlabs((editProduct as any).slabs.map((s: any) => ({
-                    minQty: s.minQty, maxQty: s.maxQty, pricePerUnit: s.pricePerUnit, label: s.label ?? "", sortOrder: s.sortOrder,
+            if (editProduct.slabs) {
+                setSlabs(editProduct.slabs.map((s: any) => ({
+                    minQty: s.minQty, maxQty: s.maxQtyRow ? s.maxQtyRow : s.maxQty, pricePerUnit: s.pricePerUnit, label: s.label ?? "", sortOrder: s.sortOrder,
                 })));
             }
 
-            if ((editProduct as any).sizeChart) {
+            if (editProduct.sizeChart) {
                 setSizeChart({
-                    chartData: (editProduct as any).sizeChart.chartData ?? JSON.stringify([]),
-                    unit: (editProduct as any).sizeChart.unit as "inches" | "cm" ?? "inches",
-                    notes: (editProduct as any).sizeChart.notes ?? "",
+                    chartData: editProduct.sizeChart.chartData ?? JSON.stringify([]),
+                    unit: editProduct.sizeChart.unit as "inches" | "cm" ?? "inches",
+                    notes: editProduct.sizeChart.notes ?? "",
                 });
             }
         }
@@ -438,22 +447,36 @@ export default function AdminNewProduct() {
     const isPending = createMutation.isPending || updateMutation.isPending || uploadingImages;
 
     return (
-        <div className="min-h-screen bg-background">
-            {/* Sticky Header */}
-            <div className="sticky top-0 z-40 w-full bg-card/80 backdrop-blur-xl border-b border-border shadow-sm">
-                <div className="container max-w-6xl mx-auto h-16 flex items-center justify-between px-4">
-                    <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon" onClick={() => setLocation("/admin")} className="hover:bg-secondary">
-                            <ArrowLeft className="w-5 h-5 text-foreground" />
+        <AdminLayout>
+            {/* Floating Save Bar (Shopify Style) */}
+            <div className={`fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}>
+                <div className="container max-w-7xl mx-auto h-16 flex items-center justify-between px-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                        <span className="text-sm font-bold text-background uppercase tracking-widest hidden sm:inline">Unsaved Changes</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Button variant="ghost" className="text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs" onClick={() => { setForm(initialForm); setIsDirty(false); }}>
+                            Discard
                         </Button>
-                        <div>
-                            <h1 className="font-serif text-xl font-bold text-foreground">
-                                {isEdit ? "Edit Product" : "Add New Product"}
-                            </h1>
-                            <p className="text-xs text-muted-foreground hidden sm:block">
-                                {isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI"}
-                            </p>
-                        </div>
+                        <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8">
+                            {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                            {isEdit ? "Save Changes" : "Publish Product"}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-8 pb-20">
+                {/* Header Actions */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 className="font-serif text-2xl font-bold text-foreground">
+                            {isEdit ? "Edit Product" : "Add New Product"}
+                        </h1>
+                        <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
+                            {isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI"}
+                        </p>
                     </div>
                     <div className="flex items-center gap-3">
                         {form.slug && (
@@ -461,18 +484,15 @@ export default function AdminNewProduct() {
                                 <Eye className="w-4 h-4 mr-2" /> Preview
                             </Button>
                         )}
-                        <Button variant="outline" onClick={() => setLocation("/admin")} disabled={isPending}>
-                            Cancel
+                        <Button variant="outline" onClick={() => setLocation("/admin/products")} disabled={isPending}>
+                            Discard
                         </Button>
-                        <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider">
+                        <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light">
                             {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                             {uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"}
                         </Button>
                     </div>
                 </div>
-            </div>
-
-            <div className="container max-w-6xl mx-auto py-8 px-4 space-y-10">
 
                 {/* Step 1: AI Visual Uploader (Prominent!) */}
                 <section className="bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5">
@@ -689,11 +709,10 @@ export default function AdminNewProduct() {
                                 </div>
                             </div>
                         </section>
-
                     </div>
                 </div>
 
             </div>
-        </div>
+        </AdminLayout>
     );
 }

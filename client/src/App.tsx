@@ -22,12 +22,18 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminAIStudio from "./pages/admin/AdminAIStudio";
+import AdminContent from "./pages/admin/AdminContent";
+import AdminSettings from "./pages/admin/AdminSettings";
 import AdminNewProduct from "./pages/AdminNewProduct";
 import Customize from "./pages/Customize";
 
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
-const BARE_ROUTES = ["/admin", "/admin/login", "/customize"];
+const BARE_ROUTES = ["/admin", "/customize"];
 
 function Router() {
   return (
@@ -48,8 +54,14 @@ function Router() {
       {/* 3D Customizer */}
       <Route path="/customize" component={Customize} />
       {/* Admin */}
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/products" component={AdminProducts} />
+      <Route path="/admin/ai-studio" component={AdminAIStudio} />
+      <Route path="/admin/content" component={AdminContent} />
+      <Route path="/admin/settings" component={AdminSettings} />
+
       <Route path="/admin/product/new" component={AdminNewProduct} />
       <Route path="/admin/product/edit/:id" component={AdminNewProduct} />
       <Route path="/404" component={NotFound} />

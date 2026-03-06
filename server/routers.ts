@@ -98,6 +98,19 @@ const productRouter = router({
   // Admin: full list including inactive
   adminList: adminProcedure.query(() => getAllProducts()),
 
+  byId: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      const product = await getProductById(input.id);
+      if (!product) return null;
+      const [images, slabs, sizeChart] = await Promise.all([
+        getProductImages(product.id),
+        getSlabPrices(product.id),
+        getSizeChart(product.id),
+      ]);
+      return { ...product, images, slabs, sizeChart: sizeChart ?? null };
+    }),
+
   create: adminProcedure
     .input(z.object({
       title: z.string().min(1).max(500),
@@ -448,6 +461,17 @@ const orderRouter = router({
 
   adminList: adminProcedure.query(() => getAllOrders()),
 
+  adminStats: adminProcedure.query(async () => {
+    const all = await getAllOrders();
+    const paidOrders = all.filter(o => ["paid", "processing", "shipped", "delivered"].includes(o.status));
+    const totalRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.totalAmount), 0);
+    return {
+      totalRevenue: totalRevenue.toFixed(2),
+      orderCount: all.length,
+      paidOrderCount: paidOrders.length
+    };
+  }),
+
   updateStatus: adminProcedure
     .input(z.object({
       id: z.number().int().positive(),
@@ -583,6 +607,8 @@ const portfolioRouter = router({
 
   categories: publicProcedure.query(() => getPortfolioCategories()),
 
+  adminList: adminProcedure.query(() => listPortfolioItems({ onlyActive: false })),
+
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ input }) => getPortfolioItemWithImages(input.id)),
@@ -644,7 +670,7 @@ const portfolioRouter = router({
   // Admin: upload image to S3 and attach to portfolio item
   uploadImage: protectedProcedure
     .input(z.object({
-      portfolioItemId: z.number(),
+      portfolioItemId: z.number().optional(),
       imageBase64: z.string(),
       mimeType: z.string().default("image/jpeg"),
       altText: z.string().optional(),
@@ -655,22 +681,29 @@ const portfolioRouter = router({
       if (ctx.user.role !== "admin") throw new TRPCError({ code: "FORBIDDEN" });
       const buffer = Buffer.from(input.imageBase64, "base64");
       const ext = input.mimeType.split("/")[1] || "jpg";
-      const fileKey = `portfolio/${input.portfolioItemId}/${nanoid(10)}.${ext}`;
+      const fileKey = input.portfolioItemId
+        ? `portfolio/${input.portfolioItemId}/${nanoid(10)}.${ext}`
+        : `portfolio/temp/${nanoid(10)}.${ext}`;
       const { url } = await storagePut(fileKey, buffer, input.mimeType);
-      const img = await addPortfolioImage({
-        portfolioItemId: input.portfolioItemId,
-        imageUrl: url,
-        fileKey,
-        altText: input.altText,
-        caption: input.caption,
-        sortOrder: input.sortOrder ?? 0,
-      });
-      // Set as cover image if it's the first image
-      const existing = await getPortfolioItemWithImages(input.portfolioItemId);
-      if (existing && existing.images.length === 1) {
-        await updatePortfolioItem(input.portfolioItemId, { coverImage: url, ogImage: url });
+
+      if (input.portfolioItemId) {
+        const img = await addPortfolioImage({
+          portfolioItemId: input.portfolioItemId,
+          imageUrl: url,
+          fileKey,
+          altText: input.altText,
+          caption: input.caption,
+          sortOrder: input.sortOrder ?? 0,
+        });
+        // Set as cover image if it's the first image
+        const existing = await getPortfolioItemWithImages(input.portfolioItemId);
+        if (existing && existing.images.length === 1) {
+          await updatePortfolioItem(input.portfolioItemId, { coverImage: url, ogImage: url });
+        }
+        return img;
       }
-      return img;
+
+      return { url };
     }),
 
   // Admin: delete a single image
