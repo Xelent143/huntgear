@@ -198,7 +198,7 @@ async function startServer() {
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
       env: process.env.NODE_ENV,
       cwd: process.cwd(),
-      __dirname: __dirname,
+      dirname: typeof __dirname !== 'undefined' ? __dirname : "undefined_in_esm",
       resolvedUploadsPath,
       uploadsDirExists: fs.existsSync(resolvedUploadsPath)
     };
