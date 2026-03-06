@@ -186,48 +186,52 @@ async function startServer() {
     return res.json({ success: true });
   });
 
-  // GET /api/admin/debug — TEMPORARY diagnostic endpoint
+  // GET /api/admin/debug — Diagnostic endpoint
   app.get("/api/admin/debug", async (_req, res) => {
-    const info: any = { nodeVersion: process.version, dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET" };
+    const isProd = process.env.NODE_ENV === "production";
+    const resolvedUploadsPath = isProd
+      ? path.resolve(process.cwd(), 'uploads')
+      : path.resolve(process.cwd(), 'uploads');
+
+    const info: any = {
+      nodeVersion: process.version,
+      dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
+      env: process.env.NODE_ENV,
+      cwd: process.cwd(),
+      __dirname: __dirname,
+      resolvedUploadsPath,
+      uploadsDirExists: fs.existsSync(resolvedUploadsPath)
+    };
+
+    try {
+      if (info.uploadsDirExists) {
+        const readdirRecursive = (dir: string): string[] => {
+          const results: string[] = [];
+          const list = fs.readdirSync(dir);
+          list.forEach(file => {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+            if (stat && stat.isDirectory()) {
+              results.push(...readdirRecursive(filePath));
+            } else {
+              results.push(filePath);
+            }
+          });
+          return results;
+        }
+        info.filesInUploads = readdirRecursive(resolvedUploadsPath).slice(0, 50); // limit to 50
+      }
+    } catch (e: any) {
+      info.fsError = e.message;
+    }
+
     try {
       const debugDb = await getDbLocal();
       if (!debugDb) { info.error = "Database not connected"; return res.json(info); }
       info.dbConnected = true;
-
-      // Try raw SQL to bypass Drizzle
-      try {
-        const rawResult = await debugDb.execute({ sql: "SELECT id, email, role, password FROM users LIMIT 5", params: [] } as any);
-        info.rawQuery = "SUCCESS";
-        info.rawRows = rawResult;
-      } catch (rawErr: any) {
-        info.rawQuery = "FAILED";
-        info.rawError = rawErr?.message;
-        info.rawCause = rawErr?.cause?.message || rawErr?.cause?.sqlMessage || String(rawErr?.cause);
-        info.rawCode = rawErr?.cause?.code;
-        info.rawErrno = rawErr?.cause?.errno;
-      }
-
-      // Try Drizzle ORM query
-      try {
-        const { users: ut } = await import("../../drizzle/schema");
-        const allUsers = await debugDb.select().from(ut).limit(3);
-        info.drizzleQuery = "SUCCESS";
-        info.userCount = allUsers.length;
-        info.users = allUsers.map((u: any) => ({
-          id: u.id, email: u.email, role: u.role,
-          hasPassword: !!u.password,
-          pwdFormat: u.password ? (u.password.includes(":") ? "scrypt" : "other_" + u.password.substring(0, 10)) : "none",
-        }));
-      } catch (ormErr: any) {
-        info.drizzleQuery = "FAILED";
-        info.drizzleError = ormErr?.message;
-        info.drizzleCause = ormErr?.cause?.message || ormErr?.cause?.sqlMessage || String(ormErr?.cause);
-      }
-
       return res.json(info);
     } catch (err: any) {
       info.error = err?.message;
-      info.cause = err?.cause?.message || String(err?.cause);
       return res.json(info);
     }
   });

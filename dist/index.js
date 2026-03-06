@@ -2860,7 +2860,38 @@ async function startServer() {
     return res.json({ success: true });
   });
   app.get("/api/admin/debug", async (_req, res) => {
-    const info = { nodeVersion: process.version, dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET" };
+    const isProd2 = process.env.NODE_ENV === "production";
+    const resolvedUploadsPath = isProd2 ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+    const info = {
+      nodeVersion: process.version,
+      dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
+      env: process.env.NODE_ENV,
+      cwd: process.cwd(),
+      __dirname,
+      resolvedUploadsPath,
+      uploadsDirExists: fs4.existsSync(resolvedUploadsPath)
+    };
+    try {
+      if (info.uploadsDirExists) {
+        const readdirRecursive = (dir) => {
+          const results = [];
+          const list = fs4.readdirSync(dir);
+          list.forEach((file) => {
+            const filePath = path4.join(dir, file);
+            const stat = fs4.statSync(filePath);
+            if (stat && stat.isDirectory()) {
+              results.push(...readdirRecursive(filePath));
+            } else {
+              results.push(filePath);
+            }
+          });
+          return results;
+        };
+        info.filesInUploads = readdirRecursive(resolvedUploadsPath).slice(0, 50);
+      }
+    } catch (e) {
+      info.fsError = e.message;
+    }
     try {
       const debugDb = await getDbLocal();
       if (!debugDb) {
@@ -2868,38 +2899,9 @@ async function startServer() {
         return res.json(info);
       }
       info.dbConnected = true;
-      try {
-        const rawResult = await debugDb.execute({ sql: "SELECT id, email, role, password FROM users LIMIT 5", params: [] });
-        info.rawQuery = "SUCCESS";
-        info.rawRows = rawResult;
-      } catch (rawErr) {
-        info.rawQuery = "FAILED";
-        info.rawError = rawErr?.message;
-        info.rawCause = rawErr?.cause?.message || rawErr?.cause?.sqlMessage || String(rawErr?.cause);
-        info.rawCode = rawErr?.cause?.code;
-        info.rawErrno = rawErr?.cause?.errno;
-      }
-      try {
-        const { users: ut } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-        const allUsers = await debugDb.select().from(ut).limit(3);
-        info.drizzleQuery = "SUCCESS";
-        info.userCount = allUsers.length;
-        info.users = allUsers.map((u) => ({
-          id: u.id,
-          email: u.email,
-          role: u.role,
-          hasPassword: !!u.password,
-          pwdFormat: u.password ? u.password.includes(":") ? "scrypt" : "other_" + u.password.substring(0, 10) : "none"
-        }));
-      } catch (ormErr) {
-        info.drizzleQuery = "FAILED";
-        info.drizzleError = ormErr?.message;
-        info.drizzleCause = ormErr?.cause?.message || ormErr?.cause?.sqlMessage || String(ormErr?.cause);
-      }
       return res.json(info);
     } catch (err) {
       info.error = err?.message;
-      info.cause = err?.cause?.message || String(err?.cause);
       return res.json(info);
     }
   });
