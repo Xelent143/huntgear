@@ -589,40 +589,52 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              {/* Manufacturing Story */}
-              {(product as any).manufacturingStory && (
-                <div className="border border-gold/30 bg-gold/5 rounded-lg p-5 mt-6">
-                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground mb-4 flex items-center gap-2">
-                    <Factory className="w-4 h-4 text-gold" />
-                    The Manufacturing Story
-                  </h3>
-                  <div className={`grid gap-6 items-center ${(product as any).manufacturingInfographic ? 'lg:grid-cols-2' : 'grid-cols-1'}`}>
-                    <div className="text-foreground/90 text-sm leading-relaxed whitespace-pre-line italic">
-                      {(product as any).manufacturingStory}
+            </div>
+
+            {/* High-End Manufacturing Story Section */}
+            {(product as any).manufacturingStory && (
+              <div className="mt-20 w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-zinc-950 text-white min-h-[500px]">
+                <div className="container mx-auto px-4 py-24 md:py-32">
+                  <div className="flex flex-col items-center mb-16 text-center">
+                    <span className="text-gold font-condensed tracking-[0.3em] text-xs uppercase mb-4 block">Sialkot Sample Masters</span>
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif tracking-tight font-light text-zinc-100">
+                      Technical Specifications
+                    </h2>
+                    <div className="w-12 h-0.5 bg-gold mt-8"></div>
+                  </div>
+
+                  <div className={`grid gap-16 lg:gap-24 items-start ${(product as any).manufacturingInfographic ? 'lg:grid-cols-12' : 'grid-cols-1 max-w-4xl mx-auto'}`}>
+                    {/* Text Section */}
+                    <div className={`${(product as any).manufacturingInfographic ? 'lg:col-span-5 lg:order-last' : ''} space-y-6 pt-4`}>
+                      <div className="text-zinc-400 text-lg md:text-xl font-light leading-relaxed whitespace-pre-line tracking-wide">
+                        {(product as any).manufacturingStory}
+                      </div>
                     </div>
+
+                    {/* Infographic Section */}
                     {(product as any).manufacturingInfographic && (
-                      <div className="flex justify-center border border-border rounded-lg bg-white overflow-hidden shadow-sm">
+                      <div className="lg:col-span-7 relative group w-full">
+                        {/* Subtle glow effect behind the image */}
+                        <div className="absolute -inset-4 bg-gold/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                         <img
                           src={(product as any).manufacturingInfographic}
                           alt="Manufacturing Process Infographic"
-                          className="w-full h-auto max-h-[300px] object-contain object-center mix-blend-multiply p-2"
+                          className="w-full h-auto object-contain bg-white rounded-xl shadow-2xl relative z-10"
                         />
                       </div>
                     )}
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
+              </div>
+            )}
 
-        {/* Size chart modal */}
-        <SizeChartModal
-          sizeChart={sizeChart}
-          open={sizeChartOpen}
-          onClose={() => setSizeChartOpen(false)}
-        />
-      </main>
-    </>
-  );
+            {/* Size chart modal */}
+            <SizeChartModal
+              sizeChart={sizeChart}
+              open={sizeChartOpen}
+              onClose={() => setSizeChartOpen(false)}
+            />
+          </main>
+        </>
+        );
 }
