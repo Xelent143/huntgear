@@ -111,8 +111,8 @@ Return a JSON object with exactly these fields:
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary for product cards (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering features, materials, customization options, and B2B benefits. Rich and keyword-focused.",
-  "manufacturingStory": "A professional 2-3 paragraph SEO and GEO-friendly narrative detailing the manufacturing process, stitching techniques, fabric composition, and embellishments (e.g., embroidery, screen printing). Make it sound artisanal and premium.",
-  "infographicPrompt": "A detailed DALL-E/Midjourney style prompt to clearly illustrate the manufacturing process described in the story as a clean, illustrative vector-style infographic on a solid background.",
+  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the item and create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments, specific stitching types at different parts of the garment, and types of customizations that can be done.",
+  "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details of this specific garment to a user.",
   "material": "Specific fabric/material description (e.g. '280GSM Ring-Spun Cotton / Polyester Blend')",
   "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
   "availableColors": ["Black", "Navy", "White", "Olive"],
@@ -208,10 +208,11 @@ export async function generateInfographicImageBase64(
 
     const parts: any[] = [
         {
-            text: `Act as a senior graphic designer specializing in vector illustrations and B2B infographics.
-            Please generate a clean, modern, flat-design infographic based strictly on this prompt: "${prompt}".
-            The infographic should NOT contain complex sentences or spelled-out words, but rather iconic, illustrative representations of the manufacturing processes, stitching, or fabrics.
-            Background MUST be a solid color (e.g., pure white or slightly off-white). No watermarks. High quality.`,
+            text: `Act as a senior graphic designer specializing in detailed production infographics and vector illustrations.
+            Use the "nano banana pro" style (ultra-high quality, detailed, visually striking illustrative style) to generate an infographic explanation image based strictly on this prompt: "${prompt}".
+            The image should visually explain the garment's fabrics, embellishments, stitching types, and production details as a comprehensive visual guide. 
+            Do NOT include long paragraphs of text. Use icons, diagrams, and illustrative callouts.
+            Background MUST be a solid color (e.g., pure white or slightly off-white). No watermarks. 4K high quality.`,
         },
     ];
 
@@ -328,8 +329,8 @@ Return a JSON object with exactly these fields based on the visual attributes of
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary covering its visible style/features (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering visible features, likely materials, customization options, and B2B wholesale benefits. Rich and keyword-focused.",
-  "manufacturingStory": "A professional 2-3 paragraph SEO and GEO-friendly narrative detailing the manufacturing process, stitching techniques, fabric composition, and embellishments (e.g., embroidery, screen printing). Evaluate based on the visible craftsmanship.",
-  "infographicPrompt": "Leave empty",
+  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the uploaded images carefully to get an idea of the physical construction. Create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments on the product, specific stitching types used at different parts of the garment, and types of customizations that can be done.",
+  "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details and construction of this specific garment to a user in an infographic style.",
   "material": "Specific fabric/material description that matches the look (e.g. 'Heavyweight Cotton Blend')",
   "availableSizes": ["S", "M", "L", "XL", "2XL"],
   "availableColors": ["Black", "Navy", "Gray", "Custom"],
