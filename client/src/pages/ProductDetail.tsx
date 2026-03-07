@@ -61,8 +61,6 @@ function ZoomableImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-// ─── Slab Pricing Table ───────────────────────────────────────────────────────
-
 function SlabPricingTable({ slabs, quantity }: {
   slabs: { id: number; minQty: number; maxQty: number | null; pricePerUnit: string; label?: string | null; sortOrder: number }[];
   quantity: number;
@@ -72,34 +70,37 @@ function SlabPricingTable({ slabs, quantity }: {
   );
 
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <div className="bg-secondary px-4 py-2 flex items-center gap-2">
-        <Tag className="w-4 h-4 text-gold" />
-        <span className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground">Slab Pricing (MOQ Tiers)</span>
+    <div className="mt-8 mb-6">
+      <div className="flex items-center gap-2 mb-4 border-b border-border pb-2">
+        <Tag className="w-3.5 h-3.5 text-muted-foreground" />
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">Wholesale Tiers</span>
       </div>
-      <div className="divide-y divide-border">
+      <div className="flex flex-col gap-3">
         {slabs.map((slab, idx) => {
           const isActive = idx === activeIdx;
           const qtyLabel = slab.maxQty ? `${slab.minQty}–${slab.maxQty} pcs` : `${slab.minQty}+ pcs`;
           return (
             <div
               key={slab.id}
-              className={`flex items-center justify-between px-4 py-3 transition-colors ${isActive ? "bg-gold/10 border-l-2 border-l-gold" : "hover:bg-secondary/50"
+              className={`flex items-center justify-between transition-colors ${isActive ? "text-foreground" : "text-muted-foreground"
                 }`}
             >
               <div className="flex items-center gap-3">
-                {isActive && <Check className="w-4 h-4 text-gold shrink-0" />}
-                {!isActive && <div className="w-4" />}
+                <div className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-foreground' : 'bg-transparent'}`} />
                 <div>
-                  <span className="font-condensed font-semibold text-sm text-foreground">{qtyLabel}</span>
+                  <span className={`text-sm ${isActive ? 'font-medium' : 'font-light'}`}>{qtyLabel}</span>
                   {slab.label && (
-                    <span className={`ml-2 text-xs px-1.5 py-0.5 rounded font-condensed font-bold uppercase tracking-wider ${isActive ? "bg-gold text-black" : "bg-secondary text-muted-foreground"
+                    <span className={`ml-3 text-[10px] uppercase tracking-wider ${isActive ? "text-foreground" : "text-muted-foreground/60"
                       }`}>{slab.label}</span>
                   )}
                 </div>
               </div>
-              <span className={`font-condensed font-bold text-lg ${isActive ? "text-gold" : "text-foreground"}`}>
-                ${parseFloat(slab.pricePerUnit).toFixed(2)}<span className="text-xs font-normal text-muted-foreground">/pc</span>
+
+              {/* Leader dots for that luxurious catalog feel */}
+              <div className="flex-1 border-b border-dotted border-border/40 mx-4 opacity-50 relative top-1" />
+
+              <span className={`text-sm ${isActive ? "font-medium" : "font-light"}`}>
+                ${parseFloat(slab.pricePerUnit).toFixed(2)}<span className="text-[10px] ml-1 opacity-60">/pc</span>
               </span>
             </div>
           );
@@ -348,31 +349,34 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        <div className="container py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16 items-start">
+        <div className="container py-12 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
             {/* ── Left: Image Gallery ── */}
-            <div className="space-y-4">
-              {/* Main zoomable image */}
-              <ZoomableImage
-                src={activeImage?.imageUrl ?? ""}
-                alt={(activeImage as any)?.altText ?? product.title}
-              />
+            <div className="lg:col-span-7 space-y-6">
+              {/* Main image with strict height constraint for elegant catalog feel */}
+              <div className="bg-secondary/20 rounded-xl overflow-hidden flex items-center justify-center p-4">
+                <img
+                  src={activeImage?.imageUrl ?? ""}
+                  alt={(activeImage as any)?.altText ?? product.title}
+                  className="w-full h-auto max-h-[75vh] object-contain object-top"
+                />
+              </div>
 
-              {/* Thumbnail strip */}
+              {/* Thumbnail strip - refined */}
               {allImages.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
+                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
                   {allImages.map((img, idx) => (
                     <button
                       key={img.id}
                       onClick={() => setActiveImageIdx(idx)}
-                      className={`aspect-square rounded overflow-hidden border-2 transition-all ${idx === activeImageIdx ? "border-gold" : "border-border hover:border-gold/50"
+                      className={`h-24 w-20 shrink-0 rounded-md overflow-hidden transition-all duration-300 ${idx === activeImageIdx ? "ring-1 ring-foreground opacity-100" : "opacity-50 hover:opacity-100"
                         }`}
                     >
                       <img
                         src={img.imageUrl}
                         alt={(img as any).altText ?? `Image ${idx + 1}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </button>
@@ -380,16 +384,15 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              {/* Trust badges */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
+              {/* Trust badges - refined */}
+              <div className="flex flex-wrap gap-x-6 gap-y-3 pt-6 border-t border-border mt-10">
                 {[
                   { icon: Shield, text: "ISO 9001 Certified Quality" },
                   { icon: Package, text: "Low MOQ from 20 pcs" },
                   { icon: Truck, text: "Ships Worldwide" },
-                  { icon: Star, text: "500+ Brands Served" },
                 ].map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-2 text-xs text-muted-foreground bg-secondary rounded px-3 py-2">
-                    <Icon className="w-3.5 h-3.5 text-gold shrink-0" />
+                  <div key={text} className="flex items-center gap-2 text-[11px] uppercase tracking-wider text-muted-foreground/80">
+                    <Icon className="w-3 h-3 text-foreground/50 shrink-0" />
                     <span>{text}</span>
                   </div>
                 ))}
@@ -397,34 +400,25 @@ export default function ProductDetail() {
             </div>
 
             {/* ── Right: Product Info ── */}
-            <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+            <div className="lg:col-span-4 lg:col-start-9 space-y-8 lg:sticky lg:top-32 lg:self-start">
               {/* Category + title */}
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-gold font-condensed text-sm font-bold uppercase tracking-widest">{product.category}</span>
-                  {product.freeShipping && (
-                    <span className="bg-green-600/20 text-green-400 text-xs font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded flex items-center gap-1">
-                      <Truck className="w-3 h-3" /> Free Shipping
-                    </span>
-                  )}
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{product.category}</span>
                 </div>
-                <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                <h1 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-foreground leading-[1.1]">
                   {product.title}
                 </h1>
                 {product.material && (
-                  <p className="text-muted-foreground text-sm mt-2">{product.material}</p>
+                  <p className="text-muted-foreground text-sm mt-4 font-light leading-relaxed">{product.material}</p>
                 )}
               </div>
 
               {/* Sample price */}
               {product.samplePrice && (
-                <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg border border-border">
-                  <Info className="w-4 h-4 text-gold shrink-0" />
-                  <div>
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider">Sample Price</span>
-                    <span className="ml-2 font-condensed font-bold text-foreground">${parseFloat(product.samplePrice).toFixed(2)}</span>
-                    <span className="text-xs text-muted-foreground ml-1">(includes shipping)</span>
-                  </div>
+                <div className="flex items-baseline gap-2 pt-2">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">Sample</span>
+                  <span className="font-light text-2xl tracking-tight text-foreground">${parseFloat(product.samplePrice).toFixed(2)}</span>
                 </div>
               )}
 
@@ -435,17 +429,15 @@ export default function ProductDetail() {
 
               {/* Size selector */}
               {availableSizes.length > 0 && (
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground">
-                      Size: <span className="text-gold">{selectedSize}</span>
-                    </label>
+                <div className="pt-6 border-t border-border">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Select Size</span>
                     {sizeChart && (
                       <button
                         onClick={() => setSizeChartOpen(true)}
-                        className="flex items-center gap-1 text-xs text-gold hover:text-gold-light transition-colors underline underline-offset-2"
+                        className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-foreground hover:opacity-70 transition-opacity underline underline-offset-4"
                       >
-                        <Ruler className="w-3.5 h-3.5" /> Size Guide
+                        Size Guide
                       </button>
                     )}
                   </div>
@@ -454,9 +446,9 @@ export default function ProductDetail() {
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`px-3 py-1.5 rounded border font-condensed font-semibold text-sm transition-all ${selectedSize === size
-                          ? "border-gold bg-gold text-black"
-                          : "border-border text-muted-foreground hover:border-gold/60 hover:text-foreground"
+                        className={`min-w-[3rem] px-3 py-2 text-xs uppercase tracking-widest transition-all ${selectedSize === size
+                          ? "bg-foreground text-background"
+                          : "bg-transparent text-foreground border border-border hover:border-foreground"
                           }`}
                       >
                         {size}
@@ -468,18 +460,16 @@ export default function ProductDetail() {
 
               {/* Color selector */}
               {availableColors.length > 0 && (
-                <div>
-                  <label className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground block mb-2">
-                    Color: <span className="text-gold">{selectedColor || "Select"}</span>
-                  </label>
+                <div className="pt-6">
+                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-4">Select Color</span>
                   <div className="flex flex-wrap gap-2">
                     {availableColors.map(color => (
                       <button
                         key={color}
                         onClick={() => setSelectedColor(color)}
-                        className={`px-3 py-1.5 rounded border font-condensed text-sm transition-all ${selectedColor === color
-                          ? "border-gold bg-gold/10 text-gold"
-                          : "border-border text-muted-foreground hover:border-gold/60 hover:text-foreground"
+                        className={`px-4 py-2 text-xs uppercase tracking-widest transition-all ${selectedColor === color
+                          ? "bg-foreground text-background"
+                          : "bg-transparent text-foreground border border-border hover:border-foreground"
                           }`}
                       >
                         {color}
@@ -490,100 +480,92 @@ export default function ProductDetail() {
               )}
 
               {/* Quantity input */}
-              <div>
-                <label className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground block mb-2">
-                  Quantity (pieces)
-                </label>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center border border-border rounded overflow-hidden">
+              <div className="pt-6">
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground block mb-4">Quantity</span>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center border border-border">
                     <button
                       onClick={() => setQuantity(q => Math.max((slabs[0]?.minQty ?? 1), q - 10))}
-                      className="px-3 py-2 bg-secondary hover:bg-secondary/80 text-foreground font-bold transition-colors"
+                      className="w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors"
                     >−</button>
                     <input
                       type="number"
                       value={quantity}
                       onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                      className="w-20 text-center bg-background text-foreground py-2 border-x border-border text-sm font-condensed font-bold focus:outline-none"
+                      className="w-16 h-10 text-center bg-transparent text-foreground border-x border-border text-xs focus:outline-none"
                       min={slabs[0]?.minQty ?? 1}
                     />
                     <button
                       onClick={() => setQuantity(q => q + 10)}
-                      className="px-3 py-2 bg-secondary hover:bg-secondary/80 text-foreground font-bold transition-colors"
+                      className="w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors"
                     >+</button>
                   </div>
                   {slabs[0] && (
-                    <span className="text-xs text-muted-foreground">Min. {slabs[0].minQty} pcs</span>
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground px-2 py-1 bg-secondary/50">Min {slabs[0].minQty}</span>
                   )}
                 </div>
               </div>
 
               {/* Price summary */}
               {unitPrice > 0 && (
-                <div className="p-4 bg-secondary/50 rounded-lg border border-gold/20">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-muted-foreground text-sm">Unit Price</span>
-                    <span className="font-condensed font-bold text-foreground">${unitPrice.toFixed(2)}/pc</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground text-sm">Order Total ({quantity} pcs)</span>
-                    <span className="font-condensed font-bold text-xl text-gold">${lineTotal.toFixed(2)}</span>
+                <div className="pt-8 pb-4">
+                  <div className="flex items-end justify-between border-b border-border pb-4 mb-4">
+                    <span className="text-xs uppercase tracking-widest text-muted-foreground">Total</span>
+                    <div className="text-right">
+                      <div className="text-[10px] text-muted-foreground mb-1 uppercase tracking-wider">${unitPrice.toFixed(2)} / pc</div>
+                      <div className="text-3xl font-light tracking-tight text-foreground">${lineTotal.toFixed(2)}</div>
+                    </div>
                   </div>
                   {product.freeShipping && (
-                    <div className="flex items-center gap-1 mt-2 text-green-400 text-xs">
-                      <Truck className="w-3 h-3" /> Free shipping included
+                    <div className="text-[10px] uppercase tracking-widest text-green-600/80">
+                      Complimentary Shipping Expected
                     </div>
                   )}
                 </div>
               )}
 
               {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 pt-4">
                 <Button
                   onClick={handleAddToCart}
                   variant="outline"
-                  className="flex-1 border-gold text-gold hover:bg-gold hover:text-black font-condensed font-bold uppercase tracking-wider py-6 text-base transition-all"
+                  className="w-full rounded-none border-foreground text-foreground hover:bg-foreground hover:text-background text-xs uppercase tracking-widest py-6 transition-all"
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart
                 </Button>
                 <Button
                   onClick={handleBuyNow}
-                  className="flex-1 bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider py-6 text-base"
+                  className="w-full rounded-none bg-foreground text-background hover:bg-foreground/90 text-xs uppercase tracking-widest py-6"
                 >
-                  <Zap className="w-5 h-5 mr-2" />
-                  Buy Now
+                  Purchase Now
                 </Button>
               </div>
 
               {/* 3D Customizer CTA */}
-              <Link href="/customize">
-                <Button
-                  variant="outline"
-                  className="w-full border-primary/40 text-primary hover:bg-primary/10 hover:border-primary font-condensed font-bold uppercase tracking-wider py-5 text-sm gap-2 group transition-all"
-                >
-                  <Palette className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  Customize This Product in 3D
-                  <span className="ml-auto text-xs font-normal normal-case text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Live Designer</span>
-                </Button>
-              </Link>
+              <div className="pt-4">
+                <Link href="/customize">
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-none border border-border text-muted-foreground hover:border-foreground hover:text-foreground text-[10px] uppercase tracking-widest py-5 group transition-all"
+                  >
+                    Open 3D Studio
+                    <span className="ml-2 w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+                  </Button>
+                </Link>
+              </div>
 
               {/* Request quote link */}
-              <p className="text-center text-sm text-muted-foreground">
-                Need a custom quote?{" "}
-                <Link href="/rfq" className="text-gold hover:text-gold-light underline underline-offset-2">
-                  Submit an RFQ
+              <p className="text-center pt-6">
+                <Link href="/rfq" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4">
+                  Request Custom Manufacturing Quote
                 </Link>
               </p>
 
               {/* Description */}
               {product.description && (
-                <div className="border-t border-border pt-6">
-                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm text-foreground mb-3 flex items-center gap-2">
-                    <Info className="w-4 h-4 text-gold" />
-                    Product Description
-                  </h3>
-                  <div className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">
+                <div className="pt-12 mt-12 border-t border-border">
+                  <h3 className="text-xs uppercase tracking-widest text-foreground font-medium mb-6">Details</h3>
+                  <div className="text-muted-foreground/80 font-light text-sm leading-8 whitespace-pre-line tracking-wide">
                     {product.description}
                   </div>
                 </div>
