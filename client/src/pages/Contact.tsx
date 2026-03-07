@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { MapPin, Phone, Mail, Clock, MessageCircle, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

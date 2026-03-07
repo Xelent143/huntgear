@@ -52,8 +52,10 @@ function ProductPreview({
     product,
     onPost,
     onGenerateImage,
+    onGenerateInfographic,
     isPosting,
     isGeneratingImage,
+    isGeneratingInfographic,
 }: {
     product: GeneratedProduct;
     onPost: (product: GeneratedProduct) => void;
