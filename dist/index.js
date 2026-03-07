@@ -807,7 +807,7 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
   const result = await chat.sendMessage(userMessage);
   return result.response.text();
 }
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-2.5-flash") {
+async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -827,7 +827,7 @@ Return a JSON object with exactly these fields:
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary for product cards (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering features, materials, customization options, and B2B benefits. Rich and keyword-focused.",
-  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the item and create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments, specific stitching types at different parts of the garment, and types of customizations that can be done.",
+  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the item and create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments, specific stitching types at different parts of the garment, and types of customizations that can be done. IMPORTANT: Do NOT include conversational intros like 'As a garment engineer...'. Write ONLY the guide itself.",
   "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details of this specific garment to a user.",
   "material": "Specific fabric/material description (e.g. '280GSM Ring-Spun Cotton / Polyester Blend')",
   "availableSizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
@@ -893,7 +893,7 @@ async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType,
     throw new Error(`Image generation failed: ${String(err)}`);
   }
 }
-async function generateInfographicImageBase64(prompt, apiKey, modelId = "gemini-2.5-flash") {
+async function generateInfographicImageBase64(prompt, apiKey, modelId = "gemini-3.1-flash-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [
@@ -969,7 +969,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
     throw new Error(`SEO analysis failed: ${err.message}`);
   }
 }
-async function analyzeUploadedProductImageBase64(base64, mimeType, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-2.5-flash") {
+async function analyzeUploadedProductImageBase64(base64, mimeType, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -990,7 +990,7 @@ Return a JSON object with exactly these fields based on the visual attributes of
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary covering its visible style/features (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering visible features, likely materials, customization options, and B2B wholesale benefits. Rich and keyword-focused.",
-  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the uploaded images carefully to get an idea of the physical construction. Create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments on the product, specific stitching types used at different parts of the garment, and types of customizations that can be done.",
+  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the uploaded images carefully to get an idea of the physical construction. Create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments on the product, specific stitching types used at different parts of the garment, and types of customizations that can be done. IMPORTANT: Do NOT include conversational intros like 'As a garment engineer...'. Write ONLY the guide itself.",
   "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details and construction of this specific garment to a user in an infographic style.",
   "material": "Specific fabric/material description that matches the look (e.g. 'Heavyweight Cotton Blend')",
   "availableSizes": ["S", "M", "L", "XL", "2XL"],
