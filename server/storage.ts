@@ -75,7 +75,7 @@ export async function storagePut(
   contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
   let processedData = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
-  let currentKey = normalizeKey(relKey);
+  let key = normalizeKey(relKey);
   let finalContentType = contentType;
 
   // Auto-convert images to WebP
@@ -88,8 +88,8 @@ export async function storagePut(
         .toBuffer();
 
       // Update key and content type
-      const ext = path.extname(currentKey);
-      currentKey = currentKey.replace(ext, '.webp');
+      const ext = path.extname(key);
+      key = key.replace(ext, '.webp');
       finalContentType = 'image/webp';
       console.log(`[Storage] Auto-converted ${relKey} to WebP`);
     } catch (err) {
@@ -124,9 +124,8 @@ export async function storagePut(
         console.log(`[Storage] Creating nested directory: ${fileDir}`);
         fs.mkdirSync(fileDir, { recursive: true });
       }
-      const buffer = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
-      await fs.promises.writeFile(filePath, buffer);
-      console.log(`[Storage] Successfully wrote ${buffer.length} bytes to ${filePath}`);
+      await fs.promises.writeFile(filePath, processedData);
+      console.log(`[Storage] Successfully wrote ${processedData.length} bytes to ${filePath}`);
     } catch (e: any) {
       console.error(`[Storage] FATAL error writing to ${filePath}:`, e.message, e.stack);
     }
@@ -138,7 +137,7 @@ export async function storagePut(
 
   const { baseUrl, apiKey } = config;
   const uploadUrl = buildUploadUrl(baseUrl, key);
-  const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
+  const formData = toFormData(processedData, finalContentType, key.split("/").pop() ?? key);
   const response = await fetch(uploadUrl, {
     method: "POST",
     headers: buildAuthHeaders(apiKey),
