@@ -858,14 +858,14 @@ __export(gemini_exports, {
 });
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 function getClient(apiKey) {
-  const key = apiKey || ENV.geminiApiKey;
-  if (!key || key === "your_gemini_api_key_here") {
+  const key2 = apiKey || ENV.geminiApiKey;
+  if (!key2 || key2 === "your_gemini_api_key_here") {
     throw new Error("GEMINI_API_KEY is not configured. Please set your Gemini API key in the AI Agent settings.");
   }
-  if (!_clientCache.has(key)) {
-    _clientCache.set(key, new GoogleGenerativeAI(key));
+  if (!_clientCache.has(key2)) {
+    _clientCache.set(key2, new GoogleGenerativeAI(key2));
   }
-  return _clientCache.get(key);
+  return _clientCache.get(key2);
 }
 async function chatWithProductAgent(conversationHistory, userMessage, systemPrompt, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
@@ -1537,8 +1537,8 @@ var SDKServer = class {
 var sdk = new SDKServer();
 
 // server/_core/oauth.ts
-function getQueryParam(req, key) {
-  const value = req.query[key];
+function getQueryParam(req, key2) {
+  const value = req.query[key2];
   return typeof value === "string" ? value : void 0;
 }
 function registerOAuthRoutes(app) {
@@ -1763,8 +1763,22 @@ function buildAuthHeaders(apiKey) {
   return { Authorization: `Bearer ${apiKey}` };
 }
 async function storagePut(relKey, data, contentType = "application/octet-stream") {
+  let processedData = typeof data === "string" ? Buffer.from(data) : Buffer.from(data);
+  let currentKey = normalizeKey(relKey);
+  let finalContentType = contentType;
+  if (contentType.startsWith("image/") && !contentType.includes("svg") && !contentType.includes("webp")) {
+    try {
+      const sharp = (await import("sharp")).default;
+      processedData = await sharp(processedData).webp({ quality: 85 }).toBuffer();
+      const ext = path.extname(currentKey);
+      currentKey = currentKey.replace(ext, ".webp");
+      finalContentType = "image/webp";
+      console.log(`[Storage] Auto-converted ${relKey} to WebP`);
+    } catch (err) {
+      console.warn(`[Storage] WebP conversion skipped (sharp might not be installed):`, err);
+    }
+  }
   const config = getStorageConfig();
-  const key = normalizeKey(relKey);
   if (!config) {
     let uploadDir;
     if (ENV.storagePath) {
@@ -1857,12 +1871,12 @@ var aiAgentRouter = router({
     modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
       const reply = await chatWithProductAgent(
         input.history,
         input.message,
         AGENT_SYSTEM_PROMPT,
-        key,
+        key2,
         input.modelId
       );
       return { reply, success: true };
@@ -1886,8 +1900,8 @@ var aiAgentRouter = router({
     modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const productData = await generateProductData(input.description, void 0, key, input.modelId);
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const productData = await generateProductData(input.description, void 0, key2, input.modelId);
       return { product: productData, success: true };
     } catch (err) {
       if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -1911,12 +1925,12 @@ var aiAgentRouter = router({
     modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
       const { base64, mimeType } = await generateProductImageBase64(
         input.imagePrompt,
         input.logoBase64,
         input.logoMimeType,
-        key,
+        key2,
         input.modelId
       );
       const buffer = Buffer.from(base64, "base64");
@@ -1939,10 +1953,10 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateInfographicImageBase64: generateInfographicImageBase642 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
       const { base64, mimeType } = await generateInfographicImageBase642(
         input.prompt,
-        key,
+        key2,
         input.modelId
       );
       const buffer = Buffer.from(base64, "base64");
@@ -1966,8 +1980,8 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { analyzeUploadedProductImageBase64: analyzeUploadedProductImageBase642 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const productData = await analyzeUploadedProductImageBase642(input.base64, input.mimeType, void 0, key, input.modelId);
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const productData = await analyzeUploadedProductImageBase642(input.base64, input.mimeType, void 0, key2, input.modelId);
       return { product: productData, success: true };
     } catch (err) {
       if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -1991,8 +2005,8 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { analyzeImageForSeo: analyzeImageForSeo2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const seoData = await analyzeImageForSeo2(input.base64, input.mimeType, key, input.modelId);
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const seoData = await analyzeImageForSeo2(input.base64, input.mimeType, key2, input.modelId);
       return { seoData, success: true };
     } catch (err) {
       if (err.message?.includes("GEMINI_API_KEY") || err.message?.includes("API key")) {
@@ -2015,8 +2029,8 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateDesignerGrid: generateDesignerGrid2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const { base64, mimeType } = await generateDesignerGrid2(input.prompt, key, input.modelId);
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const { base64, mimeType } = await generateDesignerGrid2(input.prompt, key2, input.modelId);
       return { base64, mimeType, success: true };
     } catch (err) {
       throw new TRPCError3({
@@ -2035,11 +2049,11 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { generateIndividualView: generateIndividualView2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
       const { base64, mimeType } = await generateIndividualView2(
         input.basePrompt,
         input.viewType,
-        key,
+        key2,
         input.modelId,
         input.referenceImage
       );
@@ -2065,8 +2079,8 @@ var aiAgentRouter = router({
   })).mutation(async ({ input, ctx }) => {
     try {
       const { prefillProductDataFromGrid: prefillProductDataFromGrid2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
-      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const productData = await prefillProductDataFromGrid2(input.prompt, input.base64, input.mimeType, key, input.modelId);
+      const key2 = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const productData = await prefillProductDataFromGrid2(input.prompt, input.base64, input.mimeType, key2, input.modelId);
       return { productData, success: true };
     } catch (err) {
       throw new TRPCError3({
@@ -2237,8 +2251,8 @@ var productRouter = router({
   })).mutation(async ({ input }) => {
     const buffer = Buffer.from(input.imageBase64, "base64");
     const ext = input.mimeType.split("/")[1] ?? "jpg";
-    const key = `products-${input.productId}-${nanoid2(10)}.${ext}`;
-    const { url } = await storagePut(key, buffer, input.mimeType);
+    const key2 = `products-${input.productId}-${nanoid2(10)}.${ext}`;
+    const { url } = await storagePut(key2, buffer, input.mimeType);
     await addProductImage({
       productId: input.productId,
       imageUrl: url,
@@ -2730,8 +2744,8 @@ var techPackRouter = router({
     const buffer = Buffer.from(input.imageBase64, "base64");
     const ext = input.mimeType.split("/")[1] || "jpg";
     const fileKey = `tech-packs/${nanoid2(12)}.${ext}`;
-    const { url, key } = await storagePut(fileKey, buffer, input.mimeType);
-    return { url, fileKey: key };
+    const { url, key: key2 } = await storagePut(fileKey, buffer, input.mimeType);
+    return { url, fileKey: key2 };
   }),
   list: adminProcedure3.query(async () => {
     return getAllTechPacks();
@@ -2780,10 +2794,10 @@ var appRouter = router({
       const db = await getDatabase();
       if (!db) return { hasKey: false, maskedKey: "" };
       const [user] = await db.select().from(users2).where(eq2(users2.id, ctx.user.id)).limit(1);
-      const key = user?.geminiApiKey || "";
+      const key2 = user?.geminiApiKey || "";
       return {
-        hasKey: !!key,
-        maskedKey: key ? key.substring(0, 6) + "..." + key.substring(key.length - 4) : ""
+        hasKey: !!key2,
+        maskedKey: key2 ? key2.substring(0, 6) + "..." + key2.substring(key2.length - 4) : ""
       };
     }),
     saveApiKey: adminProcedure3.input(z3.object({ apiKey: z3.string().max(255) })).mutation(async ({ input, ctx }) => {
@@ -3137,14 +3151,14 @@ async function startServer() {
   );
   function hashPwd(password) {
     const salt = crypto.randomBytes(16).toString("hex");
-    const key = crypto.scryptSync(password, salt, 64).toString("hex");
-    return `${salt}:${key}`;
+    const key2 = crypto.scryptSync(password, salt, 64).toString("hex");
+    return `${salt}:${key2}`;
   }
   function verifyPwd(password, hash) {
     try {
-      const [salt, key] = hash.split(":");
-      if (!salt || !key) return false;
-      return crypto.scryptSync(password, salt, 64).toString("hex") === key;
+      const [salt, key2] = hash.split(":");
+      if (!salt || !key2) return false;
+      return crypto.scryptSync(password, salt, 64).toString("hex") === key2;
     } catch {
       return false;
     }

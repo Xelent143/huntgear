@@ -74,8 +74,30 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
+  let processedData = typeof data === 'string' ? Buffer.from(data) : Buffer.from(data as any);
+  let currentKey = normalizeKey(relKey);
+  let finalContentType = contentType;
+
+  // Auto-convert images to WebP
+  if (contentType.startsWith('image/') && !contentType.includes('svg') && !contentType.includes('webp')) {
+    try {
+      // Dynamic import to avoid crash if sharp is not installed
+      const sharp = (await import('sharp')).default;
+      processedData = await sharp(processedData)
+        .webp({ quality: 85 })
+        .toBuffer();
+
+      // Update key and content type
+      const ext = path.extname(currentKey);
+      currentKey = currentKey.replace(ext, '.webp');
+      finalContentType = 'image/webp';
+      console.log(`[Storage] Auto-converted ${relKey} to WebP`);
+    } catch (err) {
+      console.warn(`[Storage] WebP conversion skipped (sharp might not be installed):`, err);
+    }
+  }
+
   const config = getStorageConfig();
-  const key = normalizeKey(relKey);
 
   if (!config) {
     // Local Fallback: Save to persistent directory
