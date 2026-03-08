@@ -198,6 +198,17 @@ export default function ProductDetail() {
   const allImages: any[] = [];
   if (product?.mainImage) allImages.push({ id: "main", imageUrl: product.mainImage, altText: product.title, sortOrder: -1 });
   if (images && images.length > 0) allImages.push(...images.filter((img: any) => img.imageUrl && img.imageUrl.trim() !== ""));
+
+  // Add Manufacturing Infographic to gallery if it exists
+  if ((product as any).manufacturingInfographic) {
+    allImages.push({
+      id: "infographic",
+      imageUrl: (product as any).manufacturingInfographic,
+      altText: "Manufacturing Infographic",
+      sortOrder: 99
+    });
+  }
+
   if (allImages.length === 0) allImages.push({ id: 0, imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=90", altText: product?.title ?? "", sortOrder: 0 });
 
   const activeImage = allImages[activeImageIdx] ?? allImages[0];
@@ -324,15 +335,6 @@ export default function ProductDetail() {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                   {product.shortDescription || product.material}
                 </p>
-
-                <div className="flex gap-2 mb-6">
-                  <span className="inline-flex items-center gap-1 bg-[#fff5eb] text-[#ff9900] dark:bg-[#ff9900]/10 dark:text-[#ff9900] px-2 py-1 text-xs font-semibold rounded-sm">
-                    <Shield className="w-3 h-3" /> Trade Assurance
-                  </span>
-                  <span className="inline-flex items-center gap-1 bg-[#f0f8ff] text-[#0066cc] dark:bg-[#0066cc]/10 dark:text-[#0066cc] px-2 py-1 text-xs font-semibold rounded-sm">
-                    <CheckCircle className="w-3 h-3" /> Verified Factory
-                  </span>
-                </div>
               </div>
 
               {/* Alibaba Style Tiered Pricing */}
@@ -444,45 +446,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* Supplier Identity Card (Alibaba Style) */}
-              <div className="bg-white dark:bg-card border border-border rounded-md p-5 shadow-sm">
-                <div className="flex items-start gap-4 mb-4 pb-4 border-b border-border">
-                  <div className="w-12 h-12 rounded bg-secondary flex items-center justify-center overflow-hidden border border-border">
-                    <img src={IMAGES.logoGold} alt="SSM Logo" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-sm text-foreground leading-tight">Sialkot Sample Masters<br />Manufacturing Factory</h4>
-                    <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
-                      <MapPin className="w-3.5 h-3.5" /> Punjab, Pakistan
-                    </div>
-                  </div>
-                </div>
 
-                <div className="space-y-3 text-xs mb-5">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Factory Type</span>
-                    <span className="font-medium text-foreground text-right w-1/2">OEM / ODM Manufacturer</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Years in Business</span>
-                    <span className="font-medium text-foreground flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5 text-gold" /> 15+ Years
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Certifications</span>
-                    <span className="font-medium text-foreground">ISO 9001, WRAP</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Response Rate</span>
-                    <span className="font-medium text-green-600 dark:text-green-400">98.5% (&lt; 4h)</span>
-                  </div>
-                </div>
-
-                <Link href="/contact">
-                  <Button variant="outline" className="w-full text-xs font-semibold">Contact Supplier</Button>
-                </Link>
-              </div>
 
             </div>
           </div>
@@ -551,20 +515,6 @@ export default function ProductDetail() {
                   </h2>
 
                   <div className="bg-zinc-950 rounded-xl overflow-hidden shadow-2xl">
-                    {/* B2B Infographic Banner Style */}
-                    {(product as any).manufacturingInfographic && (
-                      <div className="relative w-full border-b border-zinc-800">
-                        <img
-                          src={(product as any).manufacturingInfographic}
-                          alt="Manufacturing Flow"
-                          className="w-full h-auto object-cover max-h-[500px]"
-                        />
-                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-sm border border-gold/30">
-                          Sialkot Factory Floor
-                        </div>
-                      </div>
-                    )}
-
                     {/* Story Text Box */}
                     {(product as any).manufacturingStory && (
                       <div className="p-8 md:p-12 mt-0">
