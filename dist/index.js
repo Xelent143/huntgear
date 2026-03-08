@@ -23,6 +23,8 @@ __export(schema_exports, {
   shippingZones: () => shippingZones,
   sizeCharts: () => sizeCharts,
   slabPrices: () => slabPrices,
+  techPackImages: () => techPackImages,
+  techPacks: () => techPacks,
   testimonials: () => testimonials,
   users: () => users
 });
@@ -36,7 +38,7 @@ import {
   boolean,
   decimal
 } from "drizzle-orm/mysql-core";
-var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions;
+var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages;
 var init_schema = __esm({
   "drizzle/schema.ts"() {
     "use strict";
@@ -274,6 +276,36 @@ var init_schema = __esm({
       message: text("message").notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull()
     });
+    techPacks = mysqlTable("tech_packs", {
+      id: int("id").autoincrement().primaryKey(),
+      referenceNumber: varchar("referenceNumber", { length: 64 }).notNull().unique(),
+      brandName: varchar("brandName", { length: 255 }).notNull(),
+      contactName: varchar("contactName", { length: 255 }).notNull(),
+      email: varchar("email", { length: 320 }).notNull(),
+      phone: varchar("phone", { length: 64 }),
+      country: varchar("country", { length: 100 }),
+      garmentType: varchar("garmentType", { length: 100 }).notNull(),
+      styleName: varchar("styleName", { length: 255 }),
+      season: varchar("season", { length: 100 }),
+      gender: varchar("gender", { length: 100 }),
+      targetMarket: varchar("targetMarket", { length: 255 }),
+      techPackData: text("techPackData").notNull(),
+      // JSON blob for the full wizard data
+      status: mysqlEnum("status", ["draft", "submitted", "reviewed", "quoted"]).default("submitted").notNull(),
+      adminNotes: text("adminNotes"),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    techPackImages = mysqlTable("tech_pack_images", {
+      id: int("id").autoincrement().primaryKey(),
+      techPackId: int("techPackId").notNull(),
+      imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
+      fileKey: varchar("fileKey", { length: 500 }),
+      imageType: mysqlEnum("imageType", ["mockup", "flat_sketch", "reference", "hangtag", "care_label"]).notNull(),
+      caption: varchar("caption", { length: 500 }),
+      sortOrder: int("sortOrder").default(0).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
   }
 });
 
@@ -301,6 +333,7 @@ var db_exports = {};
 __export(db_exports, {
   addPortfolioImage: () => addPortfolioImage,
   addProductImage: () => addProductImage,
+  addTechPackImage: () => addTechPackImage,
   clearCart: () => clearCart,
   createContactSubmission: () => createContactSubmission,
   createOrder: () => createOrder,
@@ -308,6 +341,7 @@ __export(db_exports, {
   createProduct: () => createProduct,
   createRfqSubmission: () => createRfqSubmission,
   createShippingZone: () => createShippingZone,
+  createTechPack: () => createTechPack,
   deletePortfolioImage: () => deletePortfolioImage,
   deletePortfolioItem: () => deletePortfolioItem,
   deleteProduct: () => deleteProduct,
@@ -320,6 +354,7 @@ __export(db_exports, {
   getAllProducts: () => getAllProducts,
   getAllRfqSubmissions: () => getAllRfqSubmissions,
   getAllShippingZones: () => getAllShippingZones,
+  getAllTechPacks: () => getAllTechPacks,
   getBlogPostBySlug: () => getBlogPostBySlug,
   getCartItems: () => getCartItems,
   getDb: () => getDb,
@@ -337,6 +372,8 @@ __export(db_exports, {
   getPublishedBlogPosts: () => getPublishedBlogPosts,
   getSizeChart: () => getSizeChart,
   getSlabPrices: () => getSlabPrices,
+  getTechPackById: () => getTechPackById,
+  getTechPackImages: () => getTechPackImages,
   getUserByOpenId: () => getUserByOpenId,
   listPortfolioItems: () => listPortfolioItems,
   removeCartItem: () => removeCartItem,
@@ -348,6 +385,7 @@ __export(db_exports, {
   updatePortfolioItem: () => updatePortfolioItem,
   updateProduct: () => updateProduct,
   updateShippingZone: () => updateShippingZone,
+  updateTechPackStatus: () => updateTechPackStatus,
   upsertCartItem: () => upsertCartItem,
   upsertSizeChart: () => upsertSizeChart,
   upsertUser: () => upsertUser
@@ -756,6 +794,43 @@ async function getPortfolioCategories() {
   if (!db) return [];
   const rows = await db.select({ category: portfolioItems.category }).from(portfolioItems).where(eq(portfolioItems.isActive, true));
   return Array.from(new Set(rows.map((r) => r.category).filter(Boolean)));
+}
+async function createTechPack(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(techPacks).values(data);
+  const result = await db.select().from(techPacks).where(eq(techPacks.referenceNumber, data.referenceNumber)).limit(1);
+  return result[0];
+}
+async function getTechPackById(id) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const result = await db.select().from(techPacks).where(eq(techPacks.id, id)).limit(1);
+  return result[0];
+}
+async function getAllTechPacks() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(techPacks).orderBy(desc(techPacks.createdAt));
+}
+async function updateTechPackStatus(id, status, notes) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const updateData = { status, updatedAt: /* @__PURE__ */ new Date() };
+  if (notes !== void 0) updateData.adminNotes = notes;
+  await db.update(techPacks).set(updateData).where(eq(techPacks.id, id));
+}
+async function addTechPackImage(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(techPackImages).values(data).$returningId();
+  const [img] = await db.select().from(techPackImages).where(eq(techPackImages.id, result.id)).limit(1);
+  return img;
+}
+async function getTechPackImages(techPackId) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(techPackImages).where(eq(techPackImages.techPackId, techPackId)).orderBy(techPackImages.sortOrder);
 }
 var _db;
 var init_db = __esm({
@@ -2581,6 +2656,93 @@ var contactRouter = router({
     return { success: true };
   })
 });
+var techPackRouter = router({
+  submit: publicProcedure.input(z3.object({
+    brandName: z3.string().min(1),
+    contactName: z3.string().min(1),
+    email: z3.string().email(),
+    phone: z3.string().optional(),
+    country: z3.string().optional(),
+    garmentType: z3.string().min(1),
+    styleName: z3.string().optional(),
+    season: z3.string().optional(),
+    gender: z3.string().optional(),
+    targetMarket: z3.string().optional(),
+    techPackData: z3.string(),
+    // JSON blob
+    images: z3.array(z3.object({
+      imageUrl: z3.string().url(),
+      fileKey: z3.string().optional(),
+      imageType: z3.enum(["mockup", "flat_sketch", "reference", "hangtag", "care_label"]),
+      caption: z3.string().optional(),
+      sortOrder: z3.number().int().default(0)
+    })).optional()
+  })).mutation(async ({ input }) => {
+    const referenceNumber = `TP-${(/* @__PURE__ */ new Date()).getFullYear()}-${nanoid2(6).toUpperCase()}`;
+    const techPack = await createTechPack({
+      referenceNumber,
+      brandName: input.brandName,
+      contactName: input.contactName,
+      email: input.email,
+      phone: input.phone,
+      country: input.country,
+      garmentType: input.garmentType,
+      styleName: input.styleName,
+      season: input.season,
+      gender: input.gender,
+      targetMarket: input.targetMarket,
+      techPackData: input.techPackData,
+      status: "submitted"
+    });
+    if (!techPack) {
+      throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create Tech Pack overview" });
+    }
+    if (input.images && input.images.length > 0) {
+      for (const img of input.images) {
+        await addTechPackImage({
+          techPackId: techPack.id,
+          imageUrl: img.imageUrl,
+          fileKey: img.fileKey,
+          imageType: img.imageType,
+          caption: img.caption,
+          sortOrder: img.sortOrder
+        });
+      }
+    }
+    await notifyOwner({
+      title: `New Tech Pack: ${referenceNumber}`,
+      content: `${input.contactName} (${input.brandName}) submitted a Tech Pack for ${input.garmentType} (${input.styleName || "N/A"})`
+    });
+    return { success: true, referenceNumber, techPackId: techPack.id };
+  }),
+  uploadImage: publicProcedure.input(z3.object({
+    imageBase64: z3.string(),
+    mimeType: z3.string().default("image/jpeg")
+  })).mutation(async ({ input }) => {
+    const buffer = Buffer.from(input.imageBase64, "base64");
+    const ext = input.mimeType.split("/")[1] || "jpg";
+    const fileKey = `tech-packs/${nanoid2(12)}.${ext}`;
+    const { url, key } = await storagePut(fileKey, buffer, input.mimeType);
+    return { url, fileKey: key };
+  }),
+  list: adminProcedure3.query(async () => {
+    return getAllTechPacks();
+  }),
+  byId: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).query(async ({ input }) => {
+    const techPack = await getTechPackById(input.id);
+    if (!techPack) return null;
+    const images = await getTechPackImages(techPack.id);
+    return { ...techPack, images };
+  }),
+  updateStatus: adminProcedure3.input(z3.object({
+    id: z3.number().int().positive(),
+    status: z3.enum(["draft", "submitted", "reviewed", "quoted"]),
+    adminNotes: z3.string().optional()
+  })).mutation(async ({ input }) => {
+    await updateTechPackStatus(input.id, input.status, input.adminNotes);
+    return { success: true };
+  })
+});
 var appRouter = router({
   system: systemRouter,
   auth: router({
@@ -2600,6 +2762,7 @@ var appRouter = router({
   portfolio: portfolioRouter,
   testimonials: testimonialsRouter,
   contact: contactRouter,
+  techPack: techPackRouter,
   aiAgent: aiAgentRouter,
   adminSettings: router({
     getApiKey: adminProcedure3.query(async ({ ctx }) => {

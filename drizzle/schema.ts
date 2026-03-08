@@ -304,3 +304,42 @@ export const contactSubmissions = mysqlTable("contact_submissions", {
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
+
+// ─── Tech Packs ───────────────────────────────────────────────────────────────
+
+export const techPacks = mysqlTable("tech_packs", {
+  id: int("id").autoincrement().primaryKey(),
+  referenceNumber: varchar("referenceNumber", { length: 64 }).notNull().unique(),
+  brandName: varchar("brandName", { length: 255 }).notNull(),
+  contactName: varchar("contactName", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 64 }),
+  country: varchar("country", { length: 100 }),
+  garmentType: varchar("garmentType", { length: 100 }).notNull(),
+  styleName: varchar("styleName", { length: 255 }),
+  season: varchar("season", { length: 100 }),
+  gender: varchar("gender", { length: 100 }),
+  targetMarket: varchar("targetMarket", { length: 255 }),
+  techPackData: text("techPackData").notNull(), // JSON blob for the full wizard data
+  status: mysqlEnum("status", ["draft", "submitted", "reviewed", "quoted"]).default("submitted").notNull(),
+  adminNotes: text("adminNotes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TechPack = typeof techPacks.$inferSelect;
+export type InsertTechPack = typeof techPacks.$inferInsert;
+
+export const techPackImages = mysqlTable("tech_pack_images", {
+  id: int("id").autoincrement().primaryKey(),
+  techPackId: int("techPackId").notNull(),
+  imageUrl: varchar("imageUrl", { length: 1000 }).notNull(),
+  fileKey: varchar("fileKey", { length: 500 }),
+  imageType: mysqlEnum("imageType", ["mockup", "flat_sketch", "reference", "hangtag", "care_label"]).notNull(),
+  caption: varchar("caption", { length: 500 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type TechPackImage = typeof techPackImages.$inferSelect;
+export type InsertTechPackImage = typeof techPackImages.$inferInsert;

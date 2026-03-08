@@ -15,6 +15,8 @@ import {
   InsertShippingZone, shippingZones,
   InsertCartItem, cartItems,
   InsertOrder, orders,
+  InsertTechPack, techPacks,
+  InsertTechPackImage, techPackImages, TechPack, TechPackImage,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -517,5 +519,54 @@ export async function getPortfolioCategories(): Promise<string[]> {
   return Array.from(new Set(rows.map(r => r.category).filter(Boolean))) as string[];
 }
 
+// ─── Tech Packs ───────────────────────────────────────────────────────────────
+
+export async function createTechPack(data: InsertTechPack) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(techPacks).values(data);
+  const result = await db.select().from(techPacks).where(eq(techPacks.referenceNumber, data.referenceNumber)).limit(1);
+  return result[0];
+}
+
+export async function getTechPackById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(techPacks).where(eq(techPacks.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getAllTechPacks() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(techPacks).orderBy(desc(techPacks.createdAt));
+}
+
+export async function updateTechPackStatus(id: number, status: "draft" | "submitted" | "reviewed" | "quoted", notes?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const updateData: any = { status, updatedAt: new Date() };
+  if (notes !== undefined) updateData.adminNotes = notes;
+
+  await db.update(techPacks).set(updateData).where(eq(techPacks.id, id));
+}
+
+export async function addTechPackImage(data: InsertTechPackImage) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(techPackImages).values(data).$returningId();
+  const [img] = await db.select().from(techPackImages).where(eq(techPackImages.id, result.id)).limit(1);
+  return img;
+}
+
+export async function getTechPackImages(techPackId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(techPackImages)
+    .where(eq(techPackImages.techPackId, techPackId))
+    .orderBy(techPackImages.sortOrder);
+}
+
 // Re-export types for convenience
-export type { Order, Product, ProductImage, SlabPrice, SizeChart, ShippingZone, PortfolioItem, PortfolioImage } from "../drizzle/schema";
+export type { Order, Product, ProductImage, SlabPrice, SizeChart, ShippingZone, PortfolioItem, PortfolioImage, TechPack, TechPackImage } from "../drizzle/schema";

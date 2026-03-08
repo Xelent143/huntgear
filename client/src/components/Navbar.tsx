@@ -68,6 +68,7 @@ const productCategories = [
 const companyLinks = [
   { label: "About Us", href: "/about", icon: Award, desc: "Our story, certifications & values" },
   { label: "Our Services", href: "/services", icon: Factory, desc: "Manufacturing, private label, design" },
+  { label: "Create Tech Pack", href: "/tech-pack", icon: Factory, desc: "Free online spec builder" },
   { label: "Portfolio", href: "/portfolio", icon: Globe, desc: "Completed work for global brands" },
   { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Industry news & manufacturing guides" },
 ];

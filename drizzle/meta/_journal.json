@@ -29,6 +29,13 @@
       "when": 1771975328893,
       "tag": "0003_futuristic_nitro",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1772993717855,
+      "tag": "0004_daily_blue_shield",
+      "breakpoints": true
     }
   ]
 }

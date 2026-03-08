@@ -31,6 +31,7 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminNewProduct from "./pages/AdminNewProduct";
 import Customize from "./pages/Customize";
 import BrandingStudio from "./pages/BrandingStudio";
+import TechPackCreator from "./pages/TechPackCreator";
 
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
@@ -52,9 +53,10 @@ function Router() {
       <Route path="/shop" component={Shop} />
       <Route path="/shop/:slug" component={ProductDetail} />
       <Route path="/checkout" component={Checkout} />
-      {/* 3D Customizer */}
+      {/* 3D Customizer & Tools */}
       <Route path="/customize" component={Customize} />
       <Route path="/branding-studio" component={BrandingStudio} />
+      <Route path="/tech-pack" component={TechPackCreator} />
       {/* Admin */}
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/login" component={AdminLogin} />

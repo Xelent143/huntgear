@@ -37,6 +37,9 @@ import {
   getFeaturedTestimonials,
   // Contact
   createContactSubmission,
+  // Tech Packs
+  createTechPack, getTechPackById, getAllTechPacks, updateTechPackStatus,
+  addTechPackImage, getTechPackImages,
 } from "./db";
 import { storagePut } from "./storage";
 import { nanoid } from "nanoid";
@@ -766,6 +769,112 @@ const contactRouter = router({
     }),
 });
 
+// ─── Tech Pack router ─────────────────────────────────────────────────────────
+
+const techPackRouter = router({
+  submit: publicProcedure
+    .input(z.object({
+      brandName: z.string().min(1),
+      contactName: z.string().min(1),
+      email: z.string().email(),
+      phone: z.string().optional(),
+      country: z.string().optional(),
+      garmentType: z.string().min(1),
+      styleName: z.string().optional(),
+      season: z.string().optional(),
+      gender: z.string().optional(),
+      targetMarket: z.string().optional(),
+      techPackData: z.string(), // JSON blob
+      images: z.array(z.object({
+        imageUrl: z.string().url(),
+        fileKey: z.string().optional(),
+        imageType: z.enum(["mockup", "flat_sketch", "reference", "hangtag", "care_label"]),
+        caption: z.string().optional(),
+        sortOrder: z.number().int().default(0),
+      })).optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const referenceNumber = `TP-${new Date().getFullYear()}-${nanoid(6).toUpperCase()}`;
+
+      const techPack = await createTechPack({
+        referenceNumber,
+        brandName: input.brandName,
+        contactName: input.contactName,
+        email: input.email,
+        phone: input.phone,
+        country: input.country,
+        garmentType: input.garmentType,
+        styleName: input.styleName,
+        season: input.season,
+        gender: input.gender,
+        targetMarket: input.targetMarket,
+        techPackData: input.techPackData,
+        status: "submitted",
+      });
+
+      if (!techPack) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create Tech Pack overview" });
+      }
+
+      if (input.images && input.images.length > 0) {
+        for (const img of input.images) {
+          await addTechPackImage({
+            techPackId: techPack.id,
+            imageUrl: img.imageUrl,
+            fileKey: img.fileKey,
+            imageType: img.imageType,
+            caption: img.caption,
+            sortOrder: img.sortOrder,
+          });
+        }
+      }
+
+      await notifyOwner({
+        title: `New Tech Pack: ${referenceNumber}`,
+        content: `${input.contactName} (${input.brandName}) submitted a Tech Pack for ${input.garmentType} (${input.styleName || "N/A"})`,
+      });
+
+      return { success: true, referenceNumber, techPackId: techPack.id };
+    }),
+
+  uploadImage: publicProcedure
+    .input(z.object({
+      imageBase64: z.string(),
+      mimeType: z.string().default('image/jpeg'),
+    }))
+    .mutation(async ({ input }) => {
+      const buffer = Buffer.from(input.imageBase64, 'base64');
+      const ext = input.mimeType.split('/')[1] || 'jpg';
+      const fileKey = `tech-packs/${nanoid(12)}.${ext}`;
+      const { url, key } = await storagePut(fileKey, buffer, input.mimeType);
+      return { url, fileKey: key };
+    }),
+
+  list: adminProcedure.query(async () => {
+    return getAllTechPacks();
+  }),
+
+  byId: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      const techPack = await getTechPackById(input.id);
+      if (!techPack) return null;
+      const images = await getTechPackImages(techPack.id);
+      return { ...techPack, images };
+    }),
+
+  updateStatus: adminProcedure
+    .input(z.object({
+      id: z.number().int().positive(),
+      status: z.enum(["draft", "submitted", "reviewed", "quoted"]),
+      adminNotes: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      await updateTechPackStatus(input.id, input.status, input.adminNotes);
+      return { success: true };
+    }),
+});
+
 // ─── App router ───────────────────────────────────────────────────────────────
 
 export const appRouter = router({
@@ -787,6 +896,7 @@ export const appRouter = router({
   portfolio: portfolioRouter,
   testimonials: testimonialsRouter,
   contact: contactRouter,
+  techPack: techPackRouter,
   aiAgent: aiAgentRouter,
   adminSettings: router({
     getApiKey: adminProcedure.query(async ({ ctx }) => {
