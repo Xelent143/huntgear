@@ -150,6 +150,27 @@ export default function ProductDetail() {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  const availableSizes: string[] = (() => {
+    try {
+      return JSON.parse(product?.availableSizes ?? "[]");
+    } catch {
+      return [];
+    }
+  })();
+
+  const availableColors: string[] = (() => {
+    try {
+      return JSON.parse(product?.availableColors ?? "[]");
+    } catch {
+      return [];
+    }
+  })();
+
+  useEffect(() => {
+    if (availableSizes.length > 0 && !selectedSize) setSelectedSize(availableSizes[0]);
+    if (availableColors.length > 0 && !selectedColor) setSelectedColor(availableColors[0]);
+  }, [availableSizes.length, availableColors.length, selectedSize, selectedColor]);
+
   if (isLoading) {
     return (
       <main className="min-h-screen bg-[#f7f8fa] dark:bg-background pt-24 pb-12">
@@ -185,14 +206,6 @@ export default function ProductDetail() {
   const activeSlab = slabs.find(s => quantity >= s.minQty && (s.maxQty === null || quantity <= (s.maxQty ?? Infinity))) ?? slabs[slabs.length - 1];
   const unitPrice = activeSlab ? parseFloat(activeSlab.pricePerUnit) : (product.samplePrice ? parseFloat(product.samplePrice) : 0);
   const lineTotal = unitPrice * quantity;
-
-  const availableSizes: string[] = (() => { try { return JSON.parse(product?.availableSizes ?? "[]"); } catch { return []; } })();
-  const availableColors: string[] = (() => { try { return JSON.parse(product?.availableColors ?? "[]"); } catch { return []; } })();
-
-  useEffect(() => {
-    if (availableSizes.length > 0 && !selectedSize) setSelectedSize(availableSizes[0]);
-    if (availableColors.length > 0 && !selectedColor) setSelectedColor(availableColors[0]);
-  }, [availableSizes.length, availableColors.length]);
 
   const handleAddToCart = () => {
     addItem({
