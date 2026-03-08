@@ -323,7 +323,8 @@ var init_env = __esm({
       isProduction: process.env.NODE_ENV === "production",
       forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
       forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
-      geminiApiKey: process.env.GEMINI_API_KEY ?? ""
+      geminiApiKey: process.env.GEMINI_API_KEY ?? "",
+      storagePath: process.env.STORAGE_PATH || ""
     };
   }
 });
@@ -1765,7 +1766,14 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   const config = getStorageConfig();
   const key = normalizeKey(relKey);
   if (!config) {
-    const uploadDir = path.join(process.cwd(), "uploads");
+    let uploadDir;
+    if (ENV.storagePath) {
+      uploadDir = path.isAbsolute(ENV.storagePath) ? ENV.storagePath : path.resolve(process.cwd(), ENV.storagePath);
+    } else if (ENV.isProduction) {
+      uploadDir = path.resolve(process.cwd(), "..", "ssm_persistent_uploads");
+    } else {
+      uploadDir = path.join(process.cwd(), "uploads");
+    }
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
     try {
@@ -3053,6 +3061,7 @@ function serveStatic(app) {
 }
 
 // server/_core/index.ts
+init_env();
 function isPortAvailable(port) {
   return new Promise((resolve) => {
     const server = net.createServer();
@@ -3211,8 +3220,8 @@ async function startServer() {
     return res.json({ success: true });
   });
   app.get("/api/admin/debug", async (_req, res) => {
-    const isProd2 = process.env.NODE_ENV === "production";
-    const resolvedUploadsPath = isProd2 ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+    const isProd = process.env.NODE_ENV === "production";
+    const resolvedUploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
     const productsUploadsPath = path4.join(resolvedUploadsPath, "products");
     const info = {
       nodeVersion: process.version,
@@ -3266,11 +3275,17 @@ async function startServer() {
       createContext
     })
   );
-  const isProd = process.env.NODE_ENV === "production";
-  const uploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+  let uploadsPath;
+  if (ENV.storagePath) {
+    uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
+  } else if (ENV.isProduction) {
+    uploadsPath = path4.resolve(process.cwd(), "..", "ssm_persistent_uploads");
+  } else {
+    uploadsPath = path4.join(process.cwd(), "uploads");
+  }
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs4.existsSync(uploadsPath)) {
-    console.log(`[Storage] Creating uploads directory...`);
+    console.log(`[Storage] Creating uploads directory at ${uploadsPath}...`);
     fs4.mkdirSync(uploadsPath, { recursive: true });
   }
   app.use("/uploads", express2.static(uploadsPath));

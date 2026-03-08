@@ -9,6 +9,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { ENV } from "./env";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -250,14 +251,21 @@ async function startServer() {
   );
 
   // Serve local uploads
-  const isProd = process.env.NODE_ENV === "production";
-  const uploadsPath = isProd
-    ? path.resolve(process.cwd(), 'uploads')
-    : path.resolve(process.cwd(), 'uploads');
+  let uploadsPath: string;
+  if (ENV.storagePath) {
+    uploadsPath = path.isAbsolute(ENV.storagePath)
+      ? ENV.storagePath
+      : path.resolve(process.cwd(), ENV.storagePath);
+  } else if (ENV.isProduction) {
+    // In production, default to a directory OUTSIDE the project root
+    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
+  } else {
+    uploadsPath = path.join(process.cwd(), 'uploads');
+  }
 
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs.existsSync(uploadsPath)) {
-    console.log(`[Storage] Creating uploads directory...`);
+    console.log(`[Storage] Creating uploads directory at ${uploadsPath}...`);
     fs.mkdirSync(uploadsPath, { recursive: true });
   }
 

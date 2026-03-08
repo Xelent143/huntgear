@@ -78,8 +78,21 @@ export async function storagePut(
   const key = normalizeKey(relKey);
 
   if (!config) {
-    // Local Fallback: Save to root 'uploads' directory
-    const uploadDir = path.join(process.cwd(), 'uploads');
+    // Local Fallback: Save to persistent directory
+    let uploadDir: string;
+
+    if (ENV.storagePath) {
+      uploadDir = path.isAbsolute(ENV.storagePath)
+        ? ENV.storagePath
+        : path.resolve(process.cwd(), ENV.storagePath);
+    } else if (ENV.isProduction) {
+      // In production, default to a directory OUTSIDE the project root 
+      // so it survives Git deployments on Hostinger.
+      uploadDir = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
+    } else {
+      // In development, keep it local for simplicity
+      uploadDir = path.join(process.cwd(), 'uploads');
+    }
 
     const filePath = path.join(uploadDir, key);
     const fileDir = path.dirname(filePath);
@@ -94,7 +107,6 @@ export async function storagePut(
       console.log(`[Storage] Successfully wrote ${buffer.length} bytes to ${filePath}`);
     } catch (e: any) {
       console.error(`[Storage] FATAL error writing to ${filePath}:`, e.message, e.stack);
-      // Continue but it will likely result in a broken image, at least it won't crash the server
     }
 
     // Return a relative URL starting with /uploads/
