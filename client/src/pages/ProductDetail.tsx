@@ -321,16 +321,7 @@ export default function ProductDetail() {
                   {product.title}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-4 text-sm mb-4">
-                  <div className="flex items-center text-gold">
-                    {"★★★★★".split("").map((star, i) => <span key={i}>{star}</span>)}
-                    <span className="text-foreground ml-2 font-medium">4.9/5</span>
-                  </div>
-                  <span className="text-muted-foreground">|</span>
-                  <span className="text-muted-foreground">78 Reviews</span>
-                  <span className="text-muted-foreground">|</span>
-                  <span className="text-muted-foreground">1,200+ Orders</span>
-                </div>
+
 
                 <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                   {product.shortDescription || product.material}
