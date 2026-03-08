@@ -322,7 +322,7 @@ export default function ProductDetail() {
                 </h1>
 
                 <div className="flex flex-wrap items-center gap-4 text-sm mb-4">
-                  <div className="flex items-center text-[#ff9900]">
+                  <div className="flex items-center text-gold">
                     {"★★★★★".split("").map((star, i) => <span key={i}>{star}</span>)}
                     <span className="text-foreground ml-2 font-medium">4.9/5</span>
                   </div>
@@ -425,16 +425,16 @@ export default function ProductDetail() {
                   </div>
                   <div className="flex justify-between items-center pt-2 mt-2 border-t border-border/50">
                     <span className="text-foreground font-bold">Subtotal:</span>
-                    <span className="font-bold text-xl text-[#e63946] dark:text-[#f25c69]">{formatCurrency(lineTotal)}</span>
+                    <span className="font-bold text-xl text-gold-dark dark:text-gold-light">{formatCurrency(lineTotal)}</span>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-2.5">
-                  <Button onClick={handleStartOrder} className="w-full bg-[#ff6a00] hover:bg-[#e65c00] text-white font-bold rounded-full py-6">
+                  <Button onClick={handleStartOrder} className="w-full bg-gold hover:bg-gold/90 text-background font-bold rounded-full py-6">
                     Start Order
                   </Button>
-                  <Button onClick={handleAddToCart} variant="outline" className="w-full border-[#ff6a00] text-[#ff6a00] hover:bg-[#ff6a00]/10 font-bold rounded-full py-6">
+                  <Button onClick={handleAddToCart} variant="outline" className="w-full border-gold text-gold hover:bg-gold/10 font-bold rounded-full py-6">
                     Add to Inquiry Cart
                   </Button>
 
