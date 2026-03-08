@@ -30,10 +30,11 @@ import AdminContent from "./pages/admin/AdminContent";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminNewProduct from "./pages/AdminNewProduct";
 import Customize from "./pages/Customize";
+import BrandingStudio from "./pages/BrandingStudio";
 
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
-const BARE_ROUTES = ["/admin", "/customize"];
+const BARE_ROUTES = ["/admin", "/customize", "/branding-studio"];
 
 function Router() {
   return (
@@ -53,6 +54,7 @@ function Router() {
       <Route path="/checkout" component={Checkout} />
       {/* 3D Customizer */}
       <Route path="/customize" component={Customize} />
+      <Route path="/branding-studio" component={BrandingStudio} />
       {/* Admin */}
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/login" component={AdminLogin} />

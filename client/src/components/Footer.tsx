@@ -6,155 +6,116 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#050505] border-t border-white/5 text-left relative overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-gold/5 blur-[120px] pointer-events-none rounded-full" />
-
-      {/* ── Pre-footer CTA Strip (Elite Style) ── */}
-      <div className="relative border-b border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black z-0" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-            <div className="text-center md:text-left max-w-2xl">
-              <p className="text-gold font-condensed font-semibold tracking-[0.3em] uppercase text-xs mb-3">
-                Initiate the Process
+    <footer className="bg-card border-t border-border text-left">
+      {/* ── Pre-footer CTA Strip ── */}
+      <div className="bg-foreground text-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+            <div className="text-center md:text-left">
+              <p className="font-condensed font-extrabold text-2xl sm:text-3xl tracking-wide uppercase leading-tight">
+                Ready to manufacture your vision?
               </p>
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold tracking-tight text-white leading-[1.1]">
-                Ready to manufacture your <span className="text-gradient-gold italic">vision?</span>
-              </h2>
-              <p className="text-white/60 text-base mt-4 max-w-lg leading-relaxed">
-                Experience unparalleled precision manufacturing. Get a comprehensive quote within 24 hours.
+              <p className="text-background/70 text-sm mt-1.5">
+                Get a free quote in 24 hours. No commitment required.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 mt-2 md:mt-6">
+            <div className="flex items-center gap-3 shrink-0">
               <Link href="/rfq">
-                <button className="relative overflow-hidden bg-gold text-black hover:bg-white transition-colors duration-500 font-condensed font-bold tracking-[0.15em] uppercase text-[11px] px-8 py-4 h-auto rounded-none group shadow-[0_0_20px_rgba(212,175,55,0.15)]">
-                  <span className="relative z-10 flex items-center gap-2">
-                    REQUEST COMPREHENSIVE QUOTE
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <span className="absolute inset-0 w-20 h-full -translate-x-[150%] skew-x-[-20deg] bg-white/40 group-hover:animate-[sweep_1s_ease-in-out_forwards]" />
+                <button className="flex items-center gap-2 bg-gold text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-gold/90 transition-colors shadow-lg shadow-gold/20 group">
+                  Request Free Quote
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
               <a
                 href="https://wa.me/923022922242"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 border border-white/20 text-white/80 hover:text-gold hover:border-gold font-condensed font-semibold uppercase tracking-[0.15em] text-[11px] px-8 py-4 rounded-none transition-all duration-300"
+                className="flex items-center gap-2 border border-background/20 text-background/80 hover:text-background hover:border-background font-condensed font-semibold uppercase tracking-widest text-sm px-6 py-3.5 rounded-sm transition-colors"
               >
-                WHATSAPP CONCIERGE
+                WhatsApp Us
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Architectural Footer */}
-      <div className="relative pt-24 pb-12 text-left z-10">
+      {/* Main Footer - Dark Professional Theme */}
+      <div className="bg-[#0a0a0a] border-t border-border/50 pt-20 pb-10 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 items-start">
 
-          {/* Top Row: Massive Brand Name & Newsletter */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-20 border-b border-white/5 pb-20">
-            <div className="lg:col-span-7">
-              <Link href="/" className="inline-block group mb-6">
-                <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold tracking-tighter text-white leading-[0.9] group-hover:text-gold/90 transition-colors duration-500">
-                  Sialkot Sample<br />
-                  <span className="italic">Masters</span>
-                </h2>
-              </Link>
-              <p className="text-white/50 text-base leading-relaxed max-w-md font-light">
-                Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, streetwear, tactical gear, and martial arts uniforms for global, elite-tier brands.
-              </p>
-            </div>
-
-            <div className="lg:col-span-5 lg:pl-12 lg:border-l border-white/5 flex flex-col justify-end">
-              <h3 className="text-gold font-condensed font-bold text-xs tracking-[0.2em] uppercase mb-4">
-                Join the Inner Circle
-              </h3>
-              <p className="text-white/60 text-sm mb-6 max-w-sm">
-                Receive exclusive insights into manufacturing trends, new fabric technologies, and production slot availability.
-              </p>
-              <form className="relative max-w-md flex" onSubmit={(e) => e.preventDefault()}>
-                <input
-                  type="email"
-                  placeholder="Enter your email address..."
-                  className="w-full bg-transparent border-b border-white/20 text-white placeholder:text-white/30 px-0 py-3 focus:outline-none focus:border-gold transition-colors font-light text-sm"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-0 top-1/2 -translate-y-1/2 text-gold font-condensed font-bold tracking-widest text-xs uppercase hover:text-white transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Middle Row: Links Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
-
-            {/* Trust Badges & Socials (Col Span 4) */}
+            {/* Column 1: Brand & Trust (Col Span 4) */}
             <div className="lg:col-span-4">
-              <h3 className="text-gold font-condensed font-bold text-xs tracking-[0.2em] uppercase mb-8">
-                Operating Standards
-              </h3>
-              <div className="grid grid-cols-2 gap-4 mb-10">
-                <div className="bg-white/[0.02] border border-white/5 p-4 rounded-none hover:border-gold/30 transition-colors">
-                  <span className="text-white block text-sm font-condensed font-bold tracking-widest uppercase mb-1">ISO 9001:2015</span>
-                  <span className="text-white/40 text-[10px] uppercase tracking-wider">Certified Quality</span>
+              <Link href="/" className="flex items-center gap-3 mb-6">
+                <img
+                  src={IMAGES.logoGold}
+                  alt="Sialkot Sample Masters Logo"
+                  className="h-12 w-auto object-contain"
+                />
+                <div>
+                  <span className="text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Sialkot Sample</span>
+                  <span className="text-gold font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Masters</span>
                 </div>
-                <div className="bg-white/[0.02] border border-white/5 p-4 rounded-none hover:border-gold/30 transition-colors">
-                  <span className="text-white block text-sm font-condensed font-bold tracking-widest uppercase mb-1">80% Solar</span>
-                  <span className="text-white/40 text-[10px] uppercase tracking-wider">Eco-Friendly</span>
+              </Link>
+              <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
+                Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, streetwear, tactical gear, and martial arts uniforms for global brands.
+              </p>
+
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
+                  <span className="text-gold text-xs">🏅</span>
+                  <span className="text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase">ISO 9001:2015</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
+                  <span className="text-green-500 text-xs">🌱</span>
+                  <span className="text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase">Eco-Friendly</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                <a href="#" className="text-white/40 hover:text-gold transition-colors p-2 -ml-2">
-                  <Instagram className="w-5 h-5" />
+              {/* Socials */}
+              <div className="flex items-center gap-3">
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                  <Instagram className="w-4 h-4" />
                 </a>
-                <a href="#" className="text-white/40 hover:text-gold transition-colors p-2">
-                  <Linkedin className="w-5 h-5" />
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                  <Linkedin className="w-4 h-4" />
                 </a>
-                <a href="#" className="text-white/40 hover:text-gold transition-colors p-2">
-                  <Facebook className="w-5 h-5" />
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                  <Facebook className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
-            {/* Empty spacer for alignment */}
-            <div className="hidden lg:block lg:col-span-1" />
-
-            {/* Manufacturing (Col Span 2) */}
+            {/* Column 2: Manufacturing (Col Span 2) */}
             <div className="lg:col-span-2">
-              <h3 className="text-white font-condensed font-bold text-xs tracking-[0.2em] uppercase mb-8">
-                Capabilities
+              <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-gold inline-block"></span> Capabilities
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {[
                   "Private Label",
-                  "Pattern Engineering",
+                  "Pattern Making",
                   "Sublimation Printing",
                   "Embroidery & DTF",
-                  "Industrial Stitching",
+                  "Cut & Sew",
                   "Tech Pack Design",
                 ].map((item) => (
                   <li key={item}>
-                    <Link href="/services" className="text-white/50 hover:text-gold text-sm font-light transition-colors block relative w-fit group">
+                    <Link href="/services" className="text-white/60 hover:text-gold text-sm transition-colors block">
                       {item}
-                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full" />
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Apparel Lines (Col Span 2) */}
+            {/* Column 3: Apparel Lines (Col Span 2) */}
             <div className="lg:col-span-2">
-              <h3 className="text-white font-condensed font-bold text-xs tracking-[0.2em] uppercase mb-8">
-                Apparel Lines
+              <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-gold inline-block"></span> Apparel Lines
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {[
                   { label: "Sportswear", href: "/products#sports" },
                   { label: "Streetwear", href: "/products#streetwear" },
@@ -163,56 +124,78 @@ export default function Footer() {
                   { label: "Security Uniforms", href: "/products#security" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="text-white/50 hover:text-gold text-sm font-light transition-colors block relative w-fit group">
+                    <Link href={item.href} className="text-white/60 hover:text-gold text-sm transition-colors block">
                       {item.label}
-                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gold transition-all duration-300 group-hover:w-full" />
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Empty spacer for alignment */}
-            <div className="hidden lg:block lg:col-span-1" />
-
-            {/* Contact HQ (Col Span 2) */}
-            <div className="lg:col-span-2">
-              <h3 className="text-white font-condensed font-bold text-xs tracking-[0.2em] uppercase mb-8">
-                Headquarters
+            {/* Column 4: Contact & Factory (Col Span 4) */}
+            <div className="lg:col-span-4">
+              <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-gold inline-block"></span> Global Headquarters
               </h3>
-              <address className="not-italic space-y-6">
-                <div>
-                  <p className="text-white font-condensed font-bold text-xs uppercase tracking-widest mb-2">Location</p>
-                  <p className="text-white/50 text-sm leading-relaxed font-light">Sialkot Industrial Estate,<br />Sialkot 51310, Pakistan</p>
+
+              <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-4 h-4 text-gold" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm mb-1">Factory Location</p>
+                    <p className="text-white/60 text-sm leading-relaxed">Sialkot Industrial Estate,<br />Sialkot 51310, Punjab, Pakistan</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-condensed font-bold text-xs uppercase tracking-widest mb-2">Direct Line</p>
-                  <a href="tel:+923022922242" className="text-white/50 hover:text-gold text-sm font-light transition-colors">+92 302 292 2242</a>
+
+                <div className="w-full h-px bg-white/10" />
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4 text-gold" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm mb-1">Direct Sales / WhatsApp</p>
+                    <a href="tel:+923022922242" className="text-white/60 hover:text-gold text-sm transition-colors">
+                      +92 302 292 2242
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-condensed font-bold text-xs uppercase tracking-widest mb-2">Inquiries</p>
-                  <a href="mailto:info@sialkotsamplementasters.com" className="text-white/50 hover:text-gold text-sm font-light transition-colors">info@sialkotsamplementasters.com</a>
+
+                <div className="w-full h-px bg-white/10" />
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-4 h-4 text-gold" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm mb-1">Email inquiries</p>
+                    <a href="mailto:info@sialkotsamplementasters.com" className="text-white/60 hover:text-gold text-sm transition-colors">
+                      info@sialkotsamplementasters.com
+                    </a>
+                  </div>
                 </div>
-              </address>
+              </div>
             </div>
 
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <p className="text-white/30 text-[11px] font-condensed uppercase tracking-widest">
-              © {currentYear} Sialkot Sample Masters. All rights reserved.
+        <div className="border-t border-white/10 pt-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/40 text-xs font-medium tracking-wide">
+              © {currentYear} Sialkot Sample Masters. A globally recognized apparel manufacturer. All rights reserved.
             </p>
-            <div className="flex items-center gap-8">
-              <Link href="/privacy" className="text-white/30 hover:text-white text-[11px] font-condensed uppercase tracking-widest transition-colors">
+            <div className="flex items-center gap-6">
+              <Link href="/privacy" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-white/30 hover:text-white text-[11px] font-condensed uppercase tracking-widest transition-colors">
-                Terms OS Manufacturing
+              <Link href="/terms" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
+                Terms of Manufacturing
               </Link>
-              <Link href="/shipping" className="text-white/30 hover:text-white text-[11px] font-condensed uppercase tracking-widest transition-colors">
+              <Link href="/shipping" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
                 Shipping & Returns
               </Link>
             </div>
