@@ -2928,7 +2928,9 @@ import fs2 from "node:fs";
 import path2 from "node:path";
 import { defineConfig } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-var PROJECT_ROOT = import.meta.dirname;
+import { fileURLToPath } from "node:url";
+var __dirname2 = path2.dirname(fileURLToPath(import.meta.url));
+var PROJECT_ROOT = __dirname2;
 var LOG_DIR = path2.join(PROJECT_ROOT, ".manus-logs");
 var MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
 var TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
@@ -3040,16 +3042,16 @@ var vite_config_default = defineConfig({
   plugins,
   resolve: {
     alias: {
-      "@": path2.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path2.resolve(import.meta.dirname, "shared"),
-      "@assets": path2.resolve(import.meta.dirname, "attached_assets")
+      "@": path2.resolve(__dirname2, "client", "src"),
+      "@shared": path2.resolve(__dirname2, "shared"),
+      "@assets": path2.resolve(__dirname2, "attached_assets")
     }
   },
-  envDir: path2.resolve(import.meta.dirname),
-  root: path2.resolve(import.meta.dirname, "client"),
-  publicDir: path2.resolve(import.meta.dirname, "client", "public"),
+  envDir: path2.resolve(__dirname2),
+  root: path2.resolve(__dirname2, "client"),
+  publicDir: path2.resolve(__dirname2, "client", "public"),
   build: {
-    outDir: path2.resolve(import.meta.dirname, "dist/public"),
+    outDir: path2.resolve(__dirname2, "dist/public"),
     emptyOutDir: true,
     chunkSizeWarningLimit: 1e3,
     rollupOptions: {
@@ -3080,6 +3082,8 @@ var vite_config_default = defineConfig({
 });
 
 // server/_core/vite.ts
+import { fileURLToPath as fileURLToPath2 } from "url";
+var __dirname3 = path3.dirname(fileURLToPath2(import.meta.url));
 async function setupVite(app, server) {
   const serverOptions = {
     middlewareMode: true,
@@ -3097,7 +3101,7 @@ async function setupVite(app, server) {
     const url = req.originalUrl;
     try {
       const clientTemplate = path3.resolve(
-        import.meta.dirname,
+        __dirname3,
         "../..",
         "client",
         "index.html"
@@ -3116,7 +3120,7 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  const distPath = process.env.NODE_ENV === "development" ? path3.resolve(import.meta.dirname, "../..", "dist", "public") : path3.resolve(import.meta.dirname, "public");
+  const distPath = process.env.NODE_ENV === "development" ? path3.resolve(__dirname3, "../..", "dist", "public") : path3.resolve(__dirname3, "public");
   if (!fs3.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
