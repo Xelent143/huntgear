@@ -309,30 +309,30 @@ export default function Checkout() {
                     className="space-y-3"
                   >
                     {/* Stripe Option */}
-                    <div className={`relative border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'stripe' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`} onClick={() => setValue('paymentMethod', 'stripe')}>
+                    <label htmlFor="pay-stripe" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'stripe' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`}>
                       <div className="flex items-start gap-3">
                         <RadioGroupItem value="stripe" id="pay-stripe" className="mt-1" />
                         <div className="flex-1">
-                          <Label htmlFor="pay-stripe" className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
+                          <span className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
                             <CreditCard className="w-4 h-4 text-gold" /> Credit Card / Apple Pay
-                          </Label>
+                          </span>
                           <p className="text-xs text-muted-foreground mt-1">Pay securely right now via Stripe. We accept all major credit cards and digital wallets.</p>
                         </div>
                       </div>
-                    </div>
+                    </label>
 
                     {/* Invoice Option */}
-                    <div className={`relative border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'invoice' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`} onClick={() => setValue('paymentMethod', 'invoice')}>
+                    <label htmlFor="pay-invoice" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'invoice' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`}>
                       <div className="flex items-start gap-3">
                         <RadioGroupItem value="invoice" id="pay-invoice" className="mt-1" />
                         <div className="flex-1">
-                          <Label htmlFor="pay-invoice" className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
+                          <span className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
                             <Receipt className="w-4 h-4 text-gold" /> Pay Later via Invoice
-                          </Label>
+                          </span>
                           <p className="text-xs text-muted-foreground mt-1">After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise.</p>
                         </div>
                       </div>
-                    </div>
+                    </label>
                   </RadioGroup>
                 </div>
 

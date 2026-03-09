@@ -107,12 +107,7 @@ export async function storagePut(
       uploadDir = path.isAbsolute(ENV.storagePath)
         ? ENV.storagePath
         : path.resolve(process.cwd(), ENV.storagePath);
-    } else if (ENV.isProduction) {
-      // In production, default to a directory OUTSIDE the project root 
-      // so it survives Git deployments on Hostinger.
-      uploadDir = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
     } else {
-      // In development, keep it local for simplicity
       uploadDir = path.join(process.cwd(), 'uploads');
     }
 

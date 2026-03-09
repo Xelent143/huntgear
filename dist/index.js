@@ -1785,8 +1785,6 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     let uploadDir;
     if (ENV.storagePath) {
       uploadDir = path.isAbsolute(ENV.storagePath) ? ENV.storagePath : path.resolve(process.cwd(), ENV.storagePath);
-    } else if (ENV.isProduction) {
-      uploadDir = path.resolve(process.cwd(), "..", "ssm_persistent_uploads");
     } else {
       uploadDir = path.join(process.cwd(), "uploads");
     }
@@ -3222,8 +3220,6 @@ async function startServer() {
   let uploadsPath;
   if (ENV.storagePath) {
     uploadsPath = path3.isAbsolute(ENV.storagePath) ? ENV.storagePath : path3.resolve(process.cwd(), ENV.storagePath);
-  } else if (ENV.isProduction) {
-    uploadsPath = path3.resolve(process.cwd(), "..", "ssm_persistent_uploads");
   } else {
     uploadsPath = path3.join(process.cwd(), "uploads");
   }

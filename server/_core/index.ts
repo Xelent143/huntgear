@@ -300,8 +300,6 @@ async function startServer() {
     uploadsPath = path.isAbsolute(ENV.storagePath)
       ? ENV.storagePath
       : path.resolve(process.cwd(), ENV.storagePath);
-  } else if (ENV.isProduction) {
-    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
   } else {
     uploadsPath = path.join(process.cwd(), 'uploads');
   }
