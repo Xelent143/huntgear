@@ -3384,6 +3384,8 @@ async function startServer() {
   let uploadsPath;
   if (ENV.storagePath) {
     uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
+  } else if (ENV.isProduction) {
+    uploadsPath = path4.resolve(process.cwd(), "..", "ssm_persistent_uploads");
   } else {
     uploadsPath = path4.join(process.cwd(), "uploads");
   }
@@ -3405,16 +3407,24 @@ async function startServer() {
   } else {
     serveStatic(app);
   }
-  const preferredPort = parseInt(process.env.PORT || "3000");
-  let port = preferredPort;
-  if (process.env.NODE_ENV !== "production") {
-    port = await findAvailablePort(preferredPort);
-    if (port !== preferredPort) {
-      console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+  const portEnv = process.env.PORT || "3000";
+  let port = parseInt(portEnv, 10);
+  if (isNaN(port)) {
+    port = portEnv;
+  }
+  if (process.env.NODE_ENV !== "production" && typeof port === "number") {
+    const availablePort = await findAvailablePort(port);
+    if (availablePort !== port) {
+      console.log(`Port ${port} is busy, using port ${availablePort} instead`);
+      port = availablePort;
     }
   }
   server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+    if (typeof port === "string") {
+      console.log(`Server running on socket pipe: ${port}`);
+    } else {
+      console.log(`Server running on http://localhost:${port}/`);
+    }
   });
 }
 startServer().catch(console.error);

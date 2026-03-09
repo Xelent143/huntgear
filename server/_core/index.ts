@@ -300,9 +300,9 @@ async function startServer() {
     uploadsPath = path.isAbsolute(ENV.storagePath)
       ? ENV.storagePath
       : path.resolve(process.cwd(), ENV.storagePath);
+  } else if (ENV.isProduction) {
+    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
   } else {
-    // Both dev and prod will use the local uploads folder
-    // Since 'uploads/' is in .gitignore, Hostinger git deployments will not delete it.
     uploadsPath = path.join(process.cwd(), 'uploads');
   }
 
@@ -328,18 +328,26 @@ async function startServer() {
     serveStatic(app);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
+  const portEnv = process.env.PORT || "3000";
+  let port: string | number = parseInt(portEnv, 10);
+  if (isNaN(port)) {
+    port = portEnv; // Allows named pipes (UNIX sockets) for Passenger/Litespeed
+  }
 
-  let port = preferredPort;
-  if (process.env.NODE_ENV !== "production") {
-    port = await findAvailablePort(preferredPort);
-    if (port !== preferredPort) {
-      console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+  if (process.env.NODE_ENV !== "production" && typeof port === "number") {
+    const availablePort = await findAvailablePort(port);
+    if (availablePort !== port) {
+      console.log(`Port ${port} is busy, using port ${availablePort} instead`);
+      port = availablePort;
     }
   }
 
   server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+    if (typeof port === 'string') {
+      console.log(`Server running on socket pipe: ${port}`);
+    } else {
+      console.log(`Server running on http://localhost:${port}/`);
+    }
   });
 }
 
