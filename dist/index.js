@@ -3384,15 +3384,17 @@ async function startServer() {
   let uploadsPath;
   if (ENV.storagePath) {
     uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
-  } else if (ENV.isProduction) {
-    uploadsPath = path4.resolve(process.cwd(), "..", "ssm_persistent_uploads");
   } else {
     uploadsPath = path4.join(process.cwd(), "uploads");
   }
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs4.existsSync(uploadsPath)) {
     console.log(`[Storage] Creating uploads directory at ${uploadsPath}...`);
-    fs4.mkdirSync(uploadsPath, { recursive: true });
+    try {
+      fs4.mkdirSync(uploadsPath, { recursive: true });
+    } catch (err) {
+      console.error(`[Storage] CRITICAL ERROR: Could not create uploads directory!`, err);
+    }
   }
   app.use("/uploads", express2.static(uploadsPath));
   app.use("/uploads", (req, res) => {

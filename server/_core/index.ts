@@ -300,17 +300,20 @@ async function startServer() {
     uploadsPath = path.isAbsolute(ENV.storagePath)
       ? ENV.storagePath
       : path.resolve(process.cwd(), ENV.storagePath);
-  } else if (ENV.isProduction) {
-    // In production, default to a directory OUTSIDE the project root
-    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
   } else {
+    // Both dev and prod will use the local uploads folder
+    // Since 'uploads/' is in .gitignore, Hostinger git deployments will not delete it.
     uploadsPath = path.join(process.cwd(), 'uploads');
   }
 
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs.existsSync(uploadsPath)) {
     console.log(`[Storage] Creating uploads directory at ${uploadsPath}...`);
-    fs.mkdirSync(uploadsPath, { recursive: true });
+    try {
+      fs.mkdirSync(uploadsPath, { recursive: true });
+    } catch (err) {
+      console.error(`[Storage] CRITICAL ERROR: Could not create uploads directory!`, err);
+    }
   }
 
   app.use("/uploads", express.static(uploadsPath));
