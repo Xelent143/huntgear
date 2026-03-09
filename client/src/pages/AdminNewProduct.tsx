@@ -170,6 +170,13 @@ export default function AdminNewProduct() {
     const generateInfographicMutation = trpc.aiAgent.generateInfographic.useMutation();
     const uploadImageMutation = trpc.product.uploadImage.useMutation();
     const mainImagePatchMutation = trpc.product.update.useMutation();
+    const deleteImageMutation = trpc.product.deleteImage.useMutation({
+        onSuccess: () => {
+            utils.product.byId.invalidate({ id: productId! });
+            toast.success("Image deleted");
+        },
+        onError: (e) => toast.error("Failed to delete image", { description: e.message }),
+    });
 
     const [pendingImages, setPendingImages] = useState<{ file: File; preview: string; altText: string; sortOrder: number }[]>([]);
     const [pendingMainImageIndex, setPendingMainImageIndex] = useState<number>(0);
@@ -598,12 +605,15 @@ export default function AdminNewProduct() {
                             {(editProduct as any)?.images.map((img: any) => (
                                 <div key={img.id} className="relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all">
                                     <img src={img.imageUrl} alt={img.altText || "Product Image"} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                                         {form.mainImage !== img.imageUrl && (
                                             <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setForm(f => ({ ...f, mainImage: img.imageUrl })); setPendingMainImageIndex(-1); }}>
                                                 Set Main
                                             </Button>
                                         )}
+                                        <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); if (confirm('Delete this image?')) deleteImageMutation.mutate({ id: img.id }); }}>
+                                            <Trash2 className="w-4 h-4" />
+                                        </Button>
                                     </div>
                                     {form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
                                 </div>
