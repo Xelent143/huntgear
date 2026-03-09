@@ -45,7 +45,7 @@ import { storagePut } from "./storage";
 import { nanoid } from "nanoid";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
+// Stripe is now initialized lazily in the route handler to prevent startup crashes
 
 // ─── Admin guard middleware ───────────────────────────────────────────────────
 
@@ -468,6 +468,7 @@ const orderRouter = router({
         // Attempt to get host from request headers if possible, otherwise fallback
         const host = process.env.HOST || "localhost:5173";
 
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: lineItems,

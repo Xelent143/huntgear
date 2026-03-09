@@ -2114,7 +2114,6 @@ var aiAgentRouter = router({
 init_db();
 import { nanoid as nanoid2 } from "nanoid";
 import Stripe from "stripe";
-var stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
 var adminProcedure3 = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
     throw new TRPCError4({ code: "FORBIDDEN", message: "Admin access required" });
@@ -2444,6 +2443,7 @@ var orderRouter = router({
       }
       const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
       const host = process.env.HOST || "localhost:5173";
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
@@ -3167,8 +3167,8 @@ async function startServer() {
     }
     let event;
     try {
-      const stripe2 = new Stripe2(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
-      event = stripe2.webhooks.constructEvent(req.body, sig, webhookSecret);
+      const stripe = new Stripe2(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
+      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err) {
       console.error(`[Stripe] Webhook signature verification failed: ${err.message}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
