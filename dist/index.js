@@ -173,6 +173,8 @@ var init_schema = __esm({
       // Items snapshot (JSON)
       items: text("items").notNull(),
       // JSON array of { productId, title, qty, size, color, unitPrice }
+      // Payment
+      paymentMethod: mysqlEnum("paymentMethod", ["stripe", "invoice"]).default("invoice").notNull(),
       // Stripe
       stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
       stripeSessionId: varchar("stripeSessionId", { length: 255 }),
@@ -2111,6 +2113,8 @@ var aiAgentRouter = router({
 // server/routers.ts
 init_db();
 import { nanoid as nanoid2 } from "nanoid";
+import Stripe from "stripe";
+var stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
 var adminProcedure3 = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
     throw new TRPCError4({ code: "FORBIDDEN", message: "Admin access required" });
@@ -2409,9 +2413,49 @@ var orderRouter = router({
     })),
     subtotal: z3.number(),
     shippingCost: z3.number(),
-    totalAmount: z3.number()
+    totalAmount: z3.number(),
+    paymentMethod: z3.enum(["stripe", "invoice"])
   })).mutation(async ({ input }) => {
     const orderNumber = `SSM-${Date.now()}-${nanoid2(6).toUpperCase()}`;
+    let stripeSessionId = void 0;
+    let stripeUrl = void 0;
+    if (input.paymentMethod === "stripe") {
+      const lineItems = input.items.map((item) => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.title,
+            description: `Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}`
+          },
+          unit_amount: Math.round(item.unitPrice * 100)
+          // Stripe expects cents
+        },
+        quantity: item.qty
+      }));
+      if (input.shippingCost > 0) {
+        lineItems.push({
+          price_data: {
+            currency: "usd",
+            product_data: { name: "Shipping" },
+            unit_amount: Math.round(input.shippingCost * 100)
+          },
+          quantity: 1
+        });
+      }
+      const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+      const host = process.env.HOST || "localhost:5173";
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: `${protocol}://${host}/checkout/success?order_number=${orderNumber}`,
+        cancel_url: `${protocol}://${host}/checkout/cancel`,
+        customer_email: input.customerEmail,
+        metadata: { orderNumber }
+      });
+      stripeSessionId = session.id;
+      stripeUrl = session.url ?? void 0;
+    }
     const order = await createOrder({
       orderNumber,
       sessionId: input.sessionId,
@@ -2430,14 +2474,16 @@ var orderRouter = router({
       shippingCost: input.shippingCost.toFixed(2),
       totalAmount: input.totalAmount.toFixed(2),
       items: JSON.stringify(input.items),
-      status: "pending"
+      status: "pending",
+      paymentMethod: input.paymentMethod,
+      stripeSessionId
     });
     await clearCart(input.sessionId);
     await notifyOwner({
       title: `New Order: ${orderNumber}`,
-      content: `Order from ${input.customerName} (${input.companyName ?? input.customerEmail}) \u2014 Total: $${input.totalAmount.toFixed(2)}`
+      content: `Order from ${input.customerName} (${input.companyName ?? input.customerEmail}) \u2014 Total: $${input.totalAmount.toFixed(2)} via ${input.paymentMethod.toUpperCase()}`
     });
-    return { success: true, orderNumber };
+    return { success: true, orderNumber, stripeUrl };
   }),
   byNumber: publicProcedure.input(z3.object({ orderNumber: z3.string() })).query(async ({ input }) => getOrderByNumber(input.orderNumber)),
   adminList: adminProcedure3.query(() => getAllOrders()),
@@ -2789,10 +2835,10 @@ var appRouter = router({
     getApiKey: adminProcedure3.query(async ({ ctx }) => {
       const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
       const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq2 } = await import("drizzle-orm");
+      const { eq: eq3 } = await import("drizzle-orm");
       const db = await getDatabase();
       if (!db) return { hasKey: false, maskedKey: "" };
-      const [user] = await db.select().from(users2).where(eq2(users2.id, ctx.user.id)).limit(1);
+      const [user] = await db.select().from(users2).where(eq3(users2.id, ctx.user.id)).limit(1);
       const key = user?.geminiApiKey || "";
       return {
         hasKey: !!key,
@@ -2802,10 +2848,10 @@ var appRouter = router({
     saveApiKey: adminProcedure3.input(z3.object({ apiKey: z3.string().max(255) })).mutation(async ({ input, ctx }) => {
       const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
       const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq2 } = await import("drizzle-orm");
+      const { eq: eq3 } = await import("drizzle-orm");
       const db = await getDatabase();
       if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
-      await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq2(users2.id, ctx.user.id));
+      await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq3(users2.id, ctx.user.id));
       return { success: true };
     })
   })
@@ -2833,10 +2879,10 @@ async function createContext(opts) {
         if (payload.userId) {
           const { getDb: getDb2 } = await Promise.resolve().then(() => (init_db(), db_exports));
           const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-          const { eq: eq2 } = await import("drizzle-orm");
+          const { eq: eq3 } = await import("drizzle-orm");
           const db = await getDb2();
           if (db) {
-            const results = await db.select().from(users2).where(eq2(users2.id, payload.userId)).limit(1);
+            const results = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
             if (results[0]) {
               user = results[0];
             }
@@ -3075,6 +3121,9 @@ function serveStatic(app) {
 
 // server/_core/index.ts
 init_env();
+init_schema();
+import Stripe2 from "stripe";
+import { eq as eq2 } from "drizzle-orm";
 function isPortAvailable(port) {
   return new Promise((resolve) => {
     const server = net.createServer();
@@ -3095,6 +3144,37 @@ async function findAvailablePort(startPort = 3e3) {
 async function startServer() {
   const app = express2();
   const server = createServer(app);
+  app.post("/api/webhooks/stripe", express2.raw({ type: "application/json" }), async (req, res) => {
+    const sig = req.headers["stripe-signature"];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!sig || !webhookSecret) {
+      console.warn("[Stripe] Webhook error: Missing signature or webhook secret");
+      res.status(400).send("Webhook Error: Missing signature or secret");
+      return;
+    }
+    let event;
+    try {
+      const stripe2 = new Stripe2(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
+      event = stripe2.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err) {
+      console.error(`[Stripe] Webhook signature verification failed: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      try {
+        const db = await getDbLocal();
+        if (db) {
+          console.log(`[Stripe] Checkout completed for session ${session.id}. Marking as paid...`);
+          await db.update(orders).set({ status: "paid", stripePaymentIntentId: session.payment_intent }).where(eq2(orders.stripeSessionId, session.id));
+        }
+      } catch (e) {
+        console.error(`[Stripe] Failed to update order status in DB:`, e);
+      }
+    }
+    res.json({ received: true });
+  });
   app.use(express2.json({ limit: "50mb" }));
   app.use(express2.urlencoded({ limit: "50mb", extended: true }));
   const MODEL_MAP = {

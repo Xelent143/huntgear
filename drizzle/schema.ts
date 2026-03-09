@@ -168,6 +168,8 @@ export const orders = mysqlTable("orders", {
   totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
   // Items snapshot (JSON)
   items: text("items").notNull(), // JSON array of { productId, title, qty, size, color, unitPrice }
+  // Payment
+  paymentMethod: mysqlEnum("paymentMethod", ["stripe", "invoice"]).default("invoice").notNull(),
   // Stripe
   stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
   stripeSessionId: varchar("stripeSessionId", { length: 255 }),

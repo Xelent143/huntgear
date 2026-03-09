@@ -43,6 +43,9 @@ import {
 } from "./db";
 import { storagePut } from "./storage";
 import { nanoid } from "nanoid";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
 
 // ─── Admin guard middleware ───────────────────────────────────────────────────
 
@@ -429,9 +432,56 @@ const orderRouter = router({
       subtotal: z.number(),
       shippingCost: z.number(),
       totalAmount: z.number(),
+      paymentMethod: z.enum(["stripe", "invoice"]),
     }))
     .mutation(async ({ input }) => {
       const orderNumber = `SSM-${Date.now()}-${nanoid(6).toUpperCase()}`;
+
+      let stripeSessionId: string | undefined = undefined;
+      let stripeUrl: string | undefined = undefined;
+
+      if (input.paymentMethod === 'stripe') {
+        const lineItems = input.items.map(item => ({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: item.title,
+              description: `Size: ${item.size || 'N/A'}, Color: ${item.color || 'N/A'}`,
+            },
+            unit_amount: Math.round(item.unitPrice * 100), // Stripe expects cents
+          },
+          quantity: item.qty,
+        }));
+
+        if (input.shippingCost > 0) {
+          lineItems.push({
+            price_data: {
+              currency: 'usd',
+              product_data: { name: 'Shipping' },
+              unit_amount: Math.round(input.shippingCost * 100),
+            },
+            quantity: 1,
+          });
+        }
+
+        const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+        // Attempt to get host from request headers if possible, otherwise fallback
+        const host = process.env.HOST || "localhost:5173";
+
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: lineItems,
+          mode: 'payment',
+          success_url: `${protocol}://${host}/checkout/success?order_number=${orderNumber}`,
+          cancel_url: `${protocol}://${host}/checkout/cancel`,
+          customer_email: input.customerEmail,
+          metadata: { orderNumber },
+        });
+
+        stripeSessionId = session.id;
+        stripeUrl = session.url ?? undefined;
+      }
+
       const order = await createOrder({
         orderNumber,
         sessionId: input.sessionId,
@@ -451,15 +501,20 @@ const orderRouter = router({
         totalAmount: input.totalAmount.toFixed(2),
         items: JSON.stringify(input.items),
         status: "pending",
+        paymentMethod: input.paymentMethod,
+        stripeSessionId,
       });
+
       // Clear cart after order creation
       await clearCart(input.sessionId);
+
       // Notify owner
       await notifyOwner({
         title: `New Order: ${orderNumber}`,
-        content: `Order from ${input.customerName} (${input.companyName ?? input.customerEmail}) — Total: $${input.totalAmount.toFixed(2)}`,
+        content: `Order from ${input.customerName} (${input.companyName ?? input.customerEmail}) — Total: $${input.totalAmount.toFixed(2)} via ${input.paymentMethod.toUpperCase()}`,
       });
-      return { success: true, orderNumber };
+
+      return { success: true, orderNumber, stripeUrl };
     }),
 
   byNumber: publicProcedure

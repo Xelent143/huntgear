@@ -20,6 +20,8 @@ import Contact from "./pages/Contact";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutCancel from "./pages/CheckoutCancel";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -53,6 +55,8 @@ function Router() {
       <Route path="/shop" component={Shop} />
       <Route path="/shop/:slug" component={ProductDetail} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/checkout/success" component={CheckoutSuccess} />
+      <Route path="/checkout/cancel" component={CheckoutCancel} />
       {/* 3D Customizer & Tools */}
       <Route path="/customize" component={Customize} />
       <Route path="/branding-studio" component={BrandingStudio} />

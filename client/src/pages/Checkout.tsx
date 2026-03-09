@@ -12,7 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useCartStore } from "@/lib/cartStore";
-import { ShoppingBag, Truck, Shield, Loader2, Check, ArrowLeft, CreditCard } from "lucide-react";
+import { ShoppingBag, Truck, Shield, Loader2, Check, ArrowLeft, CreditCard, Receipt } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 // ─── Country list (ISO 3166-1 alpha-2) ───────────────────────────────────────
 
@@ -65,6 +66,7 @@ const checkoutSchema = z.object({
   state: z.string().optional(),
   postalCode: z.string().optional(),
   countryCode: z.string().length(2, "Please select a country"),
+  paymentMethod: z.enum(["stripe", "invoice"]),
 });
 
 type CheckoutForm = z.infer<typeof checkoutSchema>;
@@ -114,10 +116,11 @@ export default function Checkout() {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { countryCode: "US" },
+    defaultValues: { countryCode: "US", paymentMethod: "invoice" },
   });
 
   const countryCode = watch("countryCode");
+  const paymentMethod = watch("paymentMethod");
 
   // Shipping calculation
   const { data: shippingData, isLoading: shippingLoading } = trpc.shipping.calculate.useQuery(
@@ -133,8 +136,12 @@ export default function Checkout() {
 
   const createOrder = trpc.order.create.useMutation({
     onSuccess: (data) => {
-      setConfirmedOrder(data.orderNumber);
-      clearCart();
+      if (data.stripeUrl) {
+        window.location.href = data.stripeUrl;
+      } else {
+        setConfirmedOrder(data.orderNumber);
+        clearCart();
+      }
     },
     onError: (err) => {
       toast.error("Failed to place order", { description: err.message });
@@ -290,14 +297,43 @@ export default function Checkout() {
                 </div>
 
                 {/* Payment note */}
-                <div className="bg-secondary/50 border border-border rounded-xl p-4 flex gap-3">
-                  <CreditCard className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground mb-1">Payment via Invoice</p>
-                    <p className="text-xs text-muted-foreground">
-                      After order confirmation, our team will send you a proforma invoice. Payment is accepted via bank transfer (T/T), PayPal, or Wise. Stripe payment integration coming soon.
-                    </p>
-                  </div>
+                <div className="bg-card border border-border rounded-xl p-6">
+                  <h2 className="font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
+                    <span className="w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    Payment Method
+                  </h2>
+
+                  <RadioGroup
+                    value={paymentMethod}
+                    onValueChange={(val) => setValue("paymentMethod", val as "stripe" | "invoice")}
+                    className="space-y-3"
+                  >
+                    {/* Stripe Option */}
+                    <div className={`relative border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'stripe' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`} onClick={() => setValue('paymentMethod', 'stripe')}>
+                      <div className="flex items-start gap-3">
+                        <RadioGroupItem value="stripe" id="pay-stripe" className="mt-1" />
+                        <div className="flex-1">
+                          <Label htmlFor="pay-stripe" className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
+                            <CreditCard className="w-4 h-4 text-gold" /> Credit Card / Apple Pay
+                          </Label>
+                          <p className="text-xs text-muted-foreground mt-1">Pay securely right now via Stripe. We accept all major credit cards and digital wallets.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Invoice Option */}
+                    <div className={`relative border rounded-lg p-4 cursor-pointer transition-colors ${paymentMethod === 'invoice' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`} onClick={() => setValue('paymentMethod', 'invoice')}>
+                      <div className="flex items-start gap-3">
+                        <RadioGroupItem value="invoice" id="pay-invoice" className="mt-1" />
+                        <div className="flex-1">
+                          <Label htmlFor="pay-invoice" className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
+                            <Receipt className="w-4 h-4 text-gold" /> Pay Later via Invoice
+                          </Label>
+                          <p className="text-xs text-muted-foreground mt-1">After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </RadioGroup>
                 </div>
 
                 <Button

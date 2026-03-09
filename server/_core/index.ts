@@ -10,6 +10,10 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { ENV } from "./env";
+import Stripe from "stripe";
+import { getDbLocal } from "../db";
+import { orders } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -33,6 +37,46 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  // --- Stripe Webhook Endpoint (MUST be before express.json parsing) ---
+  app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!sig || !webhookSecret) {
+      console.warn('[Stripe] Webhook error: Missing signature or webhook secret');
+      res.status(400).send('Webhook Error: Missing signature or secret');
+      return;
+    }
+
+    let event;
+    try {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
+      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err: any) {
+      console.error(`[Stripe] Webhook signature verification failed: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+      return;
+    }
+
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as Stripe.Checkout.Session;
+      try {
+        const db = await getDbLocal();
+        if (db) {
+          console.log(`[Stripe] Checkout completed for session ${session.id}. Marking as paid...`);
+          await db.update(orders)
+            .set({ status: 'paid', stripePaymentIntentId: session.payment_intent as string })
+            .where(eq(orders.stripeSessionId, session.id));
+        }
+      } catch (e) {
+        console.error(`[Stripe] Failed to update order status in DB:`, e);
+      }
+    }
+
+    res.json({ received: true });
+  });
+
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
