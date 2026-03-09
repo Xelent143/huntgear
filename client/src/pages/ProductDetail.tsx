@@ -214,8 +214,12 @@ export default function ProductDetail() {
   const activeImage = allImages[activeImageIdx] ?? allImages[0];
   const formatCurrency = (val: string | number) => `$${Number(val).toFixed(2)}`;
 
-  const activeSlab = slabs.find(s => quantity >= s.minQty && (s.maxQty === null || quantity <= (s.maxQty ?? Infinity))) ?? slabs[slabs.length - 1];
-  const unitPrice = activeSlab ? parseFloat(activeSlab.pricePerUnit) : (product.samplePrice ? parseFloat(product.samplePrice) : 0);
+  let activeSlab = slabs.find(s => quantity >= s.minQty && (s.maxQty === null || quantity <= (s.maxQty ?? Infinity)));
+
+  // If no slab matches (e.g. quantity is 1 and minimum slab is 50),
+  // we should use the sample price if available, otherwise fallback to the first slab's price.
+  let unitPrice = activeSlab ? parseFloat(activeSlab.pricePerUnit) : (product.samplePrice ? parseFloat(product.samplePrice) : (slabs.length > 0 ? parseFloat(slabs[0].pricePerUnit) : 0));
+
   const lineTotal = unitPrice * quantity;
 
   const handleAddToCart = () => {
@@ -235,7 +239,7 @@ export default function ProductDetail() {
 
   const handleStartOrder = () => {
     handleAddToCart();
-    window.location.href = "/rfq"; // B2B typically goes to RFQ/Checkout
+    window.location.href = "/checkout"; // Direct to checkout instead of RFQ
   };
 
   return (
@@ -402,8 +406,8 @@ export default function ProductDetail() {
                 <div className="mb-6">
                   <span className="text-xs font-semibold text-foreground block mb-2">Quantity (Pieces):</span>
                   <div className="flex items-center border border-border rounded-sm w-full">
-                    <button onClick={() => setQuantity(q => Math.max((slabs[0]?.minQty ?? 1), q - 10))} className="w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg">−</button>
-                    <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="flex-1 h-10 text-center bg-transparent border-x border-border text-sm font-medium focus:outline-none" min={slabs[0]?.minQty ?? 1} />
+                    <button onClick={() => setQuantity(q => Math.max(1, q - 10))} className="w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg">−</button>
+                    <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="flex-1 h-10 text-center bg-transparent border-x border-border text-sm font-medium focus:outline-none" min={1} />
                     <button onClick={() => setQuantity(q => q + 10)} className="w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg">+</button>
                   </div>
                 </div>

@@ -3050,7 +3050,16 @@ var vite_config_default = defineConfig({
   publicDir: path2.resolve(import.meta.dirname, "client", "public"),
   build: {
     outDir: path2.resolve(import.meta.dirname, "dist/public"),
-    emptyOutDir: true
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 1e3,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "wouter", "@tanstack/react-query"],
+          ui: ["lucide-react", "sonner"]
+        }
+      }
+    }
   },
   server: {
     host: true,
