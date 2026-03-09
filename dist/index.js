@@ -1632,16 +1632,12 @@ var validatePayload = (input) => {
 async function notifyOwner(payload) {
   const { title, content } = validatePayload(payload);
   if (!ENV.forgeApiUrl) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service URL is not configured."
-    });
+    console.warn("[Notification] Notification service URL is not configured. Skipping.");
+    return false;
   }
   if (!ENV.forgeApiKey) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service API key is not configured."
-    });
+    console.warn("[Notification] Notification service API key is not configured. Skipping.");
+    return false;
   }
   const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
   try {
