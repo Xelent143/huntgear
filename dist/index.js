@@ -1276,8 +1276,8 @@ var init_gemini = __esm({
 // server/_core/index.ts
 import "dotenv/config";
 import express2 from "express";
-import path4 from "path";
-import fs4 from "fs";
+import path3 from "path";
+import fs3 from "fs";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
@@ -2915,183 +2915,21 @@ async function createContext(opts) {
 
 // server/_core/vite.ts
 import express from "express";
-import fs3 from "fs";
-import { nanoid as nanoid3 } from "nanoid";
-import path3 from "path";
-import { createServer as createViteServer } from "vite";
-
-// vite.config.ts
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
-import fs2 from "node:fs";
-import path2 from "node:path";
-import { defineConfig } from "vite";
-import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-import { fileURLToPath } from "node:url";
+import fs2 from "fs";
+import path2 from "path";
+import { fileURLToPath } from "url";
 var __dirname2 = path2.dirname(fileURLToPath(import.meta.url));
-var PROJECT_ROOT = __dirname2;
-var LOG_DIR = path2.join(PROJECT_ROOT, ".manus-logs");
-var MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
-var TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
-function ensureLogDir() {
-  if (!fs2.existsSync(LOG_DIR)) {
-    fs2.mkdirSync(LOG_DIR, { recursive: true });
-  }
-}
-function trimLogFile(logPath, maxSize) {
-  try {
-    if (!fs2.existsSync(logPath) || fs2.statSync(logPath).size <= maxSize) {
-      return;
-    }
-    const lines = fs2.readFileSync(logPath, "utf-8").split("\n");
-    const keptLines = [];
-    let keptBytes = 0;
-    const targetSize = TRIM_TARGET_BYTES;
-    for (let i = lines.length - 1; i >= 0; i--) {
-      const lineBytes = Buffer.byteLength(`${lines[i]}
-`, "utf-8");
-      if (keptBytes + lineBytes > targetSize) break;
-      keptLines.unshift(lines[i]);
-      keptBytes += lineBytes;
-    }
-    fs2.writeFileSync(logPath, keptLines.join("\n"), "utf-8");
-  } catch {
-  }
-}
-function writeToLogFile(source, entries) {
-  if (entries.length === 0) return;
-  ensureLogDir();
-  const logPath = path2.join(LOG_DIR, `${source}.log`);
-  const lines = entries.map((entry) => {
-    const ts = (/* @__PURE__ */ new Date()).toISOString();
-    return `[${ts}] ${JSON.stringify(entry)}`;
-  });
-  fs2.appendFileSync(logPath, `${lines.join("\n")}
-`, "utf-8");
-  trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
-}
-function vitePluginManusDebugCollector() {
-  return {
-    name: "manus-debug-collector",
-    transformIndexHtml(html) {
-      if (process.env.NODE_ENV === "production") {
-        return html;
-      }
-      return {
-        html,
-        tags: [
-          {
-            tag: "script",
-            attrs: {
-              src: "/__manus__/debug-collector.js",
-              defer: true
-            },
-            injectTo: "head"
-          }
-        ]
-      };
-    },
-    configureServer(server) {
-      server.middlewares.use("/__manus__/logs", (req, res, next) => {
-        if (req.method !== "POST") {
-          return next();
-        }
-        const handlePayload = (payload) => {
-          if (payload.consoleLogs?.length > 0) {
-            writeToLogFile("browserConsole", payload.consoleLogs);
-          }
-          if (payload.networkRequests?.length > 0) {
-            writeToLogFile("networkRequests", payload.networkRequests);
-          }
-          if (payload.sessionEvents?.length > 0) {
-            writeToLogFile("sessionReplay", payload.sessionEvents);
-          }
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ success: true }));
-        };
-        const reqBody = req.body;
-        if (reqBody && typeof reqBody === "object") {
-          try {
-            handlePayload(reqBody);
-          } catch (e) {
-            res.writeHead(400, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: false, error: String(e) }));
-          }
-          return;
-        }
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-        req.on("end", () => {
-          try {
-            const payload = JSON.parse(body);
-            handlePayload(payload);
-          } catch (e) {
-            res.writeHead(400, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: false, error: String(e) }));
-          }
-        });
-      });
-    }
-  };
-}
-var plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
-var vite_config_default = defineConfig({
-  plugins,
-  resolve: {
-    alias: {
-      "@": path2.resolve(__dirname2, "client", "src"),
-      "@shared": path2.resolve(__dirname2, "shared"),
-      "@assets": path2.resolve(__dirname2, "attached_assets")
-    }
-  },
-  envDir: path2.resolve(__dirname2),
-  root: path2.resolve(__dirname2, "client"),
-  publicDir: path2.resolve(__dirname2, "client", "public"),
-  build: {
-    outDir: path2.resolve(__dirname2, "dist/public"),
-    emptyOutDir: true,
-    chunkSizeWarningLimit: 1e3,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "wouter", "@tanstack/react-query"],
-          ui: ["lucide-react", "sonner"]
-        }
-      }
-    }
-  },
-  server: {
-    host: true,
-    allowedHosts: [
-      ".manuspre.computer",
-      ".manus.computer",
-      ".manus-asia.computer",
-      ".manuscomputer.ai",
-      ".manusvm.computer",
-      "localhost",
-      "127.0.0.1"
-    ],
-    fs: {
-      strict: true,
-      deny: ["**/.*"]
-    }
-  }
-});
-
-// server/_core/vite.ts
-import { fileURLToPath as fileURLToPath2 } from "url";
-var __dirname3 = path3.dirname(fileURLToPath2(import.meta.url));
 async function setupVite(app, server) {
+  const { createServer: createViteServer } = await import("vite");
+  const { default: viteConfig } = await import("../../vite.config");
+  const { nanoid: nanoid3 } = await import("nanoid");
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
     allowedHosts: true
   };
   const vite = await createViteServer({
-    ...vite_config_default,
+    ...viteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom"
@@ -3100,13 +2938,13 @@ async function setupVite(app, server) {
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
     try {
-      const clientTemplate = path3.resolve(
-        __dirname3,
+      const clientTemplate = path2.resolve(
+        __dirname2,
         "../..",
         "client",
         "index.html"
       );
-      let template = await fs3.promises.readFile(clientTemplate, "utf-8");
+      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid3()}"`
@@ -3120,15 +2958,15 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  const distPath = process.env.NODE_ENV === "development" ? path3.resolve(__dirname3, "../..", "dist", "public") : path3.resolve(__dirname3, "public");
-  if (!fs3.existsSync(distPath)) {
+  const distPath = process.env.NODE_ENV === "development" ? path2.resolve(__dirname2, "../..", "dist", "public") : path2.resolve(__dirname2, "public");
+  if (!fs2.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
   app.use(express.static(distPath));
   app.use("*", (_req, res) => {
-    res.sendFile(path3.resolve(distPath, "index.html"));
+    res.sendFile(path2.resolve(distPath, "index.html"));
   });
 }
 
@@ -3327,8 +3165,8 @@ async function startServer() {
   });
   app.get("/api/admin/debug", async (_req, res) => {
     const isProd = process.env.NODE_ENV === "production";
-    const resolvedUploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
-    const productsUploadsPath = path4.join(resolvedUploadsPath, "products");
+    const resolvedUploadsPath = isProd ? path3.resolve(process.cwd(), "uploads") : path3.resolve(process.cwd(), "uploads");
+    const productsUploadsPath = path3.join(resolvedUploadsPath, "products");
     const info = {
       nodeVersion: process.version,
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
@@ -3337,17 +3175,17 @@ async function startServer() {
       dirname: typeof __dirname !== "undefined" ? __dirname : "undefined_in_esm",
       resolvedUploadsPath,
       productsUploadsPath,
-      uploadsDirExists: fs4.existsSync(resolvedUploadsPath),
-      productsDirExists: fs4.existsSync(productsUploadsPath)
+      uploadsDirExists: fs3.existsSync(resolvedUploadsPath),
+      productsDirExists: fs3.existsSync(productsUploadsPath)
     };
     try {
       if (info.uploadsDirExists) {
         const readdirRecursive = (dir) => {
           const results = [];
-          const list = fs4.readdirSync(dir);
+          const list = fs3.readdirSync(dir);
           list.forEach((file) => {
-            const filePath = path4.join(dir, file);
-            const stat = fs4.statSync(filePath);
+            const filePath = path3.join(dir, file);
+            const stat = fs3.statSync(filePath);
             if (stat && stat.isDirectory()) {
               results.push(...readdirRecursive(filePath));
             } else {
@@ -3383,17 +3221,17 @@ async function startServer() {
   );
   let uploadsPath;
   if (ENV.storagePath) {
-    uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
+    uploadsPath = path3.isAbsolute(ENV.storagePath) ? ENV.storagePath : path3.resolve(process.cwd(), ENV.storagePath);
   } else if (ENV.isProduction) {
-    uploadsPath = path4.resolve(process.cwd(), "..", "ssm_persistent_uploads");
+    uploadsPath = path3.resolve(process.cwd(), "..", "ssm_persistent_uploads");
   } else {
-    uploadsPath = path4.join(process.cwd(), "uploads");
+    uploadsPath = path3.join(process.cwd(), "uploads");
   }
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
-  if (!fs4.existsSync(uploadsPath)) {
+  if (!fs3.existsSync(uploadsPath)) {
     console.log(`[Storage] Creating uploads directory at ${uploadsPath}...`);
     try {
-      fs4.mkdirSync(uploadsPath, { recursive: true });
+      fs3.mkdirSync(uploadsPath, { recursive: true });
     } catch (err) {
       console.error(`[Storage] CRITICAL ERROR: Could not create uploads directory!`, err);
     }
