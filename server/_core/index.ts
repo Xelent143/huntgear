@@ -300,6 +300,9 @@ async function startServer() {
     uploadsPath = path.isAbsolute(ENV.storagePath)
       ? ENV.storagePath
       : path.resolve(process.cwd(), ENV.storagePath);
+  } else if (ENV.isProduction) {
+    // In production, serve from OUTSIDE the project root so images survive git deployments
+    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
   } else {
     uploadsPath = path.join(process.cwd(), 'uploads');
   }

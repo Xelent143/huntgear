@@ -107,6 +107,9 @@ export async function storagePut(
       uploadDir = path.isAbsolute(ENV.storagePath)
         ? ENV.storagePath
         : path.resolve(process.cwd(), ENV.storagePath);
+    } else if (ENV.isProduction) {
+      // In production, store OUTSIDE the project root so images survive git deployments
+      uploadDir = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
     } else {
       uploadDir = path.join(process.cwd(), 'uploads');
     }
