@@ -301,8 +301,10 @@ async function startServer() {
       ? ENV.storagePath
       : path.resolve(process.cwd(), ENV.storagePath);
   } else if (ENV.isProduction) {
-    // In production, serve from OUTSIDE the project root so images survive git deployments
-    uploadsPath = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
+    // Use a fixed absolute path so images survive git deployments on Hostinger
+    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR
+      || path.join(process.env.HOME || process.env.USERPROFILE || '/tmp', 'ssm_persistent_uploads');
+    uploadsPath = persistentDir;
   } else {
     uploadsPath = path.join(process.cwd(), 'uploads');
   }

@@ -108,8 +108,11 @@ export async function storagePut(
         ? ENV.storagePath
         : path.resolve(process.cwd(), ENV.storagePath);
     } else if (ENV.isProduction) {
-      // In production, store OUTSIDE the project root so images survive git deployments
-      uploadDir = path.resolve(process.cwd(), '..', 'ssm_persistent_uploads');
+      // Use a fixed absolute path so images survive git deployments on Hostinger
+      // process.cwd() changes with each deployment, so we use an env var or HOME-based path
+      const persistentDir = process.env.PERSISTENT_UPLOADS_DIR
+        || path.join(process.env.HOME || process.env.USERPROFILE || '/tmp', 'ssm_persistent_uploads');
+      uploadDir = persistentDir;
     } else {
       uploadDir = path.join(process.cwd(), 'uploads');
     }
