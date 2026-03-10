@@ -916,7 +916,7 @@ __export(gemini_exports, {
   generateInfographicImageBase64: () => generateInfographicImageBase64,
   generateProductData: () => generateProductData,
   generateProductImageBase64: () => generateProductImageBase64,
-  generateTryOnImage: () => generateTryOnImage,
+  generateTryOnImages: () => generateTryOnImages,
   prefillProductDataFromGrid: () => prefillProductDataFromGrid
 });
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
@@ -1268,76 +1268,91 @@ STRICT INSTRUCTIONS:
   }
   throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
-async function generateTryOnImage(prompt, modelImage, referenceImages, logoImage, apiKey, modelId = "gemini-3-pro-image-preview") {
+async function generateTryOnImages(prompt, modelImage, referenceImages, logoImage, category, apiKey, modelId = "gemini-3-pro-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
-  const parts = [];
-  parts.push({
+  const sharedParts = [];
+  sharedParts.push({
     text: "BASE MODEL IMAGE (The person/mannequin to dress):"
   });
-  parts.push({
+  sharedParts.push({
     inlineData: { data: modelImage.base64, mimeType: modelImage.mimeType }
   });
-  parts.push({
+  sharedParts.push({
     text: "REFERENCE PRODUCT IMAGES (The garment to extract and apply):"
   });
-  referenceImages.forEach((img, index) => {
-    parts.push({
+  referenceImages.forEach((img) => {
+    sharedParts.push({
       inlineData: { data: img.base64, mimeType: img.mimeType }
     });
   });
   if (logoImage) {
-    parts.push({
+    sharedParts.push({
       text: "LOGO TO APPLY TO GARMENT:"
     });
-    parts.push({
+    sharedParts.push({
       inlineData: { data: logoImage.base64, mimeType: logoImage.mimeType }
     });
   }
-  const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
-Your task is to perform a photorealistic "Virtual Try-On".
+  const views = [
+    { name: "Front View", instruction: "Solid white background. Model facing perfectly forward." },
+    { name: "Right Side View", instruction: "Solid white background. Model turned showing their right side." },
+    { name: "Back View", instruction: "Solid white background. Model facing away from the camera, showing the back of the garment." },
+    { name: "Closeup Collage", instruction: "Solid white background. A 4x4 grid closeup collage showing fabric textures, stitching, and different zoomed-in parts of the garment only." },
+    { name: "Lifestyle Photoshoot", instruction: `Dynamic lifestyle photoshoot in a relevant environment based on the garment category: ${category || "outdoors"}. Do NOT use a white background for this one, integrate them into a real scene.` }
+  ];
+  const generateSingleView = async (view) => {
+    const parts = [...sharedParts];
+    const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
+Your task is to perform a photorealistic "Virtual Try-On" for exactly this view: ${view.name}.
 
 USER INSTRUCTIONS: ${prompt}
+VIEW SPECIFIC INSTRUCTIONS: ${view.instruction}
 
 STRICT REQUIREMENTS:
 1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
 2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
-3. PRESERVE the model's exact pose, body type, skin tone, face (if visible), and the original background perfectly. Do not change the model, only their clothing.
-${logoImage ? "4. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "4. Do not add any random logos or text."}
-5. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
-6. Return EXACTLY one image.`;
-  parts.push({ text: instructions });
-  let lastError = new Error("Unknown error");
-  const maxRetries = 3;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const result = await model.generateContent({
-        contents: [{ role: "user", parts }],
-        generationConfig: {
-          responseModalities: ["image", "text"]
-        }
-      });
-      const response = result.response;
-      for (const candidate of response.candidates ?? []) {
-        for (const part of candidate.content?.parts ?? []) {
-          if (part.inlineData) {
-            return {
-              base64: part.inlineData.data,
-              mimeType: part.inlineData.mimeType ?? "image/jpeg"
-            };
+3. PRESERVE the model's exact face, skin tone, and body type parfaitement.
+${view.name === "Lifestyle Photoshoot" ? "4. Place the model in a realistic lifestyle setting." : "4. Keep the original model's pose and background perfectly OR use a clean solid white background as instructed."}
+${logoImage ? "5. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "5. Do not add any random logos or text."}
+6. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+7. Return EXACTLY one image.`;
+    parts.push({ text: instructions });
+    let lastError = new Error("Unknown error");
+    const maxRetries = 2;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const result = await model.generateContent({
+          contents: [{ role: "user", parts }],
+          generationConfig: {
+            responseModalities: ["image", "text"]
+          }
+        });
+        const response = result.response;
+        for (const candidate of response.candidates ?? []) {
+          for (const part of candidate.content?.parts ?? []) {
+            if (part.inlineData) {
+              return {
+                view: view.name,
+                base64: part.inlineData.data,
+                mimeType: part.inlineData.mimeType ?? "image/jpeg"
+              };
+            }
           }
         }
-      }
-      throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
-    } catch (err) {
-      console.error(`[TryOn Gen] Attempt ${attempt} failed:`, err.message);
-      lastError = err;
-      if (attempt < maxRetries) {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+      } catch (err) {
+        console.error(`[Grid Gen] Attempt ${attempt} failed for ${view.name}:`, err.message);
+        lastError = err;
+        if (attempt < maxRetries) {
+          await new Promise((resolve) => setTimeout(resolve, 2e3));
+        }
       }
     }
-  }
-  throw new Error(`Virtual Try-On generation failed after ${maxRetries} attempts: ${lastError.message}`);
+    throw new Error(`Virtual Try-On generation failed for ${view.name} after ${maxRetries} attempts: ${lastError.message}`);
+  };
+  const results = await Promise.all(views.map((view) => generateSingleView(view)));
+  return results;
 }
 async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
@@ -2203,27 +2218,79 @@ var aiAgentRouter = router({
   generateTryOnImage: adminProcedure2.input(z2.object({
     prompt: z2.string().min(5).max(1e3),
     modelImage: z2.object({ base64: z2.string(), mimeType: z2.string() }),
-    referenceImages: z2.array(z2.object({ base64: z2.string(), mimeType: z2.string() })).min(1),
+    referenceImages: z2.array(z2.object({ base64: z2.string(), mimeType: z2.string() })).optional(),
+    referenceLink: z2.string().url().optional(),
     logoImage: z2.object({ base64: z2.string(), mimeType: z2.string() }).optional(),
+    category: z2.string().optional(),
     apiKey: z2.string().optional(),
     modelId: z2.string().optional()
   })).mutation(async ({ input, ctx }) => {
     try {
-      const { generateTryOnImage: generateTryOnImage2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
+      const { generateTryOnImages: generateTryOnImages2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
       const key = input.apiKey || ctx.user.geminiApiKey || void 0;
-      const { base64, mimeType } = await generateTryOnImage2(
+      let finalReferenceImages = input.referenceImages || [];
+      if (input.referenceLink && finalReferenceImages.length === 0) {
+        try {
+          const url = new URL(input.referenceLink);
+          const res = await fetch(url.href, {
+            headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
+          });
+          const html = await res.text();
+          const { load } = await import("cheerio");
+          const $ = load(html);
+          let imageUrl = $('meta[property="og:image"]').attr("content") || $('meta[name="twitter:image"]').attr("content") || $('link[rel="image_src"]').attr("href");
+          if (!imageUrl) {
+            $("img").each((i, el) => {
+              const src = $(el).attr("src");
+              if (src && !src.includes("logo") && !src.includes("icon")) {
+                imageUrl = src;
+                return false;
+              }
+            });
+          }
+          if (imageUrl) {
+            if (imageUrl.startsWith("/")) {
+              imageUrl = new URL(imageUrl, url.origin).href;
+            }
+            const imgRes = await fetch(imageUrl);
+            const arrayBuffer = await imgRes.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            const mimeType = imgRes.headers.get("content-type") || "image/jpeg";
+            const base64 = buffer.toString("base64");
+            finalReferenceImages.push({ base64, mimeType });
+          }
+        } catch (e) {
+          console.error("Failed to scrape reference link:", e.message);
+          throw new TRPCError3({
+            code: "BAD_REQUEST",
+            message: `Could not extract an image from the provided link: ${e.message}`
+          });
+        }
+      }
+      if (finalReferenceImages.length === 0) {
+        throw new TRPCError3({
+          code: "BAD_REQUEST",
+          message: "At least one reference image or a valid product link with an image must be provided."
+        });
+      }
+      const generatedResults = await generateTryOnImages2(
         input.prompt,
         input.modelImage,
-        input.referenceImages,
+        finalReferenceImages,
         input.logoImage,
+        input.category,
         key,
         input.modelId
       );
-      const buffer = Buffer.from(base64, "base64");
-      const ext = mimeType.split("/")[1] ?? "jpeg";
-      const storageKey = `portfolio/tryon-${nanoid(10)}.${ext}`;
-      const { url } = await storagePut(storageKey, buffer, mimeType);
-      return { imageUrl: url, success: true };
+      const uploadedUrls = [];
+      for (const result of generatedResults) {
+        const buffer = Buffer.from(result.base64, "base64");
+        const ext = result.mimeType.split("/")[1] ?? "jpeg";
+        const storageKey = `portfolio/tryon-${result.view}-${nanoid(10)}.${ext}`;
+        const { url } = await storagePut(storageKey, buffer, result.mimeType);
+        uploadedUrls.push({ view: result.view, url });
+      }
+      return { images: uploadedUrls, success: true };
     } catch (err) {
       throw new TRPCError3({
         code: "INTERNAL_SERVER_ERROR",

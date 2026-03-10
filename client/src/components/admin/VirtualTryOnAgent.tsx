@@ -31,7 +31,7 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
 
     const generateMutation = trpc.aiAgent.generateTryOnImage.useMutation({
         onSuccess: (data) => {
-            setGeneratedImageUrl(data.imageUrl);
+            setGeneratedImages(data.images);
             toast.success("Virtual Try-On successful!");
         },
         onError: (err) => toast.error(err.message),
@@ -42,10 +42,12 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
     const [hasUnsavedModel, setHasUnsavedModel] = useState(false);
 
     const [referenceImages, setReferenceImages] = useState<ImageData[]>([]);
+    const [referenceLink, setReferenceLink] = useState("");
+    const [category, setCategory] = useState("Streetwear");
     const [logoImage, setLogoImage] = useState<ImageData | null>(null);
     const [prompt, setPrompt] = useState("Place the extracted garment on the model naturally.");
 
-    const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+    const [generatedImages, setGeneratedImages] = useState<{ view: string; url: string }[] | null>(null);
 
     // Refs for file inputs
     const modelInputRef = useRef<HTMLInputElement>(null);
@@ -93,12 +95,16 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
 
     const handleGenerate = () => {
         if (!modelImage) return toast.error("Please upload or save a base model image first.");
-        if (referenceImages.length === 0) return toast.error("Please upload at least one reference garment image.");
+        if (referenceImages.length === 0 && !referenceLink) return toast.error("Please provide at least one reference garment image or a product link.");
+        if (!category) return toast.error("Please specify a garment category so the lifestyle shot knows what environment to use.");
 
+        setGeneratedImages(null);
         generateMutation.mutate({
             prompt,
             modelImage: { base64: modelImage.base64, mimeType: modelImage.mimeType },
             referenceImages: referenceImages.map(img => ({ base64: img.base64, mimeType: img.mimeType })),
+            referenceLink: referenceLink || undefined,
+            category: category,
             logoImage: logoImage ? { base64: logoImage.base64, mimeType: logoImage.mimeType } : undefined,
         });
     };
@@ -164,8 +170,22 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                         <ClothesIcon className="w-4 h-4 text-gold" /> Reference Garment
                     </h2>
                     <p className="text-xs text-muted-foreground mb-4">
-                        Upload 1-3 clear photos of the garment (flat lays or supplier photos). The AI will extract it to dress the model.
+                        Upload 1-3 clear photos of the garment, OR paste a product link (e.g. from Zara, Amazon) and the AI will scrape the image.
                     </p>
+
+                    <div className="mb-4">
+                        <Input
+                            value={referenceLink}
+                            onChange={(e) => setReferenceLink(e.target.value)}
+                            placeholder="Or paste a product link here..."
+                            className="bg-secondary/20"
+                        />
+                    </div>
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="h-px bg-border flex-1"></div>
+                        <span className="text-xs text-muted-foreground font-medium uppercase">Or Upload Manually</span>
+                        <div className="h-px bg-border flex-1"></div>
+                    </div>
 
                     <div className="flex flex-wrap gap-4">
                         {referenceImages.map((img, i) => (
@@ -189,6 +209,22 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                         )}
                         <input type="file" ref={refInputRef} multiple className="hidden" accept="image/*" onChange={handleReferenceUpload} />
                     </div>
+                </div>
+
+                {/* 2.5 Category Section */}
+                <div className="bg-card border border-border rounded-xl p-6">
+                    <h2 className="text-sm font-bold uppercase tracking-widest text-foreground flex items-center gap-2 mb-2">
+                        <Sparkles className="w-4 h-4 text-gold" /> Garment Category (For Lifestyle Shot)
+                    </h2>
+                    <p className="text-xs text-muted-foreground mb-4">
+                        Tell the AI what type of garment this is so it places the model in a realistic environment (e.g., Gym, Street, Formal).
+                    </p>
+                    <Input
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        placeholder="e.g. Sportswear, Streetwear, Suit..."
+                        className="bg-secondary/20"
+                    />
                 </div>
 
                 {/* 3. Logo Injection Section */}
@@ -240,14 +276,39 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                         </div>
                     )}
 
-                    {generatedImageUrl ? (
-                        <img src={generatedImageUrl} alt="Generated Try On" className="max-w-full max-h-full object-contain rounded-lg shadow-lg" />
+                    {generatedImages && generatedImages.length > 0 ? (
+                        <div className="grid grid-cols-2 gap-4 w-full h-full overflow-y-auto p-2">
+                            {generatedImages.map((img, i) => (
+                                <div key={i} className="flex flex-col gap-2 relative group w-full">
+                                    <div className="aspect-[3/4] w-full relative">
+                                        <img src={img.url} alt={img.view} className="w-full h-full object-cover rounded-lg shadow-md border border-border" />
+                                        <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+                                            <p className="text-xs font-bold text-white text-center tracking-wider">{img.view}</p>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="w-full text-xs"
+                                        onClick={() => {
+                                            if (onUseImage) {
+                                                toast.info("Sending standard view to Listing Agent...");
+                                                onUseImage(img.url, "", "");
+                                            }
+                                        }}
+                                    >
+                                        <CheckCircle className="w-3 h-3 mr-2 text-emerald-500" />
+                                        Use For Listing
+                                    </Button>
+                                </div>
+                            ))}
+                        </div>
                     ) : (
                         <div className="text-center max-w-sm">
                             <Wand2 className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
                             <h3 className="text-muted-foreground font-medium mb-1">Workspace Empty</h3>
                             <p className="text-xs text-muted-foreground/70">
-                                Configure your model, garment, and logo on the left, then click Generate to see the photorealistic result here.
+                                Configure your model, garment, and logo on the left, then click Generate to see the photorealistic multi-view results here.
                             </p>
                         </div>
                     )}
@@ -265,25 +326,11 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                         <Button
                             className="flex-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-bold"
                             onClick={handleGenerate}
-                            disabled={generateMutation.isPending || !modelImage || referenceImages.length === 0}
+                            disabled={generateMutation.isPending || !modelImage || (referenceImages.length === 0 && !referenceLink)}
                         >
                             {generateMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4 mr-2" />}
-                            Generate Try-On
+                            Generate Collection
                         </Button>
-
-                        {generatedImageUrl && (
-                            <Button
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6"
-                                onClick={() => {
-                                    if (onUseImage && generatedImageUrl) {
-                                        toast.info("Sending to Listing Agent...");
-                                        onUseImage(generatedImageUrl, "", "");
-                                    }
-                                }}
-                            >
-                                <CheckCircle className="w-4 h-4 mr-2" /> Use & Create Listing
-                            </Button>
-                        )}
                     </div>
                 </div>
 

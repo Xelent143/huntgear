@@ -294,31 +294,98 @@ export const aiAgentRouter = router({
         .input(z.object({
             prompt: z.string().min(5).max(1000),
             modelImage: z.object({ base64: z.string(), mimeType: z.string() }),
-            referenceImages: z.array(z.object({ base64: z.string(), mimeType: z.string() })).min(1),
+            referenceImages: z.array(z.object({ base64: z.string(), mimeType: z.string() })).optional(),
+            referenceLink: z.string().url().optional(),
             logoImage: z.object({ base64: z.string(), mimeType: z.string() }).optional(),
+            category: z.string().optional(),
             apiKey: z.string().optional(),
             modelId: z.string().optional(),
         }))
         .mutation(async ({ input, ctx }) => {
             try {
-                const { generateTryOnImage } = await import("./gemini");
+                const { generateTryOnImages } = await import("./gemini");
                 const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
-                const { base64, mimeType } = await generateTryOnImage(
+
+                let finalReferenceImages = input.referenceImages || [];
+
+                // Step 1: If a referenceLink is provided, scrape it for the main og:image
+                if (input.referenceLink && finalReferenceImages.length === 0) {
+                    try {
+                        const url = new URL(input.referenceLink);
+                        const res = await fetch(url.href, {
+                            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+                        });
+                        const html = await res.text();
+                        const { load } = await import("cheerio");
+                        const $ = load(html);
+
+                        let imageUrl = $('meta[property="og:image"]').attr('content') ||
+                            $('meta[name="twitter:image"]').attr('content') ||
+                            $('link[rel="image_src"]').attr('href');
+
+                        if (!imageUrl) {
+                            // Fallback to first large image
+                            $('img').each((i, el) => {
+                                const src = $(el).attr('src');
+                                if (src && !src.includes('logo') && !src.includes('icon')) {
+                                    imageUrl = src;
+                                    return false; // break
+                                }
+                            });
+                        }
+
+                        if (imageUrl) {
+                            // Convert relative to absolute
+                            if (imageUrl.startsWith("/")) {
+                                imageUrl = new URL(imageUrl, url.origin).href;
+                            }
+
+                            // Download image and convert to base64
+                            const imgRes = await fetch(imageUrl);
+                            const arrayBuffer = await imgRes.arrayBuffer();
+                            const buffer = Buffer.from(arrayBuffer);
+                            const mimeType = imgRes.headers.get("content-type") || "image/jpeg";
+                            const base64 = buffer.toString("base64");
+
+                            finalReferenceImages.push({ base64, mimeType });
+                        }
+                    } catch (e: any) {
+                        console.error("Failed to scrape reference link:", e.message);
+                        throw new TRPCError({
+                            code: "BAD_REQUEST",
+                            message: `Could not extract an image from the provided link: ${e.message}`
+                        });
+                    }
+                }
+
+                if (finalReferenceImages.length === 0) {
+                    throw new TRPCError({
+                        code: "BAD_REQUEST",
+                        message: "At least one reference image or a valid product link with an image must be provided."
+                    });
+                }
+
+                const generatedResults = await generateTryOnImages(
                     input.prompt,
                     input.modelImage,
-                    input.referenceImages,
+                    finalReferenceImages,
                     input.logoImage,
+                    input.category,
                     key,
                     input.modelId
                 );
 
-                // Upload result to storage
-                const buffer = Buffer.from(base64, "base64");
-                const ext = mimeType.split("/")[1] ?? "jpeg";
-                const storageKey = `portfolio/tryon-${nanoid(10)}.${ext}`;
-                const { url } = await storagePut(storageKey, buffer, mimeType);
+                // Upload all results to storage
+                const uploadedUrls = [];
+                for (const result of generatedResults) {
+                    const buffer = Buffer.from(result.base64, "base64");
+                    const ext = result.mimeType.split("/")[1] ?? "jpeg";
+                    const storageKey = `portfolio/tryon-${result.view}-${nanoid(10)}.${ext}`;
+                    const { url } = await storagePut(storageKey, buffer, result.mimeType);
+                    uploadedUrls.push({ view: result.view, url });
+                }
 
-                return { imageUrl: url, success: true };
+                return { images: uploadedUrls, success: true };
             } catch (err: any) {
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",

@@ -501,97 +501,118 @@ STRICT INSTRUCTIONS:
     throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
 
-export async function generateTryOnImage(
+export async function generateTryOnImages(
     prompt: string,
     modelImage: { base64: string; mimeType: string },
     referenceImages: Array<{ base64: string; mimeType: string }>,
     logoImage?: { base64: string; mimeType: string },
+    category?: string,
     apiKey?: string,
     modelId: string = "gemini-3-pro-image-preview",
-): Promise<{ base64: string; mimeType: string }> {
+): Promise<Array<{ view: string; base64: string; mimeType: string }>> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({ model: modelId });
 
-    const parts: any[] = [];
+    const sharedParts: any[] = [];
 
     // 1. Add Model Image First
-    parts.push({
+    sharedParts.push({
         text: "BASE MODEL IMAGE (The person/mannequin to dress):",
     });
-    parts.push({
+    sharedParts.push({
         inlineData: { data: modelImage.base64, mimeType: modelImage.mimeType },
     });
 
     // 2. Add Reference Images
-    parts.push({
+    sharedParts.push({
         text: "REFERENCE PRODUCT IMAGES (The garment to extract and apply):",
     });
-    referenceImages.forEach((img, index) => {
-        parts.push({
+    referenceImages.forEach((img) => {
+        sharedParts.push({
             inlineData: { data: img.base64, mimeType: img.mimeType },
         });
     });
 
     // 3. Add Logo if present
     if (logoImage) {
-        parts.push({
+        sharedParts.push({
             text: "LOGO TO APPLY TO GARMENT:",
         });
-        parts.push({
+        sharedParts.push({
             inlineData: { data: logoImage.base64, mimeType: logoImage.mimeType },
         });
     }
 
-    // 4. Instructions
-    const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
-Your task is to perform a photorealistic "Virtual Try-On".
+    const views = [
+        { name: "Front View", instruction: "Solid white background. Model facing perfectly forward." },
+        { name: "Right Side View", instruction: "Solid white background. Model turned showing their right side." },
+        { name: "Back View", instruction: "Solid white background. Model facing away from the camera, showing the back of the garment." },
+        { name: "Closeup Collage", instruction: "Solid white background. A 4x4 grid closeup collage showing fabric textures, stitching, and different zoomed-in parts of the garment only." },
+        { name: "Lifestyle Photoshoot", instruction: `Dynamic lifestyle photoshoot in a relevant environment based on the garment category: ${category || "outdoors"}. Do NOT use a white background for this one, integrate them into a real scene.` }
+    ];
+
+    const generateSingleView = async (view: typeof views[0]) => {
+        const parts = [...sharedParts];
+
+        // 4. Instructions
+        const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
+Your task is to perform a photorealistic "Virtual Try-On" for exactly this view: ${view.name}.
 
 USER INSTRUCTIONS: ${prompt}
+VIEW SPECIFIC INSTRUCTIONS: ${view.instruction}
 
 STRICT REQUIREMENTS:
 1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
 2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
-3. PRESERVE the model's exact pose, body type, skin tone, face (if visible), and the original background perfectly. Do not change the model, only their clothing.
-${logoImage ? "4. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "4. Do not add any random logos or text."}
-5. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
-6. Return EXACTLY one image.`;
+3. PRESERVE the model's exact face, skin tone, and body type parfaitement.
+${view.name === "Lifestyle Photoshoot" ? "4. Place the model in a realistic lifestyle setting." : "4. Keep the original model's pose and background perfectly OR use a clean solid white background as instructed."}
+${logoImage ? "5. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "5. Do not add any random logos or text."}
+6. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+7. Return EXACTLY one image.`;
 
-    parts.push({ text: instructions });
+        parts.push({ text: instructions });
 
-    let lastError = new Error("Unknown error");
-    const maxRetries = 3;
+        let lastError = new Error("Unknown error");
+        const maxRetries = 2; // Keep retries low for parallel batch to not stall forever
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            const result = await model.generateContent({
-                contents: [{ role: "user", parts }],
-                generationConfig: {
-                    responseModalities: ["image", "text"],
-                } as any,
-            });
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const result = await model.generateContent({
+                    contents: [{ role: "user", parts }],
+                    generationConfig: {
+                        responseModalities: ["image", "text"],
+                    } as any,
+                });
 
-            const response = result.response;
-            for (const candidate of response.candidates ?? []) {
-                for (const part of candidate.content?.parts ?? []) {
-                    if ((part as any).inlineData) {
-                        return {
-                            base64: (part as any).inlineData.data,
-                            mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
-                        };
+                const response = result.response;
+                for (const candidate of response.candidates ?? []) {
+                    for (const part of candidate.content?.parts ?? []) {
+                        if ((part as any).inlineData) {
+                            return {
+                                view: view.name,
+                                base64: (part as any).inlineData.data,
+                                mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                            };
+                        }
                     }
                 }
-            }
-            throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
-        } catch (err: any) {
-            console.error(`[TryOn Gen] Attempt ${attempt} failed:`, err.message);
-            lastError = err;
-            if (attempt < maxRetries) {
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+            } catch (err: any) {
+                console.error(`[Grid Gen] Attempt ${attempt} failed for ${view.name}:`, err.message);
+                lastError = err;
+                if (attempt < maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
             }
         }
-    }
 
-    throw new Error(`Virtual Try-On generation failed after ${maxRetries} attempts: ${lastError.message}`);
+        throw new Error(`Virtual Try-On generation failed for ${view.name} after ${maxRetries} attempts: ${lastError.message}`);
+    };
+
+    // Run all 5 image generations in parallel
+    const results = await Promise.all(views.map(view => generateSingleView(view)));
+
+    return results;
 }
 
 export async function prefillProductDataFromGrid(
