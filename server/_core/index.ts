@@ -11,7 +11,8 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { ENV } from "./env";
 import Stripe from "stripe";
-import { getDbLocal } from "../db";
+import { getDb } from "../db";
+import fixDbRouter from "../routes/fixDb";
 import { orders } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
@@ -51,7 +52,7 @@ async function startServer() {
 
     let event;
     try {
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2026-02-25.clover" as any });
       event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err: any) {
       console.error(`[Stripe] Webhook signature verification failed: ${err.message}`);
@@ -120,6 +121,7 @@ async function startServer() {
 
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  app.use("/api", fixDbRouter);
 
   // ── INLINE Admin Auth Routes (esbuild was not bundling the external file) ──
   const crypto = await import("crypto");

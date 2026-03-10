@@ -459,7 +459,7 @@ const orderRouter = router({
           lineItems.push({
             price_data: {
               currency: 'usd',
-              product_data: { name: 'Shipping' },
+              product_data: { name: 'Shipping', description: 'Standard Shipping Rate' },
               unit_amount: Math.round(input.shippingCost * 100),
             },
             quantity: 1,
@@ -470,7 +470,7 @@ const orderRouter = router({
         // Attempt to get host from request headers if possible, otherwise fallback
         const host = process.env.HOST || "localhost:5173";
 
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2024-10-28.acacia" });
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { apiVersion: "2026-02-25.clover" as any });
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: lineItems,
@@ -728,7 +728,7 @@ const rfqRouter = router({
       const notes = await getNotesForInquiry(input.rfqId);
 
       const productCatalog = products.map(p =>
-        `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ''} | MOQ: ${p.moq || 'N/A'} | Base Price: $${p.basePrice || 'Contact for pricing'}`
+        `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ''} | Base Price: $${p.samplePrice || 'Contact for pricing'}`
       ).join("\n");
 
       const kbContent = kb.map(k => `[${k.category}] ${k.title}: ${k.content}`).join("\n\n");

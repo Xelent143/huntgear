@@ -24,7 +24,7 @@ export const users = mysqlTable("users", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
-  savedModelImageBase64: text("savedModelImageBase64", { mode: "text" }), // longtext for base64 image
+  savedModelImageBase64: text("savedModelImageBase64"), // longtext for base64 image
   savedModelImageMimeType: varchar("savedModelImageMimeType", { length: 255 }),
 });
 
