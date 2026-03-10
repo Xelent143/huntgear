@@ -40,7 +40,7 @@ import TechPackCreator from "./pages/TechPackCreator";
 
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
 // Pages that should NOT show the main Navbar/Footer (admin, checkout confirmation)
-const BARE_ROUTES = ["/admin", "/customize", "/branding-studio"];
+const BARE_ROUTES = ["/admin-saad", "/customize", "/branding-studio"];
 
 function Router() {
   return (
@@ -65,19 +65,19 @@ function Router() {
       <Route path="/branding-studio" component={BrandingStudio} />
       <Route path="/tech-pack" component={TechPackCreator} />
       {/* Admin */}
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/login" component={AdminLogin} />
-      <Route path="/admin/orders" component={AdminOrders} />
-      <Route path="/admin/orders/:id" component={AdminOrderDetail} />
-      <Route path="/admin/inquiries" component={AdminInquiries} />
-      <Route path="/admin/inquiries/:id" component={AdminInquiryDetail} />
-      <Route path="/admin/products" component={AdminProducts} />
-      <Route path="/admin/ai-studio" component={AdminAIStudio} />
-      <Route path="/admin/content" component={AdminContent} />
-      <Route path="/admin/settings" component={AdminSettings} />
+      <Route path="/admin-saad" component={AdminDashboard} />
+      <Route path="/admin-saad/login" component={AdminLogin} />
+      <Route path="/admin-saad/orders" component={AdminOrders} />
+      <Route path="/admin-saad/orders/:id" component={AdminOrderDetail} />
+      <Route path="/admin-saad/inquiries" component={AdminInquiries} />
+      <Route path="/admin-saad/inquiries/:id" component={AdminInquiryDetail} />
+      <Route path="/admin-saad/products" component={AdminProducts} />
+      <Route path="/admin-saad/ai-studio" component={AdminAIStudio} />
+      <Route path="/admin-saad/content" component={AdminContent} />
+      <Route path="/admin-saad/settings" component={AdminSettings} />
 
-      <Route path="/admin/product/new" component={AdminNewProduct} />
-      <Route path="/admin/product/edit/:id" component={AdminNewProduct} />
+      <Route path="/admin-saad/product/new" component={AdminNewProduct} />
+      <Route path="/admin-saad/product/edit/:id" component={AdminNewProduct} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

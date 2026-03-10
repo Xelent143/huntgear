@@ -39,7 +39,7 @@ export default function AdminLogin() {
             await queryClient.invalidateQueries();
 
             // Redirect to admin dashboard
-            setLocation("/admin");
+            setLocation("/admin-saad");
         } catch (error: any) {
             toast.error(error.message);
         } finally {

@@ -39,7 +39,7 @@ function InfoRow({ icon: Icon, label, value, href, isGold }: { icon: any; label:
 }
 
 export default function AdminInquiryDetail() {
-    const [, params] = useRoute("/admin/inquiries/:id");
+    const [, params] = useRoute("/admin-saad/inquiries/:id");
     const inquiryId = parseInt(params?.id || "0", 10);
 
     const { data: inquiry, isLoading } = trpc.rfq.getById.useQuery(
@@ -108,7 +108,7 @@ export default function AdminInquiryDetail() {
             <AdminLayout>
                 <div className="text-center py-24">
                     <h2 className="text-xl font-bold text-foreground mb-2">Inquiry not found</h2>
-                    <Link href="/admin/inquiries">
+                    <Link href="/admin-saad/inquiries">
                         <Button variant="outline"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Inquiries</Button>
                     </Link>
                 </div>
@@ -122,7 +122,7 @@ export default function AdminInquiryDetail() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <Link href="/admin/inquiries">
+                        <Link href="/admin-saad/inquiries">
                             <Button variant="ghost" size="icon" className="shrink-0"><ArrowLeft className="w-5 h-5" /></Button>
                         </Link>
                         <div>

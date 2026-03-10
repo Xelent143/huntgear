@@ -236,7 +236,7 @@ async function generateInvoicePDF(order: any) {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AdminOrderDetail() {
-    const [, params] = useRoute("/admin/orders/:id");
+    const [, params] = useRoute("/admin-saad/orders/:id");
     const orderId = parseInt(params?.id || "0", 10);
 
     const { data: order, isLoading } = trpc.order.getById.useQuery(
@@ -267,7 +267,7 @@ export default function AdminOrderDetail() {
             <AdminLayout>
                 <div className="text-center py-24">
                     <h2 className="text-xl font-bold text-foreground mb-2">Order not found</h2>
-                    <Link href="/admin/orders">
+                    <Link href="/admin-saad/orders">
                         <Button variant="outline"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Orders</Button>
                     </Link>
                 </div>
@@ -284,7 +284,7 @@ export default function AdminOrderDetail() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <Link href="/admin/orders">
+                        <Link href="/admin-saad/orders">
                             <Button variant="ghost" size="icon" className="shrink-0">
                                 <ArrowLeft className="w-5 h-5" />
                             </Button>

@@ -151,7 +151,7 @@ const fileToBase64 = (file: File): Promise<string> =>
 
 export default function AdminNewProduct() {
     const [, setLocation] = useLocation();
-    const [matchEdit, paramsEdit] = useRoute("/admin/product/edit/:id");
+    const [matchEdit, paramsEdit] = useRoute("/admin-saad/product/edit/:id");
     const isEdit = matchEdit;
     const productId = isEdit ? Number(paramsEdit?.id) : null;
 
@@ -302,7 +302,7 @@ export default function AdminNewProduct() {
             }
             utils.product.adminList.invalidate();
             toast.success("Product created successfully!");
-            setLocation("/admin");
+            setLocation("/admin-saad");
         },
         onError: (e) => toast.error("Failed to create product", { description: e.message }),
     });
@@ -315,7 +315,7 @@ export default function AdminNewProduct() {
             }
             utils.product.adminList.invalidate();
             toast.success("Product updated successfully!");
-            setLocation("/admin");
+            setLocation("/admin-saad");
         },
         onError: (e) => toast.error("Failed to update product", { description: e.message }),
     });
@@ -525,7 +525,7 @@ export default function AdminNewProduct() {
                                 <Eye className="w-4 h-4 mr-2" /> Preview
                             </Button>
                         )}
-                        <Button variant="outline" onClick={() => setLocation("/admin/products")} disabled={isPending}>
+                        <Button variant="outline" onClick={() => setLocation("/admin-saad/products")} disabled={isPending}>
                             Discard
                         </Button>
                         <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light">

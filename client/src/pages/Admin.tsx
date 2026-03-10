@@ -1028,7 +1028,7 @@ export default function Admin() {
                 <p className="text-muted-foreground text-sm">{products?.length ?? 0} products in catalog</p>
               </div>
               <Button
-                onClick={() => setLocation("/admin/product/new")}
+                onClick={() => setLocation("/admin-saad/product/new")}
                 className="bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider"
               >
                 <Plus className="w-4 h-4 mr-2" /> Add Product
@@ -1045,7 +1045,7 @@ export default function Admin() {
                 <h3 className="font-serif text-xl text-foreground mb-2">No products yet</h3>
                 <p className="text-muted-foreground text-sm mb-4">Add your first product to start selling</p>
                 <Button
-                  onClick={() => setLocation("/admin/product/new")}
+                  onClick={() => setLocation("/admin-saad/product/new")}
                   className="bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider"
                 >
                   <Plus className="w-4 h-4 mr-2" /> Add First Product

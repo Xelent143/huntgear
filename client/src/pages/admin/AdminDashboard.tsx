@@ -89,7 +89,7 @@ export default function AdminDashboard() {
                         </p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Link href="/admin/product/new">
+                        <Link href="/admin-saad/product/new">
                             <Button className="bg-gold hover:bg-gold/90 text-black font-condensed font-bold uppercase tracking-wider text-xs h-9 px-4">
                                 <Plus className="w-4 h-4 mr-1.5" /> New Product
                             </Button>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                 {/* Status Pills */}
                 <div className="flex flex-wrap gap-3">
                     {(stats?.pendingCount ?? 0) > 0 && (
-                        <Link href="/admin/orders">
+                        <Link href="/admin-saad/orders">
                             <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-amber-500/20 transition-colors">
                                 <Clock className="w-3.5 h-3.5" />
                                 {stats?.pendingCount} Pending Orders
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                         </Link>
                     )}
                     {(stats?.processingCount ?? 0) > 0 && (
-                        <Link href="/admin/orders">
+                        <Link href="/admin-saad/orders">
                             <div className="flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 text-violet-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-violet-500/20 transition-colors">
                                 <Truck className="w-3.5 h-3.5" />
                                 {stats?.processingCount} Processing
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
                             </h2>
                             <p className="text-xs text-muted-foreground mt-0.5">Latest activity in your store</p>
                         </div>
-                        <Link href="/admin/orders">
+                        <Link href="/admin-saad/orders">
                             <Button variant="ghost" size="sm" className="text-xs text-gold hover:text-gold/80 gap-1">
                                 View All <ArrowUpRight className="w-3 h-3" />
                             </Button>
@@ -242,7 +242,7 @@ export default function AdminDashboard() {
                             </h2>
                             <p className="text-xs text-muted-foreground mt-0.5">Latest quote requests from your website</p>
                         </div>
-                        <Link href="/admin/inquiries">
+                        <Link href="/admin-saad/inquiries">
                             <Button variant="ghost" size="sm" className="text-xs text-gold hover:text-gold/80 gap-1">
                                 View All <ArrowUpRight className="w-3 h-3" />
                             </Button>
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
 
                 {/* Quick Actions */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <Link href="/admin/product/new">
+                    <Link href="/admin-saad/product/new">
                         <div className="bg-card border border-border rounded-2xl p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all cursor-pointer group">
                             <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                 <Plus className="w-5 h-5 text-gold" />
@@ -303,7 +303,7 @@ export default function AdminDashboard() {
                             <p className="text-xs text-muted-foreground">Create a new product listing</p>
                         </div>
                     </Link>
-                    <Link href="/admin/orders">
+                    <Link href="/admin-saad/orders">
                         <div className="bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer group">
                             <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                 <ShoppingBag className="w-5 h-5 text-blue-500" />
@@ -312,7 +312,7 @@ export default function AdminDashboard() {
                             <p className="text-xs text-muted-foreground">View and process customer orders</p>
                         </div>
                     </Link>
-                    <Link href="/admin/products">
+                    <Link href="/admin-saad/products">
                         <div className="bg-card border border-border rounded-2xl p-5 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5 transition-all cursor-pointer group">
                             <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                 <Package className="w-5 h-5 text-violet-500" />

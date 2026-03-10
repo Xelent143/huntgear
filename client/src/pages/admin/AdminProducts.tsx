@@ -32,7 +32,7 @@ export default function AdminProducts() {
                         <h1 className="font-serif text-2xl font-bold text-foreground">Products</h1>
                         <p className="text-sm text-muted-foreground mt-1">{products?.length || 0} products in catalog</p>
                     </div>
-                    <Button onClick={() => setLocation("/admin/product/new")} className="bg-gold text-black hover:bg-gold-light">
+                    <Button onClick={() => setLocation("/admin-saad/product/new")} className="bg-gold text-black hover:bg-gold-light">
                         <Plus className="w-4 h-4 mr-2" /> Add Product
                     </Button>
                 </div>

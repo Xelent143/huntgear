@@ -58,7 +58,7 @@ var init_schema = __esm({
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
       lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
-      savedModelImageBase64: text("savedModelImageBase64", { mode: "text" }),
+      savedModelImageBase64: text("savedModelImageBase64"),
       // longtext for base64 image
       savedModelImageMimeType: varchar("savedModelImageMimeType", { length: 255 })
     });
@@ -2599,7 +2599,7 @@ var orderRouter = router({
         lineItems.push({
           price_data: {
             currency: "usd",
-            product_data: { name: "Shipping" },
+            product_data: { name: "Shipping", description: "Standard Shipping Rate" },
             unit_amount: Math.round(input.shippingCost * 100)
           },
           quantity: 1
@@ -2607,7 +2607,7 @@ var orderRouter = router({
       }
       const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
       const host = process.env.HOST || "localhost:5173";
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2026-02-25.clover" });
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
@@ -2816,7 +2816,7 @@ var rfqRouter = router({
     const kb = await getAllKnowledgeBase();
     const notes = await getNotesForInquiry(input.rfqId);
     const productCatalog = products2.map(
-      (p) => `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ""} | MOQ: ${p.moq || "N/A"} | Base Price: $${p.basePrice || "Contact for pricing"}`
+      (p) => `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ""} | Base Price: $${p.samplePrice || "Contact for pricing"}`
     ).join("\n");
     const kbContent = kb.map((k) => `[${k.category}] ${k.title}: ${k.content}`).join("\n\n");
     const previousNotes = notes.map((n) => `[${n.isAiGenerated ? "AI" : "Admin"}] ${n.content}`).join("\n---\n");
@@ -3289,8 +3289,36 @@ function serveStatic(app) {
 
 // server/_core/index.ts
 init_env();
-init_schema();
 import Stripe2 from "stripe";
+
+// server/routes/fixDb.ts
+init_db();
+import { Router } from "express";
+import { sql as sql2 } from "drizzle-orm";
+var router2 = Router();
+router2.get("/fix-db-schema", async (req, res) => {
+  try {
+    const db = await getDb();
+    if (!db) {
+      return res.status(500).json({ error: "No database connection" });
+    }
+    await db.execute(sql2`
+            ALTER TABLE \`users\`
+            ADD COLUMN \`savedModelImageBase64\` LONGTEXT,
+            ADD COLUMN \`savedModelImageMimeType\` VARCHAR(255);
+        `);
+    return res.json({ success: true, message: "Columns added successfully" });
+  } catch (error) {
+    if (error.message && error.message.includes("Duplicate column name")) {
+      return res.json({ success: true, message: "Columns already exist" });
+    }
+    return res.status(500).json({ error: error.message, stack: error.stack });
+  }
+});
+var fixDb_default = router2;
+
+// server/_core/index.ts
+init_schema();
 import { eq as eq2 } from "drizzle-orm";
 function isPortAvailable(port) {
   return new Promise((resolve) => {
@@ -3322,7 +3350,7 @@ async function startServer() {
     }
     let event;
     try {
-      const stripe = new Stripe2(process.env.STRIPE_SECRET_KEY, { apiVersion: "2024-10-28.acacia" });
+      const stripe = new Stripe2(process.env.STRIPE_SECRET_KEY, { apiVersion: "2026-02-25.clover" });
       event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err) {
       console.error(`[Stripe] Webhook signature verification failed: ${err.message}`);
@@ -3390,6 +3418,7 @@ async function startServer() {
     }
   });
   registerOAuthRoutes(app);
+  app.use("/api", fixDb_default);
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
   const { getDb: getDbLocal } = await Promise.resolve().then(() => (init_db(), db_exports));

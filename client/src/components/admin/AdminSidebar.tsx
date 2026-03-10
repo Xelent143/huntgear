@@ -7,14 +7,14 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { IMAGES } from "@/lib/images";
 
 const NAVIGATION = [
-    { name: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
-    { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
-    { name: "Inquiries", href: "/admin/inquiries", icon: MessageSquare },
-    { name: "Products", href: "/admin/products", icon: Package },
-    { name: "Customers", href: "/admin/customers", icon: Users },
-    { name: "Content", href: "/admin/content", icon: ImageIcon },
-    { name: "AI Studio", href: "/admin/ai-studio", icon: Wand2 },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: "Dashboard", href: "/admin-saad", icon: LayoutDashboard, exact: true },
+    { name: "Orders", href: "/admin-saad/orders", icon: ShoppingBag },
+    { name: "Inquiries", href: "/admin-saad/inquiries", icon: MessageSquare },
+    { name: "Products", href: "/admin-saad/products", icon: Package },
+    { name: "Customers", href: "/admin-saad/customers", icon: Users },
+    { name: "Content", href: "/admin-saad/content", icon: ImageIcon },
+    { name: "AI Studio", href: "/admin-saad/ai-studio", icon: Wand2 },
+    { name: "Settings", href: "/admin-saad/settings", icon: Settings },
 ];
 
 export default function AdminSidebar({ isMobileOpen, setMobileOpen }: { isMobileOpen: boolean, setMobileOpen: (v: boolean) => void }) {

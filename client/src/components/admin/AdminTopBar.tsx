@@ -4,14 +4,14 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 
 const BREADCRUMB_MAP: Record<string, string> = {
-    "/admin": "Dashboard",
-    "/admin/orders": "Orders",
-    "/admin/products": "Products",
-    "/admin/customers": "Customers",
-    "/admin/content": "Content",
-    "/admin/ai-studio": "AI Studio",
-    "/admin/settings": "Settings",
-    "/admin/product/new": "New Product",
+    "/admin-saad": "Dashboard",
+    "/admin-saad/orders": "Orders",
+    "/admin-saad/products": "Products",
+    "/admin-saad/customers": "Customers",
+    "/admin-saad/content": "Content",
+    "/admin-saad/ai-studio": "AI Studio",
+    "/admin-saad/settings": "Settings",
+    "/admin-saad/product/new": "New Product",
 };
 
 export default function AdminTopBar({ setMobileOpen }: { setMobileOpen: (v: boolean) => void }) {
@@ -19,7 +19,7 @@ export default function AdminTopBar({ setMobileOpen }: { setMobileOpen: (v: bool
     const [location] = useLocation();
 
     // Generate breadcrumb
-    const pageName = BREADCRUMB_MAP[location] || (location.startsWith("/admin/orders/") ? "Order Details" : location.startsWith("/admin/product/edit/") ? "Edit Product" : "Admin");
+    const pageName = BREADCRUMB_MAP[location] || (location.startsWith("/admin-saad/orders/") ? "Order Details" : location.startsWith("/admin-saad/product/edit/") ? "Edit Product" : "Admin");
 
     return (
         <header className="h-[60px] bg-background/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6">
