@@ -1140,35 +1140,39 @@ export const appRouter = router({
         await db.update(users).set({ geminiApiKey: input.apiKey || null } as any).where(eq(users.id, ctx.user.id));
         return { success: true };
       }),
-    getModelImage: adminProcedure.query(async ({ ctx }) => {
-      const { getDb: getDatabase } = await import("./db");
-      const { users } = await import("../drizzle/schema");
-      const { eq } = await import("drizzle-orm");
-      const db = await getDatabase();
-      if (!db) return null;
-      const [user] = await db.select().from(users).where(eq(users.id, ctx.user.id)).limit(1);
-      if (!(user as any)?.savedModelImageBase64) return null;
-      return {
-        base64: (user as any).savedModelImageBase64,
-        mimeType: (user as any).savedModelImageMimeType,
-      };
+    getModelImage: adminProcedure.query(async () => {
+      try {
+        const fs = await import("fs/promises");
+        const path = await import("path");
+        const filePath = path.join(process.cwd(), "model_image.json");
+        const data = await fs.readFile(filePath, "utf-8");
+        const parsed = JSON.parse(data);
+        if (parsed && parsed.base64 && parsed.mimeType) {
+          return parsed;
+        }
+        return null;
+      } catch (err) {
+        return null;
+      }
     }),
     saveModelImage: adminProcedure
       .input(z.object({
         base64: z.string(),
         mimeType: z.string(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        const { getDb: getDatabase } = await import("./db");
-        const { users } = await import("../drizzle/schema");
-        const { eq } = await import("drizzle-orm");
-        const db = await getDatabase();
-        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
-        await db.update(users).set({
-          savedModelImageBase64: input.base64,
-          savedModelImageMimeType: input.mimeType,
-        } as any).where(eq(users.id, ctx.user.id));
-        return { success: true };
+      .mutation(async ({ input }) => {
+        try {
+          const fs = await import("fs/promises");
+          const path = await import("path");
+          const filePath = path.join(process.cwd(), "model_image.json");
+          await fs.writeFile(filePath, JSON.stringify({
+            base64: input.base64,
+            mimeType: input.mimeType,
+          }));
+          return { success: true };
+        } catch (err) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to save model image" });
+        }
       }),
   }),
 });

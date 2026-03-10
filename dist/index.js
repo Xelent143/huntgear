@@ -57,10 +57,7 @@ var init_schema = __esm({
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
-      savedModelImageBase64: text("savedModelImageBase64"),
-      // longtext for base64 image
-      savedModelImageMimeType: varchar("savedModelImageMimeType", { length: 255 })
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
     });
     products = mysqlTable("products", {
       id: int("id").autoincrement().primaryKey(),
@@ -3143,33 +3140,37 @@ var appRouter = router({
       await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq3(users2.id, ctx.user.id));
       return { success: true };
     }),
-    getModelImage: adminProcedure3.query(async ({ ctx }) => {
-      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
-      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq3 } = await import("drizzle-orm");
-      const db = await getDatabase();
-      if (!db) return null;
-      const [user] = await db.select().from(users2).where(eq3(users2.id, ctx.user.id)).limit(1);
-      if (!user?.savedModelImageBase64) return null;
-      return {
-        base64: user.savedModelImageBase64,
-        mimeType: user.savedModelImageMimeType
-      };
+    getModelImage: adminProcedure3.query(async () => {
+      try {
+        const fs4 = await import("fs/promises");
+        const path4 = await import("path");
+        const filePath = path4.join(process.cwd(), "model_image.json");
+        const data = await fs4.readFile(filePath, "utf-8");
+        const parsed = JSON.parse(data);
+        if (parsed && parsed.base64 && parsed.mimeType) {
+          return parsed;
+        }
+        return null;
+      } catch (err) {
+        return null;
+      }
     }),
     saveModelImage: adminProcedure3.input(z3.object({
       base64: z3.string(),
       mimeType: z3.string()
-    })).mutation(async ({ input, ctx }) => {
-      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
-      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq3 } = await import("drizzle-orm");
-      const db = await getDatabase();
-      if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
-      await db.update(users2).set({
-        savedModelImageBase64: input.base64,
-        savedModelImageMimeType: input.mimeType
-      }).where(eq3(users2.id, ctx.user.id));
-      return { success: true };
+    })).mutation(async ({ input }) => {
+      try {
+        const fs4 = await import("fs/promises");
+        const path4 = await import("path");
+        const filePath = path4.join(process.cwd(), "model_image.json");
+        await fs4.writeFile(filePath, JSON.stringify({
+          base64: input.base64,
+          mimeType: input.mimeType
+        }));
+        return { success: true };
+      } catch (err) {
+        throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Failed to save model image" });
+      }
     })
   })
 });
