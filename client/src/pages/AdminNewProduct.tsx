@@ -493,6 +493,7 @@ export default function AdminNewProduct() {
 
             setForm(f => ({
                 ...f,
+                title: product.title || f.title,
                 slug: autoSlug(product.slug || product.title).substring(0, 250),
                 category: (product.category || f.category).substring(0, 100),
                 shortDescription: (product.shortDescription || f.shortDescription).substring(0, 500),
