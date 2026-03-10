@@ -2490,12 +2490,21 @@ var orderRouter = router({
   adminList: adminProcedure3.query(() => getAllOrders()),
   adminStats: adminProcedure3.query(async () => {
     const all = await getAllOrders();
+    const products2 = await getAllProducts();
     const paidOrders = all.filter((o) => ["paid", "processing", "shipped", "delivered"].includes(o.status));
     const totalRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.totalAmount), 0);
+    const pendingCount = all.filter((o) => o.status === "pending").length;
+    const processingCount = all.filter((o) => o.status === "processing").length;
+    const recentOrders = all.slice(0, 5);
     return {
       totalRevenue: totalRevenue.toFixed(2),
       orderCount: all.length,
-      paidOrderCount: paidOrders.length
+      paidOrderCount: paidOrders.length,
+      pendingCount,
+      processingCount,
+      productCount: products2.length,
+      activeProductCount: products2.filter((p) => p.isActive).length,
+      recentOrders
     };
   }),
   updateStatus: adminProcedure3.input(z3.object({
