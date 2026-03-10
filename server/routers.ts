@@ -522,6 +522,13 @@ const orderRouter = router({
     .input(z.object({ orderNumber: z.string() }))
     .query(async ({ input }) => getOrderByNumber(input.orderNumber)),
 
+  getById: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      const all = await getAllOrders();
+      return all.find(o => o.id === input.id) ?? null;
+    }),
+
   adminList: adminProcedure.query(() => getAllOrders()),
 
   adminStats: adminProcedure.query(async () => {

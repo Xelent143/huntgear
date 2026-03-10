@@ -62,7 +62,7 @@ export default function AdminOrders() {
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                     {(orders ?? []).map(order => (
-                                        <tr key={order.id} className="hover:bg-secondary/20 transition-colors">
+                                        <tr key={order.id} className="hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin/orders/${order.id}`}>
                                             <td className="px-6 py-4 font-mono text-sm font-bold text-gold">{order.orderNumber}</td>
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-foreground">{order.customerName}</div>
@@ -79,20 +79,22 @@ export default function AdminOrders() {
                                             <td className="px-6 py-4 text-muted-foreground whitespace-nowrap">
                                                 {new Date(order.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <Select
-                                                    value={order.status}
-                                                    onValueChange={(v) => updateStatus.mutate({ id: order.id, status: v as any })}
-                                                >
-                                                    <SelectTrigger className="w-[130px] h-8 text-xs bg-background">
-                                                        <SelectValue />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"].map(s => (
-                                                            <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
+                                            <td className="px-6 py-4" onClick={e => e.stopPropagation()}>
+                                                <div className="flex items-center gap-2">
+                                                    <Select
+                                                        value={order.status}
+                                                        onValueChange={(v) => updateStatus.mutate({ id: order.id, status: v as any })}
+                                                    >
+                                                        <SelectTrigger className="w-[130px] h-8 text-xs bg-background">
+                                                            <SelectValue />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"].map(s => (
+                                                                <SelectItem key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}

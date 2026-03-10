@@ -2483,6 +2483,10 @@ var orderRouter = router({
     return { success: true, orderNumber, stripeUrl };
   }),
   byNumber: publicProcedure.input(z3.object({ orderNumber: z3.string() })).query(async ({ input }) => getOrderByNumber(input.orderNumber)),
+  getById: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).query(async ({ input }) => {
+    const all = await getAllOrders();
+    return all.find((o) => o.id === input.id) ?? null;
+  }),
   adminList: adminProcedure3.query(() => getAllOrders()),
   adminStats: adminProcedure3.query(async () => {
     const all = await getAllOrders();
