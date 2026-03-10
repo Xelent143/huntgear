@@ -1315,8 +1315,8 @@ STRICT REQUIREMENTS:
 3. PRESERVE the model's exact face, skin tone, and body type parfaitement.
 ${view.name === "Lifestyle Photoshoot" ? "4. Place the model in a realistic lifestyle setting." : "4. Keep the original model's pose and background perfectly OR use a clean solid white background as instructed."}
 ${logoImage ? "5. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "5. Do not add any random logos or text."}
-6. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
-7. Return EXACTLY one image.`;
+6. The final image must be ultra-realistic, photorealistic, **maximized 2K/4K resolution (highest possible detail)**, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+7. Return EXACTLY one stunning high-definition image.`;
     parts.push({ text: instructions });
     let lastError = new Error("Unknown error");
     const maxRetries = 2;

@@ -10,8 +10,10 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import {
-    Upload, Trash2, Wand2, Loader2, Plus, X, Eye, Star, Truck, ArrowLeft, ImagePlus, Save, Sparkles
+    Save, ImagePlus, Loader2, ArrowLeft, Trash2, Edit3, X, Eye, ShieldCheck, CreditCard, Droplet, Sparkles, AlertCircle, TrendingUp, Scissors, FileText, Wand2, Package, Truck, Info, Camera
 } from "lucide-react";
+import VirtualTryOnAgent from "@/components/admin/VirtualTryOnAgent";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -444,6 +446,88 @@ export default function AdminNewProduct() {
         }
     };
 
+    const handleTryOnImagesBatch = async (images: { url: string; base64: string; mimeType: string }[]) => {
+        // Automatically download the blobs from the generated URLs to fake a real 'File' upload 
+        // without making the user manually drag them
+        setIsAiLoading(true);
+        toast.info("Importing 5 High-Res Try-On views to Product Studio...");
+
+        try {
+            const filePromises = images.map(async (img, idx) => {
+                const res = await fetch(img.url);
+                const blob = await res.blob();
+                const file = new File([blob], `tryon_auto_${idx}.jpg`, { type: blob.type || "image/jpeg" });
+                return {
+                    file,
+                    preview: URL.createObjectURL(file),
+                    altText: `Generated View ${idx + 1}`,
+                    sortOrder: pendingImages.length + idx
+                };
+            });
+            const newFiles = await Promise.all(filePromises);
+            setPendingImages(prev => [...prev, ...newFiles]);
+
+            // Now automatically trigger the AI Fill 
+            toast.info("Views imported. Auto-filling listing details...");
+
+            // Re-trigger the analyze pipeline (we pass the 'first' one manually since state hasn't flushed)
+            const firstImage = newFiles[0].file;
+            const base64 = await fileToBase64(firstImage);
+
+            const { product } = await aiAnalyzeImageMutation.mutateAsync({ base64, mimeType: firstImage.type || "image/jpeg" });
+
+            let infographicUrl = "";
+            if (product.infographicPrompt) {
+                toast.info("Generating manufacturing infographic...");
+                try {
+                    const infoRes = await generateInfographicMutation.mutateAsync({ prompt: product.infographicPrompt });
+                    infographicUrl = infoRes.imageUrl;
+                } catch (err) { console.warn("Failed to generate infographic", err); }
+            }
+
+            const sanitizePrice = (p: string | undefined) => {
+                if (!p) return "";
+                const n = parseFloat(String(p).replace(/[^0-9.]/g, ""));
+                return isNaN(n) ? "" : n.toFixed(2);
+            };
+
+            setForm(f => ({
+                ...f,
+                slug: autoSlug(product.slug || product.title).substring(0, 250),
+                category: (product.category || f.category).substring(0, 100),
+                shortDescription: (product.shortDescription || f.shortDescription).substring(0, 500),
+                description: product.description || f.description,
+                manufacturingStory: product.manufacturingStory || f.manufacturingStory,
+                manufacturingInfographic: infographicUrl || f.manufacturingInfographic,
+                material: (product.material || f.material).substring(0, 250),
+                availableSizes: Array.isArray(product.availableSizes) ? JSON.stringify(product.availableSizes) : f.availableSizes,
+                availableColors: Array.isArray(product.availableColors) ? JSON.stringify(product.availableColors) : f.availableColors,
+                samplePrice: sanitizePrice(product.samplePrice) || f.samplePrice,
+                weight: sanitizePrice(product.weight) || f.weight,
+                seoTitle: (product.seoTitle || f.seoTitle).substring(0, 250),
+                seoDescription: product.seoDescription || f.seoDescription,
+                seoKeywords: (product.seoKeywords || f.seoKeywords).substring(0, 250),
+            }));
+
+            if (product.moqSlabs?.length) {
+                setSlabs(product.moqSlabs.map((s: any, i: number) => ({
+                    minQty: Number(s.minQty) || 1,
+                    maxQty: s.maxQty != null ? Number(s.maxQty) : null,
+                    pricePerUnit: sanitizePrice(s.pricePerUnit) || "0.00",
+                    label: s.label || "",
+                    sortOrder: i,
+                })));
+            }
+            toast.success("AI imported 5 views & wrote Listing details!", { description: "Review and click Publish!" });
+            window.scrollBy({ top: 800, behavior: 'smooth' });
+
+        } catch (e: any) {
+            toast.error("Failed to parse Try-On batch", { description: e.message });
+        } finally {
+            setIsAiLoading(false);
+        }
+    };
+
     const handleSubmit = () => {
         if (!form.title || !form.slug || !form.category) {
             toast.error("Title, slug, and category are required");
@@ -536,64 +620,88 @@ export default function AdminNewProduct() {
                 </div>
 
                 {/* Step 1: AI Visual Uploader (Prominent!) */}
-                <section className="bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5">
-                    <div className="p-8 flex flex-col items-center text-center">
-                        <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4">
-                            <Wand2 className="w-8 h-8 text-gold" />
-                        </div>
-                        <h2 className="text-2xl font-serif font-bold text-foreground mb-2">Step 1: AI Generation</h2>
-                        <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                            Upload your product photos first. Our advanced AI will analyze the styling, fabric, and features to automatically write your entire product listing, including SEO and pricing slabs.
-                        </p>
-
-                        <div className="w-full max-w-2xl bg-secondary/50 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group" onClick={() => fileInputRef.current?.click()}>
-                            <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
-                            <div className="flex flex-col items-center">
-                                <ImagePlus className="w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-3" />
-                                <h3 className="text-lg font-bold text-foreground">Click to Upload Images</h3>
-                                <p className="text-sm text-muted-foreground mt-1 text-center">
-                                    Drag and drop or browse. First image is used as the main display. Valid formats: JPG, PNG, WEBP.
-                                </p>
+                <section className="bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto">
+                    <div className="p-8">
+                        <div className="flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center">
+                            <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                <Sparkles className="w-8 h-8 text-gold" />
                             </div>
+                            <h2 className="text-2xl font-serif font-bold text-foreground mb-2">Step 1: Product Photography Setup</h2>
+                            <p className="text-muted-foreground max-w-xl mx-auto">
+                                Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing.
+                            </p>
                         </div>
 
-                        {pendingImages.length > 0 && (
-                            <div className="w-full max-w-3xl mt-8">
-                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
-                                    {pendingImages.map((img, i) => (
-                                        <div key={i} className="relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md">
-                                            <img src={img.preview} alt={`Preview ${i}`} className="w-full h-full object-cover" />
-                                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                                {pendingMainImageIndex !== i && (
-                                                    <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setPendingMainImageIndex(i); }}>
-                                                        Set Main
-                                                    </Button>
-                                                )}
-                                                <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); removePendingImage(i); }}>
-                                                    <Trash2 className="w-4 h-4" />
-                                                </Button>
-                                            </div>
-                                            {pendingMainImageIndex === i && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
-                                        </div>
-                                    ))}
+                        <Tabs defaultValue="upload" className="w-full">
+                            <div className="flex justify-center mb-8">
+                                <TabsList className="bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto">
+                                    <TabsTrigger value="upload" className="rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2">
+                                        <ImagePlus className="w-4 h-4" />
+                                        Manual Photo Upload
+                                    </TabsTrigger>
+                                    <TabsTrigger value="tryon" className="rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2">
+                                        <Camera className="w-4 h-4" />
+                                        Virtual Try-On Studio
+                                    </TabsTrigger>
+                                </TabsList>
+                            </div>
+
+                            <TabsContent value="upload" className="space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center">
+                                <div className="w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]" onClick={() => fileInputRef.current?.click()}>
+                                    <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
+                                    <div className="flex flex-col items-center">
+                                        <ImagePlus className="w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" />
+                                        <h3 className="text-lg font-bold text-foreground">Click to Upload Images</h3>
+                                        <p className="text-sm text-muted-foreground mt-2 max-w-md text-center">
+                                            Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
 
-                        <Button
-                            size="lg"
-                            onClick={handleAiFill}
-                            disabled={isAiLoading || (pendingImages.length === 0 && !form.title.trim())}
-                            className="mt-8 bg-foreground text-background hover:bg-foreground/90 font-condensed tracking-widest text-base shadow-xl h-14 px-8 min-w-[300px]"
-                        >
-                            {isAiLoading ? (
-                                <><Loader2 className="w-5 h-5 animate-spin mr-3" /> Analyzing...</>
-                            ) : pendingImages.length > 0 ? (
-                                <><Sparkles className="w-5 h-5 mr-3" /> Auto-Fill Listing from Image</>
-                            ) : (
-                                <><Sparkles className="w-5 h-5 mr-3" /> Generate using Title Text</>
-                            )}
-                        </Button>
+                                {pendingImages.length > 0 && (
+                                    <div className="w-full mt-4">
+                                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                                            {pendingImages.map((img, i) => (
+                                                <div key={i} className="relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md">
+                                                    <img src={img.preview} alt={`Preview ${i}`} className="w-full h-full object-cover" />
+                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                                        {pendingMainImageIndex !== i && (
+                                                            <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setPendingMainImageIndex(i); }}>
+                                                                Main
+                                                            </Button>
+                                                        )}
+                                                        <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); removePendingImage(i); }}>
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </Button>
+                                                    </div>
+                                                    {pendingMainImageIndex === i && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <Button
+                                    size="lg"
+                                    onClick={handleAiFill}
+                                    disabled={isAiLoading || (pendingImages.length === 0 && !form.title.trim())}
+                                    className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90 font-bold overflow-hidden"
+                                >
+                                    {isAiLoading ? (
+                                        <span className="flex items-center"><Loader2 className="w-5 h-5 animate-spin mr-3" /> Auto-writing Listing...</span>
+                                    ) : (
+                                        <span className="flex items-center"><Sparkles className="w-5 h-5 mr-3" /> Auto-Fill Listing Details</span>
+                                    )}
+                                </Button>
+                            </TabsContent>
+
+                            <TabsContent value="tryon" className="animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0">
+                                <VirtualTryOnAgent
+                                    onUseImage={async (url) => { handleTryOnImagesBatch([{ url, base64: "", mimeType: "" }]) }}
+                                    onUseImages={(images) => { handleTryOnImagesBatch(images) }}
+                                />
+                            </TabsContent>
+                        </Tabs>
                     </div>
                 </section>
 

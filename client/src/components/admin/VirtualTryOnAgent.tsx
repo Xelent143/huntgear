@@ -14,7 +14,13 @@ interface ImageData {
     preview: string;
 }
 
-export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: string, base64: string, mimeType: string) => void }) {
+export default function VirtualTryOnAgent({
+    onUseImage,
+    onUseImages
+}: {
+    onUseImage?: (url: string, base64: string, mimeType: string) => void;
+    onUseImages?: (images: { url: string; base64: string; mimeType: string }[]) => void;
+}) {
     // ─── API Hooks ─────────────────────────────────────────────────────────────
     const utils = trpc.useUtils();
 
@@ -107,6 +113,25 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
             category: category,
             logoImage: logoImage ? { base64: logoImage.base64, mimeType: logoImage.mimeType } : undefined,
         });
+    };
+
+    const handleDownload = async (imageUrl: string, viewName: string) => {
+        try {
+            const res = await fetch(imageUrl);
+            const blob = await res.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = blobUrl;
+            a.download = `Sialkot_TryOn_${viewName.replace(/\s+/g, "_")}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(blobUrl);
+            document.body.removeChild(a);
+            toast.success("Image downloaded successfully!");
+        } catch (error) {
+            toast.error("Failed to download image.");
+        }
     };
 
     // ─── Render ────────────────────────────────────────────────────────────────
@@ -286,20 +311,30 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                                             <p className="text-xs font-bold text-white text-center tracking-wider">{img.view}</p>
                                         </div>
                                     </div>
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        className="w-full text-xs"
-                                        onClick={() => {
-                                            if (onUseImage) {
-                                                toast.info("Sending standard view to Listing Agent...");
-                                                onUseImage(img.url, "", "");
-                                            }
-                                        }}
-                                    >
-                                        <CheckCircle className="w-3 h-3 mr-2 text-emerald-500" />
-                                        Use For Listing
-                                    </Button>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            className="flex-1 text-xs px-2"
+                                            onClick={() => {
+                                                if (onUseImage) {
+                                                    toast.info("Sending view to Listing Agent...");
+                                                    onUseImage(img.url, "", "");
+                                                }
+                                            }}
+                                        >
+                                            <CheckCircle className="w-3 h-3 mr-1 text-emerald-500" />
+                                            Use
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="secondary"
+                                            className="px-3"
+                                            onClick={() => handleDownload(img.url, img.view)}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>
+                                        </Button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -331,6 +366,18 @@ export default function VirtualTryOnAgent({ onUseImage }: { onUseImage?: (url: s
                             {generateMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Wand2 className="w-4 h-4 mr-2" />}
                             Generate Collection
                         </Button>
+
+                        {generatedImages && generatedImages.length > 0 && onUseImages && (
+                            <Button
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6"
+                                onClick={() => {
+                                    toast.info("Sending entire collection to Listing Agent...");
+                                    onUseImages(generatedImages.map(img => ({ url: img.url, base64: "", mimeType: "" })));
+                                }}
+                            >
+                                <CheckCircle className="w-4 h-4 mr-2" /> Select All & Post Now
+                            </Button>
+                        )}
                     </div>
                 </div>
 
