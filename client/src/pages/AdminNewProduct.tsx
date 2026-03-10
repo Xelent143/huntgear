@@ -491,10 +491,14 @@ export default function AdminNewProduct() {
                 return isNaN(n) ? "" : n.toFixed(2);
             };
 
+            const fallbackTitle = (product.title && product.title.trim() !== "")
+                ? product.title
+                : "Premium AI Generated Apparel";
+
             setForm(f => ({
                 ...f,
-                title: product.title || f.title,
-                slug: autoSlug(product.slug || product.title).substring(0, 250),
+                title: fallbackTitle,
+                slug: autoSlug(product.slug || fallbackTitle).substring(0, 250),
                 category: (product.category || f.category).substring(0, 100),
                 shortDescription: (product.shortDescription || f.shortDescription).substring(0, 500),
                 description: product.description || f.description,
