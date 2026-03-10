@@ -212,6 +212,7 @@ export async function generateInfographicImageBase64(
             Use the "nano banana pro" style (ultra-high quality, detailed, visually striking illustrative style) to generate an infographic explanation image based strictly on this prompt: "${prompt}".
             The image should visually explain the garment's fabrics, embellishments, stitching types, and production details as a comprehensive visual guide. 
             Do NOT include long paragraphs of text. Use icons, diagrams, and illustrative callouts.
+            CRITICAL LAYOUT INSTRUCTION: The generated image MUST be strictly in a VERTICAL/PORTRAIT aspect ratio (e.g. 2:3 or 3:4 or 9:16) to match standard apparel photography. Do NOT generate a horizontal or square image.
             Background MUST be a solid color (e.g., pure white or slightly off-white). No watermarks. 4K high quality.`,
         },
     ];
