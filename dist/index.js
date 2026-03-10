@@ -2701,9 +2701,10 @@ var rfqRouter = router({
   generateAiReply: adminProcedure3.input(z3.object({
     rfqId: z3.number().int().positive(),
     instruction: z3.string().min(1)
-  })).mutation(async ({ input }) => {
+  })).mutation(async ({ input, ctx }) => {
     const rfq = await getRfqById(input.rfqId);
     if (!rfq) throw new TRPCError4({ code: "NOT_FOUND", message: "Inquiry not found" });
+    const userApiKey = ctx.user?.geminiApiKey || void 0;
     const products2 = await getAllProducts();
     const kb = await getAllKnowledgeBase();
     const notes = await getNotesForInquiry(input.rfqId);
@@ -2759,7 +2760,8 @@ USER INSTRUCTION: ${input.instruction}`;
     const reply = await chatWithProductAgent2(
       [],
       inquiryContext,
-      systemPrompt
+      systemPrompt,
+      userApiKey
     );
     return { reply };
   }),

@@ -715,9 +715,12 @@ const rfqRouter = router({
       rfqId: z.number().int().positive(),
       instruction: z.string().min(1),
     }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const rfq = await getRfqById(input.rfqId);
       if (!rfq) throw new TRPCError({ code: "NOT_FOUND", message: "Inquiry not found" });
+
+      // Get user's saved Gemini API key (same one used in AI Product Agent)
+      const userApiKey = (ctx.user as any)?.geminiApiKey || undefined;
 
       // Build knowledge base from products + custom entries
       const products = await getAllProducts();
@@ -780,6 +783,7 @@ USER INSTRUCTION: ${input.instruction}`;
         [],
         inquiryContext,
         systemPrompt,
+        userApiKey,
       );
 
       return { reply };
