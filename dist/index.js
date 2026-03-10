@@ -14,6 +14,8 @@ __export(schema_exports, {
   blogPosts: () => blogPosts,
   cartItems: () => cartItems,
   contactSubmissions: () => contactSubmissions,
+  inquiryNotes: () => inquiryNotes,
+  knowledgeBase: () => knowledgeBase,
   orders: () => orders,
   portfolioImages: () => portfolioImages,
   portfolioItems: () => portfolioItems,
@@ -38,7 +40,7 @@ import {
   boolean,
   decimal
 } from "drizzle-orm/mysql-core";
-var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages;
+var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages, inquiryNotes, knowledgeBase;
 var init_schema = __esm({
   "drizzle/schema.ts"() {
     "use strict";
@@ -308,6 +310,21 @@ var init_schema = __esm({
       sortOrder: int("sortOrder").default(0).notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull()
     });
+    inquiryNotes = mysqlTable("inquiry_notes", {
+      id: int("id").autoincrement().primaryKey(),
+      rfqId: int("rfqId").notNull(),
+      content: text("content").notNull(),
+      isAiGenerated: boolean("isAiGenerated").default(false).notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
+    knowledgeBase = mysqlTable("knowledge_base", {
+      id: int("id").autoincrement().primaryKey(),
+      title: varchar("title", { length: 255 }).notNull(),
+      content: text("content").notNull(),
+      category: varchar("category", { length: 100 }).default("general").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
   }
 });
 
@@ -334,6 +351,8 @@ var init_env = __esm({
 // server/db.ts
 var db_exports = {};
 __export(db_exports, {
+  addInquiryNote: () => addInquiryNote,
+  addKnowledgeBaseEntry: () => addKnowledgeBaseEntry,
   addPortfolioImage: () => addPortfolioImage,
   addProductImage: () => addProductImage,
   addTechPackImage: () => addTechPackImage,
@@ -345,6 +364,7 @@ __export(db_exports, {
   createRfqSubmission: () => createRfqSubmission,
   createShippingZone: () => createShippingZone,
   createTechPack: () => createTechPack,
+  deleteKnowledgeBaseEntry: () => deleteKnowledgeBaseEntry,
   deletePortfolioImage: () => deletePortfolioImage,
   deletePortfolioItem: () => deletePortfolioItem,
   deleteProduct: () => deleteProduct,
@@ -353,6 +373,7 @@ __export(db_exports, {
   findShippingZoneForCountry: () => findShippingZoneForCountry,
   getActiveProducts: () => getActiveProducts,
   getActiveShippingZones: () => getActiveShippingZones,
+  getAllKnowledgeBase: () => getAllKnowledgeBase,
   getAllOrders: () => getAllOrders,
   getAllProducts: () => getAllProducts,
   getAllRfqSubmissions: () => getAllRfqSubmissions,
@@ -364,6 +385,7 @@ __export(db_exports, {
   getFeaturedPortfolioItems: () => getFeaturedPortfolioItems,
   getFeaturedProducts: () => getFeaturedProducts,
   getFeaturedTestimonials: () => getFeaturedTestimonials,
+  getNotesForInquiry: () => getNotesForInquiry,
   getOrderByNumber: () => getOrderByNumber,
   getPortfolioCategories: () => getPortfolioCategories,
   getPortfolioImagesForItem: () => getPortfolioImagesForItem,
@@ -373,6 +395,7 @@ __export(db_exports, {
   getProductBySlug: () => getProductBySlug,
   getProductImages: () => getProductImages,
   getPublishedBlogPosts: () => getPublishedBlogPosts,
+  getRfqById: () => getRfqById,
   getSizeChart: () => getSizeChart,
   getSlabPrices: () => getSlabPrices,
   getTechPackById: () => getTechPackById,
@@ -387,6 +410,7 @@ __export(db_exports, {
   updateOrderStatus: () => updateOrderStatus,
   updatePortfolioItem: () => updatePortfolioItem,
   updateProduct: () => updateProduct,
+  updateRfqStatus: () => updateRfqStatus,
   updateShippingZone: () => updateShippingZone,
   updateTechPackStatus: () => updateTechPackStatus,
   upsertCartItem: () => upsertCartItem,
@@ -699,6 +723,42 @@ async function getAllRfqSubmissions() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(rfqSubmissions).orderBy(desc(rfqSubmissions.createdAt));
+}
+async function getRfqById(id) {
+  const db = await getDb();
+  if (!db) return null;
+  const rows = await db.select().from(rfqSubmissions).where(eq(rfqSubmissions.id, id));
+  return rows[0] ?? null;
+}
+async function updateRfqStatus(id, status) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(rfqSubmissions).set({ status, updatedAt: /* @__PURE__ */ new Date() }).where(eq(rfqSubmissions.id, id));
+}
+async function getNotesForInquiry(rfqId) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(inquiryNotes).where(eq(inquiryNotes.rfqId, rfqId)).orderBy(desc(inquiryNotes.createdAt));
+}
+async function addInquiryNote(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(inquiryNotes).values(data);
+}
+async function getAllKnowledgeBase() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(knowledgeBase).orderBy(desc(knowledgeBase.createdAt));
+}
+async function addKnowledgeBaseEntry(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(knowledgeBase).values(data);
+}
+async function deleteKnowledgeBaseEntry(id) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(knowledgeBase).where(eq(knowledgeBase.id, id));
 }
 async function getPublishedBlogPosts() {
   const db = await getDb();
@@ -2491,6 +2551,7 @@ var orderRouter = router({
   adminStats: adminProcedure3.query(async () => {
     const all = await getAllOrders();
     const products2 = await getAllProducts();
+    const rfqs = await getAllRfqSubmissions();
     const paidOrders = all.filter((o) => ["paid", "processing", "shipped", "delivered"].includes(o.status));
     const totalRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.totalAmount), 0);
     const pendingCount = all.filter((o) => o.status === "pending").length;
@@ -2504,7 +2565,10 @@ var orderRouter = router({
       processingCount,
       productCount: products2.length,
       activeProductCount: products2.filter((p) => p.isActive).length,
-      recentOrders
+      recentOrders,
+      inquiryCount: rfqs.length,
+      newInquiryCount: rfqs.filter((r) => r.status === "new").length,
+      recentInquiries: rfqs.slice(0, 5)
     };
   }),
   updateStatus: adminProcedure3.input(z3.object({
@@ -2605,6 +2669,112 @@ var rfqRouter = router({
       title: `New 3D Design Quote from ${input.companyName}`,
       content: `${input.contactName} (${input.email}) submitted a 3D design quote request for ${input.productType} (${input.garmentType ?? ""}) \u2014 Qty: ${input.quantity}${designNote}`
     });
+    return { success: true };
+  }),
+  // ── Admin inquiry management ──────────────────────────────────────
+  adminList: adminProcedure3.query(() => getAllRfqSubmissions()),
+  getById: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).query(async ({ input }) => {
+    const rfq = await getRfqById(input.id);
+    if (!rfq) return null;
+    const notes = await getNotesForInquiry(input.id);
+    return { ...rfq, notes };
+  }),
+  updateStatus: adminProcedure3.input(z3.object({
+    id: z3.number().int().positive(),
+    status: z3.enum(["new", "reviewed", "quoted", "closed"])
+  })).mutation(async ({ input }) => {
+    await updateRfqStatus(input.id, input.status);
+    return { success: true };
+  }),
+  addNote: adminProcedure3.input(z3.object({
+    rfqId: z3.number().int().positive(),
+    content: z3.string().min(1),
+    isAiGenerated: z3.boolean().default(false)
+  })).mutation(async ({ input }) => {
+    await addInquiryNote({
+      rfqId: input.rfqId,
+      content: input.content,
+      isAiGenerated: input.isAiGenerated
+    });
+    return { success: true };
+  }),
+  generateAiReply: adminProcedure3.input(z3.object({
+    rfqId: z3.number().int().positive(),
+    instruction: z3.string().min(1)
+  })).mutation(async ({ input }) => {
+    const rfq = await getRfqById(input.rfqId);
+    if (!rfq) throw new TRPCError4({ code: "NOT_FOUND", message: "Inquiry not found" });
+    const products2 = await getAllProducts();
+    const kb = await getAllKnowledgeBase();
+    const notes = await getNotesForInquiry(input.rfqId);
+    const productCatalog = products2.map(
+      (p) => `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ""} | MOQ: ${p.moq || "N/A"} | Base Price: $${p.basePrice || "Contact for pricing"}`
+    ).join("\n");
+    const kbContent = kb.map((k) => `[${k.category}] ${k.title}: ${k.content}`).join("\n\n");
+    const previousNotes = notes.map((n) => `[${n.isAiGenerated ? "AI" : "Admin"}] ${n.content}`).join("\n---\n");
+    const systemPrompt = `You are a professional sales representative for Sialkot Sample Masters \u2014 a premium B2B custom apparel manufacturer from Sialkot, Pakistan. We specialize in custom sportswear, streetwear, hunting gear, tactical uniforms, martial arts uniforms, and private label manufacturing.
+
+COMPANY INFO:
+- Name: Sialkot Sample Masters
+- Location: Sialkot Industrial Estate, Sialkot 51310, Punjab, Pakistan
+- Phone/WhatsApp: +92 302 292 2242
+- Email: info@sialkotsamplemasters.com
+- Website: www.sialkotsamplemasters.com
+- Certifications: ISO 9001:2015, Eco-Friendly manufacturing
+- Capabilities: Private Label, Pattern Making, Sublimation Printing, Embroidery & DTF, Cut & Sew, Tech Pack Design
+
+PRODUCT CATALOG:
+${productCatalog}
+
+${kbContent ? `ADDITIONAL KNOWLEDGE BASE:
+${kbContent}` : ""}
+
+${previousNotes ? `PREVIOUS CONVERSATION NOTES:
+${previousNotes}` : ""}
+
+RULES:
+- Write professional, warm, and convincing business emails
+- Reference specific products and capabilities when relevant
+- Include pricing guidance based on the product catalog when appropriate
+- Always be helpful and solution-oriented
+- Sign off as the Sialkot Sample Masters Sales Team
+- Keep emails concise but thorough
+- Use proper email formatting with greeting and sign-off`;
+    const inquiryContext = `INQUIRY DETAILS:
+- From: ${rfq.contactName} (${rfq.companyName})
+- Email: ${rfq.email}
+- Phone: ${rfq.phone || "Not provided"}
+- Country: ${rfq.country || "Not specified"}
+- Product Type: ${rfq.productType}
+- Quantity: ${rfq.quantity}
+- Customization: ${rfq.customization || "Not specified"}
+- Fabric Preference: ${rfq.fabricPreference || "Not specified"}
+- Timeline: ${rfq.timeline || "Not specified"}
+- Budget: ${rfq.budget || "Not specified"}
+- Additional Notes: ${rfq.additionalNotes || "None"}
+- Current Status: ${rfq.status}
+
+USER INSTRUCTION: ${input.instruction}`;
+    const { chatWithProductAgent: chatWithProductAgent2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
+    const reply = await chatWithProductAgent2(
+      [],
+      inquiryContext,
+      systemPrompt
+    );
+    return { reply };
+  }),
+  // ── Knowledge Base ─────────────────────────────────────────────────
+  getKnowledgeBase: adminProcedure3.query(() => getAllKnowledgeBase()),
+  addKnowledge: adminProcedure3.input(z3.object({
+    title: z3.string().min(1),
+    content: z3.string().min(1),
+    category: z3.string().default("general")
+  })).mutation(async ({ input }) => {
+    await addKnowledgeBaseEntry(input);
+    return { success: true };
+  }),
+  deleteKnowledge: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+    await deleteKnowledgeBaseEntry(input.id);
     return { success: true };
   })
 });

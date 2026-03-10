@@ -345,3 +345,30 @@ export const techPackImages = mysqlTable("tech_pack_images", {
 
 export type TechPackImage = typeof techPackImages.$inferSelect;
 export type InsertTechPackImage = typeof techPackImages.$inferInsert;
+
+// ─── Inquiry Notes ────────────────────────────────────────────────────────────
+
+export const inquiryNotes = mysqlTable("inquiry_notes", {
+  id: int("id").autoincrement().primaryKey(),
+  rfqId: int("rfqId").notNull(),
+  content: text("content").notNull(),
+  isAiGenerated: boolean("isAiGenerated").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InquiryNote = typeof inquiryNotes.$inferSelect;
+export type InsertInquiryNote = typeof inquiryNotes.$inferInsert;
+
+// ─── Knowledge Base ───────────────────────────────────────────────────────────
+
+export const knowledgeBase = mysqlTable("knowledge_base", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  content: text("content").notNull(),
+  category: varchar("category", { length: 100 }).default("general").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type KnowledgeBaseEntry = typeof knowledgeBase.$inferSelect;
+export type InsertKnowledgeBaseEntry = typeof knowledgeBase.$inferInsert;

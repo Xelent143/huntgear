@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import {
     LayoutDashboard, ShoppingBag, Package, Users, Settings,
-    Image as ImageIcon, Wand2, LogOut, ChevronRight, Store
+    Image as ImageIcon, Wand2, LogOut, ChevronRight, Store, MessageSquare
 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { IMAGES } from "@/lib/images";
@@ -9,6 +9,7 @@ import { IMAGES } from "@/lib/images";
 const NAVIGATION = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
     { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
+    { name: "Inquiries", href: "/admin/inquiries", icon: MessageSquare },
     { name: "Products", href: "/admin/products", icon: Package },
     { name: "Customers", href: "/admin/customers", icon: Users },
     { name: "Content", href: "/admin/content", icon: ImageIcon },

@@ -26,7 +26,9 @@ import {
   // Orders
   createOrder, getOrderByNumber, getAllOrders, updateOrderStatus,
   // RFQ
-  createRfqSubmission, getAllRfqSubmissions,
+  createRfqSubmission, getAllRfqSubmissions, getRfqById, updateRfqStatus,
+  // Inquiry Notes + Knowledge Base
+  getNotesForInquiry, addInquiryNote, getAllKnowledgeBase, addKnowledgeBaseEntry, deleteKnowledgeBaseEntry,
   // Blog
   getPublishedBlogPosts, getBlogPostBySlug,
   // Portfolio (new image-based system)
@@ -534,11 +536,12 @@ const orderRouter = router({
   adminStats: adminProcedure.query(async () => {
     const all = await getAllOrders();
     const products = await getAllProducts();
+    const rfqs = await getAllRfqSubmissions();
     const paidOrders = all.filter(o => ["paid", "processing", "shipped", "delivered"].includes(o.status));
     const totalRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.totalAmount), 0);
     const pendingCount = all.filter(o => o.status === "pending").length;
     const processingCount = all.filter(o => o.status === "processing").length;
-    const recentOrders = all.slice(0, 5); // most recent 5
+    const recentOrders = all.slice(0, 5);
     return {
       totalRevenue: totalRevenue.toFixed(2),
       orderCount: all.length,
@@ -548,6 +551,9 @@ const orderRouter = router({
       productCount: products.length,
       activeProductCount: products.filter(p => p.isActive).length,
       recentOrders,
+      inquiryCount: rfqs.length,
+      newInquiryCount: rfqs.filter(r => r.status === "new").length,
+      recentInquiries: rfqs.slice(0, 5),
     };
   }),
 
@@ -663,6 +669,141 @@ const rfqRouter = router({
         title: `New 3D Design Quote from ${input.companyName}`,
         content: `${input.contactName} (${input.email}) submitted a 3D design quote request for ${input.productType} (${input.garmentType ?? ''}) — Qty: ${input.quantity}${designNote}`,
       });
+      return { success: true };
+    }),
+
+  // ── Admin inquiry management ──────────────────────────────────────
+
+  adminList: adminProcedure.query(() => getAllRfqSubmissions()),
+
+  getById: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      const rfq = await getRfqById(input.id);
+      if (!rfq) return null;
+      const notes = await getNotesForInquiry(input.id);
+      return { ...rfq, notes };
+    }),
+
+  updateStatus: adminProcedure
+    .input(z.object({
+      id: z.number().int().positive(),
+      status: z.enum(["new", "reviewed", "quoted", "closed"]),
+    }))
+    .mutation(async ({ input }) => {
+      await updateRfqStatus(input.id, input.status);
+      return { success: true };
+    }),
+
+  addNote: adminProcedure
+    .input(z.object({
+      rfqId: z.number().int().positive(),
+      content: z.string().min(1),
+      isAiGenerated: z.boolean().default(false),
+    }))
+    .mutation(async ({ input }) => {
+      await addInquiryNote({
+        rfqId: input.rfqId,
+        content: input.content,
+        isAiGenerated: input.isAiGenerated,
+      });
+      return { success: true };
+    }),
+
+  generateAiReply: adminProcedure
+    .input(z.object({
+      rfqId: z.number().int().positive(),
+      instruction: z.string().min(1),
+    }))
+    .mutation(async ({ input }) => {
+      const rfq = await getRfqById(input.rfqId);
+      if (!rfq) throw new TRPCError({ code: "NOT_FOUND", message: "Inquiry not found" });
+
+      // Build knowledge base from products + custom entries
+      const products = await getAllProducts();
+      const kb = await getAllKnowledgeBase();
+      const notes = await getNotesForInquiry(input.rfqId);
+
+      const productCatalog = products.map(p =>
+        `- ${p.title} (${p.category}): ${p.shortDescription || p.description || ''} | MOQ: ${p.moq || 'N/A'} | Base Price: $${p.basePrice || 'Contact for pricing'}`
+      ).join("\n");
+
+      const kbContent = kb.map(k => `[${k.category}] ${k.title}: ${k.content}`).join("\n\n");
+
+      const previousNotes = notes.map(n => `[${n.isAiGenerated ? 'AI' : 'Admin'}] ${n.content}`).join("\n---\n");
+
+      const systemPrompt = `You are a professional sales representative for Sialkot Sample Masters — a premium B2B custom apparel manufacturer from Sialkot, Pakistan. We specialize in custom sportswear, streetwear, hunting gear, tactical uniforms, martial arts uniforms, and private label manufacturing.
+
+COMPANY INFO:
+- Name: Sialkot Sample Masters
+- Location: Sialkot Industrial Estate, Sialkot 51310, Punjab, Pakistan
+- Phone/WhatsApp: +92 302 292 2242
+- Email: info@sialkotsamplemasters.com
+- Website: www.sialkotsamplemasters.com
+- Certifications: ISO 9001:2015, Eco-Friendly manufacturing
+- Capabilities: Private Label, Pattern Making, Sublimation Printing, Embroidery & DTF, Cut & Sew, Tech Pack Design
+
+PRODUCT CATALOG:
+${productCatalog}
+
+${kbContent ? `ADDITIONAL KNOWLEDGE BASE:\n${kbContent}` : ''}
+
+${previousNotes ? `PREVIOUS CONVERSATION NOTES:\n${previousNotes}` : ''}
+
+RULES:
+- Write professional, warm, and convincing business emails
+- Reference specific products and capabilities when relevant
+- Include pricing guidance based on the product catalog when appropriate
+- Always be helpful and solution-oriented
+- Sign off as the Sialkot Sample Masters Sales Team
+- Keep emails concise but thorough
+- Use proper email formatting with greeting and sign-off`;
+
+      const inquiryContext = `INQUIRY DETAILS:
+- From: ${rfq.contactName} (${rfq.companyName})
+- Email: ${rfq.email}
+- Phone: ${rfq.phone || 'Not provided'}
+- Country: ${rfq.country || 'Not specified'}
+- Product Type: ${rfq.productType}
+- Quantity: ${rfq.quantity}
+- Customization: ${rfq.customization || 'Not specified'}
+- Fabric Preference: ${rfq.fabricPreference || 'Not specified'}
+- Timeline: ${rfq.timeline || 'Not specified'}
+- Budget: ${rfq.budget || 'Not specified'}
+- Additional Notes: ${rfq.additionalNotes || 'None'}
+- Current Status: ${rfq.status}
+
+USER INSTRUCTION: ${input.instruction}`;
+
+      const { chatWithProductAgent } = await import("./ai/gemini");
+      const reply = await chatWithProductAgent(
+        [],
+        inquiryContext,
+        systemPrompt,
+      );
+
+      return { reply };
+    }),
+
+  // ── Knowledge Base ─────────────────────────────────────────────────
+
+  getKnowledgeBase: adminProcedure.query(() => getAllKnowledgeBase()),
+
+  addKnowledge: adminProcedure
+    .input(z.object({
+      title: z.string().min(1),
+      content: z.string().min(1),
+      category: z.string().default("general"),
+    }))
+    .mutation(async ({ input }) => {
+      await addKnowledgeBaseEntry(input);
+      return { success: true };
+    }),
+
+  deleteKnowledge: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .mutation(async ({ input }) => {
+      await deleteKnowledgeBaseEntry(input.id);
       return { success: true };
     }),
 });

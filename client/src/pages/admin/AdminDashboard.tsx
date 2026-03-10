@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
     DollarSign, ShoppingBag, Package, TrendingUp,
     Clock, CheckCircle2, Truck, ArrowUpRight, AlertCircle,
-    ExternalLink, Plus, Eye
+    ExternalLink, Plus, Eye, MessageSquare
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
@@ -61,9 +61,19 @@ export default function AdminDashboard() {
             iconColor: "text-gold",
             accent: "from-gold/20 to-transparent",
         },
+        {
+            label: "Inquiries",
+            value: stats?.inquiryCount ?? 0,
+            sub: `${stats?.newInquiryCount ?? 0} new inquiries`,
+            icon: MessageSquare,
+            iconBg: "bg-cyan-500/10",
+            iconColor: "text-cyan-500",
+            accent: "from-cyan-500/20 to-transparent",
+        },
     ];
 
     const recentOrders = stats?.recentOrders ?? [];
+    const recentInquiries = (stats as any)?.recentInquiries ?? [];
 
     return (
         <AdminLayout>
@@ -218,6 +228,64 @@ export default function AdminDashboard() {
                                             </tr>
                                         );
                                     })}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+                {/* Recent Inquiries */}
+                <div className="bg-card border border-border rounded-2xl overflow-hidden">
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+                        <div>
+                            <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground">
+                                Recent Inquiries
+                            </h2>
+                            <p className="text-xs text-muted-foreground mt-0.5">Latest quote requests from your website</p>
+                        </div>
+                        <Link href="/admin/inquiries">
+                            <Button variant="ghost" size="sm" className="text-xs text-gold hover:text-gold/80 gap-1">
+                                View All <ArrowUpRight className="w-3 h-3" />
+                            </Button>
+                        </Link>
+                    </div>
+
+                    {recentInquiries.length === 0 ? (
+                        <div className="text-center py-12 px-4">
+                            <div className="w-14 h-14 rounded-2xl bg-secondary/50 flex items-center justify-center mx-auto mb-4">
+                                <MessageSquare className="w-6 h-6 text-muted-foreground" />
+                            </div>
+                            <p className="text-sm text-muted-foreground">No inquiries yet. They'll appear here when customers submit quote requests.</p>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="bg-secondary/30">
+                                        {["Company", "Contact", "Product", "Qty", "Status", "Date"].map(h => (
+                                            <th key={h} className="px-6 py-3 text-left text-[10px] font-condensed font-bold uppercase tracking-[0.15em] text-muted-foreground">{h}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-border/50">
+                                    {recentInquiries.map((inq: any) => (
+                                        <tr key={inq.id} className="group hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin/inquiries/${inq.id}`}>
+                                            <td className="px-6 py-4 font-semibold text-foreground">{inq.companyName}</td>
+                                            <td className="px-6 py-4">
+                                                <p className="text-foreground">{inq.contactName}</p>
+                                                <p className="text-xs text-muted-foreground">{inq.email}</p>
+                                            </td>
+                                            <td className="px-6 py-4 text-foreground">{inq.productType}</td>
+                                            <td className="px-6 py-4 font-mono text-foreground">{inq.quantity}</td>
+                                            <td className="px-6 py-4">
+                                                <Badge className={`border text-[10px] font-bold ${STATUS_COLORS[inq.status] || ""}`}>
+                                                    {inq.status.charAt(0).toUpperCase() + inq.status.slice(1)}
+                                                </Badge>
+                                            </td>
+                                            <td className="px-6 py-4 text-muted-foreground text-xs whitespace-nowrap">
+                                                {new Date(inq.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

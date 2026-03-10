@@ -17,6 +17,8 @@ import {
   InsertOrder, orders,
   InsertTechPack, techPacks,
   InsertTechPackImage, techPackImages, TechPack, TechPackImage,
+  InsertInquiryNote, inquiryNotes,
+  InsertKnowledgeBaseEntry, knowledgeBase,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -387,6 +389,53 @@ export async function getAllRfqSubmissions() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(rfqSubmissions).orderBy(desc(rfqSubmissions.createdAt));
+}
+
+export async function getRfqById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const rows = await db.select().from(rfqSubmissions).where(eq(rfqSubmissions.id, id));
+  return rows[0] ?? null;
+}
+
+export async function updateRfqStatus(id: number, status: "new" | "reviewed" | "quoted" | "closed") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(rfqSubmissions).set({ status, updatedAt: new Date() }).where(eq(rfqSubmissions.id, id));
+}
+
+// ─── Inquiry Notes ────────────────────────────────────────────────────────────
+
+export async function getNotesForInquiry(rfqId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(inquiryNotes).where(eq(inquiryNotes.rfqId, rfqId)).orderBy(desc(inquiryNotes.createdAt));
+}
+
+export async function addInquiryNote(data: InsertInquiryNote) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(inquiryNotes).values(data);
+}
+
+// ─── Knowledge Base ───────────────────────────────────────────────────────────
+
+export async function getAllKnowledgeBase() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(knowledgeBase).orderBy(desc(knowledgeBase.createdAt));
+}
+
+export async function addKnowledgeBaseEntry(data: InsertKnowledgeBaseEntry) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(knowledgeBase).values(data);
+}
+
+export async function deleteKnowledgeBaseEntry(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(knowledgeBase).where(eq(knowledgeBase.id, id));
 }
 
 // ─── Blog ─────────────────────────────────────────────────────────────────────
