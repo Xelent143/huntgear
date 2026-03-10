@@ -990,7 +990,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
   const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
   return JSON.parse(jsonText);
 }
-async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey, modelId = "gemini-2.5-flash") {
+async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType, apiKey, modelId = "gemini-3-pro-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [
@@ -1032,7 +1032,7 @@ async function generateProductImageBase64(imagePrompt, logoBase64, logoMimeType,
     throw new Error(`Image generation failed: ${String(err)}`);
   }
 }
-async function generateInfographicImageBase64(prompt, apiKey, modelId = "gemini-3.1-flash-image-preview") {
+async function generateInfographicImageBase64(prompt, apiKey, modelId = "gemini-3-pro-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [
@@ -1161,7 +1161,7 @@ Important: Return ONLY valid JSON matching the exact structure above, no markdow
   const jsonText = text2.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim();
   return JSON.parse(jsonText);
 }
-async function generateDesignerGrid(prompt, apiKey, modelId = "gemini-2.5-flash") {
+async function generateDesignerGrid(prompt, apiKey, modelId = "gemini-3-pro-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [
@@ -1209,7 +1209,7 @@ Studio lighting, clean solid background, ultra-realistic 4K quality, premium B2B
   }
   throw new Error(`Grid image generation failed after ${maxRetries} attempts: ${lastError.message}`);
 }
-async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-2.5-flash", referenceImage) {
+async function generateIndividualView(basePrompt, viewType, apiKey, modelId = "gemini-3-pro-image-preview", referenceImage) {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [];
@@ -1268,7 +1268,7 @@ STRICT INSTRUCTIONS:
   }
   throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
-async function generateTryOnImage(prompt, modelImage, referenceImages, logoImage, apiKey, modelId = "gemini-2.5-flash") {
+async function generateTryOnImage(prompt, modelImage, referenceImages, logoImage, apiKey, modelId = "gemini-3-pro-image-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({ model: modelId });
   const parts = [];

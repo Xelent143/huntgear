@@ -147,7 +147,7 @@ export async function generateProductImageBase64(
     logoBase64?: string,
     logoMimeType?: string,
     apiKey?: string,
-    modelId: string = "gemini-2.5-flash",
+    modelId: string = "gemini-3-pro-image-preview",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
 
@@ -201,7 +201,7 @@ export async function generateProductImageBase64(
 export async function generateInfographicImageBase64(
     prompt: string,
     apiKey?: string,
-    modelId: string = "gemini-3.1-flash-image-preview",
+    modelId: string = "gemini-3-pro-image-preview",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({ model: modelId });
@@ -371,7 +371,7 @@ Important: Return ONLY valid JSON matching the exact structure above, no markdow
 export async function generateDesignerGrid(
     prompt: string,
     apiKey?: string,
-    modelId: string = "gemini-2.5-flash",
+    modelId: string = "gemini-3-pro-image-preview",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({ model: modelId });
@@ -431,7 +431,7 @@ export async function generateIndividualView(
     basePrompt: string,
     viewType: string,
     apiKey?: string,
-    modelId: string = "gemini-2.5-flash",
+    modelId: string = "gemini-3-pro-image-preview",
     referenceImage?: { base64: string; mimeType: string },
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
@@ -507,7 +507,7 @@ export async function generateTryOnImage(
     referenceImages: Array<{ base64: string; mimeType: string }>,
     logoImage?: { base64: string; mimeType: string },
     apiKey?: string,
-    modelId: string = "gemini-2.5-flash",
+    modelId: string = "gemini-3-pro-image-preview",
 ): Promise<{ base64: string; mimeType: string }> {
     const client = getClient(apiKey);
     const model = client.getGenerativeModel({ model: modelId });
