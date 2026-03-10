@@ -57,7 +57,10 @@ var init_schema = __esm({
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+      savedModelImageBase64: text("savedModelImageBase64", { mode: "text" }),
+      // longtext for base64 image
+      savedModelImageMimeType: varchar("savedModelImageMimeType", { length: 255 })
     });
     products = mysqlTable("products", {
       id: int("id").autoincrement().primaryKey(),
@@ -916,6 +919,7 @@ __export(gemini_exports, {
   generateInfographicImageBase64: () => generateInfographicImageBase64,
   generateProductData: () => generateProductData,
   generateProductImageBase64: () => generateProductImageBase64,
+  generateTryOnImage: () => generateTryOnImage,
   prefillProductDataFromGrid: () => prefillProductDataFromGrid
 });
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
@@ -1266,6 +1270,77 @@ STRICT INSTRUCTIONS:
     }
   }
   throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
+}
+async function generateTryOnImage(prompt, modelImage, referenceImages, logoImage, apiKey, modelId = "gemini-2.5-flash") {
+  const client = getClient(apiKey);
+  const model = client.getGenerativeModel({ model: modelId });
+  const parts = [];
+  parts.push({
+    text: "BASE MODEL IMAGE (The person/mannequin to dress):"
+  });
+  parts.push({
+    inlineData: { data: modelImage.base64, mimeType: modelImage.mimeType }
+  });
+  parts.push({
+    text: "REFERENCE PRODUCT IMAGES (The garment to extract and apply):"
+  });
+  referenceImages.forEach((img, index) => {
+    parts.push({
+      inlineData: { data: img.base64, mimeType: img.mimeType }
+    });
+  });
+  if (logoImage) {
+    parts.push({
+      text: "LOGO TO APPLY TO GARMENT:"
+    });
+    parts.push({
+      inlineData: { data: logoImage.base64, mimeType: logoImage.mimeType }
+    });
+  }
+  const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
+Your task is to perform a photorealistic "Virtual Try-On".
+
+USER INSTRUCTIONS: ${prompt}
+
+STRICT REQUIREMENTS:
+1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
+2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
+3. PRESERVE the model's exact pose, body type, skin tone, face (if visible), and the original background perfectly. Do not change the model, only their clothing.
+${logoImage ? "4. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "4. Do not add any random logos or text."}
+5. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+6. Return EXACTLY one image.`;
+  parts.push({ text: instructions });
+  let lastError = new Error("Unknown error");
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig: {
+          responseModalities: ["image", "text"]
+        }
+      });
+      const response = result.response;
+      for (const candidate of response.candidates ?? []) {
+        for (const part of candidate.content?.parts ?? []) {
+          if (part.inlineData) {
+            return {
+              base64: part.inlineData.data,
+              mimeType: part.inlineData.mimeType ?? "image/jpeg"
+            };
+          }
+        }
+      }
+      throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+    } catch (err) {
+      console.error(`[TryOn Gen] Attempt ${attempt} failed:`, err.message);
+      lastError = err;
+      if (attempt < maxRetries) {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
+    }
+  }
+  throw new Error(`Virtual Try-On generation failed after ${maxRetries} attempts: ${lastError.message}`);
 }
 async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey, modelId = "gemini-2.5-flash") {
   const client = getClient(apiKey);
@@ -2124,6 +2199,38 @@ var aiAgentRouter = router({
       throw new TRPCError3({
         code: "INTERNAL_SERVER_ERROR",
         message: `Individual view generation failed: ${err.message}`
+      });
+    }
+  }),
+  // Premium: Generate a Virtual Try-On image
+  generateTryOnImage: adminProcedure2.input(z2.object({
+    prompt: z2.string().min(5).max(1e3),
+    modelImage: z2.object({ base64: z2.string(), mimeType: z2.string() }),
+    referenceImages: z2.array(z2.object({ base64: z2.string(), mimeType: z2.string() })).min(1),
+    logoImage: z2.object({ base64: z2.string(), mimeType: z2.string() }).optional(),
+    apiKey: z2.string().optional(),
+    modelId: z2.string().optional()
+  })).mutation(async ({ input, ctx }) => {
+    try {
+      const { generateTryOnImage: generateTryOnImage2 } = await Promise.resolve().then(() => (init_gemini(), gemini_exports));
+      const key = input.apiKey || ctx.user.geminiApiKey || void 0;
+      const { base64, mimeType } = await generateTryOnImage2(
+        input.prompt,
+        input.modelImage,
+        input.referenceImages,
+        input.logoImage,
+        key,
+        input.modelId
+      );
+      const buffer = Buffer.from(base64, "base64");
+      const ext = mimeType.split("/")[1] ?? "jpeg";
+      const storageKey = `portfolio/tryon-${nanoid(10)}.${ext}`;
+      const { url } = await storagePut(storageKey, buffer, mimeType);
+      return { imageUrl: url, success: true };
+    } catch (err) {
+      throw new TRPCError3({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Virtual Try-On generation failed: ${err.message}`
       });
     }
   }),
@@ -3034,6 +3141,34 @@ var appRouter = router({
       const db = await getDatabase();
       if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
       await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq3(users2.id, ctx.user.id));
+      return { success: true };
+    }),
+    getModelImage: adminProcedure3.query(async ({ ctx }) => {
+      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eq3 } = await import("drizzle-orm");
+      const db = await getDatabase();
+      if (!db) return null;
+      const [user] = await db.select().from(users2).where(eq3(users2.id, ctx.user.id)).limit(1);
+      if (!user?.savedModelImageBase64) return null;
+      return {
+        base64: user.savedModelImageBase64,
+        mimeType: user.savedModelImageMimeType
+      };
+    }),
+    saveModelImage: adminProcedure3.input(z3.object({
+      base64: z3.string(),
+      mimeType: z3.string()
+    })).mutation(async ({ input, ctx }) => {
+      const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
+      const { eq: eq3 } = await import("drizzle-orm");
+      const db = await getDatabase();
+      if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+      await db.update(users2).set({
+        savedModelImageBase64: input.base64,
+        savedModelImageMimeType: input.mimeType
+      }).where(eq3(users2.id, ctx.user.id));
       return { success: true };
     })
   })

@@ -2,10 +2,20 @@ import AdminLayout from "@/pages/layouts/AdminLayout";
 import AIProductAgent from "@/components/admin/AIProductAgent";
 import AIImageOptimizer from "@/components/admin/AIImageOptimizer";
 import FashionDesignerStudio from "@/components/admin/FashionDesignerStudio";
+import VirtualTryOnAgent from "@/components/admin/VirtualTryOnAgent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wand2, Image as ImageIcon, Shirt } from "lucide-react";
+import { Wand2, Image as ImageIcon, Shirt, ScanFace } from "lucide-react";
+import { useState } from "react";
 
 export default function AdminAIStudio() {
+    const [activeTab, setActiveTab] = useState("tryon");
+    const [scannedImageUrl, setScannedImageUrl] = useState<string | null>(null);
+
+    const handleUseTryOnImage = (url: string) => {
+        setScannedImageUrl(url);
+        setActiveTab("agent");
+    };
+
     return (
         <AdminLayout>
             <div className="space-y-6">
@@ -14,8 +24,11 @@ export default function AdminAIStudio() {
                     <p className="text-sm text-muted-foreground mt-1">Accelerate your workflow with specialized AI tools.</p>
                 </div>
 
-                <Tabs defaultValue="designer" className="w-full">
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="bg-secondary/50 border-border p-1">
+                        <TabsTrigger value="tryon" className="data-[state=active]:bg-card data-[state=active]:text-foreground text-muted-foreground">
+                            <ScanFace className="w-4 h-4 mr-2" /> Virtual Try-On
+                        </TabsTrigger>
                         <TabsTrigger value="designer" className="data-[state=active]:bg-card data-[state=active]:text-foreground text-muted-foreground">
                             <Shirt className="w-4 h-4 mr-2" /> Quick Designer
                         </TabsTrigger>
@@ -27,12 +40,16 @@ export default function AdminAIStudio() {
                         </TabsTrigger>
                     </TabsList>
 
+                    <TabsContent value="tryon" className="mt-6 border-none p-0 outline-none">
+                        <VirtualTryOnAgent onUseImage={handleUseTryOnImage} />
+                    </TabsContent>
+
                     <TabsContent value="designer" className="mt-6 border-none p-0 outline-none">
                         <FashionDesignerStudio />
                     </TabsContent>
 
                     <TabsContent value="agent" className="mt-6 border-none p-0 outline-none">
-                        <AIProductAgent />
+                        <AIProductAgent initialImageUrl={scannedImageUrl} onClearInitialImage={() => setScannedImageUrl(null)} />
                     </TabsContent>
 
                     <TabsContent value="optimizer" className="mt-6 border-none p-0 outline-none">

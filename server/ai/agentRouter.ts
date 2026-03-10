@@ -289,6 +289,44 @@ export const aiAgentRouter = router({
             }
         }),
 
+    // Premium: Generate a Virtual Try-On image
+    generateTryOnImage: adminProcedure
+        .input(z.object({
+            prompt: z.string().min(5).max(1000),
+            modelImage: z.object({ base64: z.string(), mimeType: z.string() }),
+            referenceImages: z.array(z.object({ base64: z.string(), mimeType: z.string() })).min(1),
+            logoImage: z.object({ base64: z.string(), mimeType: z.string() }).optional(),
+            apiKey: z.string().optional(),
+            modelId: z.string().optional(),
+        }))
+        .mutation(async ({ input, ctx }) => {
+            try {
+                const { generateTryOnImage } = await import("./gemini");
+                const key = input.apiKey || (ctx.user as any).geminiApiKey || undefined;
+                const { base64, mimeType } = await generateTryOnImage(
+                    input.prompt,
+                    input.modelImage,
+                    input.referenceImages,
+                    input.logoImage,
+                    key,
+                    input.modelId
+                );
+
+                // Upload result to storage
+                const buffer = Buffer.from(base64, "base64");
+                const ext = mimeType.split("/")[1] ?? "jpeg";
+                const storageKey = `portfolio/tryon-${nanoid(10)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, mimeType);
+
+                return { imageUrl: url, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Virtual Try-On generation failed: ${err.message}`,
+                });
+            }
+        }),
+
     // Premium: Auto-fill product form based on grid image
     prefillProductFromGrid: adminProcedure
         .input(z.object({

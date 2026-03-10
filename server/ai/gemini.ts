@@ -501,6 +501,99 @@ STRICT INSTRUCTIONS:
     throw new Error(`Individual view generation failed for ${viewType} after ${maxRetries} attempts: ${lastError.message}`);
 }
 
+export async function generateTryOnImage(
+    prompt: string,
+    modelImage: { base64: string; mimeType: string },
+    referenceImages: Array<{ base64: string; mimeType: string }>,
+    logoImage?: { base64: string; mimeType: string },
+    apiKey?: string,
+    modelId: string = "gemini-2.5-flash",
+): Promise<{ base64: string; mimeType: string }> {
+    const client = getClient(apiKey);
+    const model = client.getGenerativeModel({ model: modelId });
+
+    const parts: any[] = [];
+
+    // 1. Add Model Image First
+    parts.push({
+        text: "BASE MODEL IMAGE (The person/mannequin to dress):",
+    });
+    parts.push({
+        inlineData: { data: modelImage.base64, mimeType: modelImage.mimeType },
+    });
+
+    // 2. Add Reference Images
+    parts.push({
+        text: "REFERENCE PRODUCT IMAGES (The garment to extract and apply):",
+    });
+    referenceImages.forEach((img, index) => {
+        parts.push({
+            inlineData: { data: img.base64, mimeType: img.mimeType },
+        });
+    });
+
+    // 3. Add Logo if present
+    if (logoImage) {
+        parts.push({
+            text: "LOGO TO APPLY TO GARMENT:",
+        });
+        parts.push({
+            inlineData: { data: logoImage.base64, mimeType: logoImage.mimeType },
+        });
+    }
+
+    // 4. Instructions
+    const instructions = `Act as an elite high-end fashion retoucher and professional AI photographer.
+Your task is to perform a photorealistic "Virtual Try-On".
+
+USER INSTRUCTIONS: ${prompt}
+
+STRICT REQUIREMENTS:
+1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
+2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
+3. PRESERVE the model's exact pose, body type, skin tone, face (if visible), and the original background perfectly. Do not change the model, only their clothing.
+${logoImage ? "4. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "4. Do not add any random logos or text."}
+5. The final image must be ultra-realistic, photorealistic, 4K quality, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+6. Return EXACTLY one image.`;
+
+    parts.push({ text: instructions });
+
+    let lastError = new Error("Unknown error");
+    const maxRetries = 3;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts }],
+                generationConfig: {
+                    responseModalities: ["image", "text"],
+                } as any,
+            });
+
+            const response = result.response;
+            for (const candidate of response.candidates ?? []) {
+                for (const part of candidate.content?.parts ?? []) {
+                    if ((part as any).inlineData) {
+                        return {
+                            base64: (part as any).inlineData.data,
+                            mimeType: (part as any).inlineData.mimeType ?? "image/jpeg",
+                        };
+                    }
+                }
+            }
+            throw new Error(`Attempt ${attempt}: No image data in Gemini response`);
+        } catch (err: any) {
+            console.error(`[TryOn Gen] Attempt ${attempt} failed:`, err.message);
+            lastError = err;
+            if (attempt < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+            }
+        }
+    }
+
+    throw new Error(`Virtual Try-On generation failed after ${maxRetries} attempts: ${lastError.message}`);
+}
+
 export async function prefillProductDataFromGrid(
     imagePrompt: string,
     base64: string,

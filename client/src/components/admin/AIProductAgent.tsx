@@ -229,7 +229,13 @@ function ProductPreview({
 
 // ─── Main AI Product Agent Component ─────────────────────────────────────────
 
-export default function AIProductAgent() {
+export default function AIProductAgent({
+    initialImageUrl,
+    onClearInitialImage
+}: {
+    initialImageUrl?: string | null;
+    onClearInitialImage?: () => void;
+}) {
     const [messages, setMessages] = useState<ChatMessage[]>([
         {
             role: "model",
@@ -285,6 +291,18 @@ export default function AIProductAgent() {
     const generateProductMutation = trpc.aiAgent.generateProduct.useMutation();
     const generateImageMutation = trpc.aiAgent.generateProductImage.useMutation();
     const generateInfographicMutation = trpc.aiAgent.generateInfographic.useMutation();
+
+    const analyzeImageMutation = trpc.aiAgent.analyzeUploadedProductImage.useMutation({
+        onSuccess: (data) => {
+            setGeneratedProduct(data.product);
+            addMessage("model", `✅ Product listing generated from image for **"${data.product.title}"**!\n\nI've extracted the design intelligence and created:\n- Full SEO-optimized overview\n- Manufacturing story\n- Pricing slabs and variations\n\nReview the product card below.`);
+        },
+        onError: (err) => {
+            addMessage("model", `❌ Image analysis failed: ${err.message}`);
+        },
+        onSettled: () => setIsLoading(false)
+    });
+
     const createProductMutation = trpc.product.create.useMutation({
         onSuccess: () => {
             toast.success("🎉 Product posted to the website!", {
@@ -298,6 +316,39 @@ export default function AIProductAgent() {
         },
     });
     const utils = trpc.useUtils();
+
+    // Handle incoming initial image (e.g. from Virtual Try-On)
+    useEffect(() => {
+        if (initialImageUrl) {
+            const fetchInitialImage = async () => {
+                try {
+                    setIsLoading(true);
+                    addMessage("user", "[System] Received a generated image from Virtual Try-On Studio. Please analyze this garment and create a full product listing.");
+                    addMessage("model", "🔍 Understood! Processing the Virtual Try-On image to generate your product listing data...");
+
+                    const res = await fetch(initialImageUrl);
+                    const blob = await res.blob();
+                    const reader = new FileReader();
+
+                    reader.onloadend = () => {
+                        const base64data = reader.result as string;
+                        analyzeImageMutation.mutate({
+                            base64: base64data.split(",")[1] ?? "",
+                            mimeType: blob.type,
+                            apiKey: apiKeyInput || undefined,
+                            modelId: researchModelId
+                        });
+                        if (onClearInitialImage) onClearInitialImage();
+                    };
+                    reader.readAsDataURL(blob);
+                } catch (e) {
+                    setIsLoading(false);
+                    addMessage("model", "❌ Failed to load the Virtual Try-On image.");
+                }
+            };
+            fetchInitialImage();
+        }
+    }, [initialImageUrl]);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
