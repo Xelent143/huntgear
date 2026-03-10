@@ -21,6 +21,23 @@ const STATUS_COLORS: Record<string, string> = {
     closed: "bg-emerald-500/15 text-emerald-500 border-emerald-500/30",
 };
 
+function InfoRow({ icon: Icon, label, value, href, isGold }: { icon: any; label: string; value: string; href?: string; isGold?: boolean }) {
+    if (!value) return null;
+    return (
+        <div className="flex items-start gap-3 py-2.5">
+            <Icon className="w-4 h-4 text-muted-foreground mt-1 shrink-0" />
+            <div className="min-w-0">
+                <p className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium">{label}</p>
+                {href ? (
+                    <a href={href} className="text-[15px] font-semibold text-gold hover:underline break-all">{value}</a>
+                ) : (
+                    <p className={`text-[15px] font-semibold ${isGold ? "text-gold" : "text-foreground"}`}>{value}</p>
+                )}
+            </div>
+        </div>
+    );
+}
+
 export default function AdminInquiryDetail() {
     const [, params] = useRoute("/admin/inquiries/:id");
     const inquiryId = parseInt(params?.id || "0", 10);
@@ -55,7 +72,6 @@ export default function AdminInquiryDetail() {
         onError: (err) => toast.error(err.message),
     });
 
-    // Knowledge Base
     const { data: kbEntries } = trpc.rfq.getKnowledgeBase.useQuery();
     const addKb = trpc.rfq.addKnowledge.useMutation({
         onSuccess: () => {
@@ -102,23 +118,27 @@ export default function AdminInquiryDetail() {
 
     return (
         <AdminLayout>
-            <div className="max-w-6xl mx-auto space-y-6">
+            <div className="max-w-6xl mx-auto space-y-5">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         <Link href="/admin/inquiries">
-                            <Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button>
+                            <Button variant="ghost" size="icon" className="shrink-0"><ArrowLeft className="w-5 h-5" /></Button>
                         </Link>
                         <div>
-                            <h1 className="font-condensed text-2xl font-extrabold tracking-tight text-foreground uppercase flex items-center gap-3">
-                                {inquiry.companyName}
-                                <Badge className={`border text-xs ${STATUS_COLORS[inquiry.status]}`}>
+                            <div className="flex items-center gap-3">
+                                <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                                    {inquiry.companyName}
+                                </h1>
+                                <Badge className={`border text-[11px] font-bold ${STATUS_COLORS[inquiry.status]}`}>
                                     {inquiry.status.charAt(0).toUpperCase() + inquiry.status.slice(1)}
                                 </Badge>
-                            </h1>
-                            <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-0.5 flex items-center gap-1.5">
                                 <Calendar className="w-3.5 h-3.5" />
-                                {new Date(inquiry.createdAt).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                                {new Date(inquiry.createdAt).toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" })}
+                                {" · "}
+                                {inquiry.contactName} · {inquiry.email}
                             </p>
                         </div>
                     </div>
@@ -135,7 +155,7 @@ export default function AdminInquiryDetail() {
                     </Select>
                 </div>
 
-                {/* Tab Switcher */}
+                {/* Tabs */}
                 <div className="flex items-center gap-1 bg-card border border-border rounded-xl p-1">
                     {([
                         { key: "details", label: "Inquiry Details", icon: FileText },
@@ -157,175 +177,125 @@ export default function AdminInquiryDetail() {
                     ))}
                 </div>
 
-                {/* Tab: Details */}
+                {/* ═══════════ TAB: DETAILS ═══════════ */}
                 {activeTab === "details" && (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Left: Contact + Requirements */}
-                        <div className="lg:col-span-2 space-y-6">
-                            {/* Contact Info */}
-                            <div className="bg-card border border-border rounded-2xl p-6">
-                                <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-muted-foreground mb-4 flex items-center gap-2">
-                                    <User className="w-4 h-4 text-gold" /> Contact Information
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+                        {/* ── Left: Contact + Product (3 cols) ── */}
+                        <div className="lg:col-span-3 space-y-5">
+
+                            {/* Quick Summary Banner */}
+                            <div className="bg-gold/5 border border-gold/15 rounded-2xl p-5 flex flex-wrap gap-x-10 gap-y-3">
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-widest text-gold/70 font-bold">Product</p>
+                                    <p className="text-lg font-bold text-foreground">{inquiry.productType}</p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-widest text-gold/70 font-bold">Quantity</p>
+                                    <p className="text-lg font-bold text-foreground font-mono">{inquiry.quantity}</p>
+                                </div>
+                                {inquiry.timeline && (
+                                    <div>
+                                        <p className="text-[10px] uppercase tracking-widest text-gold/70 font-bold">Timeline</p>
+                                        <p className="text-lg font-bold text-foreground">{inquiry.timeline}</p>
+                                    </div>
+                                )}
+                                {inquiry.budget && (
+                                    <div>
+                                        <p className="text-[10px] uppercase tracking-widest text-gold/70 font-bold">Budget</p>
+                                        <p className="text-lg font-bold text-foreground">{inquiry.budget}</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Contact Card */}
+                            <div className="bg-card border border-border rounded-2xl p-5">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
+                                    <User className="w-4 h-4 text-gold" /> Contact
                                 </h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div className="flex items-center gap-3">
-                                        <User className="w-4 h-4 text-muted-foreground shrink-0" />
-                                        <div>
-                                            <p className="text-xs text-muted-foreground">Contact Name</p>
-                                            <p className="font-semibold text-foreground">{inquiry.contactName}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <Building2 className="w-4 h-4 text-muted-foreground shrink-0" />
-                                        <div>
-                                            <p className="text-xs text-muted-foreground">Company</p>
-                                            <p className="font-semibold text-foreground">{inquiry.companyName}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <Mail className="w-4 h-4 text-muted-foreground shrink-0" />
-                                        <div>
-                                            <p className="text-xs text-muted-foreground">Email</p>
-                                            <a href={`mailto:${inquiry.email}`} className="text-gold hover:underline">{inquiry.email}</a>
-                                        </div>
-                                    </div>
-                                    {inquiry.phone && (
-                                        <div className="flex items-center gap-3">
-                                            <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
-                                            <div>
-                                                <p className="text-xs text-muted-foreground">Phone</p>
-                                                <p className="text-foreground">{inquiry.phone}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {inquiry.country && (
-                                        <div className="flex items-center gap-3">
-                                            <Globe className="w-4 h-4 text-muted-foreground shrink-0" />
-                                            <div>
-                                                <p className="text-xs text-muted-foreground">Country</p>
-                                                <p className="text-foreground">{inquiry.country}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {inquiry.website && (
-                                        <div className="flex items-center gap-3">
-                                            <Globe className="w-4 h-4 text-muted-foreground shrink-0" />
-                                            <div>
-                                                <p className="text-xs text-muted-foreground">Website</p>
-                                                <a href={inquiry.website} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">{inquiry.website}</a>
-                                            </div>
-                                        </div>
-                                    )}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0 divide-y sm:divide-y-0 divide-border/50">
+                                    <InfoRow icon={User} label="Name" value={inquiry.contactName} />
+                                    <InfoRow icon={Building2} label="Company" value={inquiry.companyName} />
+                                    <InfoRow icon={Mail} label="Email" value={inquiry.email} href={`mailto:${inquiry.email}`} isGold />
+                                    <InfoRow icon={Phone} label="Phone" value={inquiry.phone || ""} href={inquiry.phone ? `tel:${inquiry.phone}` : undefined} />
+                                    <InfoRow icon={Globe} label="Country" value={inquiry.country || ""} />
+                                    <InfoRow icon={Globe} label="Website" value={inquiry.website || ""} href={inquiry.website || undefined} isGold />
                                 </div>
                             </div>
 
-                            {/* Product Requirements */}
-                            <div className="bg-card border border-border rounded-2xl p-6">
-                                <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-muted-foreground mb-4 flex items-center gap-2">
-                                    <Package className="w-4 h-4 text-gold" /> Product Requirements
+                            {/* Requirements Card */}
+                            <div className="bg-card border border-border rounded-2xl p-5">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
+                                    <Package className="w-4 h-4 text-gold" /> Requirements
                                 </h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p className="text-xs text-muted-foreground mb-1">Product Type</p>
-                                        <p className="font-semibold text-foreground">{inquiry.productType}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-muted-foreground mb-1">Quantity</p>
-                                        <p className="font-semibold text-foreground font-mono">{inquiry.quantity}</p>
-                                    </div>
-                                    {inquiry.customization && (
-                                        <div>
-                                            <p className="text-xs text-muted-foreground mb-1">Customization</p>
-                                            <p className="text-foreground">{inquiry.customization}</p>
-                                        </div>
-                                    )}
-                                    {inquiry.fabricPreference && (
-                                        <div>
-                                            <p className="text-xs text-muted-foreground mb-1">Fabric Preference</p>
-                                            <p className="text-foreground">{inquiry.fabricPreference}</p>
-                                        </div>
-                                    )}
-                                    {inquiry.timeline && (
-                                        <div className="flex items-start gap-2">
-                                            <Clock className="w-4 h-4 text-muted-foreground mt-0.5" />
-                                            <div>
-                                                <p className="text-xs text-muted-foreground mb-1">Timeline</p>
-                                                <p className="text-foreground">{inquiry.timeline}</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {inquiry.budget && (
-                                        <div className="flex items-start gap-2">
-                                            <DollarSign className="w-4 h-4 text-muted-foreground mt-0.5" />
-                                            <div>
-                                                <p className="text-xs text-muted-foreground mb-1">Budget</p>
-                                                <p className="text-foreground">{inquiry.budget}</p>
-                                            </div>
-                                        </div>
-                                    )}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
+                                    <InfoRow icon={Package} label="Product Type" value={inquiry.productType} />
+                                    <InfoRow icon={Ruler} label="Quantity" value={inquiry.quantity} />
+                                    <InfoRow icon={FileText} label="Customization" value={inquiry.customization || ""} />
+                                    <InfoRow icon={FileText} label="Fabric" value={inquiry.fabricPreference || ""} />
+                                    <InfoRow icon={Clock} label="Timeline" value={inquiry.timeline || ""} />
+                                    <InfoRow icon={DollarSign} label="Budget" value={inquiry.budget || ""} />
                                 </div>
+
                                 {inquiry.additionalNotes && (
-                                    <div className="mt-4 pt-4 border-t border-border">
-                                        <p className="text-xs text-muted-foreground mb-2">Additional Notes</p>
-                                        <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{inquiry.additionalNotes}</p>
+                                    <div className="mt-3 pt-3 border-t border-border/50">
+                                        <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium mb-1.5">Additional Notes</p>
+                                        <p className="text-[14px] text-foreground whitespace-pre-wrap leading-relaxed bg-secondary/20 rounded-lg p-3">{inquiry.additionalNotes}</p>
                                     </div>
                                 )}
+
                                 {inquiry.designImageUrl && (
-                                    <div className="mt-4 pt-4 border-t border-border">
-                                        <p className="text-xs text-muted-foreground mb-2">Design Reference</p>
-                                        <img src={inquiry.designImageUrl} alt="Design" className="rounded-lg max-w-xs border border-border" />
+                                    <div className="mt-3 pt-3 border-t border-border/50">
+                                        <p className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium mb-2">Design Reference</p>
+                                        <img src={inquiry.designImageUrl} alt="Design" className="rounded-lg max-w-sm border border-border" />
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        {/* Right: Notes */}
-                        <div className="space-y-6">
-                            <div className="bg-card border border-border rounded-2xl p-6">
-                                <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-muted-foreground mb-4 flex items-center gap-2">
+                        {/* ── Right: Notes (2 cols) ── */}
+                        <div className="lg:col-span-2">
+                            <div className="bg-card border border-border rounded-2xl p-5 sticky top-[76px]">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
                                     <MessageSquare className="w-4 h-4 text-gold" /> Notes & Activity
                                 </h2>
 
-                                {/* Add note */}
-                                <div className="mb-4">
-                                    <textarea
-                                        value={noteText}
-                                        onChange={e => setNoteText(e.target.value)}
-                                        placeholder="Add a note..."
-                                        className="w-full bg-secondary/30 border border-border rounded-lg px-3 py-2 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-gold/30"
-                                    />
-                                    <Button
-                                        size="sm"
-                                        className="mt-2 bg-gold hover:bg-gold/90 text-black font-bold text-xs"
-                                        disabled={!noteText.trim()}
-                                        onClick={() => addNote.mutate({ rfqId: inquiry.id, content: noteText })}
-                                    >
-                                        <Save className="w-3 h-3 mr-1" /> Save Note
-                                    </Button>
-                                </div>
+                                <textarea
+                                    value={noteText}
+                                    onChange={e => setNoteText(e.target.value)}
+                                    placeholder="Add a note..."
+                                    className="w-full bg-secondary/30 border border-border rounded-lg px-3 py-2.5 text-sm resize-none h-20 focus:outline-none focus:ring-2 focus:ring-gold/30"
+                                />
+                                <Button
+                                    size="sm"
+                                    className="mt-2 bg-gold hover:bg-gold/90 text-black font-bold text-xs"
+                                    disabled={!noteText.trim()}
+                                    onClick={() => addNote.mutate({ rfqId: inquiry.id, content: noteText })}
+                                >
+                                    <Save className="w-3 h-3 mr-1.5" /> Save Note
+                                </Button>
 
                                 <Separator className="my-4" />
 
-                                {/* Notes list */}
-                                <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                                <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                                     {(inquiry.notes ?? []).length === 0 ? (
-                                        <p className="text-xs text-muted-foreground text-center py-4">No notes yet</p>
+                                        <p className="text-xs text-muted-foreground text-center py-6">No notes yet</p>
                                     ) : (
                                         (inquiry.notes ?? []).map((note: any) => (
-                                            <div key={note.id} className={`p-3 rounded-lg text-sm ${note.isAiGenerated ? "bg-violet-500/5 border border-violet-500/20" : "bg-secondary/30 border border-border"}`}>
+                                            <div key={note.id} className={`p-3 rounded-lg text-sm ${note.isAiGenerated ? "bg-violet-500/5 border border-violet-500/20" : "bg-secondary/20 border border-border/50"}`}>
                                                 <div className="flex items-center gap-2 mb-1.5">
                                                     {note.isAiGenerated ? (
-                                                        <Badge className="text-[9px] bg-violet-500/15 text-violet-500 border-violet-500/30">
-                                                            <Sparkles className="w-2.5 h-2.5 mr-1" /> AI Generated
+                                                        <Badge className="text-[9px] bg-violet-500/15 text-violet-400 border-violet-500/30">
+                                                            <Sparkles className="w-2.5 h-2.5 mr-1" /> AI
                                                         </Badge>
                                                     ) : (
-                                                        <Badge className="text-[9px] bg-secondary text-muted-foreground border-border">Admin Note</Badge>
+                                                        <Badge className="text-[9px] bg-secondary text-muted-foreground border-border">Note</Badge>
                                                     )}
                                                     <span className="text-[10px] text-muted-foreground ml-auto">
-                                                        {new Date(note.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                                                        {new Date(note.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                                                     </span>
                                                 </div>
-                                                <p className="text-foreground whitespace-pre-wrap leading-relaxed text-xs">{note.content}</p>
+                                                <p className="text-foreground whitespace-pre-wrap leading-relaxed text-[13px]">{note.content}</p>
                                             </div>
                                         ))
                                     )}
@@ -335,18 +305,17 @@ export default function AdminInquiryDetail() {
                     </div>
                 )}
 
-                {/* Tab: AI Reply Assistant */}
+                {/* ═══════════ TAB: AI REPLY ═══════════ */}
                 {activeTab === "ai" && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                         <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
-                            <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground flex items-center gap-2">
-                                <Wand2 className="w-4 h-4 text-gold" /> Generate AI Reply
+                            <h2 className="text-xs font-bold uppercase tracking-widest text-foreground flex items-center gap-2">
+                                <Wand2 className="w-4 h-4 text-gold" /> Generate Reply
                             </h2>
-                            <p className="text-xs text-muted-foreground">
-                                Tell the AI what kind of reply you want. It will use your product catalog and knowledge base to craft a professional response.
+                            <p className="text-sm text-muted-foreground">
+                                Tell the AI what kind of reply you want. It uses your product catalog + knowledge base.
                             </p>
 
-                            {/* Quick suggestions */}
                             <div className="flex flex-wrap gap-2">
                                 {[
                                     "Write a professional quote reply with pricing",
@@ -383,9 +352,8 @@ export default function AdminInquiryDetail() {
                             </Button>
                         </div>
 
-                        {/* Reply Preview */}
                         <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
-                            <h2 className="font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground flex items-center gap-2">
+                            <h2 className="text-xs font-bold uppercase tracking-widest text-foreground flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-gold" /> Reply Preview
                             </h2>
 
@@ -394,7 +362,7 @@ export default function AdminInquiryDetail() {
                                     <div className="bg-secondary/20 border border-border rounded-lg p-4 max-h-[400px] overflow-y-auto">
                                         <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{aiReply}</p>
                                     </div>
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-3 flex-wrap">
                                         <Button
                                             variant="outline"
                                             size="sm"
@@ -404,14 +372,13 @@ export default function AdminInquiryDetail() {
                                                 toast.success("Copied to clipboard!");
                                             }}
                                         >
-                                            <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy Reply
+                                            <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy
                                         </Button>
                                         <Button
                                             size="sm"
                                             className="text-xs bg-gold hover:bg-gold/90 text-black font-bold"
                                             onClick={() => {
                                                 addNote.mutate({ rfqId: inquiry.id, content: aiReply, isAiGenerated: true });
-                                                toast.success("Saved as note");
                                             }}
                                         >
                                             <Save className="w-3.5 h-3.5 mr-1.5" /> Save as Note
@@ -436,16 +403,16 @@ export default function AdminInquiryDetail() {
                     </div>
                 )}
 
-                {/* Tab: Knowledge Base */}
+                {/* ═══════════ TAB: KNOWLEDGE BASE ═══════════ */}
                 {activeTab === "kb" && (
-                    <div className="space-y-6">
+                    <div className="space-y-5">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h2 className="font-condensed font-bold text-lg uppercase tracking-wider text-foreground flex items-center gap-2">
+                                <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
                                     <BookOpen className="w-5 h-5 text-gold" /> Knowledge Base
                                 </h2>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                    Add custom information the AI will use when generating replies. Product catalog is included automatically.
+                                <p className="text-sm text-muted-foreground mt-0.5">
+                                    Custom information the AI references when generating replies. Product catalog is included automatically.
                                 </p>
                             </div>
                             <Button
@@ -458,7 +425,7 @@ export default function AdminInquiryDetail() {
                         </div>
 
                         {showKbForm && (
-                            <div className="bg-card border border-gold/20 rounded-2xl p-6 space-y-4">
+                            <div className="bg-card border border-gold/20 rounded-2xl p-5 space-y-3">
                                 <input
                                     value={kbTitle}
                                     onChange={e => setKbTitle(e.target.value)}
@@ -469,7 +436,7 @@ export default function AdminInquiryDetail() {
                                     value={kbContent}
                                     onChange={e => setKbContent(e.target.value)}
                                     placeholder="Content the AI should know about..."
-                                    className="w-full bg-secondary/30 border border-border rounded-lg px-4 py-3 text-sm resize-none h-28 focus:outline-none focus:ring-2 focus:ring-gold/30"
+                                    className="w-full bg-secondary/30 border border-border rounded-lg px-4 py-3 text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-gold/30"
                                 />
                                 <div className="flex items-center gap-3">
                                     <Select value={kbCategory} onValueChange={setKbCategory}>
@@ -492,12 +459,11 @@ export default function AdminInquiryDetail() {
                             </div>
                         )}
 
-                        {/* Entries */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {(kbEntries ?? []).length === 0 ? (
                                 <div className="col-span-2 text-center py-16 text-muted-foreground bg-card border border-border rounded-2xl">
                                     <BookOpen className="w-10 h-10 mx-auto mb-3 opacity-20" />
-                                    <p className="text-sm">No knowledge base entries yet. Add information the AI should reference.</p>
+                                    <p className="text-sm">No knowledge base entries yet.</p>
                                 </div>
                             ) : (
                                 (kbEntries ?? []).map(entry => (
