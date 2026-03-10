@@ -114,17 +114,25 @@ async function generateInvoicePDF(order: any) {
 
     // ── Items Table ──
     // Header row
+    // Column positions: ITEM=+4, SIZE=+72, COLOR=+88, QTY=+110, PRICE=+128, TOTAL=right
+    const colItem = margin + 4;
+    const colSize = margin + 72;
+    const colColor = margin + 88;
+    const colQty = margin + 108;
+    const colPrice = margin + 124;
+    const colTotal = W - margin - 4;
+
     doc.setFillColor(...dark);
     doc.rect(margin, y, contentW, 9, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
-    doc.text("ITEM", margin + 4, y + 6);
-    doc.text("SIZE", margin + 85, y + 6);
-    doc.text("COLOR", margin + 102, y + 6);
-    doc.text("QTY", margin + 130, y + 6, { align: "center" });
-    doc.text("UNIT PRICE", margin + 148, y + 6);
-    doc.text("TOTAL", W - margin - 4, y + 6, { align: "right" });
+    doc.text("ITEM", colItem, y + 6);
+    doc.text("SIZE", colSize, y + 6);
+    doc.text("COLOR", colColor, y + 6);
+    doc.text("QTY", colQty, y + 6);
+    doc.text("PRICE", colPrice, y + 6);
+    doc.text("TOTAL", colTotal, y + 6, { align: "right" });
 
     y += 9;
 
@@ -142,17 +150,17 @@ async function generateInvoicePDF(order: any) {
         doc.setTextColor(...dark);
         doc.setFont("helvetica", "normal");
         doc.setFontSize(9);
-        const title = item.title?.length > 38 ? item.title.substring(0, 38) + "..." : item.title;
-        doc.text(title || "Product", margin + 4, y + 7);
-        doc.text(item.size || "—", margin + 85, y + 7);
-        const colorText = (item.color || "—").length > 12 ? item.color.substring(0, 12) + ".." : item.color || "—";
-        doc.text(colorText, margin + 102, y + 7);
-        doc.text(String(item.qty), margin + 130, y + 7, { align: "center" });
-        doc.text(`$${Number(item.unitPrice).toFixed(2)}`, margin + 148, y + 7);
+        const title = item.title?.length > 30 ? item.title.substring(0, 30) + "..." : item.title;
+        doc.text(title || "Product", colItem, y + 7);
+        doc.text(item.size || "—", colSize, y + 7);
+        const colorText = (item.color || "—").length > 10 ? item.color.substring(0, 10) + ".." : item.color || "—";
+        doc.text(colorText, colColor, y + 7);
+        doc.text(String(item.qty), colQty, y + 7);
+        doc.text(`$${Number(item.unitPrice).toFixed(2)}`, colPrice, y + 7);
 
         const lineTotal = (item.qty * item.unitPrice).toFixed(2);
         doc.setFont("helvetica", "bold");
-        doc.text(`$${lineTotal}`, W - margin - 4, y + 7, { align: "right" });
+        doc.text(`$${lineTotal}`, colTotal, y + 7, { align: "right" });
 
         y += rowH;
     });
