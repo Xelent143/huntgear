@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import {
-    Save, ImagePlus, Loader2, ArrowLeft, Trash2, Edit3, X, Eye, ShieldCheck, CreditCard, Droplet, Sparkles, AlertCircle, TrendingUp, Scissors, FileText, Wand2, Package, Truck, Info, Camera
+    Save, ImagePlus, Loader2, ArrowLeft, Trash2, Edit3, X, Eye, ShieldCheck, CreditCard, Droplet, Sparkles, AlertCircle, TrendingUp, Scissors, FileText, Wand2, Package, Truck, Info, Camera, Star, Plus
 } from "lucide-react";
 import VirtualTryOnAgent from "@/components/admin/VirtualTryOnAgent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
