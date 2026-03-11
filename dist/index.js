@@ -1317,11 +1317,11 @@ async function generateTryOnImages(prompt, modelImage, referenceImages, logoImag
     });
   }
   const views = [
-    { name: "Front View", instruction: "Solid white background. Model facing perfectly forward." },
-    { name: "Right Side View", instruction: "Solid white background. Model turned showing their right side." },
-    { name: "Back View", instruction: "Solid white background. Model facing away from the camera, showing the back of the garment." },
-    { name: "Closeup Collage", instruction: "Solid white background. A 4x4 grid closeup collage showing fabric textures, stitching, and different zoomed-in parts of the garment only." },
-    { name: "Lifestyle Photoshoot", instruction: `Dynamic lifestyle photoshoot in a relevant environment based on the garment category: ${category || "outdoors"}. Do NOT use a white background for this one, integrate them into a real scene.` }
+    { name: "Front View", instruction: "Solid light background. Full-body shot (head to toe). Model facing perfectly forward in a confident, professional luxury-brand pose." },
+    { name: "Right Side View", instruction: "Solid light background. Full-body shot (head to toe). Model turned showing their right side in a confident, professional luxury-brand pose." },
+    { name: "Back View", instruction: "Solid light background. Full-body shot (head to toe). Model facing away from the camera, showing the back of the garment in a confident, professional luxury-brand pose." },
+    { name: "Closeup Collage", instruction: "Solid light background. A 4x4 grid closeup collage showing fabric textures, stitching, and different zoomed-in parts of the garment only." },
+    { name: "Lifestyle Photoshoot", instruction: `Dynamic full-body lifestyle photoshoot in a relevant environment based on the garment category: ${category || "outdoors"}. Do NOT use a solid background for this one, integrate them into a real scene with a confident, professional luxury-brand pose.` }
   ];
   const generateSingleView = async (view) => {
     const parts = [...sharedParts];
@@ -1335,11 +1335,12 @@ STRICT REQUIREMENTS:
 1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
 2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
    CRITICAL CLOTHING RULE: If the reference product is ONLY pants/bottoms, you MUST give the model a generic, plain matching top (like a black tee). Do NOT copy their original top (e.g., a rashguard). If the reference is ONLY a top, give them generic bottoms. Never let the model's original clothing interfere with the overall outfit look.
-3. PRESERVE the model's exact face, skin tone, and body type parfaitement.
-${view.name === "Lifestyle Photoshoot" ? "4. Place the model in a realistic lifestyle setting." : "4. Keep the original model's pose and background perfectly OR use a clean solid white background as instructed."}
-${logoImage ? "5. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "5. Do not add any random logos or text."}
-6. The final image must be ultra-realistic, photorealistic, **maximized 2K/4K resolution (highest possible detail)**, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
-7. Return EXACTLY one stunning high-definition image.`;
+3. PRESERVE the model's exact face, skin tone, and body type perfectly, BUT gently adapt their facial expression to include a subtle, professional smile.
+4. ADAPT the model's pose into a confident, professional luxury-brand fashion stance appropriate for the view. Do NOT force them to keep a stiff, awkward, or amateur original pose.
+${view.name === "Lifestyle Photoshoot" ? "5. Place the model in a realistic, high-end lifestyle environment." : "5. Use a clean, professional solid light background."}
+${logoImage ? "6. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "6. Do not add any random logos or text."}
+7. The final image must be ultra-realistic, photorealistic, **maximized 2K/4K resolution (highest possible detail)**, with natural shadows and lighting blending the garment onto the model. Let the garment drape naturally based on the model's pose.
+8. Return EXACTLY one stunning high-definition image.`;
     parts.push({ text: instructions });
     let lastError = new Error("Unknown error");
     const maxRetries = 2;
