@@ -43,25 +43,25 @@ function SlabEditor({ slabs, onChange }: { slabs: SlabRow[]; onChange: (slabs: S
             )}
             <div className="space-y-3">
                 {slabs.map((slab, i) => (
-                    <div key={i} className="grid grid-cols-12 gap-3 items-end bg-secondary/30 rounded-lg p-3 border border-border">
-                        <div className="col-span-2">
+                    <div key={i} className="grid grid-cols-2 gap-3 items-end bg-secondary/30 rounded-lg p-3 border border-border">
+                        <div>
                             <Label className="text-xs text-muted-foreground mb-1 block">Min Qty</Label>
                             <Input type="number" value={slab.minQty} min={1} onChange={e => update(i, "minQty", parseInt(e.target.value) || 1)} className="bg-background" />
                         </div>
-                        <div className="col-span-2">
-                            <Label className="text-xs text-muted-foreground mb-1 block">Max Qty (Leave blank for ∞)</Label>
+                        <div>
+                            <Label className="text-xs text-muted-foreground mb-1 block">Max Qty (∞ if blank)</Label>
                             <Input type="number" value={slab.maxQty ?? ""} placeholder="∞" onChange={e => update(i, "maxQty", e.target.value ? parseInt(e.target.value) : null)} className="bg-background" />
                         </div>
-                        <div className="col-span-3">
+                        <div>
                             <Label className="text-xs text-muted-foreground mb-1 block">Price / Unit ($)</Label>
                             <Input value={slab.pricePerUnit} onChange={e => update(i, "pricePerUnit", e.target.value)} placeholder="0.00" className="bg-background" />
                         </div>
-                        <div className="col-span-4">
-                            <Label className="text-xs text-muted-foreground mb-1 block">Label</Label>
-                            <Input value={slab.label} onChange={e => update(i, "label", e.target.value)} placeholder="e.g. Popular" className="bg-background" />
-                        </div>
-                        <div className="col-span-1 pb-1">
-                            <Button type="button" variant="ghost" size="icon" onClick={() => remove(i)} className="text-muted-foreground hover:text-destructive w-full">
+                        <div className="flex gap-2 items-end">
+                            <div className="flex-1">
+                                <Label className="text-xs text-muted-foreground mb-1 block">Label</Label>
+                                <Input value={slab.label} onChange={e => update(i, "label", e.target.value)} placeholder="e.g. Popular" className="bg-background" />
+                            </div>
+                            <Button type="button" variant="ghost" size="icon" onClick={() => remove(i)} className="text-muted-foreground hover:text-destructive shrink-0 bg-background border border-border h-9 w-9" title="Remove Tier">
                                 <Trash2 className="w-4 h-4" />
                             </Button>
                         </div>

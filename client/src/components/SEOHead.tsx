@@ -29,9 +29,9 @@ interface SEOHeadProps {
 
 const SITE_NAME = "Sialkot Sample Masters - Custom Apparel Manufacturer Pakistan";
 const DEFAULT_DESCRIPTION =
-  "Sialkot Sample Masters is Pakistan's leading custom apparel manufacturer based in Sialkot. We specialize in Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear. Private label, low MOQ from 50 pcs, bulk orders for global brands.";
+  "Sialkot Sample Masters is Pakistan's leading custom apparel manufacturer based in Sialkot. We specialize in Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear (BJJ Kimonos & Rashguards). Private label, low MOQ from 50 pcs, bulk export for global brands in USA, UAE & Europe.";
 const DEFAULT_KEYWORDS =
-  "custom apparel manufacturer Pakistan, hunting wear manufacturer Sialkot, sports wear manufacturer Pakistan, ski wear manufacturer Pakistan, tech wear manufacturer Sialkot, streetwear manufacturer Pakistan, martial arts wear manufacturer Pakistan, private label clothing Pakistan, B2B clothing manufacturer Sialkot, OEM apparel manufacturer Pakistan, wholesale hunting clothing supplier, custom ski jacket manufacturer Pakistan";
+  "custom apparel manufacturer Pakistan, hunting wear manufacturer Sialkot, sports wear manufacturer Pakistan, ski wear manufacturer Pakistan, tech wear manufacturer Sialkot, streetwear manufacturer Pakistan, martial arts wear manufacturer Pakistan, bulk BJJ kimonos manufacturer, custom rashguards supplier, private label clothing Pakistan, B2B clothing manufacturer Sialkot, OEM apparel manufacturer Pakistan, wholesale hunting clothing supplier, custom ski jacket manufacturer Pakistan";
 const DEFAULT_OG_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/RfANkMVkQHIazGrh.jpg";
 const SITE_URL = "https://sialkotsamplementasters.com";
 

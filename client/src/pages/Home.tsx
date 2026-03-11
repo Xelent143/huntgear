@@ -50,6 +50,7 @@ const products = [
   { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/shop", category: "Security Uniforms", tag: "Guard" },
   { name: "Tech Wear", image: IMAGES.catTechwear, href: "/shop", category: "Tech Wear", tag: "Utility" },
   { name: "Ski Wear", image: IMAGES.catSki, href: "/shop", category: "Ski Wear", tag: "Alpine" },
+  { name: "Martial Arts Wear", image: IMAGES.catMedical, href: "/shop", category: "Martial Arts", tag: "BJJ / MMA" },
 ];
 
 const testimonials = [
@@ -133,9 +134,9 @@ export default function Home() {
   return (
     <PageWrapper>
       <SEOHead
-        title="Custom Streetwear Manufacturer Pakistan | B2B Apparel Manufacturing"
-        description="Sialkot Sample Masters is Pakistan's premier custom streetwear manufacturer in Sialkot. Private label, low MOQ, bulk orders for global brands. T-shirts, hoodies, joggers, bomber jackets. Get a free quote today."
-        keywords="custom streetwear manufacturer Pakistan, private label clothing manufacturer Pakistan, bulk streetwear supplier Sialkot, B2B apparel manufacturer Pakistan, custom hoodie manufacturer, wholesale streetwear Pakistan"
+        title="Custom Streetwear & BJJ Kimonos Manufacturer | Sialkot Pakistan"
+        description="Sialkot Sample Masters is Pakistan's premier custom clothing manufacturer. Private label, low MOQ (50pcs), bulk orders for global brands in USA and UAE. T-shirts, hoodies, streetwear, and BJJ Kimonos. Get a free quote today."
+        keywords="custom streetwear manufacturer Pakistan, private label clothing USA, bulk streetwear supplier Sialkot, B2B apparel manufacturer Dubai UAE, custom hoodie manufacturer, wholesale BJJ Kimonos manufacturer, custom rashguards supplier Pakistan"
         canonical="/"
       />
 
@@ -180,7 +181,7 @@ export default function Home() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="flex flex-wrap gap-2 mb-8"
             >
-              {["Hunting Wear", "Sportswear", "Streetwear", "Ski Wear"].map((cat) => (
+              {["Hunting Wear", "Sportswear", "Streetwear", "BJJ Kimonos"].map((cat) => (
                 <span
                   key={cat}
                   className="text-[10px] sm:text-[11px] font-condensed font-semibold tracking-[0.2em] uppercase text-white/60 border border-white/15 px-3 py-1.5 backdrop-blur-sm"
@@ -216,7 +217,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.65 }}
             >
-              B2B bulk manufacturing for global brands — Hunting Wear, Sportswear, Streetwear & Ski Wear. ISO 9001 certified. Low MOQ. Shipped to 40+ countries.
+              B2B bulk manufacturing for global sportswear, streetwear, and martial arts brands. ISO 9001 certified. Low MOQ. Exporting daily to the USA, UAE & Europe.
             </motion.p>
 
             {/* CTA Buttons */}

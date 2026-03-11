@@ -80,9 +80,9 @@ export default function About() {
   return (
     <PageWrapper>
       <SEOHead
-        title="About Sialkot Sample Masters | Custom Streetwear Manufacturer Sialkot Pakistan"
-        description="Learn about Sialkot Sample Masters, Pakistan's leading custom streetwear manufacturer based in Sialkot. 15+ years of experience, ISO certified, serving 500+ global brands in 40+ countries. Excellence in technical apparel since 2010."
-        keywords="about Sialkot Sample Masters, streetwear manufacturer Sialkot Pakistan, clothing manufacturer Pakistan history, ISO certified garment factory Pakistan, B2B apparel manufacturer Pakistan"
+        title="About Sialkot Sample Masters | Custom Streetwear & BJJ Kimonos Pakistan"
+        description="Learn about Sialkot Sample Masters, Pakistan's leading custom streetwear and BJJ Kimonos manufacturer based in Sialkot. 15+ years of experience, ISO certified, serving 500+ global brands in the USA, UAE, and 40+ countries. Excellence in technical apparel since 2010."
+        keywords="about Sialkot Sample Masters, streetwear manufacturer Sialkot Pakistan, BJJ Kimonos manufacturer USA, custom clothing manufacturer UAE, clothing manufacturer Pakistan history, ISO certified garment factory Pakistan, B2B apparel manufacturer Pakistan, wholesale rashguards supplier"
         canonical="/about"
         breadcrumbs={[
           { name: "Home", item: "/" },
@@ -165,7 +165,7 @@ export default function About() {
                     Headquartered in Sialkot, Pakistan — the global epicenter of textile excellence — Sialkot Sample Masters specializes in the complex manufacturing requirements of modern apparel brands. We are not just a factory; we are an engineering-led production house equipped with over 50+ in-house specialized sewing machines and advanced pattern-drafting technology.
                   </p>
                   <p>
-                    Our facility is a vertically integrated hub for Sublimation, Screen Printing, DTF, and DTG, allowing us to maintain absolute quality control. We specialize in six critical categories: high-performance Sportswear, tactical Hunting Wear, premium Streetwear, professional Security Uniforms, functional Techwear, and technical Ski Wear.
+                    Our facility is a vertically integrated hub for Sublimation, Screen Printing, DTF, and DTG, allowing us to maintain absolute quality control. We specialize in seven critical categories: high-performance Sportswear, tactical Hunting Wear, premium Streetwear, professional Security Uniforms, functional Techwear, technical Ski Wear, and heavy-duty Martial Arts Wear (BJJ Kimonos & Rashguards).
                   </p>
                   <p>
                     Sustainability as a Standard: We lead the industry in eco-conscious manufacturing. With 80% of our production powered by renewable solar energy, we help brands reduce their carbon footprint without compromising on the durability or performance of the final garment.
