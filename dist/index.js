@@ -1335,7 +1335,7 @@ STRICT REQUIREMENTS:
 1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
 2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
    CRITICAL CLOTHING RULE: If the reference product is ONLY pants/bottoms, you MUST give the model a generic, plain matching top (like a black tee). Do NOT copy their original top (e.g., a rashguard). If the reference is ONLY a top, give them generic bottoms. Never let the model's original clothing interfere with the overall outfit look.
-3. PRESERVE the model's exact face, skin tone, and body type perfectly, BUT apply a premium commercial grade beauty filter: ensure the skin tone is even without blemishes and reduce oily skin. Gently adapt their facial expression to include a very subtle, professional smile WITHOUT showing teeth.
+3. PRESERVE the model's exact face, skin tone, and body type perfectly, BUT apply a premium commercial grade beauty filter: ensure the skin tone is even without blemishes and reduce oily skin. Keep the facial expression perfectly consistent with the original base model image. do NOT add smiles or artificial facial changes.
 4. ADAPT the model's pose into a confident, professional luxury-brand fashion stance appropriate for the view. Do NOT force them to keep a stiff, awkward, or amateur original pose.
 ${view.name === "Lifestyle Photoshoot" ? "5. Place the model in a realistic, high-end lifestyle environment." : "5. Use a clean, professional solid light background."}
 ${logoImage ? "6. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "6. Do not add any random logos or text."}
