@@ -86,7 +86,7 @@ export default function AdminProducts() {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-foreground hover:text-gold cursor-pointer transition-colors" onClick={() => setLocation(`/admin/product/edit/${product.id}`)}>
+                                                    <div className="font-bold text-foreground hover:text-gold cursor-pointer transition-colors" onClick={() => setLocation(`/admin-saad/product/edit/${product.id}`)}>
                                                         {product.title}
                                                     </div>
                                                     <div className="text-xs text-muted-foreground mt-0.5">{product.category}</div>
@@ -113,7 +113,7 @@ export default function AdminProducts() {
                                                 <Button size="icon" variant="ghost" onClick={() => window.open(`/shop/${product.slug}`, '_blank')} className="h-8 w-8 text-muted-foreground hover:text-foreground">
                                                     <Eye className="w-4 h-4" />
                                                 </Button>
-                                                <Button size="icon" variant="ghost" onClick={() => setLocation(`/admin/product/edit/${product.id}`)} className="h-8 w-8 text-muted-foreground hover:text-gold">
+                                                <Button size="icon" variant="ghost" onClick={() => setLocation(`/admin-saad/product/edit/${product.id}`)} className="h-8 w-8 text-muted-foreground hover:text-gold">
                                                     <Edit className="w-4 h-4" />
                                                 </Button>
                                                 <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete product?')) deleteMutation.mutate({ id: product.id }) }} className="h-8 w-8 text-muted-foreground hover:text-destructive">

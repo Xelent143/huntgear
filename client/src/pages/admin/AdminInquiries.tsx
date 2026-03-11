@@ -133,7 +133,7 @@ export default function AdminInquiries() {
                                         <tr
                                             key={inq.id}
                                             className="group hover:bg-secondary/20 transition-colors cursor-pointer"
-                                            onClick={() => window.location.href = `/admin/inquiries/${inq.id}`}
+                                            onClick={() => window.location.href = `/admin-saad/inquiries/${inq.id}`}
                                         >
                                             <td className="px-6 py-4">
                                                 <p className="font-semibold text-foreground">{inq.companyName}</p>
@@ -157,7 +157,7 @@ export default function AdminInquiries() {
                                                 {new Date(inq.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <Link href={`/admin/inquiries/${inq.id}`}>
+                                                <Link href={`/admin-saad/inquiries/${inq.id}`}>
                                                     <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8">
                                                         <ArrowUpRight className="w-4 h-4 text-gold" />
                                                     </Button>

@@ -62,7 +62,7 @@ export default function AdminOrders() {
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                     {(orders ?? []).map(order => (
-                                        <tr key={order.id} className="hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin/orders/${order.id}`}>
+                                        <tr key={order.id} className="hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin-saad/orders/${order.id}`}>
                                             <td className="px-6 py-4 font-mono text-sm font-bold text-gold">{order.orderNumber}</td>
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-foreground">{order.customerName}</div>

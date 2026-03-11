@@ -1110,7 +1110,7 @@ export default function Admin() {
                             </Button>
                             <Button
                               size="icon" variant="ghost"
-                              onClick={() => setLocation(`/admin/product/edit/${product.id}`)}
+                              onClick={() => setLocation(`/admin-saad/product/edit/${product.id}`)}
                               className="h-7 w-7 text-muted-foreground hover:text-gold"
                             >
                               <Edit className="w-3.5 h-3.5" />

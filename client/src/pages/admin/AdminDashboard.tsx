@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                                                     {new Date(order.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <Link href={`/admin/orders/${order.id}`}>
+                                                    <Link href={`/admin-saad/orders/${order.id}`}>
                                                         <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8">
                                                             <Eye className="w-4 h-4 text-muted-foreground" />
                                                         </Button>
@@ -268,7 +268,7 @@ export default function AdminDashboard() {
                                 </thead>
                                 <tbody className="divide-y divide-border/50">
                                     {recentInquiries.map((inq: any) => (
-                                        <tr key={inq.id} className="group hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin/inquiries/${inq.id}`}>
+                                        <tr key={inq.id} className="group hover:bg-secondary/20 transition-colors cursor-pointer" onClick={() => window.location.href = `/admin-saad/inquiries/${inq.id}`}>
                                             <td className="px-6 py-4 font-semibold text-foreground">{inq.companyName}</td>
                                             <td className="px-6 py-4">
                                                 <p className="text-foreground">{inq.contactName}</p>
