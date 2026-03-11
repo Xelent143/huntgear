@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 interface BreadcrumbItem {
   name: string;
@@ -49,192 +49,156 @@ export default function SEOHead({
   product,
 }: SEOHeadProps) {
   const fullTitle = title ? `${title} | Sialkot Sample Masters Pakistan` : SITE_NAME;
+  const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : SITE_URL;
 
-  useEffect(() => {
-    // Title
-    document.title = fullTitle;
-
-    // Helper to set/update meta tags
-    const setMeta = (selector: string, content: string) => {
-      let el = document.querySelector(selector) as HTMLMetaElement | null;
-      if (!el) {
-        el = document.createElement("meta");
-        const attr = selector.includes("[name=") ? "name" : "property";
-        const val = selector.match(/["']([^"']+)["']/)?.[1] || "";
-        el.setAttribute(attr, val);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string, extras?: Record<string, string>) => {
-      let selector = `link[rel="${rel}"]`;
-      if (extras?.hreflang) selector += `[hreflang="${extras.hreflang}"]`;
-
-      let el = document.querySelector(selector) as HTMLLinkElement | null;
-      if (!el) {
-        el = document.createElement("link");
-        el.setAttribute("rel", rel);
-        if (extras) {
-          Object.entries(extras).forEach(([k, v]) => el?.setAttribute(k, v));
-        }
-        document.head.appendChild(el);
-      }
-      el.setAttribute("href", href);
-    };
-
-    // Standard meta
-    setMeta('[name="description"]', description);
-    setMeta('[name="keywords"]', keywords);
-    setMeta('[name="author"]', "Sialkot Sample Masters, Sialkot, Pakistan");
-    setMeta('[name="robots"]', noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1");
-    setMeta('[name="geo.region"]', "PK-PB");
-    setMeta('[name="geo.placename"]', "Sialkot, Punjab, Pakistan");
-    setMeta('[name="geo.position"]', "32.4945;74.5229");
-    setMeta('[name="ICBM"]', "32.4945, 74.5229");
-
-    // Open Graph
-    setMeta('[property="og:title"]', fullTitle);
-    setMeta('[property="og:description"]', description);
-    setMeta('[property="og:type"]', ogType);
-    setMeta('[property="og:image"]', ogImage);
-    setMeta('[property="og:site_name"]', "Sialkot Sample Masters");
-    setMeta('[property="og:locale"]', "en_US");
-    setMeta('[property="og:url"]', canonical ? `${SITE_URL}${canonical}` : SITE_URL);
-
-    // Twitter Card
-    setMeta('[name="twitter:card"]', "summary_large_image");
-    setMeta('[name="twitter:title"]', fullTitle);
-    setMeta('[name="twitter:description"]', description);
-    setMeta('[name="twitter:image"]', ogImage);
-
-    // Facebook / Instagram Catalog Product Tags
-    if (product) {
-      if (product.brand) setMeta('[property="product:brand"]', product.brand);
-      if (product.availability) setMeta('[property="product:availability"]', product.availability);
-      if (product.condition) setMeta('[property="product:condition"]', product.condition);
-      if (product.priceAmount) setMeta('[property="product:price:amount"]', product.priceAmount);
-      if (product.priceCurrency) setMeta('[property="product:price:currency"]', product.priceCurrency);
-      if (product.retailerItemId) setMeta('[property="product:retailer_item_id"]', product.retailerItemId);
-      if (product.itemGroupId) setMeta('[property="product:item_group_id"]', product.itemGroupId);
-    }
-
-    // Canonical
-    if (canonical) setLink("canonical", `${SITE_URL}${canonical}`);
-
-    // Hreflang
-    if (hreflangs) {
-      hreflangs.forEach((hl) => setLink("alternate", hl.href, { hreflang: hl.rel }));
-    }
-
-    // JSON-LD Schema
-    const schemaId = "xelent-schema";
-    let schemaEl = document.getElementById(schemaId);
-    if (!schemaEl) {
-      schemaEl = document.createElement("script");
-      schemaEl.id = schemaId;
-      schemaEl.setAttribute("type", "application/ld+json");
-      document.head.appendChild(schemaEl);
-    }
-
-    const defaultSchemaGraph: any[] = [
-      {
-        "@type": "Organization",
-        "@id": `${SITE_URL}/#organization`,
-        name: "Sialkot Sample Masters",
-        url: SITE_URL,
-        logo: `${SITE_URL}/logo.png`,
-        description: DEFAULT_DESCRIPTION,
-        foundingDate: "2010",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Sialkot Industrial Zone",
-          addressLocality: "Sialkot",
-          addressRegion: "Punjab",
-          addressCountry: "PK",
-        },
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+92-300-123-4567",
-          contactType: "sales",
-          availableLanguage: ["English", "Urdu"],
-        },
-        sameAs: [
-          "https://instagram.com/sialkotsamplementasters",
-          "https://linkedin.com/company/sialkot-sample-masters",
-        ],
+  // JSON-LD Schema
+  const defaultSchemaGraph: any[] = [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Sialkot Sample Masters",
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
+      description: DEFAULT_DESCRIPTION,
+      foundingDate: "2010",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Sialkot Industrial Zone",
+        addressLocality: "Sialkot",
+        addressRegion: "Punjab",
+        addressCountry: "PK",
       },
-      {
-        "@type": "LocalBusiness",
-        "@id": `${SITE_URL}/#localbusiness`,
-        name: "Sialkot Sample Masters",
-        image: DEFAULT_OG_IMAGE,
-        url: SITE_URL,
+      contactPoint: {
+        "@type": "ContactPoint",
         telephone: "+92-300-123-4567",
-        email: "info@sialkotsamplementasters.com",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Sialkot Industrial Zone",
-          addressLocality: "Sialkot",
-          addressRegion: "Punjab",
-          postalCode: "51310",
-          addressCountry: "PK",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: 32.4945,
-          longitude: 74.5229,
-        },
-        openingHoursSpecification: [
-          {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            opens: "09:00",
-            closes: "18:00",
-          },
-        ],
-        priceRange: "$$",
-        currenciesAccepted: "USD, EUR, GBP, PKR",
-        paymentAccepted: "Wire Transfer, PayPal, LC",
+        contactType: "sales",
+        availableLanguage: ["English", "Urdu"],
       },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: SITE_URL,
-        name: "Sialkot Sample Masters",
-        publisher: { "@id": `${SITE_URL}/#organization` },
+      sameAs: [
+        "https://instagram.com/sialkotsamplementasters",
+        "https://linkedin.com/company/sialkot-sample-masters",
+      ],
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/#localbusiness`,
+      name: "Sialkot Sample Masters",
+      image: DEFAULT_OG_IMAGE,
+      url: SITE_URL,
+      telephone: "+92-300-123-4567",
+      email: "info@sialkotsamplementasters.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Sialkot Industrial Zone",
+        addressLocality: "Sialkot",
+        addressRegion: "Punjab",
+        postalCode: "51310",
+        addressCountry: "PK",
       },
-      {
-        "@type": "Speakable",
-        "cssSelector": [".speakable-title", ".speakable-description"]
-      }
-    ];
-
-    if (breadcrumbs) {
-      defaultSchemaGraph.push({
-        "@type": "BreadcrumbList",
-        "itemListElement": breadcrumbs.map((crumb, index) => ({
-          "@type": "ListItem",
-          "position": index + 1,
-          "name": crumb.name,
-          "item": crumb.item.startsWith('http') ? crumb.item : `${SITE_URL}${crumb.item}`
-        }))
-      });
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 32.4945,
+        longitude: 74.5229,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+      ],
+      priceRange: "$$",
+      currenciesAccepted: "USD, EUR, GBP, PKR",
+      paymentAccepted: "Wire Transfer, PayPal, LC",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Sialkot Sample Masters",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "Speakable",
+      cssSelector: [".speakable-title", ".speakable-description"]
     }
+  ];
 
-    if (schema) {
-      if (Array.isArray(schema)) {
-        defaultSchemaGraph.push(...schema);
-      } else {
-        defaultSchemaGraph.push(schema);
-      }
-    }
-
-    schemaEl.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": defaultSchemaGraph,
+  if (breadcrumbs) {
+    defaultSchemaGraph.push({
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((crumb, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: crumb.name,
+        item: crumb.item.startsWith("http") ? crumb.item : `${SITE_URL}${crumb.item}`,
+      })),
     });
-  }, [fullTitle, description, keywords, canonical, ogImage, ogType, schema, noIndex, breadcrumbs, hreflangs, product]);
+  }
 
-  return null;
+  if (schema) {
+    if (Array.isArray(schema)) {
+      defaultSchemaGraph.push(...schema);
+    } else {
+      defaultSchemaGraph.push(schema);
+    }
+  }
+
+  const schemaJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": defaultSchemaGraph,
+  });
+
+  return (
+    <Helmet>
+      {/* Basic HTML Meta Tags */}
+      <title>{fullTitle}</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content="Sialkot Sample Masters, Sialkot, Pakistan" />
+      <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
+
+      {/* GEO Meta Tags */}
+      <meta name="geo.region" content="PK-PB" />
+      <meta name="geo.placename" content="Sialkot, Punjab, Pakistan" />
+      <meta name="geo.position" content="32.4945;74.5229" />
+      <meta name="ICBM" content="32.4945, 74.5229" />
+
+      {/* Open Graph Tags */}
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:site_name" content="Sialkot Sample Masters" />
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:url" content={canonicalUrl} />
+
+      {/* Twitter Card Tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+
+      {/* Canonical Link */}
+      {canonical && <link rel="canonical" href={canonicalUrl} />}
+
+      {/* Hreflang Tags */}
+      {hreflangs?.map((hl, index) => (
+        <link key={index} rel="alternate" href={hl.href} hrefLang={hl.rel} />
+      ))}
+
+      {/* Structured Data (JSON-LD) */}
+      <script type="application/ld+json">{schemaJson}</script>
+
+      {/* Conditionally Rendered Product Meta Tags */}
+      {product && product.brand && <meta property="product:brand" content={product.brand} />}
+      {product && product.availability && <meta property="product:availability" content={product.availability} />}
+      {product && product.condition && <meta property="product:condition" content={product.condition} />}
+      {product && product.priceAmount && <meta property="product:price:amount" content={product.priceAmount} />}
+      {product && product.priceCurrency && <meta property="product:price:currency" content={product.priceCurrency} />}
+      {product && product.retailerItemId && <meta property="product:retailer_item_id" content={product.retailerItemId} />}
+      {product && product.itemGroupId && <meta property="product:item_group_id" content={product.itemGroupId} />}
+    </Helmet>
+  );
 }

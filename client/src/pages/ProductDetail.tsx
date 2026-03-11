@@ -258,7 +258,7 @@ export default function ProductDetail() {
           "@context": "https://schema.org",
           "@type": "Product",
           "name": product.title,
-          "description": product.shortDescription,
+          "description": `${product.shortDescription || ""} ${(product as any).manufacturingStory || ""}`.trim(),
           "image": allImages.map(i => i.imageUrl),
           "sku": `SSM-${product.id}`,
           "brand": { "@type": "Brand", "name": "Sialkot Sample Masters OEM/ODM" },

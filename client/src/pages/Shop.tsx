@@ -177,12 +177,20 @@ export default function Shop() {
 
   const totalCount = displayProducts.length;
 
+  const seoTitle = activeCategory === "All"
+    ? "Shop Custom Streetwear | B2B Wholesale | Sialkot Sample Masters Pakistan"
+    : `${activeCategory} Manufacturer | Wholesale Catalog | Sialkot Pakistan`;
+
+  const seoDescription = activeCategory === "All"
+    ? "Browse Sialkot Sample Masters' B2B custom apparel catalog. Slab pricing, low MOQ from 50 pcs, private label manufacturing from Sialkot, Pakistan."
+    : `Explore our premium ${activeCategory.toLowerCase()} collection. Direct B2B manufacturing from Sialkot, Pakistan with low MOQ of 50pcs and tiered wholesale pricing.`;
+
   return (
     <PageWrapper>
       <SEOHead
-        title="Shop Custom Streetwear | B2B Wholesale | Sialkot Sample Masters Pakistan"
-        description="Browse Sialkot Sample Masters' B2B custom apparel catalog — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear. Slab pricing, low MOQ from 50 pcs, private label manufacturing from Sialkot, Pakistan."
-        keywords="custom hunting wear manufacturer Pakistan, custom sports wear wholesale, ski wear manufacturer Sialkot, techwear manufacturer Pakistan, custom streetwear manufacturer, BJJ gi manufacturer Pakistan, martial arts wear wholesale, private label apparel manufacturer Pakistan"
+        title={seoTitle}
+        description={seoDescription}
+        keywords={`custom ${activeCategory.toLowerCase()} manufacturer Pakistan, wholesale ${activeCategory.toLowerCase()} supplier, custom streetwear manufacturer, private label apparel manufacturer Pakistan, Sialkot Sample Masters`}
         ogType="website"
       />
 
