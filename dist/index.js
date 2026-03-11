@@ -3444,6 +3444,25 @@ router2.get("/fix-db-schema", async (req, res) => {
     return res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
+router2.get("/setup-tryon-table", async (req, res) => {
+  try {
+    const db = await getDb();
+    if (!db) {
+      return res.status(500).json({ error: "No database connection" });
+    }
+    await db.execute(sql2`
+            CREATE TABLE IF NOT EXISTS \`saved_tryon_models\` (
+              \`id\` INT AUTO_INCREMENT PRIMARY KEY,
+              \`name\` VARCHAR(255),
+              \`imageUrl\` VARCHAR(1000) NOT NULL,
+              \`createdAt\` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+            );
+        `);
+    return res.json({ success: true, message: "saved_tryon_models table created successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message, stack: error.stack });
+  }
+});
 var fixDb_default = router2;
 
 // server/_core/index.ts
