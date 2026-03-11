@@ -417,6 +417,49 @@ export const aiAgentRouter = router({
             }
         }),
 
+    // Get saved Virtual Try-On models
+    getSavedModels: adminProcedure
+        .query(async () => {
+            try {
+                const { getSavedTryOnModels } = await import("../db");
+                const models = await getSavedTryOnModels();
+                return { models, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Failed to fetch saved models: ${err.message}`,
+                });
+            }
+        }),
+
+    // Save a new Virtual Try-On model to the database
+    saveTryOnModel: adminProcedure
+        .input(z.object({
+            base64: z.string(),
+            mimeType: z.string(),
+            name: z.string().optional(),
+        }))
+        .mutation(async ({ input }) => {
+            try {
+                const { insertSavedTryOnModel } = await import("../db");
+                const buffer = Buffer.from(input.base64, "base64");
+                const ext = input.mimeType.split("/")[1] ?? "jpeg";
+                const storageKey = `portfolio/saved-model-${nanoid(10)}.${ext}`;
+                const { url } = await storagePut(storageKey, buffer, input.mimeType);
+
+                await insertSavedTryOnModel({
+                    imageUrl: url,
+                    name: input.name || "Custom Model",
+                });
+                return { imageUrl: url, success: true };
+            } catch (err: any) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Failed to save model: ${err.message}`,
+                });
+            }
+        }),
+
     // Premium: Save the final approved grid design to storage
     saveStudioImage: adminProcedure
         .input(z.object({

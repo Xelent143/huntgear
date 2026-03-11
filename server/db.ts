@@ -19,6 +19,7 @@ import {
   InsertTechPackImage, techPackImages, TechPack, TechPackImage,
   InsertInquiryNote, inquiryNotes,
   InsertKnowledgeBaseEntry, knowledgeBase,
+  InsertSavedTryOnModel, savedTryOnModels, SavedTryOnModel,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -420,10 +421,24 @@ export async function addInquiryNote(data: InsertInquiryNote) {
 
 // ─── Knowledge Base ───────────────────────────────────────────────────────────
 
-export async function getAllKnowledgeBase() {
+export async function getAllKnowledgeBase(opts?: { limit?: number; offset?: number }) {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(knowledgeBase).orderBy(desc(knowledgeBase.createdAt));
+  return db.select().from(knowledgeBase).limit(opts?.limit ?? 10).offset(opts?.offset ?? 0);
+}
+
+// ─── Virtual Try-On Saved Models ──────────────────────────────────────────────
+
+export async function insertSavedTryOnModel(modelData: InsertSavedTryOnModel) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(savedTryOnModels).values(modelData);
+}
+
+export async function getSavedTryOnModels(limit: number = 20) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(savedTryOnModels).orderBy(desc(savedTryOnModels.createdAt)).limit(limit);
 }
 
 export async function addKnowledgeBaseEntry(data: InsertKnowledgeBaseEntry) {

@@ -22,6 +22,7 @@ __export(schema_exports, {
   productImages: () => productImages,
   products: () => products,
   rfqSubmissions: () => rfqSubmissions,
+  savedTryOnModels: () => savedTryOnModels,
   shippingZones: () => shippingZones,
   sizeCharts: () => sizeCharts,
   slabPrices: () => slabPrices,
@@ -40,7 +41,7 @@ import {
   boolean,
   decimal
 } from "drizzle-orm/mysql-core";
-var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages, inquiryNotes, knowledgeBase;
+var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages, inquiryNotes, knowledgeBase, savedTryOnModels;
 var init_schema = __esm({
   "drizzle/schema.ts"() {
     "use strict";
@@ -325,6 +326,14 @@ var init_schema = __esm({
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
     });
+    savedTryOnModels = mysqlTable("saved_tryon_models", {
+      id: int("id").autoincrement().primaryKey(),
+      name: varchar("name", { length: 255 }),
+      // Optional name for the model
+      imageUrl: varchar("imageUrl", { length: 1e3 }).notNull(),
+      // The high-res URL of the model image
+      createdAt: timestamp("createdAt").defaultNow().notNull()
+    });
   }
 });
 
@@ -396,11 +405,13 @@ __export(db_exports, {
   getProductImages: () => getProductImages,
   getPublishedBlogPosts: () => getPublishedBlogPosts,
   getRfqById: () => getRfqById,
+  getSavedTryOnModels: () => getSavedTryOnModels,
   getSizeChart: () => getSizeChart,
   getSlabPrices: () => getSlabPrices,
   getTechPackById: () => getTechPackById,
   getTechPackImages: () => getTechPackImages,
   getUserByOpenId: () => getUserByOpenId,
+  insertSavedTryOnModel: () => insertSavedTryOnModel,
   listPortfolioItems: () => listPortfolioItems,
   removeCartItem: () => removeCartItem,
   reorderPortfolioImages: () => reorderPortfolioImages,
@@ -745,10 +756,20 @@ async function addInquiryNote(data) {
   if (!db) throw new Error("Database not available");
   await db.insert(inquiryNotes).values(data);
 }
-async function getAllKnowledgeBase() {
+async function getAllKnowledgeBase(opts) {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(knowledgeBase).orderBy(desc(knowledgeBase.createdAt));
+  return db.select().from(knowledgeBase).limit(opts?.limit ?? 10).offset(opts?.offset ?? 0);
+}
+async function insertSavedTryOnModel(modelData) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(savedTryOnModels).values(modelData);
+}
+async function getSavedTryOnModels(limit = 20) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(savedTryOnModels).orderBy(desc(savedTryOnModels.createdAt)).limit(limit);
 }
 async function addKnowledgeBaseEntry(data) {
   const db = await getDb();
@@ -1130,8 +1151,8 @@ Return a JSON object with exactly these fields based on the visual attributes of
   "category": "One of: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, Martial Arts Wear",
   "shortDescription": "Compelling 1-2 sentence summary covering its visible style/features (under 160 chars)",
   "description": "Full detailed 3-5 paragraph product description covering visible features, likely materials, customization options, and B2B wholesale benefits. Rich and keyword-focused.",
-  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the uploaded images carefully to get an idea of the physical construction. Create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments on the product, specific stitching types used at different parts of the garment, and types of customizations that can be done. IMPORTANT: Do NOT include conversational intros like 'As a garment engineer...'. Write ONLY the guide itself.",
-  "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details and construction of this specific garment to a user in an infographic style.",
+  "manufacturingStory": "Act as a garment engineer and experienced fashion designer. Analyze the uploaded images carefully to get an idea of the physical construction. Create a detailed production process guide in an easy-to-understand way. Detail the likely fabrics used, types of embellishments on the product, specific stitching types used at different parts of the garment, and types of customizations that can be done. IMPORTANT: Focus ONLY on the primary garment being sold (e.g. if it's a pants listing, ignore the model's shirt/rashguard). Do NOT include conversational intros like 'As a garment engineer...'. Write ONLY the guide itself.",
+  "infographicPrompt": "Take your production process guide summary and create a highly detailed image generation prompt (in the style of nano banana pro / midjourney / vector illustration) to visually explain the manufacturing details and construction of this specific garment to a user in an infographic style. CRITICAL: Your prompt MUST focus ONLY on the primary garment. If the model is wearing irrelevant items (e.g. a rashguard when the product is pants), DO NOT include them in this prompt.",
   "material": "Specific fabric/material description that matches the look (e.g. 'Heavyweight Cotton Blend')",
   "availableSizes": ["S", "M", "L", "XL", "2XL"],
   "availableColors": ["Black", "Navy", "Gray", "Custom"],
@@ -1313,6 +1334,7 @@ VIEW SPECIFIC INSTRUCTIONS: ${view.instruction}
 STRICT REQUIREMENTS:
 1. Extract the garment exactly as shown in the REFERENCE PRODUCT IMAGES (matching color, fabric, cut, and details).
 2. Dress the subject shown in the BASE MODEL IMAGE in this garment.
+   CRITICAL CLOTHING RULE: If the reference product is ONLY pants/bottoms, you MUST give the model a generic, plain matching top (like a black tee). Do NOT copy their original top (e.g., a rashguard). If the reference is ONLY a top, give them generic bottoms. Never let the model's original clothing interfere with the overall outfit look.
 3. PRESERVE the model's exact face, skin tone, and body type parfaitement.
 ${view.name === "Lifestyle Photoshoot" ? "4. Place the model in a realistic lifestyle setting." : "4. Keep the original model's pose and background perfectly OR use a clean solid white background as instructed."}
 ${logoImage ? "5. Apply the provided LOGO prominently and naturally onto the garment (e.g., left chest, center chest, or where instructed)." : "5. Do not add any random logos or text."}
@@ -2316,6 +2338,43 @@ var aiAgentRouter = router({
       throw new TRPCError3({
         code: "INTERNAL_SERVER_ERROR",
         message: `Product prefill failed: ${err.message}`
+      });
+    }
+  }),
+  // Get saved Virtual Try-On models
+  getSavedModels: adminProcedure2.query(async () => {
+    try {
+      const { getSavedTryOnModels: getSavedTryOnModels2 } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const models = await getSavedTryOnModels2();
+      return { models, success: true };
+    } catch (err) {
+      throw new TRPCError3({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Failed to fetch saved models: ${err.message}`
+      });
+    }
+  }),
+  // Save a new Virtual Try-On model to the database
+  saveTryOnModel: adminProcedure2.input(z2.object({
+    base64: z2.string(),
+    mimeType: z2.string(),
+    name: z2.string().optional()
+  })).mutation(async ({ input }) => {
+    try {
+      const { insertSavedTryOnModel: insertSavedTryOnModel2 } = await Promise.resolve().then(() => (init_db(), db_exports));
+      const buffer = Buffer.from(input.base64, "base64");
+      const ext = input.mimeType.split("/")[1] ?? "jpeg";
+      const storageKey = `portfolio/saved-model-${nanoid(10)}.${ext}`;
+      const { url } = await storagePut(storageKey, buffer, input.mimeType);
+      await insertSavedTryOnModel2({
+        imageUrl: url,
+        name: input.name || "Custom Model"
+      });
+      return { imageUrl: url, success: true };
+    } catch (err) {
+      throw new TRPCError3({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Failed to save model: ${err.message}`
       });
     }
   }),

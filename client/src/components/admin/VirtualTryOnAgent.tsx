@@ -24,12 +24,12 @@ export default function VirtualTryOnAgent({
     // ─── API Hooks ─────────────────────────────────────────────────────────────
     const utils = trpc.useUtils();
 
-    const { data: savedModel, isLoading: isLoadingModel } = trpc.adminSettings.getModelImage.useQuery();
+    const { data: savedModelsResult, isLoading: isLoadingModels } = trpc.aiAgent.getSavedModels.useQuery();
 
-    const saveModelMutation = trpc.adminSettings.saveModelImage.useMutation({
+    const saveModelMutation = trpc.aiAgent.saveTryOnModel.useMutation({
         onSuccess: () => {
-            utils.adminSettings.getModelImage.invalidate();
-            toast.success("Model image saved successfully!");
+            utils.aiAgent.getSavedModels.invalidate();
+            toast.success("Model saved to your Library!");
             setHasUnsavedModel(false);
         },
         onError: (err) => toast.error(err.message),
@@ -60,16 +60,7 @@ export default function VirtualTryOnAgent({
     const refInputRef = useRef<HTMLInputElement>(null);
     const logoInputRef = useRef<HTMLInputElement>(null);
 
-    // Load saved model on mount
-    useEffect(() => {
-        if (savedModel && !hasUnsavedModel) {
-            setModelImage({
-                base64: savedModel.base64,
-                mimeType: savedModel.mimeType,
-                preview: `data:${savedModel.mimeType};base64,${savedModel.base64}`
-            });
-        }
-    }, [savedModel, hasUnsavedModel]);
+    // Load saved model on mount defaults removed because user can pick from list
 
     // ─── Handlers ──────────────────────────────────────────────────────────────
     const handleModelUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,21 +144,18 @@ export default function VirtualTryOnAgent({
                                 disabled={saveModelMutation.isPending}
                                 onClick={() => saveModelMutation.mutate({ base64: modelImage.base64, mimeType: modelImage.mimeType })}
                             >
-                                {saveModelMutation.isPending ? "Saving..." : "Save as Default Model"}
+                                {saveModelMutation.isPending ? "Saving..." : "Save to Library"}
                             </Button>
                         )}
                     </div>
-                    <p className="text-xs text-muted-foreground mb-4">
-                        Upload the core photo. The AI will preserve this person's pose, face, skin tone, and background, and only change their clothes.
-                    </p>
 
-                    {isLoadingModel ? (
-                        <div className="h-32 flex items-center justify-center bg-secondary/30 rounded-lg animate-pulse">Loading saved model...</div>
-                    ) : (
+                    <div className="flex flex-col gap-4">
+                        {/* Currently Selected or Uploaded Model */}
                         <div className="flex gap-4">
                             {modelImage ? (
                                 <div className="relative group w-32 h-40 shrink-0">
-                                    <img src={modelImage.preview} alt="Base model" className="w-full h-full object-cover rounded-lg border border-border" />
+                                    <img src={modelImage.preview} alt="Base model" className="w-full h-full object-cover rounded-lg border-2 border-gold" />
+                                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded shadow">Active</span>
                                     <button
                                         onClick={() => { setModelImage(null); setHasUnsavedModel(false); }}
                                         className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md"
@@ -177,16 +165,54 @@ export default function VirtualTryOnAgent({
                                 </div>
                             ) : (
                                 <div
-                                    className="w-32 h-40 border-2 border-dashed border-border hover:border-gold/50 rounded-lg flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors bg-secondary/10"
+                                    className="w-32 h-40 border-2 border-dashed border-border hover:border-gold/50 rounded-lg flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors bg-secondary/10 shrink-0"
                                     onClick={() => modelInputRef.current?.click()}
                                 >
                                     <Upload className="w-5 h-5 text-muted-foreground" />
-                                    <span className="text-xs font-medium text-muted-foreground">Upload Model</span>
+                                    <span className="text-xs font-medium text-muted-foreground text-center px-2">Upload New Custom Model</span>
                                 </div>
                             )}
                             <input type="file" ref={modelInputRef} className="hidden" accept="image/*" onChange={handleModelUpload} />
+
+                            {/* Saved Models Horizontal List */}
+                            <div className="flex gap-3 overflow-x-auto pb-2 flex-nowrap w-full">
+                                {isLoadingModels ? (
+                                    <div className="w-24 h-32 flex items-center justify-center rounded-lg bg-secondary/20 animate-pulse text-xs text-muted-foreground text-center p-2">Loading Library...</div>
+                                ) : (
+                                    savedModelsResult?.models?.map((savedModel) => (
+                                        <div
+                                            key={savedModel.id}
+                                            onClick={async () => {
+                                                try {
+                                                    const res = await fetch(savedModel.imageUrl);
+                                                    const blob = await res.blob();
+                                                    const reader = new FileReader();
+                                                    reader.readAsDataURL(blob);
+                                                    reader.onloadend = () => {
+                                                        const b64 = reader.result as string;
+                                                        setModelImage({
+                                                            base64: b64.split(",")[1],
+                                                            mimeType: blob.type,
+                                                            preview: savedModel.imageUrl
+                                                        });
+                                                        setHasUnsavedModel(false);
+                                                    }
+                                                } catch (e) {
+                                                    toast.error("Failed to load saved model");
+                                                }
+                                            }}
+                                            className="w-24 h-32 shrink-0 rounded-lg border border-border cursor-pointer hover:border-gold/50 transition-all opacity-70 hover:opacity-100 group relative overflow-hidden"
+                                        >
+                                            <img src={savedModel.imageUrl} alt={savedModel.name || "Saved"} className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <span className="text-[10px] bg-gold text-black px-2 py-1 rounded font-bold">Use Model</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 {/* 2. Reference Garments Section */}

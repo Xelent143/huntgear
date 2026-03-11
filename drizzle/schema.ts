@@ -372,3 +372,15 @@ export const knowledgeBase = mysqlTable("knowledge_base", {
 
 export type KnowledgeBaseEntry = typeof knowledgeBase.$inferSelect;
 export type InsertKnowledgeBaseEntry = typeof knowledgeBase.$inferInsert;
+
+// ─── Saved Virtual Try-On Models ──────────────────────────────────────────────
+
+export const savedTryOnModels = mysqlTable("saved_tryon_models", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }), // Optional name for the model
+  imageUrl: varchar("imageUrl", { length: 1000 }).notNull(), // The high-res URL of the model image
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type SavedTryOnModel = typeof savedTryOnModels.$inferSelect;
+export type InsertSavedTryOnModel = typeof savedTryOnModels.$inferInsert;
