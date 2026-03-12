@@ -56,6 +56,16 @@ const posts = [
     featured: false,
   },
   {
+    slug: "5-signs-change-sublimation-vendor",
+    title: "5 Signs You Need to Change Your Current Sublimation Printing Vendor",
+    excerpt: "Low vibrancy, muddy blacks, or peeling logos? Learn how to spot the red flags in your sublimation apparel production before it costs you an export contract.",
+    category: "Quality Alert",
+    readTime: "7 min read",
+    date: "March 12, 2026",
+    image: "/sublimation_red_flags_comparison_1773277691076.png",
+    featured: false,
+  },
+  {
     slug: "why-sportswear-brands-outsource-cmt-sialkot",
     title: "Why Sialkot Sportswear Brands are Outsourcing to Specialized CMT Units",
     excerpt: "Discover why the leading sportswear exporters in Sialkot are moving toward a lean manufacturing model by outsourcing stitching to specialized CMT partner units.",
