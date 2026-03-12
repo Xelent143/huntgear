@@ -3572,6 +3572,15 @@ router3.get("/sitemap.xml", async (req, res) => {
     <priority>0.7</priority>
   </url>`;
     });
+    const regions = ["usa", "uk", "europe", "australia", "canada"];
+    regions.forEach((region) => {
+      xml += `
+  <url>
+    <loc>${DOMAIN}/manufacturing/${region}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>`;
+    });
     xml += `
 </urlset>`;
     res.header("Content-Type", "application/xml");
