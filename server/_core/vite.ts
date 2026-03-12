@@ -71,46 +71,73 @@ export async function setupVite(app: Express, server: any) {
 }
 
 export function serveStatic(app: Express) {
-  const distClientPath = path.resolve(__dirname, "client");
-  const distServerPath = path.resolve(__dirname, "server");
-
+  // Determine client dist path — new SSR layout uses dist/client, old layout uses dist/public
+  let distClientPath = path.resolve(__dirname, "client");
   if (!fs.existsSync(distClientPath)) {
-    console.warn(`[SSR] Could not find the client build directory: ${distClientPath}. Serving from older dist/public format if available.`);
-    const fallbackDist = path.resolve(__dirname, "public");
-    if (fs.existsSync(fallbackDist)) {
-      app.use(express.static(fallbackDist));
-      app.use("*", (_req, res) => res.sendFile(path.resolve(fallbackDist, "index.html")));
-      return;
-    }
+    distClientPath = path.resolve(__dirname, "public");
   }
 
-  // Serve static assets from the client build
+  if (!fs.existsSync(distClientPath)) {
+    console.error(`[Static] Could not find any build directory at ${distClientPath}`);
+    return;
+  }
+
+  console.log(`[Static] Serving client assets from: ${distClientPath}`);
+
+  // Serve static assets (JS, CSS, images, etc.) but NOT index.html for root
   app.use(express.static(distClientPath, { index: false }));
 
-  // Fallback to SSR
-  app.use("*", async (req, res, next) => {
+  // Try to load the SSR render function once at startup
+  let ssrRender: ((url: string, req?: any) => Promise<{ html: string; helmet?: any }>) | null = null;
+  const distServerPath = path.resolve(__dirname, "server");
+  const serverEntryPath = path.resolve(distServerPath, "entry-server.js");
+
+  if (fs.existsSync(serverEntryPath)) {
+    // Eagerly try to import the SSR module. If it fails, we log and continue in SPA mode.
+    import(/* @vite-ignore */ `file://${serverEntryPath.replace(/\\/g, "/")}`)
+      .then((mod) => {
+        ssrRender = mod.render;
+        console.log("[SSR] Server-side rendering enabled ✓");
+      })
+      .catch((err) => {
+        console.warn("[SSR] Could not load SSR entry, falling back to SPA mode:", err?.message || err);
+      });
+  } else {
+    console.warn(`[SSR] No server entry found at ${serverEntryPath}. Running in SPA-only mode.`);
+  }
+
+  // Catch-all: serve index.html with optional SSR injection
+  app.use("*", async (_req, res) => {
     try {
-      const url = req.originalUrl;
-      const clientTemplate = path.resolve(distClientPath, "index.html");
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
+      const url = _req.originalUrl;
+      const indexHtmlPath = path.resolve(distClientPath, "index.html");
+      let html = await fs.promises.readFile(indexHtmlPath, "utf-8");
 
-      // Load the pre-built SSR entry
-      const serverEntryPath = path.resolve(distServerPath, "entry-server.js");
-      const { render } = await import(`file://${serverEntryPath}`);
-      const { html: appHtml, helmet } = await render(url, req);
-
-      let html = template.replace(`<!--ssr-outlet-->`, appHtml ?? "");
-
-      if (helmet) {
-        html = html.replace(
-          `</head>`,
-          `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
-        );
+      // If SSR is available, render and inject
+      if (ssrRender) {
+        try {
+          const { html: appHtml, helmet } = await ssrRender(url, _req);
+          html = html.replace(`<!--ssr-outlet-->`, appHtml ?? "");
+          if (helmet) {
+            html = html.replace(
+              `</head>`,
+              `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
+            );
+          }
+        } catch (ssrErr: any) {
+          console.error("[SSR] Render error, serving SPA fallback:", ssrErr?.message);
+          // SSR failed — just serve the plain index.html (SPA mode)
+          html = html.replace(`<!--ssr-outlet-->`, "");
+        }
+      } else {
+        // No SSR available — serve as plain SPA
+        html = html.replace(`<!--ssr-outlet-->`, "");
       }
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
-    } catch (e) {
-      next(e);
+    } catch (e: any) {
+      console.error("[Static] Fatal error serving page:", e?.message);
+      res.status(500).send("Internal Server Error");
     }
   });
 }

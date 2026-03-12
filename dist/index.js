@@ -3413,36 +3413,58 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  const distClientPath = path2.resolve(__dirname2, "client");
-  const distServerPath = path2.resolve(__dirname2, "server");
+  let distClientPath = path2.resolve(__dirname2, "client");
   if (!fs2.existsSync(distClientPath)) {
-    console.warn(`[SSR] Could not find the client build directory: ${distClientPath}. Serving from older dist/public format if available.`);
-    const fallbackDist = path2.resolve(__dirname2, "public");
-    if (fs2.existsSync(fallbackDist)) {
-      app.use(express.static(fallbackDist));
-      app.use("*", (_req, res) => res.sendFile(path2.resolve(fallbackDist, "index.html")));
-      return;
-    }
+    distClientPath = path2.resolve(__dirname2, "public");
   }
+  if (!fs2.existsSync(distClientPath)) {
+    console.error(`[Static] Could not find any build directory at ${distClientPath}`);
+    return;
+  }
+  console.log(`[Static] Serving client assets from: ${distClientPath}`);
   app.use(express.static(distClientPath, { index: false }));
-  app.use("*", async (req, res, next) => {
+  let ssrRender = null;
+  const distServerPath = path2.resolve(__dirname2, "server");
+  const serverEntryPath = path2.resolve(distServerPath, "entry-server.js");
+  if (fs2.existsSync(serverEntryPath)) {
+    import(
+      /* @vite-ignore */
+      `file://${serverEntryPath.replace(/\\/g, "/")}`
+    ).then((mod) => {
+      ssrRender = mod.render;
+      console.log("[SSR] Server-side rendering enabled \u2713");
+    }).catch((err) => {
+      console.warn("[SSR] Could not load SSR entry, falling back to SPA mode:", err?.message || err);
+    });
+  } else {
+    console.warn(`[SSR] No server entry found at ${serverEntryPath}. Running in SPA-only mode.`);
+  }
+  app.use("*", async (_req, res) => {
     try {
-      const url = req.originalUrl;
-      const clientTemplate = path2.resolve(distClientPath, "index.html");
-      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
-      const serverEntryPath = path2.resolve(distServerPath, "entry-server.js");
-      const { render } = await import(`file://${serverEntryPath}`);
-      const { html: appHtml, helmet } = await render(url, req);
-      let html = template.replace(`<!--ssr-outlet-->`, appHtml ?? "");
-      if (helmet) {
-        html = html.replace(
-          `</head>`,
-          `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
-        );
+      const url = _req.originalUrl;
+      const indexHtmlPath = path2.resolve(distClientPath, "index.html");
+      let html = await fs2.promises.readFile(indexHtmlPath, "utf-8");
+      if (ssrRender) {
+        try {
+          const { html: appHtml, helmet } = await ssrRender(url, _req);
+          html = html.replace(`<!--ssr-outlet-->`, appHtml ?? "");
+          if (helmet) {
+            html = html.replace(
+              `</head>`,
+              `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
+            );
+          }
+        } catch (ssrErr) {
+          console.error("[SSR] Render error, serving SPA fallback:", ssrErr?.message);
+          html = html.replace(`<!--ssr-outlet-->`, "");
+        }
+      } else {
+        html = html.replace(`<!--ssr-outlet-->`, "");
       }
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
-      next(e);
+      console.error("[Static] Fatal error serving page:", e?.message);
+      res.status(500).send("Internal Server Error");
     }
   });
 }
