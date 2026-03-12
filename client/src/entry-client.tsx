@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
-import { hydrateRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import superjson from "superjson";
 import App from "./App";
@@ -60,8 +60,8 @@ const trpcClient = trpc.createClient({
     ],
 });
 
-hydrateRoot(
-    document.getElementById("root")!,
+const rootEl = document.getElementById("root")!;
+const appJsx = (
     <HelmetProvider>
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
@@ -70,3 +70,11 @@ hydrateRoot(
         </trpc.Provider>
     </HelmetProvider>
 );
+
+// If the root has SSR content, hydrate it. Otherwise, do a fresh client render.
+if (rootEl.innerHTML.trim().length > 0) {
+    hydrateRoot(rootEl, appJsx);
+} else {
+    createRoot(rootEl).render(appJsx);
+}
+
