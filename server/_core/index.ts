@@ -13,6 +13,7 @@ import { ENV } from "./env";
 import Stripe from "stripe";
 import { getDb } from "../db";
 import fixDbRouter from "../routes/fixDb";
+import sitemapRouter from "../routes/sitemap";
 import { orders } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
@@ -122,6 +123,7 @@ async function startServer() {
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   app.use("/api", fixDbRouter);
+  app.use("/", sitemapRouter);
 
   // ── INLINE Admin Auth Routes (esbuild was not bundling the external file) ──
   const crypto = await import("crypto");

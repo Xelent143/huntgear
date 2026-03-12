@@ -23,6 +23,7 @@ import BlogCMTGuide from "./pages/blog/BlogCMTGuide";
 import BlogSublimationGuide from "./pages/blog/BlogSublimationGuide";
 import BlogCADvsManual from "./pages/blog/BlogCADvsManual";
 import BlogQCChecklist from "./pages/blog/BlogQCChecklist";
+import BlogOutsourcingBenefits from "./pages/blog/BlogOutsourcingBenefits";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/blog/sublimation-printing-guide-sportswear" component={BlogSublimationGuide} />
       <Route path="/blog/cad-vs-manual-pattern-drafting-guide" component={BlogCADvsManual} />
       <Route path="/blog/apparel-manufacturing-qc-checklist" component={BlogQCChecklist} />
+      <Route path="/blog/why-sportswear-brands-outsource-cmt-sialkot" component={BlogOutsourcingBenefits} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/rfq" component={RFQ} />
       <Route path="/contact" component={Contact} />

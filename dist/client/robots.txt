@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://sialkotsamplementasters.com/sitemap.xml
+Sitemap: https://sialkotsamplemasters.com/sitemap.xml
 
 # Disallow admin and API paths
 Disallow: /api/

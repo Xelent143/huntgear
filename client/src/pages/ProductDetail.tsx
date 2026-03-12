@@ -298,7 +298,7 @@ export default function ProductDetail() {
 
             {/* COLUMN 1: Image Gallery (Left, Span 4) */}
             <div className="lg:col-span-4 bg-white dark:bg-card p-4 rounded-md shadow-sm border border-border sticky top-24">
-              <ZoomableImage src={activeImage.imageUrl} alt={activeImage.altText || product.title} />
+              <ZoomableImage src={activeImage.imageUrl} alt={`${activeImage.altText || product.title} - Apparel Manufacturer Sialkot`} />
 
               {/* Thumbnails */}
               {allImages.length > 1 && (
@@ -534,7 +534,7 @@ export default function ProductDetail() {
                           <img src={step.img} alt={step.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-luminosity hover:mix-blend-normal" />
                           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
                             <div className="text-gold font-condensed font-bold text-xl leading-none">0{i + 1}</div>
-                            <div className="text-white text-xs font-semibold uppercase tracking-wider mt-1">{step.title}</div>
+                            <div className="text-white text-xs font-semibold uppercase tracking-wider mt-1">{step.title} Sialkot Facility</div>
                           </div>
                         </div>
                       ))}

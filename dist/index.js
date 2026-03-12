@@ -3249,10 +3249,10 @@ var appRouter = router({
     getApiKey: adminProcedure3.query(async ({ ctx }) => {
       const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
       const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq3 } = await import("drizzle-orm");
+      const { eq: eq4 } = await import("drizzle-orm");
       const db = await getDatabase();
       if (!db) return { hasKey: false, maskedKey: "" };
-      const [user] = await db.select().from(users2).where(eq3(users2.id, ctx.user.id)).limit(1);
+      const [user] = await db.select().from(users2).where(eq4(users2.id, ctx.user.id)).limit(1);
       const key = user?.geminiApiKey || "";
       return {
         hasKey: !!key,
@@ -3262,10 +3262,10 @@ var appRouter = router({
     saveApiKey: adminProcedure3.input(z3.object({ apiKey: z3.string().max(255) })).mutation(async ({ input, ctx }) => {
       const { getDb: getDatabase } = await Promise.resolve().then(() => (init_db(), db_exports));
       const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eq3 } = await import("drizzle-orm");
+      const { eq: eq4 } = await import("drizzle-orm");
       const db = await getDatabase();
       if (!db) throw new TRPCError4({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
-      await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq3(users2.id, ctx.user.id));
+      await db.update(users2).set({ geminiApiKey: input.apiKey || null }).where(eq4(users2.id, ctx.user.id));
       return { success: true };
     }),
     getModelImage: adminProcedure3.query(async () => {
@@ -3325,10 +3325,10 @@ async function createContext(opts) {
         if (payload.userId) {
           const { getDb: getDb2 } = await Promise.resolve().then(() => (init_db(), db_exports));
           const { users: users2 } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-          const { eq: eq3 } = await import("drizzle-orm");
+          const { eq: eq4 } = await import("drizzle-orm");
           const db = await getDb2();
           if (db) {
-            const results = await db.select().from(users2).where(eq3(users2.id, payload.userId)).limit(1);
+            const results = await db.select().from(users2).where(eq4(users2.id, payload.userId)).limit(1);
             if (results[0]) {
               user = results[0];
             }
@@ -3518,9 +3518,74 @@ router2.get("/setup-tryon-table", async (req, res) => {
 });
 var fixDb_default = router2;
 
+// server/routes/sitemap.ts
+init_db();
+init_schema();
+import { Router as Router2 } from "express";
+import { eq as eq2, desc as desc2 } from "drizzle-orm";
+var router3 = Router2();
+var DOMAIN = "https://sialkotsamplemasters.com";
+router3.get("/sitemap.xml", async (req, res) => {
+  try {
+    const db = await getDb();
+    if (!db) {
+      return res.status(500).send("Database not available");
+    }
+    const activeProducts = await db.select({ slug: products.slug, updatedAt: products.updatedAt }).from(products).where(eq2(products.isActive, true)).orderBy(desc2(products.updatedAt));
+    const publishedPosts = await db.select({ slug: blogPosts.slug, publishedAt: blogPosts.publishedAt }).from(blogPosts).where(eq2(blogPosts.published, true)).orderBy(desc2(blogPosts.publishedAt));
+    const activePortfolio = await db.select({ id: portfolioItems.id, updatedAt: portfolioItems.updatedAt }).from(portfolioItems).where(eq2(portfolioItems.isActive, true)).orderBy(desc2(portfolioItems.updatedAt));
+    const staticPages = [
+      { path: "", priority: "1.0", changefreq: "daily" },
+      { path: "/about", priority: "0.9", changefreq: "monthly" },
+      { path: "/services", priority: "0.9", changefreq: "monthly" },
+      { path: "/products", priority: "0.9", changefreq: "weekly" },
+      { path: "/portfolio", priority: "0.8", changefreq: "weekly" },
+      { path: "/blog", priority: "0.8", changefreq: "daily" },
+      { path: "/rfq", priority: "0.9", changefreq: "monthly" },
+      { path: "/contact", priority: "0.8", changefreq: "monthly" }
+    ];
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+    staticPages.forEach((page) => {
+      xml += `
+  <url>
+    <loc>${DOMAIN}${page.path}</loc>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`;
+    });
+    activeProducts.forEach((p) => {
+      xml += `
+  <url>
+    <loc>${DOMAIN}/product/${p.slug}</loc>
+    <lastmod>${(p.updatedAt || /* @__PURE__ */ new Date()).toISOString().split("T")[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+    });
+    publishedPosts.forEach((post) => {
+      xml += `
+  <url>
+    <loc>${DOMAIN}/blog/${post.slug}</loc>
+    <lastmod>${(post.publishedAt || /* @__PURE__ */ new Date()).toISOString().split("T")[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+    });
+    xml += `
+</urlset>`;
+    res.header("Content-Type", "application/xml");
+    res.status(200).send(xml);
+  } catch (error) {
+    console.error("[Sitemap] Generation error:", error);
+    res.status(500).send("Error generating sitemap");
+  }
+});
+var sitemap_default = router3;
+
 // server/_core/index.ts
 init_schema();
-import { eq as eq2 } from "drizzle-orm";
+import { eq as eq3 } from "drizzle-orm";
 function isPortAvailable(port) {
   return new Promise((resolve) => {
     const server = net.createServer();
@@ -3564,7 +3629,7 @@ async function startServer() {
         const db = await getDbLocal();
         if (db) {
           console.log(`[Stripe] Checkout completed for session ${session.id}. Marking as paid...`);
-          await db.update(orders).set({ status: "paid", stripePaymentIntentId: session.payment_intent }).where(eq2(orders.stripeSessionId, session.id));
+          await db.update(orders).set({ status: "paid", stripePaymentIntentId: session.payment_intent }).where(eq3(orders.stripeSessionId, session.id));
         }
       } catch (e) {
         console.error(`[Stripe] Failed to update order status in DB:`, e);
@@ -3620,6 +3685,7 @@ async function startServer() {
   });
   registerOAuthRoutes(app);
   app.use("/api", fixDb_default);
+  app.use("/", sitemap_default);
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
   const { getDb: getDbLocal } = await Promise.resolve().then(() => (init_db(), db_exports));

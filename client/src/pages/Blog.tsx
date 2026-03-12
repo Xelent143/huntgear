@@ -56,6 +56,16 @@ const posts = [
     featured: false,
   },
   {
+    slug: "why-sportswear-brands-outsource-cmt-sialkot",
+    title: "Why Sialkot Sportswear Brands are Outsourcing to Specialized CMT Units",
+    excerpt: "Discover why the leading sportswear exporters in Sialkot are moving toward a lean manufacturing model by outsourcing stitching to specialized CMT partner units.",
+    category: "Industry Analysis",
+    readTime: "8 min read",
+    date: "March 12, 2026",
+    image: "/cmt_value_chain_infographic_1773276832953.png",
+    featured: false,
+  },
+  {
     slug: "low-moq-streetwear-manufacturing-guide",
     title: "Low MOQ Streetwear Manufacturing: The Complete Guide for Emerging Brands",
     excerpt: "Starting a streetwear brand doesn't require massive upfront investment. Discover how low MOQ manufacturing works, what to expect, and how to scale from 50 to 5,000 units.",

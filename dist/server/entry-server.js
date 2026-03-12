@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, CircleIcon, CreditCard, Receipt, Loader2, Check, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, TrendingUp, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, CheckCircle2, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Info, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, ShieldCheck, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, CircleIcon, CreditCard, Receipt, Loader2, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, CheckCircle2, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -426,7 +426,7 @@ function AnnouncementBar() {
             onClick: dismiss,
             className: "absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors p-1",
             "aria-label": "Dismiss announcement",
-            children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\Navbar.tsx:48", className: "w-3.5 h-3.5" })
+            children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\Navbar.tsx:48", className: "w-3.5 h-3.5" })
           }
         )
       ] })
@@ -659,7 +659,7 @@ function Navbar() {
                   className: "text-foreground p-2",
                   onClick: () => setIsOpen(!isOpen),
                   "aria-label": "Toggle menu",
-                  children: /* @__PURE__ */ jsx(AnimatePresence, { "data-loc": "client\\src\\components\\Navbar.tsx:342", mode: "wait", initial: false, children: isOpen ? /* @__PURE__ */ jsx(motion.span, { "data-loc": "client\\src\\components\\Navbar.tsx:344", initial: { rotate: -90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: 90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\Navbar.tsx:345", className: "w-6 h-6" }) }, "x") : /* @__PURE__ */ jsx(motion.span, { "data-loc": "client\\src\\components\\Navbar.tsx:348", initial: { rotate: 90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: -90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(Menu, { "data-loc": "client\\src\\components\\Navbar.tsx:349", className: "w-6 h-6" }) }, "menu") })
+                  children: /* @__PURE__ */ jsx(AnimatePresence, { "data-loc": "client\\src\\components\\Navbar.tsx:342", mode: "wait", initial: false, children: isOpen ? /* @__PURE__ */ jsx(motion.span, { "data-loc": "client\\src\\components\\Navbar.tsx:344", initial: { rotate: -90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: 90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\Navbar.tsx:345", className: "w-6 h-6" }) }, "x") : /* @__PURE__ */ jsx(motion.span, { "data-loc": "client\\src\\components\\Navbar.tsx:348", initial: { rotate: 90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: -90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(Menu, { "data-loc": "client\\src\\components\\Navbar.tsx:349", className: "w-6 h-6" }) }, "menu") })
                 }
               )
             ] })
@@ -3498,7 +3498,7 @@ function Lightbox({
             "data-loc": "client\\src\\pages\\Portfolio.tsx:316",
             onClick: onClose,
             className: "absolute top-4 right-4 bg-card/90 hover:bg-secondary text-foreground rounded-full p-2 transition-all border border-border",
-            children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\Portfolio.tsx:320", className: "w-5 h-5" })
+            children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\Portfolio.tsx:320", className: "w-5 h-5" })
           }
         )
       ]
@@ -3695,6 +3695,46 @@ const posts = [
     featured: true
   },
   {
+    slug: "cmt-outsourcing-guide-sialkot",
+    title: "The Sialkot Exporter's Guide to Outsourcing CMT Production",
+    excerpt: "Transform your production floor without the overhead. Learn how to leverage Sialkot's specialized CMT units to scale your export brand.",
+    category: "Manufacturing Guide",
+    readTime: "10 min read",
+    date: "March 12, 2026",
+    image: IMAGES.servicePattern,
+    featured: false
+  },
+  {
+    slug: "sublimation-printing-guide-sportswear",
+    title: "Everything You Need to Know About Digital Sublimation Printing for Sportswear in 2026",
+    excerpt: "Why the world's top sports brands choose sublimation for performance. A deep dive into the science of gas-to-fiber printing.",
+    category: "Technical Guide",
+    readTime: "8 min read",
+    date: "March 12, 2026",
+    image: IMAGES.servicePrinting,
+    featured: false
+  },
+  {
+    slug: "cad-vs-manual-pattern-drafting-guide",
+    title: "CAD vs Manual Pattern Drafting: Why Exporters Should Switch to Digital Patterns",
+    excerpt: "In the high-stakes world of apparel exports, a 1% saving in fabric can equal thousands of dollars in profit. Discover why manual drafting is costing you money.",
+    category: "Efficiency Insights",
+    readTime: "7 min read",
+    date: "March 12, 2026",
+    image: IMAGES.servicePattern,
+    featured: false
+  },
+  {
+    slug: "apparel-manufacturing-qc-checklist",
+    title: "The Ultimate Checklist for Quality Control in Sialkot Apparel Manufacturing",
+    excerpt: "One 'bad batch' can destroy a decade of trust. Master the AQL standards and auditing pipelines used by the world's most successful exporters.",
+    category: "Quality Assurance",
+    readTime: "9 min read",
+    date: "March 12, 2026",
+    image: IMAGES.serviceQC,
+    featured: false
+  },
+  {
     slug: "low-moq-streetwear-manufacturing-guide",
     title: "Low MOQ Streetwear Manufacturing: The Complete Guide for Emerging Brands",
     excerpt: "Starting a streetwear brand doesn't require massive upfront investment. Discover how low MOQ manufacturing works, what to expect, and how to scale from 50 to 5,000 units.",
@@ -3749,104 +3789,104 @@ const categories = ["All", "Manufacturing Guide", "Brand Building", "Private Lab
 function Blog() {
   const featured = posts.find((p) => p.featured);
   const rest = posts.filter((p) => !p.featured);
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:77", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:118", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:78",
+        "data-loc": "client\\src\\pages\\Blog.tsx:119",
         title: "Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan",
         description: "Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer.",
         keywords: "apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide",
         canonical: "/blog"
       }
     ),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:86", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:87", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:88", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
-      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:89", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:127", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:128", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:129", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
+      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:130", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
         "The Sialkot Sample Masters",
-        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:91", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:132", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:93", className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:94", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:134", className: "gold-divider mx-auto" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:135", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:101", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:102", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:103", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:142", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:143", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:144", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:105",
+        "data-loc": "client\\src\\pages\\Blog.tsx:146",
         className: `shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All" ? "bg-gold text-background" : "border border-border text-muted-foreground hover:border-gold/30 hover:text-foreground"}`,
         children: cat
       },
       cat
     )) }) }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:119", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:120", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:123", className: "mb-16", children: [
-        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:124", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
-        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:125", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:126", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:127", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:160", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:161", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:164", className: "mb-16", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:165", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:166", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:167", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:168", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
-                "data-loc": "client\\src\\pages\\Blog.tsx:128",
+                "data-loc": "client\\src\\pages\\Blog.tsx:169",
                 src: featured.image,
                 alt: featured.title,
                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               }
             ),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:133", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:134", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:174", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:175", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:138", className: "p-8 flex flex-col justify-center", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:139", className: "flex items-center gap-3 mb-4", children: [
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:140", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:141", className: "text-border", children: "·" }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:142", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:143", className: "w-3 h-3" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:179", className: "p-8 flex flex-col justify-center", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:180", className: "flex items-center gap-3 mb-4", children: [
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:181", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:182", className: "text-border", children: "·" }),
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:183", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:184", className: "w-3 h-3" }),
                 " ",
                 featured.readTime
               ] })
             ] }),
-            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:146", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:149", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:150", className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:151", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:152", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:187", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:190", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:191", className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:192", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:193", className: "w-3 h-3" }),
                 " ",
                 featured.date
               ] }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:154", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:195", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
                 "Read Article ",
-                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:155", className: "w-3 h-3" })
+                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:196", className: "w-3 h-3" })
               ] })
             ] })
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:165", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:167", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:168", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:169", className: "relative overflow-hidden aspect-[16/9]", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:206", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:208", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:209", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:210", className: "relative overflow-hidden aspect-[16/9]", children: [
           /* @__PURE__ */ jsx(
             "img",
             {
-              "data-loc": "client\\src\\pages\\Blog.tsx:170",
+              "data-loc": "client\\src\\pages\\Blog.tsx:211",
               src: post.image,
               alt: post.title,
               className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
               loading: "lazy"
             }
           ),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:176", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:177", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:178", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:217", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:218", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:219", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:183", className: "p-5 flex flex-col flex-1", children: [
-          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:184", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:187", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:188", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:189", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:190", className: "w-3 h-3" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:224", className: "p-5 flex flex-col flex-1", children: [
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:225", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:228", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:229", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:230", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:231", className: "w-3 h-3" }),
               " ",
               post.date
             ] }),
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:192", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:193", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:233", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:234", className: "w-3 h-3" }),
               " ",
               post.readTime
             ] })
@@ -5914,7 +5954,7 @@ function ProductDetail() {
       ] }) }),
       /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:296", className: "max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:297", className: "grid grid-cols-1 lg:grid-cols-12 gap-6 items-start", children: [
         /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:300", className: "lg:col-span-4 bg-white dark:bg-card p-4 rounded-md shadow-sm border border-border sticky top-24", children: [
-          /* @__PURE__ */ jsx(ZoomableImage, { "data-loc": "client\\src\\pages\\ProductDetail.tsx:301", src: activeImage.imageUrl, alt: activeImage.altText || product.title }),
+          /* @__PURE__ */ jsx(ZoomableImage, { "data-loc": "client\\src\\pages\\ProductDetail.tsx:301", src: activeImage.imageUrl, alt: `${activeImage.altText || product.title} - Apparel Manufacturer Sialkot` }),
           allImages.length > 1 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:305", className: "flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide", children: allImages.map((img, idx) => /* @__PURE__ */ jsx(
             "button",
             {
@@ -6068,7 +6108,10 @@ function ProductDetail() {
                     "0",
                     i + 1
                   ] }),
-                  /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:537", className: "text-white text-xs font-semibold uppercase tracking-wider mt-1", children: step.title })
+                  /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:537", className: "text-white text-xs font-semibold uppercase tracking-wider mt-1", children: [
+                    step.title,
+                    " Sialkot Facility"
+                  ] })
                 ] })
               ] }, i)) })
             ] })
@@ -6109,6 +6152,779 @@ function Lock(props) {
   return /* @__PURE__ */ jsxs("svg", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:588", ...props, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ jsx("rect", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:589", width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2" }),
     /* @__PURE__ */ jsx("path", { "data-loc": "client\\src\\pages\\ProductDetail.tsx:589", d: "M7 11V7a5 5 0 0 1 10 0v4" })
+  ] });
+}
+function BlogCMTGuide() {
+  const cmtSteps = [
+    {
+      title: "Cut (Precision Cutting)",
+      desc: "Laying, marking, and cutting fabric according to approved digital patterns with zero-tolerance precision.",
+      icon: /* @__PURE__ */ jsx(Ruler, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:13", className: "w-6 h-6" })
+    },
+    {
+      title: "Make (Stitching & Assembly)",
+      desc: "Industrial-grade stitching using mult-head machines, ensuring export-standard seams and structural integrity.",
+      icon: /* @__PURE__ */ jsx(Factory, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:18", className: "w-6 h-6" })
+    },
+    {
+      title: "Trim (Finishing & Packing)",
+      desc: "Adding labels, hardware, final pressing, and poly-bagging according to buyer-specific guidelines.",
+      icon: /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:23", className: "w-6 h-6" })
+    }
+  ];
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:28", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:29",
+        title: "The Sialkot Exporter's Guide to Outsourcing CMT Production",
+        description: "A complete guide for Sialkot apparel exporters on how to find, vet, and manage reliable CMT (Cut, Make, Trim) sub-contractors for sportswear & fashion exports.",
+        canonical: "/blog/cmt-outsourcing-guide-sialkot",
+        ogType: "article",
+        ogImage: IMAGES.servicesBg
+      }
+    ),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:38", className: "relative pt-32 pb-20 overflow-hidden bg-background", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:39", className: "absolute inset-0 z-0 opacity-10", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:40", className: "absolute top-0 left-0 w-full h-full bg-[url('/svc-stitching-sewing.png')] bg-cover bg-center" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:41", className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:44", className: "container relative z-10", children: [
+        /* @__PURE__ */ jsxs(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:45", href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+          /* @__PURE__ */ jsx(ArrowLeft, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:46", className: "w-4 h-4" }),
+          " Back to Blog"
+        ] }),
+        /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:49", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:50", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:51", className: "bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: "Manufacturing Guide" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:54", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:55", className: "w-3 h-3" }),
+              " 10 min read"
+            ] }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:57", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:58", className: "w-3 h-3" }),
+              " March 12, 2026"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:62", className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8 max-w-4xl", children: [
+            "The Sialkot Exporter's Guide to ",
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:63", className: "text-gradient-gold italic", children: "Outsourcing CMT Production" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:66", className: "text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed mb-10", children: "Transform your production floor without the overhead. Learn how to leverage Sialkot's specialized CMT units to scale your export brand." })
+        ] }),
+        /* @__PURE__ */ jsxs(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:71", className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:72", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:73", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:74", to: 98.5, suffix: "%" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:76", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "On-Time Delivery Rate" })
+          ] }),
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:78", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:79", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:80", to: 40, suffix: "%" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:82", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Avg. Overhead Reduction" })
+          ] }),
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:84", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:85", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:86", to: 500, suffix: "+" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:88", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Exporters Served in Sialkot" })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:95", className: "py-20 bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:96", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:97", className: "prose-custom", children: [
+      /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:98", className: "text-xl leading-relaxed", children: [
+        "If you are a garment exporter in Sialkot, you already know the single most stressful part of your business isn't finding international clients—it's ",
+        /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:99", children: "fulfilling their orders on time and to quality" }),
+        ". Your reputation, and your next order, rides entirely on the production floor."
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:102", className: "blog-callout", children: `"Outsourcing to a CMT unit in Sialkot is no longer just a trend; it's a structural shift allowing brands to stay lean while scaling exponentially."` })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:110", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:111", className: "container max-w-4xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:112", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:113", className: "font-serif text-3xl md:text-4xl font-bold mb-4", children: "The 3-Step CMT Workflow" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:114", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:117", className: "space-y-4", children: cmtSteps.map((step, idx) => /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:119", delay: idx * 0.1, className: "blog-process-step", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:120", className: "blog-process-number", children: idx + 1 }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:121", className: "flex gap-4 items-start", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:122", className: "p-3 rounded-sm bg-gold/10 text-gold", children: step.icon }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:125", children: [
+            /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:126", className: "font-serif text-xl font-bold mb-2", children: step.title }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:127", className: "text-muted-foreground leading-relaxed", children: step.desc })
+          ] })
+        ] })
+      ] }, idx)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:137", className: "py-20 bg-muted/20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:138", className: "container max-w-4xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:139", className: "text-center mb-12", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:140", className: "font-serif text-3xl font-bold mb-4", children: "CMT Cost Benchmarks (2026)" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:141", className: "text-muted-foreground", children: "Estimated per-piece rates for export-quality production in Sialkot." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:144", className: "blog-table-container", children: /* @__PURE__ */ jsxs("table", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:145", className: "blog-table", children: [
+        /* @__PURE__ */ jsx("thead", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:146", children: /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:147", children: [
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:148", children: "Garment Type" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:149", children: "Basics (PKR)" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:150", children: "Technical (PKR)" })
+        ] }) }),
+        /* @__PURE__ */ jsxs("tbody", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:153", children: [
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:154", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:155", children: "T-Shirts / Polos" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:156", children: "80 - 150" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:157", children: "150 - 250" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:159", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:160", children: "Hoodies / Sweatshirts" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:161", children: "180 - 300" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:162", children: "300 - 550" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:164", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:165", children: "Tracksuits / Joggers" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:166", children: "250 - 450" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:167", children: "450 - 800" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:169", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:170", children: "Industrial Workwear" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:171", children: "400 - 650" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:172", children: "650 - 1200" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:174", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:175", children: "Sublimated Uniforms" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:176", children: "300 - 500" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:177", children: "500 - 900" })
+          ] })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:183", className: "text-xs italic text-muted-foreground text-center", children: "*Note: Final pricing depends on order volume, fabric type, and complexity of tech packs." })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:190", className: "py-20", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:191", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:192", className: "bg-destructive/5 border border-destructive/20 rounded-sm p-8 relative overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:193", className: "absolute top-0 right-0 p-4 opacity-10", children: /* @__PURE__ */ jsx(AlertTriangle, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:194", className: "w-24 h-24 text-destructive" }) }),
+      /* @__PURE__ */ jsxs("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:197", className: "font-serif text-2xl font-bold text-destructive mb-6 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx(AlertTriangle, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:198", className: "w-6 h-6" }),
+        " Red Flags When Vetting CMT Units"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:201", className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: [
+        /* @__PURE__ */ jsxs("ul", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:202", className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:203", className: "flex gap-3 text-sm text-foreground/80 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:204", className: "text-destructive font-bold", children: "01." }),
+            "No formal Quality Control station on the floor."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:207", className: "flex gap-3 text-sm text-foreground/80 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:208", className: "text-destructive font-bold", children: "02." }),
+            "Old machines without proper maintenance logs."
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("ul", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:212", className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:213", className: "flex gap-3 text-sm text-foreground/80 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:214", className: "text-destructive font-bold", children: "03." }),
+            "Lack of specialized folders for specific operations."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:217", className: "flex gap-3 text-sm text-foreground/80 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:218", className: "text-destructive font-bold", children: "04." }),
+            "Unwillingness to provide a first-piece strike-off."
+          ] })
+        ] })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:228", className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:229", className: "container", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:230", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:231", className: "text-gold font-condensed font-bold tracking-widest uppercase text-xs mb-3", children: "Professional Standards" }),
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:232", className: "font-serif text-3xl md:text-4xl font-bold mb-4", children: "Why Sialkot Exporters Trust Our Branch" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:233", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsxs(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:236", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8", children: [
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:237", className: "flex flex-col items-center text-center group", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:238", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(ShieldCheck, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:239", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:241", className: "font-serif text-lg font-bold mb-2", children: "AQL Standard QC" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:242", className: "text-muted-foreground text-sm", children: "We follow international AQL 2.5/4.0 standards consistently." })
+        ] }),
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:245", className: "flex flex-col items-center text-center group", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:246", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(Zap, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:247", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:249", className: "font-serif text-lg font-bold mb-2", children: "Swift Lead Times" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:250", className: "text-muted-foreground text-sm", children: "Priority lines for urgent export shipments and sampling." })
+        ] }),
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:253", className: "flex flex-col items-center text-center group", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:254", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(Factory, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:255", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:257", className: "font-serif text-lg font-bold mb-2", children: "Modern Machines" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:258", className: "text-muted-foreground text-sm", children: "Latest Juki and Brother machines for consistent stitching." })
+        ] }),
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:261", className: "flex flex-col items-center text-center group", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:262", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:263", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:265", className: "font-serif text-lg font-bold mb-2", children: "Ethical Floor" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:266", className: "text-muted-foreground text-sm", children: "Zero child labor and fair wage compliance verified." })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:273", className: "py-20 bg-gold", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:274", className: "container text-center", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:275", className: "font-serif text-3xl md:text-5xl font-bold text-background mb-8", children: "Ready to Scale Your Production?" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:278", className: "text-background/80 text-lg mb-10 max-w-2xl mx-auto", children: "Book a factory visit or request a custom CMT quote for your next export order. Our specialists are ready to assist." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:281", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:282", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:283", className: "bg-background text-foreground hover:bg-background/90 px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+          "Get a CMT Quote ",
+          /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:284", className: "ml-2 w-4 h-4" })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:287", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCMTGuide.tsx:288", variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Contact Our Branch" }) })
+      ] })
+    ] }) })
+  ] });
+}
+function BlogSublimationGuide() {
+  const processSteps2 = [
+    {
+      title: "Digital Design & Mirroring",
+      desc: "Creating high-resolution vector artwork that is mirrored before printing to ensure correct orientation on fabric.",
+      icon: /* @__PURE__ */ jsx(Printer, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:13", className: "w-6 h-6" })
+    },
+    {
+      title: "Ink-to-Paper Transfer",
+      desc: "Printing the mirrored design onto specialized heat-transfer paper using premium Italian or Japanese sublimation inks.",
+      icon: /* @__PURE__ */ jsx(Droplets, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:18", className: "w-6 h-6" })
+    },
+    {
+      title: "Heat Press & Gassing",
+      desc: "Applying high heat (200°C) and pressure. The solid ink turns into gas and molecules merge with the fabric fibers.",
+      icon: /* @__PURE__ */ jsx(Layers, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:23", className: "w-6 h-6" })
+    },
+    {
+      title: "Cooling & Bond Locking",
+      desc: "As the fabric cools, the ink molecules are trapped inside the fibers, making the print permanent and breathable.",
+      icon: /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:28", className: "w-6 h-6" })
+    }
+  ];
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:33", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:34",
+        title: "Everything You Need to Know About Digital Sublimation Printing for Sportswear in 2026",
+        description: "The ultimate B2B guide to digital sublimation printing for sportswear brands. Learn about fabric compatibility, ink quality, and why Sialkot is the hub for performance apparel.",
+        canonical: "/blog/sublimation-printing-guide-sportswear",
+        ogType: "article",
+        ogImage: IMAGES.servicePrinting
+      }
+    ),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:43", className: "relative pt-32 pb-20 overflow-hidden bg-background", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:44", className: "absolute inset-0 z-0 opacity-10", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:45", className: "absolute top-0 left-0 w-full h-full bg-[url('/svc-textile-printing.png')] bg-cover bg-center" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:46", className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:49", className: "container relative z-10", children: [
+        /* @__PURE__ */ jsxs(Link, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:50", href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+          /* @__PURE__ */ jsx(ArrowLeft, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:51", className: "w-4 h-4" }),
+          " Back to Blog"
+        ] }),
+        /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:54", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:55", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:56", className: "bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: "Technical Guide" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:59", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:60", className: "w-3 h-3" }),
+              " 8 min read"
+            ] }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:62", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:63", className: "w-3 h-3" }),
+              " March 12, 2026"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:67", className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8 max-w-4xl", children: [
+            "The 2026 Guide to ",
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:68", className: "text-gradient-gold italic", children: "Digital Sublimation Printing" }),
+            " for Sportswear"
+          ] }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:71", className: "text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed mb-10", children: "Why the world's top sports brands choose sublimation for performance. A deep dive into the science of gas-to-fiber printing." })
+        ] }),
+        /* @__PURE__ */ jsxs(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:76", className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: [
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:77", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:78", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:79", to: 100, suffix: "%" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:81", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Breathability Retained" })
+          ] }),
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:83", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:84", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:85", to: 50, suffix: "+" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:87", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Wash Cycles (No Fade)" })
+          ] }),
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:89", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:90", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:91", to: 16.7, suffix: "M" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:93", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Possible Color Shades" })
+          ] }),
+          /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:95", className: "blog-stat-card", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:96", className: "text-gold font-serif text-4xl font-bold mb-2", children: /* @__PURE__ */ jsx(CountUp, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:97", to: 0, suffix: "" }) }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:99", className: "text-muted-foreground font-condensed font-bold uppercase tracking-wider text-xs", children: "Texture/Feel on Fabric" })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:106", className: "py-20 bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:107", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:108", className: "prose-custom", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:109", className: "font-serif text-3xl font-bold mb-6", children: 'The "Science" of Sublimation' }),
+      /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:110", className: "text-lg leading-relaxed mb-6", children: [
+        "Unlike screen printing—where ink sits on ",
+        /* @__PURE__ */ jsx("em", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:111", children: "top" }),
+        " of the fabric—sublimation actually bonds the ink ",
+        /* @__PURE__ */ jsx("em", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:111", children: "inside" }),
+        " the fibers. When the heat hits those polyester-based fibers, they open up like a microscopic pore, allowing the vaporized ink to enter. Once cooled, the pore closes, locking the color in forever."
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:114", className: "blog-callout", children: [
+        /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:115", children: "Key Advantage:" }),
+        " Because the ink is inside the fiber, it doesn't block the gaps between the threads. This means the moisture-wicking and breathability features of high-performance sportswear are 100% maintained."
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:122", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:123", className: "container max-w-5xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:124", className: "text-center mb-16 px-4", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:125", className: "font-serif text-3xl md:text-4xl font-bold mb-4 text-foreground", children: "The Professional Sublimation Pipeline" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:126", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:129", className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8", children: processSteps2.map((step, idx) => /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:131", delay: idx * 0.1, className: "relative group", children: [
+        idx < processSteps2.length - 1 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:133", className: "hidden lg:block absolute top-12 left-full w-full h-[2px] bg-gold/20 z-0 -translate-x-1/4" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:135", className: "bg-card border border-border p-6 rounded-sm relative z-10 h-full hover:border-gold/50 transition-colors", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:136", className: "w-12 h-12 rounded-full bg-gold text-background flex items-center justify-center font-bold mb-6 shadow-lg shadow-gold/20", children: idx + 1 }),
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:139", className: "font-serif text-xl font-bold mb-4", children: step.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:140", className: "text-muted-foreground text-sm leading-relaxed", children: step.desc })
+        ] })
+      ] }, idx)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:149", className: "py-20 bg-muted/20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:150", className: "container max-w-4xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:151", className: "text-center mb-12", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:152", className: "font-serif text-3xl font-bold mb-4", children: "Fabric Compatibility Matrix" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:153", className: "text-muted-foreground", children: "Sublimation requires specific synthetic compositions to achieve vibrant results." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:156", className: "blog-table-container", children: /* @__PURE__ */ jsxs("table", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:157", className: "blog-table", children: [
+        /* @__PURE__ */ jsx("thead", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:158", children: /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:159", children: [
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:160", children: "Fabric Type" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:161", children: "Polyester %" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:162", children: "Color Vibrancy" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:163", children: "Durability" })
+        ] }) }),
+        /* @__PURE__ */ jsxs("tbody", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:166", children: [
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:167", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:168", children: "100% Performance Poly" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:169", children: "100%" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:170", children: "Ultra-Vibrant" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:171", children: "Exceptional" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:173", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:174", children: "Interlock / Birdseye" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:175", children: "100%" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:176", children: "High Contrast" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:177", children: "High" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:179", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:180", children: "Poly-Spandex Blends" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:181", children: "80-92%" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:182", children: "Very Good" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:183", children: "High (Stretch-Safe)" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:185", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:186", children: "Poly-Cotton Blend" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:187", children: "50-65%" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:188", children: "Vintage/Faded" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:189", children: "Moderate" })
+          ] }),
+          /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:191", children: [
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:192", children: "100% Cotton" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:193", children: "0%" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:194", children: "Not Recommended" }),
+            /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:195", children: "N/A" })
+          ] })
+        ] })
+      ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:204", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:205", className: "container max-w-4xl", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:206", className: "font-serif text-3xl font-bold mb-10 text-center", children: "Quality Indicators: What to Look For" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:208", className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:209", className: "p-8 border border-border rounded-sm bg-card hover:border-gold/30 transition-all group", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:210", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:211", className: "p-3 bg-gold/10 text-gold rounded-sm group-hover:bg-gold group-hover:text-background transition-colors", children: /* @__PURE__ */ jsx(Droplets, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:212", className: "w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:214", className: "font-serif text-xl font-bold", children: "Ink Grade Matters" })
+          ] }),
+          /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:216", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: [
+            'Generic inks often lead to "ghosting" or color shifting (e.g., black turning to brown after 5 washes). We exclusively use ',
+            /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:217", children: "J-Teck (Italy)" }),
+            " or ",
+            /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:217", children: "Epson Gen5" }),
+            " inks for deep, true color saturation."
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:219", className: "flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-widest", children: [
+            /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:220", className: "w-4 h-4" }),
+            " Eco-Pass Certified"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:224", className: "p-8 border border-border rounded-sm bg-card hover:border-gold/30 transition-all group", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:225", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:226", className: "p-3 bg-gold/10 text-gold rounded-sm group-hover:bg-gold group-hover:text-background transition-colors", children: /* @__PURE__ */ jsx(Layers, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:227", className: "w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:229", className: "font-serif text-xl font-bold", children: "Paper Thickness" })
+          ] }),
+          /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:231", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: [
+            "Low-GSM paper warps under high-speed printing, causing blur. Our ",
+            /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:232", children: "100GSM+ Tackified Paper" }),
+            " ensures the design doesn't move during transfer, providing razor-sharp edges on every logo."
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:234", className: "flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-widest", children: [
+            /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:235", className: "w-4 h-4" }),
+            " Anti-Ghosting Tech"
+          ] })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:243", className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:244", className: "container max-w-3xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:245", className: "flex flex-col items-center text-center", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:246", className: "w-16 h-16 rounded-full bg-gold/10 text-gold flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx(Info, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:247", className: "w-8 h-8" }) }),
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:249", className: "font-serif text-3xl font-bold mb-8", children: "A Note on Export Standards" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:250", className: "space-y-6 text-left w-full", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:251", className: "flex gap-4 p-6 bg-muted/30 rounded-sm", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:252", className: "shrink-0", children: /* @__PURE__ */ jsx(Shield, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:252", className: "w-5 h-5 text-gold" }) }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:253", children: [
+            /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:254", className: "font-bold text-sm mb-1 uppercase tracking-wider", children: "REACH Compliance" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:255", className: "text-muted-foreground text-sm leading-relaxed", children: "For European exports, your inks must be free of harmful chemicals. Our sublimation process passes all OEKO-TEX and REACH stringent tests." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:258", className: "flex gap-4 p-6 bg-muted/30 rounded-sm", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:259", className: "shrink-0", children: /* @__PURE__ */ jsx(Shield, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:259", className: "w-5 h-5 text-gold" }) }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:260", children: [
+            /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:261", className: "font-bold text-sm mb-1 uppercase tracking-wider", children: "Color Consistency" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:262", className: "text-muted-foreground text-sm leading-relaxed", children: "We use X-Rite spectrophotometers to ensure that the color of the jersey you order in March perfectly matches the re-order in November." })
+          ] })
+        ] })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:271", className: "py-24 bg-gradient-to-r from-gold via-gold-dark to-gold", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:272", className: "container text-center", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:273", className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Level Up Your Sportswear Brand" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:276", className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Ready to see the difference premium Italian ink makes? Request a sample kit featuring our latest sublimated performance fabrics." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:279", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:280", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:281", className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+          "Request Sample Kit ",
+          /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:282", className: "ml-2 w-4 h-4" })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:285", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogSublimationGuide.tsx:286", variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Speak to a Print Expert" }) })
+      ] })
+    ] }) })
+  ] });
+}
+function BlogCADvsManual() {
+  const comparisonData = [
+    { feature: "Pattern Accuracy", manual: "Low (0.5mm - 2mm error)", cad: "Zero-Tolerance Precision", cadBetter: true },
+    { feature: "Fabric Utilization", manual: "Manual Masking (Higher Waste)", cad: "AI Auto-Nested (5-12% Savings)", cadBetter: true },
+    { feature: "Grading Speed", manual: "3-5 Hours per Size", cad: "Instant (Parameter Based)", cadBetter: true },
+    { feature: "Digital Archiving", manual: "Physical Paper Storage", cad: "Cloud Based / Instant Retrieval", cadBetter: true },
+    { feature: "Revision Time", manual: "Must Redraw Entirely", cad: "Non-Destructive Adjustments", cadBetter: true }
+  ];
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:18", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:19",
+        title: "CAD Pattern Drafting vs. Manual: Why Exporters Should Switch to Digital Patterns",
+        description: "A technical comparison of CAD vs Manual pattern drafting for Sialkot apparel manufacturers. Learn how digital patterns save fabric, speed up production, and ensure export-quality grading.",
+        canonical: "/blog/cad-vs-manual-pattern-drafting-guide",
+        ogType: "article",
+        ogImage: IMAGES.servicePattern
+      }
+    ),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:28", className: "relative pt-32 pb-20 overflow-hidden bg-background", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:29", className: "absolute inset-0 z-0 opacity-10", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:30", className: "absolute top-0 left-0 w-full h-full bg-[url('/svc-pattern-drafting.png')] bg-cover bg-center" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:31", className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:34", className: "container relative z-10", children: [
+        /* @__PURE__ */ jsxs(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:35", href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+          /* @__PURE__ */ jsx(ArrowLeft, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:36", className: "w-4 h-4" }),
+          " Back to Blog"
+        ] }),
+        /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:39", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:40", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:41", className: "bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: "Efficiency Insights" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:44", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:45", className: "w-3 h-3" }),
+              " 7 min read"
+            ] }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:47", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:48", className: "w-3 h-3" }),
+              " March 12, 2026"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:52", className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8 max-w-4xl", children: [
+            "CAD vs Manual ",
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:53", className: "text-gradient-gold italic", children: "Pattern Drafting:" }),
+            " The Switch for Exporters"
+          ] }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:56", className: "text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed mb-10", children: "In the high-stakes world of apparel exports, a 1% saving in fabric can equal thousands of dollars in profit. Discover why manual drafting is costing you money." })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:64", className: "py-20 bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:65", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:66", className: "prose-custom", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:67", className: "font-serif text-3xl font-bold mb-6", children: 'The "Hidden Tax" on Manual Patterns' }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:68", className: "text-lg leading-relaxed mb-6", children: "For decades, Sialkot's master cutters have relied on brown paper and chalk. While legendary, this manual approach introduces human error that cumulative costs add up. A slight misalignment in a sleeve cap or a 2mm error in grading across 6 sizes can lead to massive rejection rates from international buyers." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:72", className: "blog-callout border-destructive/50 bg-destructive/5", children: [
+        /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:73", children: "The Reality Check:" }),
+        " Manual markers typically result in 15-20% fabric waste. CAD-based auto-nesting can reduce this to 8-12% almost instantly."
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:80", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:81", className: "container max-w-4xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:82", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:83", className: "font-serif text-3xl md:text-4xl font-bold mb-4", children: "Production Speed Benchmark" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:84", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:87", className: "space-y-12", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:88", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:89", className: "blog-progress-label", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:90", children: "Manual Grading (6 Sizes)" }),
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:91", children: "~240 Minutes" })
+          ] }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:93", className: "blog-progress-bg", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:94", className: "blog-progress-fill w-[100%] bg-muted-foreground/30" }) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:98", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:99", className: "blog-progress-label", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:100", className: "text-gold font-bold", children: "CAD Digital Grading (6 Sizes)" }),
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:101", className: "text-gold font-bold", children: "~15 Minutes" })
+          ] }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:103", className: "blog-progress-bg", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:104", className: "blog-progress-fill w-[6.25%] animate-pulse" }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:109", className: "mt-8 text-center text-sm text-muted-foreground italic", children: "*Calculated based on standard hoodie pattern with 12 components." })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:116", className: "py-20 bg-muted/20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:117", className: "container max-w-5xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:118", className: "text-center mb-12 px-4", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:119", className: "font-serif text-3xl font-bold mb-4", children: "Head-to-Head Comparison" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:120", className: "text-muted-foreground", children: "Why the industry's shift to digital is now mandatory for survival." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:123", className: "blog-table-container", children: /* @__PURE__ */ jsxs("table", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:124", className: "blog-table", children: [
+        /* @__PURE__ */ jsx("thead", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:125", children: /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:126", children: [
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:127", children: "Feature" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:128", children: "Manual (Analog)" }),
+          /* @__PURE__ */ jsx("th", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:129", children: "CAD (Digital)" })
+        ] }) }),
+        /* @__PURE__ */ jsx("tbody", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:132", children: comparisonData.map((row, idx) => /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:134", children: [
+          /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:135", className: "font-bold text-foreground", children: row.feature }),
+          /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:136", children: row.manual }),
+          /* @__PURE__ */ jsxs("td", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:137", className: row.cadBetter ? "text-gold font-bold flex items-center gap-2" : "", children: [
+            row.cadBetter && /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:138", className: "w-4 h-4" }),
+            " ",
+            row.cad
+          ] })
+        ] }, idx)) })
+      ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:149", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:150", className: "container max-w-5xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:151", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:152", className: "font-serif text-3xl md:text-4xl font-bold mb-4", children: "Our Technology Stack" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:153", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsxs(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:156", className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:157", className: "p-8 border border-border rounded-sm bg-card hover:border-gold/30 transition-all flex flex-col items-center text-center", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:158", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(Laptop, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:159", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:161", className: "font-serif text-xl font-bold mb-3", children: "Optitex & Gerber" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:162", className: "text-muted-foreground text-sm leading-relaxed", children: "Industry-lead solutions for 2D drafting and high-speed nesting algorithms." })
+        ] }),
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:167", className: "p-8 border border-border rounded-sm bg-card hover:border-gold/30 transition-all flex flex-col items-center text-center", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:168", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(Cpu, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:169", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:171", className: "font-serif text-xl font-bold mb-3", children: "AI Nesting" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:172", className: "text-muted-foreground text-sm leading-relaxed", children: "Smart computation of pattern placement to squeeze every centimeter out of your fabric." })
+        ] }),
+        /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:177", className: "p-8 border border-border rounded-sm bg-card hover:border-gold/30 transition-all flex flex-col items-center text-center", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:178", className: "blog-feature-icon", children: /* @__PURE__ */ jsx(FileJson, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:179", className: "w-6 h-6" }) }),
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:181", className: "font-serif text-xl font-bold mb-3", children: "Multi-format Export" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:182", className: "text-muted-foreground text-sm leading-relaxed", children: "Deliver patterns in DXF, ASTM, or AAMA formats compatible with global factory cutters." })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:191", className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:192", className: "container max-w-4xl", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:193", className: "bg-gold/5 border-2 border-gold/20 rounded-sm p-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:194", className: "flex flex-col md:flex-row gap-10 items-center", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:195", className: "md:w-1/2", children: [
+        /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:196", className: "font-serif font-bold text-3xl mb-6", children: "The ROI Calculator" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:197", className: "text-muted-foreground leading-relaxed mb-6", children: "If you are producing 1,000 tracksuits and saving just 0.15 meters per piece through digital nesting, you save **150 meters** of fabric." }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:200", className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:201", className: "flex justify-between items-center text-sm", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:202", children: "Fabric Saved" }),
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:203", className: "font-bold text-gold", children: "150 Meters" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:205", className: "flex justify-between items-center text-sm", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:206", children: "Avg. Fabric Cost" }),
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:207", className: "font-bold text-gold", children: "PKR 850/m" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:209", className: "border-t border-gold/20 pt-4 flex justify-between items-center", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:210", className: "font-bold", children: "Estimated Savings" }),
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:211", className: "font-serif text-2xl font-bold text-gold", children: "PKR 127,500" })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:215", className: "md:w-1/2 flex justify-center", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:216", className: "relative", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:217", className: "w-32 h-32 rounded-full border-4 border-gold/30 flex items-center justify-center text-gold", children: /* @__PURE__ */ jsx(TrendingUp, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:218", className: "w-16 h-16" }) }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:220", className: "absolute -top-2 -right-2 bg-gold text-background px-3 py-1 text-xs font-bold rounded-full", children: "+15% MARGIN" })
+      ] }) })
+    ] }) }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:231", className: "py-24 bg-foreground", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:232", className: "container text-center", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:233", className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Digitize Your Pattern Library Today" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:236", className: "text-background/60 text-lg mb-12 max-w-2xl mx-auto", children: "Stop wasting fabric and risking rejection. Our pattern masters can convert your existing paper patterns into high-precision digital assets." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:239", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:240", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:241", className: "bg-gold text-background hover:bg-gold-light px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+          "Get a Digitizing Quote ",
+          /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:242", className: "ml-2 w-4 h-4" })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:245", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCADvsManual.tsx:246", variant: "outline", className: "border-gold text-gold hover:bg-gold hover:text-background px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request a Live Demo" }) })
+      ] })
+    ] }) })
+  ] });
+}
+function BlogQCChecklist() {
+  const qcStages = [
+    {
+      title: "Pre-Production Audit (PPA)",
+      desc: "Checking fabric GSM, color matching (Lab dips), and trim durability before the first cut is made.",
+      icon: /* @__PURE__ */ jsx(Search, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:13", className: "w-6 h-6" })
+    },
+    {
+      title: "Inline Inspection (DPI)",
+      desc: "Random sampling during the stitching phase to catch seam defects or sizing drift early in the run.",
+      icon: /* @__PURE__ */ jsx(ClipboardCheck, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:18", className: "w-6 h-6" })
+    },
+    {
+      title: "End-of-Line (EOL) Review",
+      desc: "100% inspection of finished garments for loose threads, hardware function, and measurement accuracy.",
+      icon: /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:23", className: "w-6 h-6" })
+    },
+    {
+      title: "Final Random Inspection (FRI)",
+      desc: "Pre-shipment audit based on AQL 2.5 standards to ensure packing and carton markings are correct.",
+      icon: /* @__PURE__ */ jsx(Truck, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:28", className: "w-6 h-6" })
+    }
+  ];
+  const checklistItems = [
+    { category: "Stitching", points: ["No skipped stitches", "Consistent stitch density (SPI)", "Secure back-tacking"] },
+    { category: "Fabric / Color", points: ["No shading within the same garment", "Color fastness to sweat/wash", "Correct fabric GSM"] },
+    { category: "Hardware / Trims", points: ["YKK Zipper smoothness", "Secure button attachment", "Label placement accuracy"] },
+    { category: "Measurements", points: ["Full size set grading check", "Sleeve length +/- 1cm tolerance", "Waistband stretch recovery"] }
+  ];
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:40", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:41",
+        title: "The Ultimate Checklist for Quality Control in Sialkot Apparel Manufacturing",
+        description: "Ensure your export orders meet international standards. A comprehensive guide to Quality Control (QC) for Sialkot apparel manufacturers, covering PPA, DPI, and FRI audits.",
+        canonical: "/blog/apparel-manufacturing-qc-checklist",
+        ogType: "article",
+        ogImage: IMAGES.serviceQC
+      }
+    ),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:50", className: "relative pt-32 pb-20 overflow-hidden bg-background border-b border-border", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:51", className: "absolute inset-0 z-0 opacity-10", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:52", className: "absolute top-0 left-0 w-full h-full bg-[url('/svc-quality-control.png')] bg-cover bg-center" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:53", className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:56", className: "container relative z-10", children: [
+        /* @__PURE__ */ jsxs(Link, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:57", href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+          /* @__PURE__ */ jsx(ArrowLeft, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:58", className: "w-4 h-4" }),
+          " Back to Blog"
+        ] }),
+        /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:61", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:62", className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:63", className: "bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: "Quality Assurance" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:66", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:67", className: "w-3 h-3" }),
+              " 9 min read"
+            ] }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:69", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:70", className: "w-3 h-3" }),
+              " March 12, 2026"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:74", className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8 max-w-4xl", children: [
+            "The ",
+            /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:75", className: "text-gradient-gold italic", children: "Ultimate Checklist" }),
+            " for Apparel Quality Control"
+          ] }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:78", className: "text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed mb-10", children: `One "bad batch" can destroy a decade of trust. Master the AQL standards and auditing pipelines used by the world's most successful exporters.` })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:86", className: "py-20 bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:87", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:88", className: "prose-custom", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:89", className: "font-serif text-3xl font-bold mb-6", children: "Why QC is Your Most Profitable Department" }),
+      /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:90", className: "text-lg leading-relaxed mb-6", children: [
+        'In Sialkot, "Quality Control" is often treated as a final hurdle just before packing. This is a mistake. Professional QC is a ',
+        /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:91", children: "preventative" }),
+        " system, not an ",
+        /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:91", children: "obstructionist" }),
+        " one. Catching a fabric flaw during Pre-Production costs PKR 0. Catching it after 5,000 units are stitched costs you the entire shipment."
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:94", className: "blog-callout", children: `"Quality is not an act, it is a habit. In B2B manufacturing, it's the difference between a one-time buyer and a lifetime partner."` })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:102", className: "py-20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:103", className: "container max-w-5xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:104", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:105", className: "font-serif text-3xl md:text-4xl font-bold mb-4", children: "The 4-Stage Auditing Pipeline" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:106", className: "gold-divider mx-auto" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:109", className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: qcStages.map((stage, idx) => /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:111", delay: idx * 0.1, className: "relative blog-stat-card border-gold/10 hover:border-gold/40 transition-all p-8 flex flex-col items-center text-center group", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:112", className: "w-14 h-14 rounded-full bg-gold/5 text-gold flex items-center justify-center mb-6 group-hover:bg-gold group-hover:text-background transition-colors duration-300", children: stage.icon }),
+        /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:115", className: "font-serif font-bold text-lg mb-3", children: stage.title }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:116", className: "text-muted-foreground text-xs leading-relaxed", children: stage.desc }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:117", className: "mt-auto pt-6 text-[10px] font-condensed font-bold tracking-widest text-gold opacity-30 group-hover:opacity-100 transition-opacity", children: [
+          "STAGE 0",
+          idx + 1
+        ] })
+      ] }, idx)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:127", className: "py-20 bg-muted/20", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:128", className: "container max-w-5xl", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:129", className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:130", className: "font-serif text-3xl font-bold mb-4", children: "The Inspector's Checklist" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:131", className: "text-muted-foreground max-w-lg mx-auto", children: "Critical points our audit teams verify on the production floor every single day." })
+      ] }),
+      /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:134", className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: checklistItems.map((item, idx) => /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:136", className: "bg-card border border-border p-8 rounded-sm hover:shadow-xl hover:shadow-gold/5 transition-all", children: [
+        /* @__PURE__ */ jsxs("h4", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:137", className: "font-condensed font-bold text-gold uppercase tracking-widest mb-6 flex items-center gap-2 border-b border-border pb-4", children: [
+          /* @__PURE__ */ jsx(ShieldCheck, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:138", className: "w-4 h-4" }),
+          " ",
+          item.category
+        ] }),
+        /* @__PURE__ */ jsx("ul", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:140", className: "space-y-4", children: item.points.map((point, pIdx) => /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:142", className: "flex gap-3 text-sm text-foreground/80", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:143", className: "shrink-0 w-5 h-5 rounded-full bg-gold/10 text-gold flex items-center justify-center", children: /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:144", className: "w-3 h-3" }) }),
+          point
+        ] }, pIdx)) })
+      ] }, idx)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:157", className: "py-20", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:158", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:159", className: "flex flex-col md:flex-row gap-12 items-center bg-foreground text-background p-10 rounded-sm", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:160", className: "md:w-1/3 text-center", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:161", className: "inline-block p-6 rounded-full border-4 border-gold text-gold mb-4", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:162", className: "font-serif text-4xl font-bold italic", children: "AQL" }) }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:164", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs", children: "Industry Standard" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:166", className: "md:w-2/3", children: [
+        /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:167", className: "font-serif text-3xl font-bold mb-4 text-gradient-gold italic", children: "Understanding AQL 2.5" }),
+        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:168", className: "text-background/70 leading-relaxed mb-6", children: [
+          "Acceptable Quality Level (AQL) is the statistical method we use to determine if a full product batch is accepted or rejected. For export orders, we typically operate on ",
+          /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:169", children: "AQL 2.5 for Major Defects" }),
+          " and ",
+          /* @__PURE__ */ jsx("strong", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:169", children: "4.0 for Minor Defects" }),
+          "."
+        ] }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:171", href: "/contact", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Download our full QA Handbook (PDF)" })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:180", className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:181", className: "container max-w-3xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:182", className: "flex flex-col items-center text-center", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:183", className: "w-16 h-16 rounded-full bg-destructive/10 text-destructive flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx(AlertCircle, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:184", className: "w-8 h-8" }) }),
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:186", className: "font-serif text-3xl font-bold mb-8", children: 'Common "Critical" Defects' }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:187", className: "text-muted-foreground mb-10", children: "Items that trigger an immediate batch rejection regardless of AQL count." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:189", className: "grid grid-cols-1 sm:grid-cols-2 gap-4 w-full", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:190", className: "flex gap-4 p-5 bg-destructive/5 border border-destructive/10 rounded-sm text-left", children: [
+          /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:191", className: "w-5 h-5 text-destructive shrink-0" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:192", className: "text-sm font-bold", children: "Broken needle tip in garment" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:194", className: "flex gap-4 p-5 bg-destructive/5 border border-destructive/10 rounded-sm text-left", children: [
+          /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:195", className: "w-5 h-5 text-destructive shrink-0" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:196", className: "text-sm font-bold", children: "Incorrect brand labeling" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:198", className: "flex gap-4 p-5 bg-destructive/5 border border-destructive/10 rounded-sm text-left", children: [
+          /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:199", className: "w-5 h-5 text-destructive shrink-0" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:200", className: "text-sm font-bold", children: "Fabric holes or weak seams" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:202", className: "flex gap-4 p-5 bg-destructive/5 border border-destructive/10 rounded-sm text-left", children: [
+          /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:203", className: "w-5 h-5 text-destructive shrink-0" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:204", className: "text-sm font-bold", children: "Moisture or fungal growth" })
+        ] })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:212", className: "py-24 bg-card border-y border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:213", className: "container text-center", children: [
+      /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:214", className: "font-serif text-4xl md:text-5xl font-bold text-foreground mb-8", children: [
+        "Zero-Compromise ",
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:215", className: "text-gold italic", children: "Quality Assurance" })
+      ] }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:217", className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto", children: "Experience the peace of mind that comes with a manufacturing partner who cares about your reputation as much as you do." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:220", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:221", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:222", className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+          "Inquire About QC Services ",
+          /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:223", className: "ml-2 w-4 h-4" })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:226", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogQCChecklist.tsx:227", variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Audit Samples" }) })
+      ] })
+    ] }) })
   ] });
 }
 function Separator({
@@ -8651,7 +9467,7 @@ It is now shown in your product preview and will be displayed alongside the stor
         ),
         logoFile && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:557", className: "flex items-center gap-1.5 bg-secondary border border-border rounded-full px-2 py-1 text-xs", children: [
           /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:558", className: "text-muted-foreground truncate max-w-24", children: logoFile.name }),
-          /* @__PURE__ */ jsx("button", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:559", onClick: () => setLogoFile(null), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:560", className: "w-3 h-3" }) })
+          /* @__PURE__ */ jsx("button", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:559", onClick: () => setLogoFile(null), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:560", className: "w-3 h-3" }) })
         ] }),
         /* @__PURE__ */ jsx("input", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:564", ref: fileInputRef, type: "file", accept: "image/*", onChange: handleLogoUpload, className: "hidden" }),
         /* @__PURE__ */ jsxs(
@@ -8676,7 +9492,7 @@ It is now shown in your product preview and will be displayed alongside the stor
           /* @__PURE__ */ jsx(Settings, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:582", className: "w-4 h-4 text-muted-foreground" }),
           /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:583", className: "font-condensed font-bold uppercase tracking-wider text-xs text-foreground", children: "Gemini API Key Settings" })
         ] }),
-        /* @__PURE__ */ jsx("button", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:585", onClick: () => setShowSettings(false), className: "text-muted-foreground hover:text-foreground", children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:586", className: "w-4 h-4" }) })
+        /* @__PURE__ */ jsx("button", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:585", onClick: () => setShowSettings(false), className: "text-muted-foreground hover:text-foreground", children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:586", className: "w-4 h-4" }) })
       ] }),
       apiKeyQuery.data?.hasKey && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:591", className: "flex items-center gap-2 text-xs", children: [
         /* @__PURE__ */ jsx(CheckCircle, { "data-loc": "client\\src\\components\\admin\\AIProductAgent.tsx:592", className: "w-3.5 h-3.5 text-green-500" }),
@@ -9035,7 +9851,7 @@ function AIImageOptimizer() {
               "data-loc": "client\\src\\components\\admin\\AIImageOptimizer.tsx:150",
               onClick: handleClear,
               className: "absolute top-2 right-2 bg-black/60 hover:bg-destructive/80 text-white rounded-full p-1.5 transition-colors",
-              children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\AIImageOptimizer.tsx:154", className: "w-4 h-4" })
+              children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\AIImageOptimizer.tsx:154", className: "w-4 h-4" })
             }
           )
         ] }),
@@ -9624,7 +10440,7 @@ function VirtualTryOnAgent({
                   setHasUnsavedModel(false);
                 },
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:163", className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:163", className: "w-3 h-3" })
               }
             )
           ] }) : /* @__PURE__ */ jsxs(
@@ -9703,7 +10519,7 @@ function VirtualTryOnAgent({
                 "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:245",
                 onClick: () => setReferenceImages((prev) => prev.filter((_, idx) => idx !== i)),
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:249", className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:249", className: "w-3 h-3" })
               }
             )
           ] }, i)),
@@ -9751,7 +10567,7 @@ function VirtualTryOnAgent({
                 "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:294",
                 onClick: () => setLogoImage(null),
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:298", className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\components\\admin\\VirtualTryOnAgent.tsx:298", className: "w-3 h-3" })
               }
             )
           ] }) : /* @__PURE__ */ jsx(
@@ -10313,7 +11129,7 @@ function SizeChartEditor({ value, onChange }) {
       ] }) }),
       /* @__PURE__ */ jsx("tbody", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:113", className: "divide-y divide-border", children: rows.map((row, i) => /* @__PURE__ */ jsxs("tr", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:115", className: "hover:bg-secondary/20 transition-colors", children: [
         columns.map((col) => /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:117", className: "px-2 py-2", children: /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:118", value: row[col] ?? "", onChange: (e) => updateCell(i, col, e.target.value), className: "bg-background border-border" }) }, col)),
-        /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:121", className: "px-2 py-2 text-center", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:122", type: "button", variant: "ghost", size: "icon", onClick: () => removeRow(i), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:123", className: "w-4 h-4" }) }) })
+        /* @__PURE__ */ jsx("td", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:121", className: "px-2 py-2 text-center", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:122", type: "button", variant: "ghost", size: "icon", onClick: () => removeRow(i), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:123", className: "w-4 h-4" }) }) })
       ] }, i)) })
     ] }) }),
     /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:131", className: "flex justify-between items-center", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:132", type: "button", size: "sm", variant: "outline", onClick: addRow, children: [
@@ -17558,58 +18374,62 @@ function TechPackCreator() {
 }
 const BARE_ROUTES = ["/admin-saad", "/customize", "/branding-studio"];
 function Router() {
-  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:47", children: [
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:48", path: "/", component: Home }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:49", path: "/about", component: About }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:50", path: "/services", component: Services }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:51", path: "/products", component: Products }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:52", path: "/portfolio", component: Portfolio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:53", path: "/blog", component: Blog }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:54", path: "/blog/:slug", component: BlogPost }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:55", path: "/rfq", component: RFQ }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:56", path: "/contact", component: Contact }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/shop", component: Shop }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/shop/:slug", component: ProductDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/checkout", component: Checkout }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/checkout/success", component: CheckoutSuccess }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/checkout/cancel", component: CheckoutCancel }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/customize", component: Customize }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/branding-studio", component: BrandingStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/tech-pack", component: TechPackCreator }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/admin-saad", component: AdminDashboard }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/admin-saad/login", component: AdminLogin }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/admin-saad/orders", component: AdminOrders }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/admin-saad/inquiries", component: AdminInquiries }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/admin-saad/products", component: AdminProducts }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/admin-saad/content", component: AdminContent }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/admin-saad/settings", component: AdminSettings }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/admin-saad/product/new", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/404", component: NotFound }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", component: NotFound })
+  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:51", children: [
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:52", path: "/", component: Home }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:53", path: "/about", component: About }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:54", path: "/services", component: Services }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:55", path: "/products", component: Products }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:56", path: "/portfolio", component: Portfolio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:57", path: "/blog", component: Blog }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/blog/:slug", component: BlogPost }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/rfq", component: RFQ }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/contact", component: Contact }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/shop", component: Shop }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/shop/:slug", component: ProductDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/checkout", component: Checkout }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/checkout/success", component: CheckoutSuccess }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/checkout/cancel", component: CheckoutCancel }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/customize", component: Customize }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/branding-studio", component: BrandingStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/tech-pack", component: TechPackCreator }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/admin-saad", component: AdminDashboard }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/admin-saad/login", component: AdminLogin }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/admin-saad/orders", component: AdminOrders }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/admin-saad/inquiries", component: AdminInquiries }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/admin-saad/products", component: AdminProducts }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:83", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/admin-saad/content", component: AdminContent }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:85", path: "/admin-saad/settings", component: AdminSettings }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/admin-saad/product/new", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/404", component: NotFound }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", component: NotFound })
   ] });
 }
 function Layout() {
   const [location] = useLocation();
   const isBare = BARE_ROUTES.some((r) => location.startsWith(r));
   if (isBare) {
-    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:93", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:94" }) });
+    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:101", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:102" }) });
   }
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:100", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
-    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:101" }),
-    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:102" }),
-    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:103", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:104" }) }),
-    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:106" }),
-    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:107" })
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:108", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:109" }),
+    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:110" }),
+    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:111", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:112" }) }),
+    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:114" }),
+    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:115" })
   ] });
 }
 function App() {
-  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:114", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:115", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:116", children: [
-    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:117" }),
-    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:118" })
+  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:122", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:123", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:124", children: [
+    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:125" }),
+    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:126" })
   ] }) }) });
 }
 async function render(url) {
