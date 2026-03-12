@@ -173,10 +173,13 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'wouter', '@tanstack/react-query'],
-          ui: ['lucide-react', 'sonner'],
-        }
+        // manualChunks only applies to client builds; SSR externalizes these
+        ...(!process.argv.includes('--ssr') ? {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'wouter', '@tanstack/react-query'],
+            ui: ['lucide-react', 'sonner'],
+          }
+        } : {})
       }
     }
   },

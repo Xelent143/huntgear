@@ -3392,11 +3392,20 @@ async function setupVite(app, server) {
       );
       let template = await fs2.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid3()}"`
+        `src="/src/entry-client.tsx"`,
+        `src="/src/entry-client.tsx?v=${nanoid3()}"`
       );
       const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+      const { render } = await vite.ssrLoadModule("/src/entry-server.tsx");
+      const { html: appHtml, helmet } = await render(url, req);
+      let html = page.replace(`<!--ssr-outlet-->`, appHtml ?? "");
+      if (helmet) {
+        html = html.replace(
+          `</head>`,
+          `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
+        );
+      }
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
       vite.ssrFixStacktrace(e);
       next(e);
@@ -3404,15 +3413,37 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  const distPath = process.env.NODE_ENV === "development" ? path2.resolve(__dirname2, "../..", "dist", "public") : path2.resolve(__dirname2, "public");
-  if (!fs2.existsSync(distPath)) {
-    console.error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`
-    );
+  const distClientPath = path2.resolve(__dirname2, "client");
+  const distServerPath = path2.resolve(__dirname2, "server");
+  if (!fs2.existsSync(distClientPath)) {
+    console.warn(`[SSR] Could not find the client build directory: ${distClientPath}. Serving from older dist/public format if available.`);
+    const fallbackDist = path2.resolve(__dirname2, "public");
+    if (fs2.existsSync(fallbackDist)) {
+      app.use(express.static(fallbackDist));
+      app.use("*", (_req, res) => res.sendFile(path2.resolve(fallbackDist, "index.html")));
+      return;
+    }
   }
-  app.use(express.static(distPath));
-  app.use("*", (_req, res) => {
-    res.sendFile(path2.resolve(distPath, "index.html"));
+  app.use(express.static(distClientPath, { index: false }));
+  app.use("*", async (req, res, next) => {
+    try {
+      const url = req.originalUrl;
+      const clientTemplate = path2.resolve(distClientPath, "index.html");
+      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
+      const serverEntryPath = path2.resolve(distServerPath, "entry-server.js");
+      const { render } = await import(`file://${serverEntryPath}`);
+      const { html: appHtml, helmet } = await render(url, req);
+      let html = template.replace(`<!--ssr-outlet-->`, appHtml ?? "");
+      if (helmet) {
+        html = html.replace(
+          `</head>`,
+          `${helmet.title?.toString() || ""}${helmet.meta?.toString() || ""}${helmet.link?.toString() || ""}${helmet.script?.toString() || ""}</head>`
+        );
+      }
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    } catch (e) {
+      next(e);
+    }
   });
 }
 
