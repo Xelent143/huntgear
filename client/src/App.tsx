@@ -19,6 +19,7 @@ import RFQ from "./pages/RFQ";
 import Contact from "./pages/Contact";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
+import GeoLanding from "./pages/GeoLanding";
 import BlogCMTGuide from "./pages/blog/BlogCMTGuide";
 import BlogSublimationGuide from "./pages/blog/BlogSublimationGuide";
 import BlogCADvsManual from "./pages/blog/BlogCADvsManual";
@@ -67,6 +68,7 @@ function Router() {
       {/* E-Commerce */}
       <Route path="/shop" component={Shop} />
       <Route path="/shop/:slug" component={ProductDetail} />
+      <Route path="/manufacturing/:region" component={GeoLanding} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/checkout/success" component={CheckoutSuccess} />
       <Route path="/checkout/cancel" component={CheckoutCancel} />

@@ -33,7 +33,7 @@ const DEFAULT_DESCRIPTION =
 const DEFAULT_KEYWORDS =
   "custom apparel manufacturer Pakistan, hunting wear manufacturer Sialkot, sports wear manufacturer Pakistan, ski wear manufacturer Pakistan, tech wear manufacturer Sialkot, streetwear manufacturer Pakistan, martial arts wear manufacturer Pakistan, bulk BJJ kimonos manufacturer, custom rashguards supplier, private label clothing Pakistan, B2B clothing manufacturer Sialkot, OEM apparel manufacturer Pakistan, wholesale hunting clothing supplier, custom ski jacket manufacturer Pakistan";
 const DEFAULT_OG_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/RfANkMVkQHIazGrh.jpg";
-const SITE_URL = "https://sialkotsamplementasters.com";
+const SITE_URL = "https://sialkotsamplemasters.com";
 
 export default function SEOHead({
   title,
@@ -75,7 +75,7 @@ export default function SEOHead({
         availableLanguage: ["English", "Urdu"],
       },
       sameAs: [
-        "https://instagram.com/sialkotsamplementasters",
+        "https://instagram.com/sialkotsamplemasters",
         "https://linkedin.com/company/sialkot-sample-masters",
       ],
     },
@@ -86,7 +86,7 @@ export default function SEOHead({
       image: DEFAULT_OG_IMAGE,
       url: SITE_URL,
       telephone: "+92-300-123-4567",
-      email: "info@sialkotsamplementasters.com",
+      email: "info@sialkotsamplemasters.com",
       address: {
         "@type": "PostalAddress",
         streetAddress: "Sialkot Industrial Zone",
@@ -181,7 +181,7 @@ export default function SEOHead({
       <meta name="twitter:image" content={ogImage} />
 
       {/* Canonical Link */}
-      {canonical && <link rel="canonical" href={canonicalUrl} />}
+      <link rel="canonical" href={canonicalUrl} />
 
       {/* Hreflang Tags */}
       {hreflangs?.map((hl, index) => (
