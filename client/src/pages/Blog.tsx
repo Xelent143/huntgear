@@ -56,6 +56,16 @@ const posts = [
     featured: false,
   },
   {
+    slug: "3d-puff-embroidery-streetwear-impact",
+    title: "How 3D Puff Embroidery Can elevate Your Streetwear Export Orders",
+    excerpt: "Learn how 3D puff embroidery elevates brand perception and justifies premium pricing for streetwear export orders from Sialkot.",
+    category: "Technical Elevation",
+    readTime: "6 min read",
+    date: "March 12, 2026",
+    image: "/3d_puff_anatomy_infographic_1773278576854.png",
+    featured: false,
+  },
+  {
     slug: "5-signs-change-sublimation-vendor",
     title: "5 Signs You Need to Change Your Current Sublimation Printing Vendor",
     excerpt: "Low vibrancy, muddy blacks, or peeling logos? Learn how to spot the red flags in your sublimation apparel production before it costs you an export contract.",
