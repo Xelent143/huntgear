@@ -445,3 +445,74 @@ html {
   left: 1.5rem;
   pointer-events: none;
 }
+
+/* ── Premium Blog / Infographic Utilities ────────────────────────────────── */
+.blog-stat-card {
+  @apply bg-card border border-border p-6 rounded-sm relative overflow-hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blog-stat-card::after {
+  content: '';
+  @apply absolute bottom-0 left-0 h-1 w-0 bg-gold transition-all duration-500;
+}
+
+.blog-stat-card:hover::after {
+  @apply w-full;
+}
+
+.blog-callout {
+  @apply bg-gold/5 border-l-4 border-gold p-6 my-8 rounded-r-sm italic text-foreground/90;
+}
+
+.blog-table-container {
+  @apply overflow-x-auto my-8 border border-border rounded-sm;
+}
+
+.blog-table {
+  @apply w-full text-left border-collapse;
+}
+
+.blog-table th {
+  @apply bg-gold text-background font-condensed font-bold uppercase tracking-widest text-sm p-4;
+}
+
+.blog-table td {
+  @apply p-4 border-b border-border text-sm text-muted-foreground transition-colors;
+}
+
+.blog-table tr:last-child td {
+  @apply border-b-0;
+}
+
+.blog-table tr:nth-child(even) td {
+  @apply bg-muted/30;
+}
+
+.blog-table tr:hover td {
+  @apply bg-gold/5 text-foreground;
+}
+
+.blog-process-step {
+  @apply relative pl-12 py-6 border-l-2 border-gold/20 last:border-l-0;
+}
+
+.blog-process-number {
+  @apply absolute left-[-17px] top-6 w-8 h-8 rounded-full bg-gold text-background flex items-center justify-center font-bold text-sm shadow-lg shadow-gold/20 z-10;
+}
+
+.blog-progress-label {
+  @apply flex justify-between font-condensed font-bold uppercase tracking-wider text-xs mb-2 text-muted-foreground;
+}
+
+.blog-progress-bg {
+  @apply w-full h-2 bg-muted rounded-full overflow-hidden mb-6;
+}
+
+.blog-progress-fill {
+  @apply h-full bg-gold transition-all duration-1000 ease-out origin-left;
+}
+
+.blog-feature-icon {
+  @apply w-12 h-12 rounded-sm bg-gold/10 flex items-center justify-center text-gold mb-4 group-hover:bg-gold group-hover:text-background transition-all duration-300;
+}

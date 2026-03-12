@@ -19,6 +19,10 @@ import RFQ from "./pages/RFQ";
 import Contact from "./pages/Contact";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
+import BlogCMTGuide from "./pages/blog/BlogCMTGuide";
+import BlogSublimationGuide from "./pages/blog/BlogSublimationGuide";
+import BlogCADvsManual from "./pages/blog/BlogCADvsManual";
+import BlogQCChecklist from "./pages/blog/BlogQCChecklist";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
@@ -51,6 +55,10 @@ function Router() {
       <Route path="/products" component={Products} />
       <Route path="/portfolio" component={Portfolio} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/cmt-outsourcing-guide-sialkot" component={BlogCMTGuide} />
+      <Route path="/blog/sublimation-printing-guide-sportswear" component={BlogSublimationGuide} />
+      <Route path="/blog/cad-vs-manual-pattern-drafting-guide" component={BlogCADvsManual} />
+      <Route path="/blog/apparel-manufacturing-qc-checklist" component={BlogQCChecklist} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/rfq" component={RFQ} />
       <Route path="/contact" component={Contact} />
