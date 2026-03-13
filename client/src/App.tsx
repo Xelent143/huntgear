@@ -27,6 +27,7 @@ import BlogQCChecklist from "./pages/blog/BlogQCChecklist";
 import BlogOutsourcingBenefits from "./pages/blog/BlogOutsourcingBenefits";
 import BlogSublimationRedFlags from "./pages/blog/BlogSublimationRedFlags";
 import BlogPuffEmbroidery from "./pages/blog/BlogPuffEmbroidery";
+import BlogCADGrading from "./pages/blog/BlogCADGrading";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
@@ -66,6 +67,7 @@ function Router() {
       <Route path="/blog/why-sportswear-brands-outsource-cmt-sialkot" component={BlogOutsourcingBenefits} />
       <Route path="/blog/5-signs-change-sublimation-vendor" component={BlogSublimationRedFlags} />
       <Route path="/blog/3d-puff-embroidery-streetwear-impact" component={BlogPuffEmbroidery} />
+      <Route path="/blog/cad-grading-international-sizing-importance" component={BlogCADGrading} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/rfq" component={RFQ} />
       <Route path="/contact" component={Contact} />

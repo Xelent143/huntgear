@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, CircleIcon, CreditCard, Receipt, Loader2, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, CircleIcon, CreditCard, Receipt, Loader2, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -361,9 +361,9 @@ const IMAGES = {
   // Brand logos
   logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
   heroCustomBg: "/hero-bg-new.jpg",
-  aboutBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/JYGBAsGCNzVzuDTI.jpg",
+  aboutBg: "/about-mfg.png",
   servicesBg: "/pakistani_master_craftsman.png",
-  ctaBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PUUptEvyHwCdLTZt.jpg",
+  ctaBg: "/cta-logistics.png",
   shopBg: "/ssm_shop_banner.png",
   servicePattern: "/svc-pattern-drafting.png",
   servicePrinting: "/svc-textile-printing.png",
@@ -379,7 +379,11 @@ const IMAGES = {
   catSports: "/cat_sportswear_1772542255131.png",
   catSecurityUniforms: "/cat_security_1772542311636.png",
   catStreetwear: "/cat_streetwear_1772542290412.png",
-  catHunting: "/cat_hunting_1772542272039.png"
+  catHunting: "/cat_hunting_1772542272039.png",
+  // Manufacturing / Geo Landing
+  mfgHero: "/manufacturing-hero.png",
+  mfgProcess: "/manufacturing-process.png",
+  mfgDetail: "/manufacturing-detail.png"
 };
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
@@ -3735,6 +3739,16 @@ const posts = [
     featured: false
   },
   {
+    slug: "cad-grading-international-sizing-importance",
+    title: "The Importance of Accurate CAD Grading for International Sizing Charts",
+    excerpt: "Discover why digital CAD grading is critical for international apparel exports. Learn about precision, fabric efficiency, and global sizing compliance.",
+    category: "Industry Standards",
+    readTime: "8 min read",
+    date: "March 13, 2026",
+    image: "/cad_grading_accuracy_comparison_1773426576624.png",
+    featured: false
+  },
+  {
     slug: "3d-puff-embroidery-streetwear-impact",
     title: "How 3D Puff Embroidery Can elevate Your Streetwear Export Orders",
     excerpt: "Learn how 3D puff embroidery elevates brand perception and justifies premium pricing for streetwear export orders from Sialkot.",
@@ -3819,104 +3833,104 @@ const categories = ["All", "Manufacturing Guide", "Brand Building", "Private Lab
 function Blog() {
   const featured = posts.find((p) => p.featured);
   const rest = posts.filter((p) => !p.featured);
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:148", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:158", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:149",
+        "data-loc": "client\\src\\pages\\Blog.tsx:159",
         title: "Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan",
         description: "Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer.",
         keywords: "apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide",
         canonical: "/blog"
       }
     ),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:157", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:158", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:159", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
-      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:160", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:167", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:168", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:169", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
+      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:170", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
         "The Sialkot Sample Masters",
-        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:162", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:172", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:164", className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:165", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:174", className: "gold-divider mx-auto" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:175", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:172", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:173", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:174", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:182", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:183", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:184", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:176",
+        "data-loc": "client\\src\\pages\\Blog.tsx:186",
         className: `shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All" ? "bg-gold text-background" : "border border-border text-muted-foreground hover:border-gold/30 hover:text-foreground"}`,
         children: cat
       },
       cat
     )) }) }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:190", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:191", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:194", className: "mb-16", children: [
-        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:195", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
-        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:196", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:197", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:198", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:200", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:201", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:204", className: "mb-16", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:205", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:206", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:207", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:208", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
-                "data-loc": "client\\src\\pages\\Blog.tsx:199",
+                "data-loc": "client\\src\\pages\\Blog.tsx:209",
                 src: featured.image,
                 alt: featured.title,
                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               }
             ),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:204", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:205", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:214", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:215", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:209", className: "p-8 flex flex-col justify-center", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:210", className: "flex items-center gap-3 mb-4", children: [
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:211", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:212", className: "text-border", children: "·" }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:213", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:214", className: "w-3 h-3" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:219", className: "p-8 flex flex-col justify-center", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:220", className: "flex items-center gap-3 mb-4", children: [
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:221", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:222", className: "text-border", children: "·" }),
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:223", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:224", className: "w-3 h-3" }),
                 " ",
                 featured.readTime
               ] })
             ] }),
-            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:217", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:220", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:221", className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:222", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:223", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:227", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:230", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:231", className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:232", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:233", className: "w-3 h-3" }),
                 " ",
                 featured.date
               ] }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:225", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:235", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
                 "Read Article ",
-                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:226", className: "w-3 h-3" })
+                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:236", className: "w-3 h-3" })
               ] })
             ] })
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:236", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:238", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:239", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:240", className: "relative overflow-hidden aspect-[16/9]", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:246", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:248", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:249", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:250", className: "relative overflow-hidden aspect-[16/9]", children: [
           /* @__PURE__ */ jsx(
             "img",
             {
-              "data-loc": "client\\src\\pages\\Blog.tsx:241",
+              "data-loc": "client\\src\\pages\\Blog.tsx:251",
               src: post.image,
               alt: post.title,
               className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
               loading: "lazy"
             }
           ),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:247", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:248", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:249", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:257", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:258", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:259", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:254", className: "p-5 flex flex-col flex-1", children: [
-          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:255", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:258", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:259", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:260", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:261", className: "w-3 h-3" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:264", className: "p-5 flex flex-col flex-1", children: [
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:265", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:268", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:269", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:270", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:271", className: "w-3 h-3" }),
               " ",
               post.date
             ] }),
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:263", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:264", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:273", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:274", className: "w-3 h-3" }),
               " ",
               post.readTime
             ] })
@@ -6214,145 +6228,145 @@ const REGION_MAP = {
 function GeoLanding() {
   const { region } = useParams();
   const data = REGION_MAP[region?.toLowerCase() || "usa"] || REGION_MAP["usa"];
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:53", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:54", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\GeoLanding.tsx:54",
+        "data-loc": "client\\src\\pages\\GeoLanding.tsx:55",
         title: `Premier Streetwear Manufacturer for ${data.name} Brands | Sialkot Sample Masters`,
         description: `Custom apparel manufacturing for ${data.name} based streetwear brands. High-quality production, low MOQ, and fast shipping to ${data.name}. Direct from Sialkot factory.`,
         keywords: `streetwear manufacturer ${data.name}, custom clothing supplier ${data.name}, wholesale apparel ${data.name}, garment factory Pakistan`,
         canonical: `/manufacturing/${region || "usa"}`
       }
     ),
-    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:62", className: "relative pt-24 pb-20 bg-zinc-950 overflow-hidden", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:63", className: "absolute inset-0 opacity-20", children: [
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:64", className: "absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950" }),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:63", className: "relative pt-24 pb-20 bg-zinc-950 overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:64", className: "absolute inset-0 opacity-40", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:65", className: "absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950" }),
         /* @__PURE__ */ jsx(
           "img",
           {
-            "data-loc": "client\\src\\pages\\GeoLanding.tsx:65",
-            src: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80",
+            "data-loc": "client\\src\\pages\\GeoLanding.tsx:66",
+            src: IMAGES.mfgHero,
             alt: "Manufacturing Facility",
             className: "w-full h-full object-cover"
           }
         )
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:72", className: "max-w-7xl mx-auto px-4 relative z-10 text-center", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:73", className: "inline-flex items-center gap-2 bg-gold/10 border border-gold/20 px-4 py-1.5 rounded-full mb-8", children: [
-          /* @__PURE__ */ jsx(Globe, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:74", className: "w-4 h-4 text-gold" }),
-          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:75", className: "text-gold text-xs font-bold uppercase tracking-widest", children: "Global Manufacturing Hub" })
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:73", className: "max-w-7xl mx-auto px-4 relative z-10 text-center", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:74", className: "inline-flex items-center gap-2 bg-gold/20 border border-gold/30 px-4 py-1.5 rounded-full mb-8 backdrop-blur-sm", children: [
+          /* @__PURE__ */ jsx(Globe, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:75", className: "w-4 h-4 text-gold" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:76", className: "text-gold text-xs font-bold uppercase tracking-widest", children: "Global Manufacturing Hub" })
         ] }),
-        /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:78", className: "text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight", children: [
+        /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:79", className: "text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-lg", children: [
           "The Preferred Streetwear Manufacturer ",
-          /* @__PURE__ */ jsx("br", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:79" }),
-          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:80", className: "text-gold italic", children: [
+          /* @__PURE__ */ jsx("br", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:80" }),
+          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:81", className: "text-gold italic", children: [
             "for ",
             data.name,
             " Brands"
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:83", className: "text-zinc-400 text-lg max-w-2xl mx-auto mb-10", children: [
+        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:84", className: "text-zinc-300 text-lg max-w-2xl mx-auto mb-10 drop-shadow", children: [
           "Scale your ",
           data.name,
           " base brand with premium quality manufacturing from Sialkot. We specialize in ",
           data.specialty,
           " with door-to-door delivery."
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:88", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:89", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:90", className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:89", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:90", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:91", className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
             "Get Your Quote ",
-            /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:91", className: "ml-2 w-4 h-4" })
+            /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:92", className: "ml-2 w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:94", href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:95", variant: "outline", className: "border-zinc-800 text-white hover:bg-white/5 px-8 py-6 rounded-sm", children: "View Our Work" }) })
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:95", href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:96", variant: "outline", className: "border-zinc-700 text-white hover:bg-white/10 px-8 py-6 rounded-sm backdrop-blur-sm", children: "View Our Work" }) })
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:104", className: "py-12 border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:105", className: "max-w-7xl mx-auto px-4", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:106", className: "grid grid-cols-2 lg:grid-cols-4 gap-8", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:107", className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(Truck, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:108", className: "w-8 h-8 text-gold shrink-0" }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:109", children: [
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:110", className: "text-white font-bold text-sm", children: "Fast Shipping" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:111", className: "text-zinc-500 text-xs", children: data.shipping })
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:105", className: "py-12 border-b border-border bg-card/50 backdrop-blur-sm", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:106", className: "max-w-7xl mx-auto px-4", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:107", className: "grid grid-cols-2 lg:grid-cols-4 gap-8", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:108", className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:109", className: "p-2 bg-gold/10 rounded-sm", children: /* @__PURE__ */ jsx(Truck, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:110", className: "w-6 h-6 text-gold shrink-0" }) }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:112", children: [
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:113", className: "text-foreground font-bold text-sm", children: "Fast Shipping" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:114", className: "text-zinc-500 text-xs", children: data.shipping })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:114", className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(ShieldCheck, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:115", className: "w-8 h-8 text-gold shrink-0" }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:116", children: [
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:117", className: "text-white font-bold text-sm", children: "Quality Guaranteed" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:118", className: "text-zinc-500 text-xs", children: "ISO Certified Facility" })
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:117", className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:118", className: "p-2 bg-gold/10 rounded-sm", children: /* @__PURE__ */ jsx(ShieldCheck, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:119", className: "w-6 h-6 text-gold shrink-0" }) }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:121", children: [
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:122", className: "text-foreground font-bold text-sm", children: "Quality Guaranteed" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:123", className: "text-zinc-500 text-xs", children: "ISO Certified Facility" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:121", className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:122", className: "w-8 h-8 text-gold shrink-0" }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:123", children: [
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:124", className: "text-white font-bold text-sm", children: "Low MOQs" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:125", className: "text-zinc-500 text-xs", children: "Starting from 50pcs" })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:128", className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(Users, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:129", className: "w-8 h-8 text-gold shrink-0" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:126", className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:127", className: "p-2 bg-gold/10 rounded-sm", children: /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:128", className: "w-6 h-6 text-gold shrink-0" }) }),
         /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:130", children: [
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:131", className: "text-white font-bold text-sm", children: "B2B Support" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:132", className: "text-zinc-500 text-xs", children: "Dedicated Account Mgr" })
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:131", className: "text-foreground font-bold text-sm", children: "Low MOQs" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:132", className: "text-zinc-500 text-xs", children: "Starting from 50pcs" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:135", className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:136", className: "p-2 bg-gold/10 rounded-sm", children: /* @__PURE__ */ jsx(Users, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:137", className: "w-6 h-6 text-gold shrink-0" }) }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:139", children: [
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:140", className: "text-foreground font-bold text-sm", children: "B2B Support" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:141", className: "text-zinc-500 text-xs", children: "Dedicated Account Mgr" })
         ] })
       ] })
     ] }) }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:140", className: "section-padding", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:141", className: "max-w-7xl mx-auto px-4", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:142", className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:143", className: "space-y-6", children: [
-        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:144", className: "text-3xl md:text-4xl font-serif font-bold text-white", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:149", className: "section-padding bg-zinc-950", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:150", className: "max-w-7xl mx-auto px-4", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:151", className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:152", className: "space-y-6", children: [
+        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:153", className: "text-3xl md:text-5xl font-serif font-bold text-white leading-tight", children: [
           "Why ",
           data.name,
           " Brands Partner ",
-          /* @__PURE__ */ jsx("br", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:145" }),
-          " With Sialkot Sample Masters"
+          /* @__PURE__ */ jsx("br", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:154" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:155", className: "text-gold", children: "With Sialkot Sample Masters" })
         ] }),
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:147", className: "gold-divider" }),
-        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:148", className: "text-zinc-400 leading-relaxed", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:157", className: "w-20 h-1 bg-gold" }),
+        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:158", className: "text-zinc-400 text-lg leading-relaxed", children: [
           "As a direct manufacturer based in the world's apparel hub, we eliminate the middlemen, giving you better pricing and full control over your supply chain in ",
           data.name,
           "."
         ] }),
-        /* @__PURE__ */ jsx("ul", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:153", className: "space-y-4 pt-4", children: [
+        /* @__PURE__ */ jsx("ul", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:163", className: "space-y-4 pt-4", children: [
           "Tech Pack & Design Assistance",
           "Premium Fabric Sourcing (Custom GSM)",
           "Ethical & Sustainable Production",
           "Door-to-Door DDP Shipping Available",
           "Transparent Quality Control Reports"
-        ].map((item) => /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:161", className: "flex items-center gap-3 text-zinc-300", children: [
-          /* @__PURE__ */ jsx(CheckCircle2, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:162", className: "w-5 h-5 text-gold shrink-0" }),
-          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:163", children: item })
+        ].map((item) => /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:171", className: "flex items-center gap-3 text-zinc-300", children: [
+          /* @__PURE__ */ jsx(CheckCircle2, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:172", className: "w-5 h-5 text-gold shrink-0" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:173", className: "text-sm md:text-base", children: item })
         ] }, item)) })
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:169", className: "grid grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:170", className: "space-y-4 pt-12", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:171", className: "rounded-sm overflow-hidden aspect-[4/5] border border-zinc-800", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:172", src: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=800&q=80", alt: "Process", className: "w-full h-full object-cover" }) }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:174", className: "bg-gold p-6 rounded-sm", children: [
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:175", className: "text-black font-condensed font-bold text-4xl mb-1", children: "98%" }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:176", className: "text-black/80 text-xs font-bold uppercase tracking-wider", children: "Client Retention" })
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:179", className: "grid grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:180", className: "space-y-4 pt-12", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:181", className: "rounded-sm overflow-hidden aspect-[4/5] border border-zinc-800 shadow-2xl", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:182", src: IMAGES.mfgProcess, alt: "Garment Production Process", className: "w-full h-full object-cover" }) }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:184", className: "bg-gold p-8 rounded-sm shadow-xl", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:185", className: "text-black font-condensed font-bold text-5xl mb-1", children: "98%" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:186", className: "text-black/80 text-sm font-bold uppercase tracking-wider", children: "Client Retention" })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:179", className: "space-y-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:180", className: "bg-zinc-900 border border-zinc-800 p-6 rounded-sm", children: [
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:181", className: "text-gold font-condensed font-bold text-4xl mb-1", children: "5+" }),
-            /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:182", className: "text-zinc-500 text-xs font-bold uppercase tracking-wider", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:189", className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:190", className: "bg-zinc-900 border border-zinc-800 p-8 rounded-sm shadow-xl", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:191", className: "text-gold font-condensed font-bold text-5xl mb-1", children: "5+" }),
+            /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:192", className: "text-zinc-400 text-sm font-bold uppercase tracking-wider", children: [
               "Major ",
               data.name,
               " Clients"
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:184", className: "rounded-sm overflow-hidden aspect-[4/5] border border-zinc-800", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:185", src: "https://images.unsplash.com/photo-1532188978303-4bdac23a948d?w=800&q=80", alt: "Detail", className: "w-full h-full object-cover" }) })
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:194", className: "rounded-sm overflow-hidden aspect-[4/5] border border-zinc-800 shadow-2xl", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:195", src: IMAGES.mfgDetail, alt: "Quality Check Detail", className: "w-full h-full object-cover transition-transform hover:scale-105 duration-700" }) })
         ] })
       ] })
     ] }) }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:194", className: "bg-gold py-16", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:195", className: "max-w-4xl mx-auto px-4 text-center", children: [
-      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:196", className: "text-3xl md:text-5xl font-serif font-bold text-black mb-6", children: "Ready to manufacture your next collection?" }),
-      /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:199", className: "text-black/70 text-lg mb-10", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:204", className: "bg-gold py-16", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:205", className: "max-w-4xl mx-auto px-4 text-center", children: [
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:206", className: "text-3xl md:text-5xl font-serif font-bold text-black mb-6", children: "Ready to manufacture your next collection?" }),
+      /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\GeoLanding.tsx:209", className: "text-black/70 text-lg mb-10", children: [
         "Join the elite ",
         data.name,
         " brands sourcing directly from the source. Response guaranteed within 24 hours."
       ] }),
-      /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:203", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:204", size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
+      /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:213", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\GeoLanding.tsx:214", size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
     ] }) })
   ] });
 }
@@ -7623,6 +7637,169 @@ function BlogPuffEmbroidery() {
           /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogPuffEmbroidery.tsx:195", className: "ml-2 w-4 h-4" })
         ] }) }),
         /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogPuffEmbroidery.tsx:198", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogPuffEmbroidery.tsx:199", variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Swatch Samples" }) })
+      ] })
+    ] }) })
+  ] });
+}
+function BlogCADGrading() {
+  const features = [
+    {
+      title: "Millimeter Precision",
+      desc: "Unlike manual rulers, CAD grading eliminates human error, ensuring every size (S to 5XL) maintains identical fit proportions.",
+      icon: /* @__PURE__ */ jsx(Maximize, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:13", className: "w-6 h-6" })
+    },
+    {
+      title: "Global Compatibility",
+      desc: "Instantly convert patterns between US, EU, and Asian size charts without redrafting the entire technical file.",
+      icon: /* @__PURE__ */ jsx(Globe, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:18", className: "w-6 h-6" })
+    },
+    {
+      title: "Material Efficiency",
+      desc: "Precise digital markers can reduce fabric waste by 3-5%, potentially saving thousands of dollars on large export shipments.",
+      icon: /* @__PURE__ */ jsx(Cpu, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:23", className: "w-6 h-6" })
+    },
+    {
+      title: "Rapid Iteration",
+      desc: "Adjust grading rules across an entire collection in seconds rather than hours of manual paper cutting.",
+      icon: /* @__PURE__ */ jsx(Laptop, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:28", className: "w-6 h-6" })
+    }
+  ];
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:33", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:34",
+        title: "Accurate CAD Grading for International Sizing Charts | SSM Blog",
+        description: "Discover why digital CAD grading is critical for international apparel exports. Learn about precision, fabric efficiency, and global sizing compliance.",
+        canonical: "/blog/cad-grading-international-sizing-importance",
+        ogType: "article",
+        ogImage: "/cad_grading_accuracy_comparison_1773426576624.png"
+      }
+    ),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:43", className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:44", className: "container relative z-10", children: [
+      /* @__PURE__ */ jsxs(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:45", href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:46", className: "w-4 h-4" }),
+        " Back to Blog"
+      ] }),
+      /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:49", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:50", className: "flex items-center gap-3 mb-6", children: [
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:51", className: "bg-gold/10 text-gold text-[10px] font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm border border-gold/20", children: "Industry Standards" }),
+          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:54", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:55", className: "w-3 h-3" }),
+            " 8 min read"
+          ] }),
+          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:57", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:58", className: "w-3 h-3" }),
+            " March 13, 2026"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:62", className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8 max-w-4xl", children: [
+          "The Critical Role of ",
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:63", className: "text-gradient-gold italic", children: "CAD Grading" }),
+          " in Global Exports"
+        ] }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:66", className: "text-muted-foreground text-lg md:text-xl max-w-3xl leading-relaxed mb-10", children: "In the high-stakes world of international apparel, a 1-centimeter error can lead to a rejected shipment. Learn how digital precision is replacing manual guesswork." })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:74", className: "py-20 bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:75", className: "container", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:76", className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
+      /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:77", children: [
+        /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:78", className: "font-serif text-3xl md:text-4xl font-bold mb-6 text-foreground", children: "Precision: The Invisible Profit Maker" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:79", className: "text-muted-foreground leading-relaxed mb-8", children: "Manual grading relies on the physical accuracy of a pattern maker's hand. Even the most skilled artisan cannot match the 0.001mm precision of a modern CAD system. For exporters, this means consistency that survives the transition from a sample to mass production." }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:82", className: "space-y-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:83", className: "flex items-center gap-3 text-sm font-bold text-gold uppercase tracking-widest", children: [
+            /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:84", className: "w-4 h-4" }),
+            " ISO-Compliant Digital Files"
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:86", className: "flex items-center gap-3 text-sm font-bold text-gold uppercase tracking-widest", children: [
+            /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:87", className: "w-4 h-4" }),
+            " Instant ASTM Standard Mapping"
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:89", className: "flex items-center gap-3 text-sm font-bold text-gold uppercase tracking-widest", children: [
+            /* @__PURE__ */ jsx(Check, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:90", className: "w-4 h-4" }),
+            " Seamless .DXF Export Capability"
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:95", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:96", className: "aspect-video rounded-sm overflow-hidden border border-border shadow-2xl", children: /* @__PURE__ */ jsx(
+        "img",
+        {
+          "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:97",
+          src: "/cad_grading_accuracy_comparison_1773426576624.png",
+          alt: "Manual vs CAD Grading Accuracy Infographic",
+          className: "w-full h-full object-cover"
+        }
+      ) }) })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:109", className: "py-24", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:110", className: "container", children: /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:111", className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8", children: features.map((feature, idx) => /* @__PURE__ */ jsxs(AnimatedChild, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:113", className: "blog-feature-card text-center p-8 border border-border bg-card hover:border-gold/30 transition-all rounded-sm flex flex-col items-center", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:114", className: "w-14 h-14 rounded-full bg-gold/5 text-gold flex items-center justify-center mb-6 border border-gold/10", children: feature.icon }),
+      /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:117", className: "font-serif text-xl font-bold mb-4", children: feature.title }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:118", className: "text-muted-foreground text-sm leading-relaxed", children: feature.desc })
+    ] }, idx)) }) }) }),
+    /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:126", className: "py-24 bg-foreground text-background overflow-hidden relative", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:127", className: "absolute top-0 right-0 w-1/2 h-full bg-gold/5 skew-x-12 transform translate-x-1/2" }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:128", className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:129", className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
+        /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:130", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:131", className: "aspect-square rounded-sm overflow-hidden border border-gold/20 shadow-2xl", children: /* @__PURE__ */ jsx(
+          "img",
+          {
+            "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:132",
+            src: "/global_sizing_strategy_map_1773426593535.png",
+            alt: "Global Sizing Strategy Map",
+            className: "w-full h-full object-cover"
+          }
+        ) }) }),
+        /* @__PURE__ */ jsxs(FadeIn, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:140", children: [
+          /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:141", className: "font-serif text-4xl font-bold mb-8 text-gradient-gold", children: "Navigating International Standards" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:142", className: "text-background/70 leading-relaxed mb-8 text-lg", children: "Shipping to both Germany and the United States? The 'Large' in Berlin is not the same as the 'Large' in New York. CAD systems allow us to apply different grading rule tables to the same digital master pattern instantly." }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:145", className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:146", className: "p-6 bg-background/5 border border-background/10 rounded-sm", children: [
+              /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:147", className: "font-bold text-gold uppercase tracking-widest text-xs mb-2", children: "Regional Scaling" }),
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:148", className: "text-sm", children: "Automated adjustments for sleeve length, chest breadth, and torso height based on regional anthropometric data." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:150", className: "p-6 bg-background/5 border border-background/10 rounded-sm", children: [
+              /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:151", className: "font-bold text-gold uppercase tracking-widest text-xs mb-2", children: "Zero-Error Repetition" }),
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:152", className: "text-sm", children: "Once a size chart is perfected in CAD, every subsequent production run is identical to the millimeter." })
+            ] })
+          ] })
+        ] })
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:161", className: "py-24 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:162", className: "container max-w-4xl", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:163", className: "flex flex-col items-center text-center", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:164", className: "w-16 h-16 rounded-full bg-gold/10 text-gold flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx(Info, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:165", className: "w-8 h-8" }) }),
+      /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:167", className: "font-serif text-4xl font-bold mb-8 text-foreground", children: "The Cost of Manual Mistakes" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:168", className: "text-muted-foreground text-lg leading-relaxed mb-10 italic", children: `"In B2B apparel exports, a single size chart discrepancy doesn't just result in a return—it results in a lost partnership. Digital CAD grading is the insurance policy for your brand's international reputation."` }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:172", className: "grid grid-cols-1 sm:grid-cols-2 gap-8 w-full text-left", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:173", className: "p-8 bg-destructive/5 border border-destructive/20 rounded-sm", children: [
+          /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:174", className: "text-destructive font-bold uppercase tracking-widest text-xs mb-4", children: "Manual Risks" }),
+          /* @__PURE__ */ jsxs("ul", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:175", className: "space-y-3 text-sm text-muted-foreground", children: [
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:176", children: "• Creeping measurement errors" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:177", children: "• Inconsistent seam allowances" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:178", children: "• High paper pattern storage costs" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:179", children: "• Slow revision turnaround" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:182", className: "p-8 bg-gold/5 border border-gold/20 rounded-sm", children: [
+          /* @__PURE__ */ jsx("h5", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:183", className: "text-gold font-bold uppercase tracking-widest text-xs mb-4", children: "CAD Advantages" }),
+          /* @__PURE__ */ jsxs("ul", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:184", className: "space-y-3 text-sm text-muted-foreground", children: [
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:185", children: "• Dynamic grading rule libraries" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:186", children: "• Precision marker making" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:187", children: "• Instant digital sharing" }),
+            /* @__PURE__ */ jsx("li", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:188", children: "• 100% reproducible accuracy" })
+          ] })
+        ] })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:197", className: "py-24 bg-gradient-to-r from-background to-card border-t border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:198", className: "container text-center", children: [
+      /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:199", className: "font-serif text-4xl md:text-5xl font-bold text-foreground mb-8", children: [
+        "Ready for ",
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:200", className: "text-gradient-gold", children: "Global Scaling?" })
+      ] }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:202", className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto leading-relaxed", children: "Ensure your next export order fits perfectly in every market. Leverage our advanced CAD grading services for your technical apparel manufacturing." }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:205", className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:206", href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:207", className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl transition-all hover:-translate-y-1", children: [
+          "Start Tech-Pack Consultation ",
+          /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:208", className: "ml-2 w-4 h-4" })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:211", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCADGrading.tsx:212", variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm transition-all hover:-translate-y-1", children: "Request Sample Sizes" }) })
       ] })
     ] }) })
   ] });
@@ -17835,7 +18012,7 @@ function BrandingStudio() {
   };
   const styleTemplates = WOVEN_TEMPLATES.filter((t2) => t2.labelStyle === activeLabelStyle);
   const currentLabelStyleInfo = LABEL_STYLES.find((s2) => s2.id === activeLabelStyle);
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\BrandingStudio.tsx:148", className: "flex flex-col h-screen bg-[#111] text-foreground overflow-hidden select-none", children: [
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\BrandingStudio.tsx:148", className: "dark flex flex-col h-screen bg-[#111] text-foreground overflow-hidden select-none", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
@@ -19074,66 +19251,67 @@ function TechPackCreator() {
 }
 const BARE_ROUTES = ["/admin-saad", "/customize", "/branding-studio"];
 function Router() {
-  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:55", children: [
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:56", path: "/", component: Home }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:57", path: "/about", component: About }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/services", component: Services }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/products", component: Products }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/portfolio", component: Portfolio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/blog", component: Blog }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/:slug", component: BlogPost }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/rfq", component: RFQ }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/contact", component: Contact }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/shop", component: Shop }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/shop/:slug", component: ProductDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/manufacturing/:region", component: GeoLanding }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/checkout", component: Checkout }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/checkout/success", component: CheckoutSuccess }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/checkout/cancel", component: CheckoutCancel }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/customize", component: Customize }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/branding-studio", component: BrandingStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/tech-pack", component: TechPackCreator }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/admin-saad", component: AdminDashboard }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:85", path: "/admin-saad/login", component: AdminLogin }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:86", path: "/admin-saad/orders", component: AdminOrders }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/admin-saad/inquiries", component: AdminInquiries }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", path: "/admin-saad/products", component: AdminProducts }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/content", component: AdminContent }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/settings", component: AdminSettings }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/product/new", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:96", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/404", component: NotFound }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:98", component: NotFound })
+  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:56", children: [
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:57", path: "/", component: Home }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/about", component: About }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/services", component: Services }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/products", component: Products }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/portfolio", component: Portfolio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/blog", component: Blog }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/blog/:slug", component: BlogPost }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/rfq", component: RFQ }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/contact", component: Contact }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/shop", component: Shop }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/shop/:slug", component: ProductDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/manufacturing/:region", component: GeoLanding }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/checkout", component: Checkout }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/checkout/success", component: CheckoutSuccess }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/checkout/cancel", component: CheckoutCancel }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/customize", component: Customize }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:83", path: "/branding-studio", component: BrandingStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/tech-pack", component: TechPackCreator }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:86", path: "/admin-saad", component: AdminDashboard }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/admin-saad/login", component: AdminLogin }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/admin-saad/orders", component: AdminOrders }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", path: "/admin-saad/inquiries", component: AdminInquiries }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/products", component: AdminProducts }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:94", path: "/admin-saad/content", component: AdminContent }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/settings", component: AdminSettings }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/admin-saad/product/new", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:98", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:99", path: "/404", component: NotFound }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:100", component: NotFound })
   ] });
 }
 function Layout() {
   const [location] = useLocation();
   const isBare = BARE_ROUTES.some((r) => location.startsWith(r));
   if (isBare) {
-    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:109", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:110" }) });
+    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:111", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:112" }) });
   }
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:116", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
-    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:117" }),
-    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:118" }),
-    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:119", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:120" }) }),
-    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:122" }),
-    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:123" })
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:118", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:119" }),
+    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:120" }),
+    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:121", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:122" }) }),
+    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:124" }),
+    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:125" })
   ] });
 }
 function App() {
-  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:130", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:131", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:132", children: [
-    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:133" }),
-    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:134" })
+  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:132", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:133", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:134", children: [
+    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:135" }),
+    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:136" })
   ] }) }) });
 }
 async function render(url) {

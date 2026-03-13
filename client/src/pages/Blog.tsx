@@ -56,6 +56,16 @@ const posts = [
     featured: false,
   },
   {
+    slug: "cad-grading-international-sizing-importance",
+    title: "The Importance of Accurate CAD Grading for International Sizing Charts",
+    excerpt: "Discover why digital CAD grading is critical for international apparel exports. Learn about precision, fabric efficiency, and global sizing compliance.",
+    category: "Industry Standards",
+    readTime: "8 min read",
+    date: "March 13, 2026",
+    image: "/cad_grading_accuracy_comparison_1773426576624.png",
+    featured: false,
+  },
+  {
     slug: "3d-puff-embroidery-streetwear-impact",
     title: "How 3D Puff Embroidery Can elevate Your Streetwear Export Orders",
     excerpt: "Learn how 3D puff embroidery elevates brand perception and justifies premium pricing for streetwear export orders from Sialkot.",

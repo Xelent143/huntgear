@@ -145,7 +145,7 @@ export default function BrandingStudio() {
     const currentLabelStyleInfo = LABEL_STYLES.find(s => s.id === activeLabelStyle)!;
 
     return (
-        <div className="flex flex-col h-screen bg-[#111] text-foreground overflow-hidden select-none">
+        <div className="dark flex flex-col h-screen bg-[#111] text-foreground overflow-hidden select-none">
             <SEOHead
                 title="Woven Label Design Studio | Sialkot Sample Masters"
                 description="Design professional woven labels online — Center fold, end fold, patch, care strips and more. Download as PNG."
@@ -211,8 +211,8 @@ export default function BrandingStudio() {
                                         if (first) handleSelectTemplate(first);
                                     }}
                                     className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all group ${activeLabelStyle === style.id
-                                            ? 'bg-[#c9a84c]/20 border border-[#c9a84c]/40'
-                                            : 'hover:bg-white/5 border border-transparent'
+                                        ? 'bg-[#c9a84c]/20 border border-[#c9a84c]/40'
+                                        : 'hover:bg-white/5 border border-transparent'
                                         }`}
                                 >
                                     {/* SVG thumbnail */}
@@ -239,8 +239,8 @@ export default function BrandingStudio() {
                                 <button key={tpl.id}
                                     onClick={() => handleSelectTemplate(tpl)}
                                     className={`rounded-xl overflow-hidden border transition-all text-left group ${activeTemplate.id === tpl.id
-                                            ? 'border-[#c9a84c] ring-1 ring-[#c9a84c]/40'
-                                            : 'border-white/10 hover:border-white/30'
+                                        ? 'border-[#c9a84c] ring-1 ring-[#c9a84c]/40'
+                                        : 'border-white/10 hover:border-white/30'
                                         }`}
                                 >
                                     <div className="h-16 relative" style={{ background: tpl.previewGradient }}>
@@ -296,8 +296,8 @@ export default function BrandingStudio() {
                                 <button key={tab.id}
                                     onClick={() => setActiveTab(tab.id === activeTab ? activeTab : tab.id)}
                                     className={`flex-1 flex flex-col items-center justify-center py-3 gap-1 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === tab.id
-                                            ? 'text-[#c9a84c] border-t-2 border-[#c9a84c] bg-[#c9a84c]/5'
-                                            : 'text-white/40 hover:text-white/70'
+                                        ? 'text-[#c9a84c] border-t-2 border-[#c9a84c] bg-[#c9a84c]/5'
+                                        : 'text-white/40 hover:text-white/70'
                                         }`}
                                 >
                                     {tab.icon}
@@ -324,8 +324,8 @@ export default function BrandingStudio() {
                                                         if (first) handleSelectTemplate(first);
                                                     }}
                                                     className={`flex-shrink-0 flex flex-col items-center gap-1.5 p-3 rounded-xl border w-[82px] transition-all ${activeLabelStyle === style.id
-                                                            ? 'border-[#c9a84c] bg-[#c9a84c]/10'
-                                                            : 'border-white/10 hover:border-white/20'
+                                                        ? 'border-[#c9a84c] bg-[#c9a84c]/10'
+                                                        : 'border-white/10 hover:border-white/20'
                                                         }`}
                                                 >
                                                     <div className="w-12 h-9 rounded overflow-hidden bg-black/20"
@@ -354,8 +354,8 @@ export default function BrandingStudio() {
                                             <button key={tpl.id}
                                                 onClick={() => handleSelectTemplate(tpl)}
                                                 className={`flex-shrink-0 w-24 rounded-xl overflow-hidden border transition-all ${activeTemplate.id === tpl.id
-                                                        ? 'border-[#c9a84c] ring-1 ring-[#c9a84c]/40'
-                                                        : 'border-white/10 hover:border-white/30'
+                                                    ? 'border-[#c9a84c] ring-1 ring-[#c9a84c]/40'
+                                                    : 'border-white/10 hover:border-white/30'
                                                     }`}
                                             >
                                                 <div className="h-14 relative" style={{ background: tpl.previewGradient }}>
@@ -506,8 +506,8 @@ export default function BrandingStudio() {
                                             <button key={cat.id}
                                                 onClick={() => setActiveCare(cat.id)}
                                                 className={`flex-shrink-0 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border transition-all ${activeCare === cat.id
-                                                        ? 'text-white border-transparent'
-                                                        : 'border-white/15 text-white/40 hover:border-white/30'
+                                                    ? 'text-white border-transparent'
+                                                    : 'border-white/15 text-white/40 hover:border-white/30'
                                                     }`}
                                                 style={activeCare === cat.id ? { background: cat.color, borderColor: cat.color } : {}}
                                             >

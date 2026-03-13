@@ -7,10 +7,10 @@ export const IMAGES = {
   heroBg: "/ssm_hero_custom.jpeg",
   eliteHeroBg: "/elite_hero_vogue.png",
   heroCustomBg: "/hero-bg-new.jpg",
-  aboutBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/JYGBAsGCNzVzuDTI.jpg",
+  aboutBg: "/about-mfg.png",
   servicesBg: "/pakistani_master_craftsman.png",
-  portfolioBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/XGPJvpmbANrHQhiI.jpg",
-  ctaBg: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PUUptEvyHwCdLTZt.jpg",
+  portfolioBg: "/portfolio-branding.png",
+  ctaBg: "/cta-logistics.png",
   shopBg: "/ssm_shop_banner.png",
   servicePattern: "/svc-pattern-drafting.png",
   servicePrinting: "/svc-textile-printing.png",
@@ -31,4 +31,8 @@ export const IMAGES = {
   catSecurityUniforms: "/cat_security_1772542311636.png",
   catStreetwear: "/cat_streetwear_1772542290412.png",
   catHunting: "/cat_hunting_1772542272039.png",
+  // Manufacturing / Geo Landing
+  mfgHero: "/manufacturing-hero.png",
+  mfgProcess: "/manufacturing-process.png",
+  mfgDetail: "/manufacturing-detail.png",
 };
