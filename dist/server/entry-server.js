@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, CircleIcon, CreditCard, Receipt, Loader2, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, Calculator, TrendingDown, CircleIcon, CreditCard, Receipt, Loader2, XCircle, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -3739,6 +3739,15 @@ const posts = [
     featured: false
   },
   {
+    slug: "calculate-cmt-costs-export-shipment",
+    title: "How to Calculate CMT Costs for Your Next Export Shipment",
+    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+    date: "March 14, 2026",
+    category: "Manufacturing strategy",
+    image: "/cmt_cost_breakdown_pie_1773440983080.png",
+    readTime: "8 min read"
+  },
+  {
     slug: "cad-grading-international-sizing-importance",
     title: "The Importance of Accurate CAD Grading for International Sizing Charts",
     excerpt: "Discover why digital CAD grading is critical for international apparel exports. Learn about precision, fabric efficiency, and global sizing compliance.",
@@ -3833,104 +3842,104 @@ const categories = ["All", "Manufacturing Guide", "Brand Building", "Private Lab
 function Blog() {
   const featured = posts.find((p) => p.featured);
   const rest = posts.filter((p) => !p.featured);
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:158", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Blog.tsx:167", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:159",
+        "data-loc": "client\\src\\pages\\Blog.tsx:168",
         title: "Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan",
         description: "Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer.",
         keywords: "apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide",
         canonical: "/blog"
       }
     ),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:167", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:168", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:169", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
-      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:170", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:176", className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:177", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:178", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
+      /* @__PURE__ */ jsxs("h1", { "data-loc": "client\\src\\pages\\Blog.tsx:179", className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
         "The Sialkot Sample Masters",
-        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:172", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:181", className: "text-gradient-gold italic", children: " Manufacturing Blog" })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:174", className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:175", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:183", className: "gold-divider mx-auto" }),
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:184", className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:182", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:183", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:184", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:191", className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:192", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:193", className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
       {
-        "data-loc": "client\\src\\pages\\Blog.tsx:186",
+        "data-loc": "client\\src\\pages\\Blog.tsx:195",
         className: `shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All" ? "bg-gold text-background" : "border border-border text-muted-foreground hover:border-gold/30 hover:text-foreground"}`,
         children: cat
       },
       cat
     )) }) }) }),
-    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:200", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:201", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:204", className: "mb-16", children: [
-        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:205", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
-        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:206", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:207", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:208", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
+    /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Blog.tsx:209", className: "section-padding", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:210", className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+      featured && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:213", className: "mb-16", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:214", className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:215", href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:216", className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:217", className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
-                "data-loc": "client\\src\\pages\\Blog.tsx:209",
+                "data-loc": "client\\src\\pages\\Blog.tsx:218",
                 src: featured.image,
                 alt: featured.title,
                 className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               }
             ),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:214", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:215", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:223", className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:224", className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:219", className: "p-8 flex flex-col justify-center", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:220", className: "flex items-center gap-3 mb-4", children: [
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:221", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
-              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:222", className: "text-border", children: "·" }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:223", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:224", className: "w-3 h-3" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:228", className: "p-8 flex flex-col justify-center", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:229", className: "flex items-center gap-3 mb-4", children: [
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:230", className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
+              /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:231", className: "text-border", children: "·" }),
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:232", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:233", className: "w-3 h-3" }),
                 " ",
                 featured.readTime
               ] })
             ] }),
-            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:227", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:230", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:231", className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:232", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:233", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Blog.tsx:236", className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:239", className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:240", className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:241", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:242", className: "w-3 h-3" }),
                 " ",
                 featured.date
               ] }),
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:235", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:244", className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
                 "Read Article ",
-                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:236", className: "w-3 h-3" })
+                /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Blog.tsx:245", className: "w-3 h-3" })
               ] })
             ] })
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:246", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:248", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:249", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:250", className: "relative overflow-hidden aspect-[16/9]", children: [
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:255", className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Blog.tsx:257", href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { "data-loc": "client\\src\\pages\\Blog.tsx:258", className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:259", className: "relative overflow-hidden aspect-[16/9]", children: [
           /* @__PURE__ */ jsx(
             "img",
             {
-              "data-loc": "client\\src\\pages\\Blog.tsx:251",
+              "data-loc": "client\\src\\pages\\Blog.tsx:260",
               src: post.image,
               alt: post.title,
               className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
               loading: "lazy"
             }
           ),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:257", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:258", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:259", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:266", className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Blog.tsx:267", className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Blog.tsx:268", className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:264", className: "p-5 flex flex-col flex-1", children: [
-          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:265", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:268", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:269", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:270", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:271", className: "w-3 h-3" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:273", className: "p-5 flex flex-col flex-1", children: [
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Blog.tsx:274", className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Blog.tsx:277", className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Blog.tsx:278", className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:279", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { "data-loc": "client\\src\\pages\\Blog.tsx:280", className: "w-3 h-3" }),
               " ",
               post.date
             ] }),
-            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:273", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:274", className: "w-3 h-3" }),
+            /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Blog.tsx:282", className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Clock, { "data-loc": "client\\src\\pages\\Blog.tsx:283", className: "w-3 h-3" }),
               " ",
               post.readTime
             ] })
@@ -7804,6 +7813,152 @@ function BlogCADGrading() {
     ] }) })
   ] });
 }
+const BlogCMTCosting = () => {
+  const fadeInUp2 = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:25", className: "min-h-screen bg-[#0A0A0A] text-white pt-24 pb-16", children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:26",
+        title: "How to Calculate CMT Costs for Your Next Export Shipment | Sialkot Sampling",
+        description: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+        keywords: "CMT cost calculation, Sialkot export, streetwear manufacturing, Cut Make Trim pricing, garment production budget"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:32", className: "max-w-4xl mx-auto px-6", children: [
+      /* @__PURE__ */ jsxs(motion.div, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:34", ...fadeInUp2, className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:35", className: "flex justify-center mb-6", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:36", className: "px-4 py-1.5 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-sm font-medium tracking-wide", children: "MANUFACTURING STRATEGY" }) }),
+        /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:40", className: "text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent", children: "How to Calculate CMT Costs for Your Next Export Shipment" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:43", className: "text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed", children: "Transparent pricing is the foundation of a successful export partnership. Learn the exact formula Sialkot factories use to quote your streetwear designs." })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:49", className: "prose prose-invert max-w-none prose-p:text-gray-400 prose-headings:text-white mb-16", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:50", className: "text-lg leading-relaxed mb-8", children: "For many international streetwear brands, moving from a fully factored (FOB) model to **CMT (Cut, Make, Trim)** is a significant milestone. It offers more control over fabric quality and material costs. However, calculating CMT accurately is crucial to avoid hidden charges and production delays." }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:54", className: "grid grid-cols-1 md:grid-cols-3 gap-6 my-12", children: [
+          { icon: /* @__PURE__ */ jsx(Scissors, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:56", className: "w-6 h-6" }), title: "Cut", desc: "Precision fabric cutting based on graded patterns." },
+          { icon: /* @__PURE__ */ jsx(CheckCircle2, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:57", className: "w-6 h-6" }), title: "Make", desc: "Expert assembly, stitching, and construction." },
+          { icon: /* @__PURE__ */ jsx(Package, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:58", className: "w-6 h-6" }), title: "Trim", desc: "Thread cleaning, QC, and export packaging." }
+        ].map((item, idx) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:60", className: "p-6 rounded-2xl bg-[#141414] border border-white/5", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:61", className: "text-[#C5A059] mb-4", children: item.icon }),
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:62", className: "text-lg font-semibold mb-2", children: item.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:63", className: "text-sm text-gray-500", children: item.desc })
+        ] }, idx)) })
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:70",
+          initial: { opacity: 0, scale: 0.95 },
+          whileInView: { opacity: 1, scale: 1 },
+          className: "mb-16 rounded-3xl overflow-hidden border border-white/10 bg-[#111] p-1",
+          children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:75", className: "aspect-video relative", children: /* @__PURE__ */ jsx(
+              "img",
+              {
+                "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:76",
+                src: "/cmt_cost_breakdown_pie_1773440983080.png",
+                alt: "CMT Cost Distribution Infographic",
+                className: "w-full h-full object-cover"
+              }
+            ) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:82", className: "p-6 text-center italic text-gray-400 text-sm", children: "Standard CMT weightage in a high-complexity streetwear production line." })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:88", className: "mb-16", children: [
+        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:89", className: "text-3xl font-bold mb-8 flex items-center gap-3", children: [
+          /* @__PURE__ */ jsx(Calculator, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:90", className: "text-[#C5A059]" }),
+          " The CMT Calculation Formula"
+        ] }),
+        /* @__PURE__ */ jsx(Card, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:92", className: "bg-[#141414] border-white/5 p-8 mb-8", children: /* @__PURE__ */ jsxs(CardContent, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:93", className: "p-0", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:94", className: "text-center py-6 border-b border-white/5 mb-6", children: /* @__PURE__ */ jsx("code", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:95", className: "text-2xl md:text-3xl font-mono text-[#C5A059]", children: "CMT = (SAM × Cost Per Minute) + Overheads" }) }),
+          /* @__PURE__ */ jsxs("ul", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:99", className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:100", className: "flex gap-4", children: [
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:101", className: "w-1.5 h-1.5 rounded-full bg-[#C5A059] mt-2.5 shrink-0" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:102", children: [
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:103", className: "font-bold text-white block", children: "SAM (Standard Allowed Minutes):" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:104", className: "text-gray-400", children: "The total time required for an operator to complete the garment assembly under standard conditions. Simple hoodies usually average 18-24 SAM, while technical jackets can exceed 45 SAM." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:107", className: "flex gap-4", children: [
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:108", className: "w-1.5 h-1.5 rounded-full bg-[#C5A059] mt-2.5 shrink-0" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:109", children: [
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:110", className: "font-bold text-white block", children: "Cost Per Minute:" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:111", className: "text-gray-400", children: "Includes direct labor wages, insurance, and local labor compliance costs in Sialkot." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("li", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:114", className: "flex gap-4", children: [
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:115", className: "w-1.5 h-1.5 rounded-full bg-[#C5A059] mt-2.5 shrink-0" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:116", children: [
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:117", className: "font-bold text-white block", children: "Factory Overheads:" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:118", className: "text-gray-400", children: "Electricity (critical in Pakistan), machine maintenance, supervision, and building rent. Typically calculated at 110-140% of standard labor costs." })
+              ] })
+            ] })
+          ] })
+        ] }) })
+      ] }),
+      /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:127", className: "text-3xl font-bold mb-8 flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx(Scale, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:128", className: "text-[#C5A059]" }),
+        " CMT vs. FOB: Making the Choice"
+      ] }),
+      /* @__PURE__ */ jsx(
+        motion.div,
+        {
+          "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:130",
+          initial: { opacity: 0, x: -20 },
+          whileInView: { opacity: 1, x: 0 },
+          className: "mb-16 rounded-3xl overflow-hidden border border-white/10 bg-[#111]",
+          children: /* @__PURE__ */ jsx(
+            "img",
+            {
+              "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:135",
+              src: "/cmt_vs_fob_comparison_visual_1773441011260.png",
+              alt: "CMT vs FOB Comparison Table",
+              className: "w-full h-auto"
+            }
+          )
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:143", className: "grid grid-cols-1 md:grid-cols-2 gap-8 mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:144", className: "p-8 rounded-3xl bg-gradient-to-br from-[#141414] to-black border border-white/5", children: [
+          /* @__PURE__ */ jsx(ShieldCheck, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:145", className: "w-8 h-8 text-[#C5A059] mb-6" }),
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:146", className: "text-xl font-bold mb-4", children: "Quality Control" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:147", className: "text-gray-400 leading-relaxed italic", children: '"By providing your own fabric, you eliminate variables in shrinkage, pilling, and wash-fastness before the first cut is made."' })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:151", className: "p-8 rounded-3xl bg-gradient-to-br from-[#141414] to-black border border-white/5", children: [
+          /* @__PURE__ */ jsx(TrendingDown, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:152", className: "w-8 h-8 text-[#C5A059] mb-6" }),
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:153", className: "text-xl font-bold mb-4", children: "Cost Transparency" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:154", className: "text-gray-400 leading-relaxed italic", children: `"Understand exactly where every dollar goes. No more 'bulk fabric markups' hidden in your FOB price."` })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:161",
+          whileHover: { scale: 1.02 },
+          className: "p-12 rounded-[32px] bg-gradient-to-r from-[#C5A059] to-[#D4B57E] text-black text-center relative overflow-hidden group mb-12",
+          children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:165", className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" }),
+            /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:166", className: "text-3xl font-bold mb-4 relative z-10", children: "Need a Precise Quote?" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:167", className: "text-black/80 mb-8 max-w-lg mx-auto relative z-10 font-medium italic", children: "Send us your tech pack today. Our sampling masters will provide a detailed SAM breakdown and CMT quote within 24 hours." }),
+            /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:170", size: "lg", className: "bg-black text-white hover:bg-black/90 rounded-full px-8 relative z-10 group", children: [
+              "Request CMT Quote ",
+              /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:171", className: "ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" })
+            ] })
+          ]
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsx("footer", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:176", className: "max-w-4xl mx-auto px-6 pt-16 border-t border-white/5 text-center", children: /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\blog\\BlogCMTCosting.tsx:177", className: "text-gray-500 text-sm italic", children: [
+      "© ",
+      (/* @__PURE__ */ new Date()).getFullYear(),
+      " Sialkot Sample Masters. All rights reserved. Specialized streetwear CMT for global exports."
+    ] }) })
+  ] });
+};
 function Separator({
   className,
   orientation = "horizontal",
@@ -19251,67 +19406,68 @@ function TechPackCreator() {
 }
 const BARE_ROUTES = ["/admin-saad", "/customize", "/branding-studio"];
 function Router() {
-  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:56", children: [
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:57", path: "/", component: Home }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/about", component: About }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/services", component: Services }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/products", component: Products }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/portfolio", component: Portfolio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/blog", component: Blog }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/blog/:slug", component: BlogPost }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/rfq", component: RFQ }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/contact", component: Contact }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/shop", component: Shop }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/shop/:slug", component: ProductDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/manufacturing/:region", component: GeoLanding }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/checkout", component: Checkout }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/checkout/success", component: CheckoutSuccess }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/checkout/cancel", component: CheckoutCancel }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/customize", component: Customize }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:83", path: "/branding-studio", component: BrandingStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/tech-pack", component: TechPackCreator }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:86", path: "/admin-saad", component: AdminDashboard }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/admin-saad/login", component: AdminLogin }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/admin-saad/orders", component: AdminOrders }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", path: "/admin-saad/inquiries", component: AdminInquiries }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/products", component: AdminProducts }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:94", path: "/admin-saad/content", component: AdminContent }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/settings", component: AdminSettings }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/admin-saad/product/new", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:98", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:99", path: "/404", component: NotFound }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:100", component: NotFound })
+  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:57", children: [
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:58", path: "/", component: Home }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/about", component: About }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/services", component: Services }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/products", component: Products }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/portfolio", component: Portfolio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/blog", component: Blog }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/blog/calculate-cmt-costs-export-shipment", component: BlogCMTCosting }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/blog/:slug", component: BlogPost }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/rfq", component: RFQ }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/contact", component: Contact }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/shop", component: Shop }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/shop/:slug", component: ProductDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/manufacturing/:region", component: GeoLanding }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/checkout", component: Checkout }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/checkout/success", component: CheckoutSuccess }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/checkout/cancel", component: CheckoutCancel }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/customize", component: Customize }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:85", path: "/branding-studio", component: BrandingStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:86", path: "/tech-pack", component: TechPackCreator }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/admin-saad", component: AdminDashboard }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/admin-saad/login", component: AdminLogin }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", path: "/admin-saad/orders", component: AdminOrders }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/inquiries", component: AdminInquiries }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:94", path: "/admin-saad/products", component: AdminProducts }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:96", path: "/admin-saad/content", component: AdminContent }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/admin-saad/settings", component: AdminSettings }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:99", path: "/admin-saad/product/new", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:100", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:101", path: "/404", component: NotFound }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:102", component: NotFound })
   ] });
 }
 function Layout() {
   const [location] = useLocation();
   const isBare = BARE_ROUTES.some((r) => location.startsWith(r));
   if (isBare) {
-    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:111", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:112" }) });
+    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:113", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:114" }) });
   }
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:118", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
-    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:119" }),
-    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:120" }),
-    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:121", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:122" }) }),
-    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:124" }),
-    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:125" })
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:120", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:121" }),
+    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:122" }),
+    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:123", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:124" }) }),
+    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:126" }),
+    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:127" })
   ] });
 }
 function App() {
-  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:132", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:133", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:134", children: [
-    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:135" }),
-    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:136" })
+  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:134", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:135", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:136", children: [
+    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:137" }),
+    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:138" })
   ] }) }) });
 }
 async function render(url) {

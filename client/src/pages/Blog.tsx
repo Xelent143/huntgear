@@ -56,6 +56,15 @@ const posts = [
     featured: false,
   },
   {
+    slug: "calculate-cmt-costs-export-shipment",
+    title: "How to Calculate CMT Costs for Your Next Export Shipment",
+    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+    date: "March 14, 2026",
+    category: "Manufacturing strategy",
+    image: "/cmt_cost_breakdown_pie_1773440983080.png",
+    readTime: "8 min read"
+  },
+  {
     slug: "cad-grading-international-sizing-importance",
     title: "The Importance of Accurate CAD Grading for International Sizing Charts",
     excerpt: "Discover why digital CAD grading is critical for international apparel exports. Learn about precision, fabric efficiency, and global sizing compliance.",
