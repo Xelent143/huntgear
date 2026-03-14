@@ -29,6 +29,7 @@ import BlogSublimationRedFlags from "./pages/blog/BlogSublimationRedFlags";
 import BlogPuffEmbroidery from "./pages/blog/BlogPuffEmbroidery";
 import BlogCADGrading from "./pages/blog/BlogCADGrading";
 import BlogCMTCosting from "./pages/blog/BlogCMTCosting";
+import BlogPatchMistakes from "./pages/blog/BlogPatchMistakes";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
@@ -70,6 +71,7 @@ function Router() {
       <Route path="/blog/3d-puff-embroidery-streetwear-impact" component={BlogPuffEmbroidery} />
       <Route path="/blog/cad-grading-international-sizing-importance" component={BlogCADGrading} />
       <Route path="/blog/calculate-cmt-costs-export-shipment" component={BlogCMTCosting} />
+      <Route path="/blog/3-mistakes-ordering-custom-patches-badges" component={BlogPatchMistakes} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/rfq" component={RFQ} />
       <Route path="/contact" component={Contact} />

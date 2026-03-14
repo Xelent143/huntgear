@@ -56,6 +56,15 @@ const posts = [
     featured: false,
   },
   {
+    slug: "3-mistakes-ordering-custom-patches-badges",
+    title: "Top 3 Mistakes Sialkot Exporters Make When Ordering Custom Patches and Badges",
+    excerpt: "Avoid costly mistakes in custom patch and badge ordering. Learn about resolution, backing types, and detail density for international export standards.",
+    date: "March 15, 2026",
+    category: "QC & Finishing",
+    image: "/patches_bad_vs_good_comparison_1773484450519.png",
+    readTime: "6 min read"
+  },
+  {
     slug: "calculate-cmt-costs-export-shipment",
     title: "How to Calculate CMT Costs for Your Next Export Shipment",
     excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
