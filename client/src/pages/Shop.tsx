@@ -616,10 +616,10 @@ export default function Shop() {
         <div className="container py-6">
           <div className="flex flex-col lg:flex-row gap-6">
             
-            {/* ── Sidebar (Desktop) / Mobile Sheet ───────────────── */}
-            <aside className="lg:w-64 flex-shrink-0">
-              {/* Mobile Filter Button */}
-              <div className="lg:hidden mb-4">
+            {/* ── Sidebar Navigation ───────────────── */}
+            <aside className="w-full lg:w-64 flex-shrink-0">
+              {/* Mobile: Filter Sheet Button */}
+              <div className="block lg:hidden mb-4">
                 <MobileFilterSheet activeCategory={activeCategory} activeSubCategory={activeSubCategory}>
                   <CategorySidebar
                     activeCategory={activeCategory}
@@ -630,21 +630,21 @@ export default function Shop() {
                 </MobileFilterSheet>
               </div>
 
-              {/* Desktop Sidebar */}
-              <div className="hidden lg:block sticky top-20">
-                <div className="bg-card border border-border rounded-xl p-4">
-                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2">
+              {/* Desktop: Always Visible Sidebar */}
+              <div className="hidden lg:block" style={{ display: 'block !important' }}>
+                <div className="bg-card border border-border rounded-xl p-4 sticky top-24" style={{ position: 'sticky', top: '96px' }}>
+                  <h3 className="font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground">
                     <List className="w-4 h-4" />
                     Categories
                   </h3>
-                  <ScrollArea className="h-[calc(100vh-350px)]">
+                  <div className="max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin">
                     <CategorySidebar
                       activeCategory={activeCategory}
                       activeSubCategory={activeSubCategory}
                       onCategoryChange={handleCategoryChange}
                       productCounts={productCounts}
                     />
-                  </ScrollArea>
+                  </div>
                 </div>
               </div>
             </aside>
