@@ -4,7 +4,7 @@ export const DEMO_PRODUCTS = [
     // ── Sportswear ──
     {
         id: 1, slug: "custom-elite-basketball-jersey", title: "Custom Elite Basketball Jersey",
-        category: "Sports Wear", shortDescription: "Premium moisture-wicking basketball jersey.",
+        category: "Sports Wear", subCategory: "Jerseys", shortDescription: "Premium moisture-wicking basketball jersey.",
         description: "Our signature heavyweight basketball jersey is crafted from 180GSM micro-mesh, delivering exceptional durability and a premium feel that your team will love. Designed specifically for professional and amateur leagues, each piece can be fully customized with your logo, artwork, or numbering through sublimation or tackle twill.",
         mainImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=85",
         samplePrice: "35.00", material: "180 GSM Micro Mesh Polyester",
@@ -20,7 +20,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 2, slug: "sublimated-soccer-kit", title: "Pro Sublimated Soccer Kit",
-        category: "Sports Wear", shortDescription: "Fully sublimated custom soccer uniforms.",
+        category: "Sports Wear", subCategory: "Team Kits", shortDescription: "Fully sublimated custom soccer uniforms.",
         description: "High performance soccer kits with fully custom sublimation. Breathable interlock polyester designed for 90 minutes of intense action.",
         mainImage: "https://images.unsplash.com/photo-1518091043644-c1d44570a2c9?w=800&q=85",
         samplePrice: "40.00", material: "160 GSM Interlock Polyester",
@@ -35,7 +35,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 3, slug: "compression-base-layer", title: "Athletic Compression Base Layer",
-        category: "Sports Wear", shortDescription: "4-way stretch compression wear for all sports.",
+        category: "Sports Wear", subCategory: "Compression Wear", shortDescription: "4-way stretch compression wear for all sports.",
         description: "Private label compression gear for your athletic brand. Moisture-wicking, anti-odor, and 4-way stretch.",
         mainImage: "https://images.unsplash.com/photo-1581636625402-29f2a0dfbef4?w=800&q=85",
         samplePrice: "25.00", material: "Spandex/Polyester Blend 220 GSM",
@@ -51,7 +51,7 @@ export const DEMO_PRODUCTS = [
     // ── Hunting Wear ──
     {
         id: 4, slug: "waterproof-hunting-jacket", title: "Tactical Waterproof Hunting Jacket",
-        category: "Hunting Wear", shortDescription: "Silent shell waterproof jacket in custom camo.",
+        category: "Hunting Wear", subCategory: "Hunting Jackets", shortDescription: "Silent shell waterproof jacket in custom camo.",
         description: "B2B manufacturing for silent waterproof hunting jackets. Engineered for the field.",
         mainImage: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=85",
         samplePrice: "85.00", material: "Softshell with DWR coating",
@@ -66,7 +66,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 5, slug: "ripstop-cargo-pants", title: "Reinforced Ripstop Hunting Cargo Pants",
-        category: "Hunting Wear", shortDescription: "Tough ripstop pants with articulated knees.",
+        category: "Hunting Wear", subCategory: "Hunting Pants", shortDescription: "Tough ripstop pants with articulated knees.",
         description: "Durable ripstop cargo pants designed for the wild. Reinforced seat and knees.",
         mainImage: "https://images.unsplash.com/photo-1550346059-59eb4df42d8a?w=800&q=85",
         samplePrice: "55.00", material: "Cotton/Poly Ripstop 280 GSM",
@@ -81,7 +81,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 6, slug: "camo-fleece-pullover", title: "Thermal Camo Fleece Pullover",
-        category: "Hunting Wear", shortDescription: "Mid-layer fleece for cold morning hunts.",
+        category: "Hunting Wear", subCategory: "Camo Gear", shortDescription: "Mid-layer fleece for cold morning hunts.",
         description: "Warm, silent, microfleece layer for hunting brands. Keeps you warm when it matters.",
         mainImage: "https://images.unsplash.com/photo-1553531384-397c80973a0b?w=800&q=85",
         samplePrice: "45.00", material: "Microfleece 300 GSM",
@@ -97,7 +97,7 @@ export const DEMO_PRODUCTS = [
     // ── Streetwear ──
     {
         id: 7, slug: "heavyweight-oversized-hoodie", title: "450GSM Heavyweight Oversized Hoodie",
-        category: "Streetwear", shortDescription: "Premium drop-shoulder boxy fit hoodie.",
+        category: "Streetwear", subCategory: "Hoodies", shortDescription: "Premium drop-shoulder boxy fit hoodie.",
         description: "Premium blank and custom heavyweight hoodies for streetwear brands. 450GSM French terry cotton.",
         mainImage: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=85",
         samplePrice: "45.00", material: "450 GSM French Terry Cotton",
@@ -112,7 +112,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 8, slug: "vintage-wash-graphic-tee", title: "Vintage Wash Graphic Tee",
-        category: "Streetwear", shortDescription: "Acid-washed oversized tee ready for screen printing.",
+        category: "Streetwear", subCategory: "T-Shirts", shortDescription: "Acid-washed oversized tee ready for screen printing.",
         description: "Acid washed blanks and custom printed vintage tees. Highly sought after drop-shoulder fit.",
         mainImage: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=85",
         samplePrice: "22.00", material: "280 GSM Ring-Spun Cotton",
@@ -127,7 +127,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 9, slug: "nylon-cargo-joggers", title: "Utility Nylon Cargo Joggers",
-        category: "Streetwear", shortDescription: "Tech-inspired streetwear joggers with multiple pockets.",
+        category: "Streetwear", subCategory: "Cargo Pants", shortDescription: "Tech-inspired streetwear joggers with multiple pockets.",
         description: "High-quality streetwear cargo pants wholesale manufacturing. DWR coating and bungee cuffs.",
         mainImage: "https://plus.unsplash.com/premium_photo-1673356301535-224a0dcdcbca?w=800&q=85",
         samplePrice: "38.00", material: "Nylon/Spandex Blend with DWR",
@@ -235,7 +235,7 @@ export const DEMO_PRODUCTS = [
     // ── Ski Wear ──
     {
         id: 16, slug: "alpine-pro-snow-jacket", title: "Alpine Pro 20K Snow Jacket",
-        category: "Ski Wear", shortDescription: "20k/20k waterproof and breathable alpine jacket.",
+        category: "Ski Wear", subCategory: "Ski Jackets", shortDescription: "20k/20k waterproof and breathable alpine jacket.",
         description: "High-end ski apparel manufacturing with 20K waterproofing and Primaloft insulation.",
         mainImage: "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=800&q=85",
         samplePrice: "140.00", material: "20K Poly Shell + Primaloft Insulation",
@@ -250,7 +250,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 17, slug: "insulated-snow-bib", title: "Insulated Freeride Snow Bib",
-        category: "Ski Wear", shortDescription: "Full coverage bib with sealed zippers and powder cuffs.",
+        category: "Ski Wear", subCategory: "Ski Pants", shortDescription: "Full coverage bib with sealed zippers and powder cuffs.",
         description: "Durable snow bibs and overalls for freeride and park snowboarding.",
         mainImage: "https://images.unsplash.com/photo-1610443420456-c2ba79471f54?w=800&q=85",
         samplePrice: "110.00", material: "15K/15K Waterproof Oxford",
@@ -265,7 +265,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 18, slug: "merino-base-layer", title: "Merino Wool Snow Base Layer Set",
-        category: "Ski Wear", shortDescription: "Natural odor resistant, temperature regulating set.",
+        category: "Ski Wear", subCategory: "Base Layers", shortDescription: "Natural odor resistant, temperature regulating set.",
         description: "Custom merino wool thermals for winter sports. Prevents odors and keeps you warm.",
         mainImage: "https://images.unsplash.com/photo-1520113412521-996ff6d7734a?w=800&q=85",
         samplePrice: "60.00", material: "100% Merino Wool 210 GSM",
@@ -281,7 +281,7 @@ export const DEMO_PRODUCTS = [
     // ── Martial Arts Wear ──
     {
         id: 19, slug: "custom-bjj-gi", title: "Custom BJJ Gi",
-        category: "Martial Arts Wear", shortDescription: "Pearl weave 550GSM, IBJJF compliant.",
+        category: "Martial Arts Wear", subCategory: "BJJ Gis", shortDescription: "Pearl weave 550GSM, IBJJF compliant.",
         description: "Custom premium BJJ gi for academies and brands.",
         mainImage: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&q=85",
         samplePrice: "65.00", material: "Pearl Weave 550GSM",
@@ -296,7 +296,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 20, slug: "custom-mma-rashguard", title: "Custom MMA Rashguard",
-        category: "Martial Arts Wear", shortDescription: "Nylon-spandex 200GSM, full sublimation.",
+        category: "Martial Arts Wear", subCategory: "Rashguards", shortDescription: "Nylon-spandex 200GSM, full sublimation.",
         description: "IBJJF ranked rashguards fully sublimated.",
         mainImage: "https://images.unsplash.com/photo-1599058917212-97d142bdfb39?w=800&q=85",
         samplePrice: "22.00", material: "200 GSM Nylon/Spandex",
@@ -311,7 +311,7 @@ export const DEMO_PRODUCTS = [
     },
     {
         id: 21, slug: "mma-fight-shorts", title: "MMA Fight Shorts",
-        category: "Martial Arts Wear", shortDescription: "4-way lightweight stretch, velcro closure.",
+        category: "Martial Arts Wear", subCategory: "MMA Shorts", shortDescription: "4-way lightweight stretch, velcro closure.",
         description: "Durable and flexible fight shorts designed for striking and grappling.",
         mainImage: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&q=85",
         samplePrice: "28.00", material: "Microfiber Stretch",
