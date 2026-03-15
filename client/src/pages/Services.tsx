@@ -197,6 +197,10 @@ export default function Services() {
         canonical="/services"
         breadcrumbs={[
           { name: "Home", item: "/" },
+          { name: "Services", item: "/services" },
+        ]}
+        breadcrumbs={[
+          { name: "Home", item: "/" },
           { name: "Manufacturing Services", item: "/services" },
         ]}
       />

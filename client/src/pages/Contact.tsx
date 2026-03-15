@@ -79,6 +79,10 @@ export default function Contact() {
         description="Contact Sialkot Sample Masters, Pakistan's leading custom streetwear manufacturer in Sialkot. Reach us via email, phone, WhatsApp, or our contact form. Response within 24 hours."
         keywords="contact streetwear manufacturer Pakistan, Sialkot Sample Masters contact, clothing manufacturer Sialkot contact, B2B apparel manufacturer Pakistan contact"
         canonical="/contact"
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Contact", item: "/contact" },
+        ]}
       />
 
       {/* Hero */}

@@ -437,7 +437,11 @@ export default function Portfolio() {
         title="Portfolio | Custom Apparel Manufacturing | Sialkot Sample Masters"
         description="Browse our portfolio of custom hunting wear, sportswear, ski wear, techwear, streetwear, and martial arts apparel manufactured in Sialkot, Pakistan for global brands."
         keywords="custom apparel portfolio, streetwear manufacturer portfolio, hunting wear manufacturer, ski wear manufacturer Pakistan, techwear manufacturer Sialkot, martial arts wear manufacturer"
-        canonical="https://sialkotsamplementasters.com/portfolio"
+        canonical="/portfolio"
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Portfolio", item: "/portfolio" },
+        ]}
       />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />

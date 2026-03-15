@@ -70,7 +70,7 @@ export default function SEOHead({
       },
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+92-300-123-4567",
+        telephone: "+92-302-292-2242",
         contactType: "sales",
         availableLanguage: ["English", "Urdu"],
       },
@@ -85,7 +85,7 @@ export default function SEOHead({
       name: "Sialkot Sample Masters",
       image: DEFAULT_OG_IMAGE,
       url: SITE_URL,
-      telephone: "+92-300-123-4567",
+      telephone: "+92-302-292-2242",
       email: "info@sialkotsamplemasters.com",
       address: {
         "@type": "PostalAddress",
@@ -172,6 +172,8 @@ export default function SEOHead({
       <meta property="og:image" content={ogImage} />
       <meta property="og:site_name" content="Sialkot Sample Masters" />
       <meta property="og:locale" content="en_US" />
+      <meta property="og:locale:alternate" content="en_GB" />
+      <meta property="og:locale:alternate" content="en_AE" />
       <meta property="og:url" content={canonicalUrl} />
 
       {/* Twitter Card Tags */}
@@ -182,6 +184,11 @@ export default function SEOHead({
 
       {/* Canonical Link */}
       <link rel="canonical" href={canonicalUrl} />
+
+      {/* Additional SEO Meta Tags */}
+      <meta name="format-detection" content="telephone=yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
       {/* Hreflang Tags */}
       {hreflangs?.map((hl, index) => (

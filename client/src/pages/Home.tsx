@@ -390,9 +390,13 @@ export default function Home() {
                   >
                     <img
                       src={product.image}
-                      alt={`${product.name} - Custom Streetwear Manufacturer Pakistan`}
+                      alt={`${product.name} - Custom ${product.category} Manufacturer Pakistan`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
+                      decoding="async"
+                      width="800"
+                      height="1000"
+                      itemProp="image"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                     {product.tag && (
@@ -439,6 +443,10 @@ export default function Home() {
                     alt="Sialkot Sample Masters manufacturing facility Sialkot Pakistan"
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="900"
+                    itemProp="image"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent" />
                 </motion.div>
@@ -571,6 +579,10 @@ export default function Home() {
                     alt="Sialkot Sample Masters skilled workforce and manufacturing precision"
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="1500"
+                    itemProp="image"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   {/* Overlay stamp */}

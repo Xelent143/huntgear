@@ -192,6 +192,11 @@ export default function Shop() {
         description={seoDescription}
         keywords={`custom ${activeCategory.toLowerCase()} manufacturer Pakistan, wholesale ${activeCategory.toLowerCase()} supplier, custom streetwear manufacturer, private label apparel manufacturer Pakistan, Sialkot Sample Masters`}
         ogType="website"
+        breadcrumbs={[
+          { name: "Home", item: "/" },
+          { name: "Shop", item: "/shop" },
+          ...(activeCategory !== "All" ? [{ name: activeCategory, item: `/shop?category=${activeCategory}` }] : []),
+        ]}
       />
 
       {/* JSON-LD: ItemList schema for SEO */}
@@ -206,7 +211,7 @@ export default function Shop() {
             "@type": "ListItem",
             "position": i + 1,
             "name": p.title,
-            "url": `https://sialkotsamplementasters.com/shop/${p.slug}`,
+            "url": `https://sialkotsamplemasters.com/shop/${p.slug}`,
           })),
         })
       }} />

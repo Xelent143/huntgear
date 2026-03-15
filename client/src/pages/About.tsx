@@ -107,7 +107,7 @@ export default function About() {
               <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">The Sialkot Sample Masters Advantage</p>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight speakable-title">
+              <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
                 Your Strategic Partner in
                 <br />
                 <span className="text-gradient-gold italic">Global Apparel Manufacturing</span>
