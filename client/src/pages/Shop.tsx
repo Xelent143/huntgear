@@ -531,21 +531,21 @@ export default function Shop() {
       />
 
       {/* JSON-LD: ItemList schema for SEO */}
-      <script type="application/ld+json">
-        {`{
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "${activeCategory ? getCategoryBySlug(activeCategory)?.name + ' Catalog' : 'Sialkot Sample Masters Catalog'}",
-          "description": "${seoDescription?.replace(/"/g, '\\"')}",
-          "numberOfItems": ${totalCount},
-          "itemListElement": [${displayProducts.slice(0, 10).map((p, i) => `{
+          "name": activeCategory ? getCategoryBySlug(activeCategory)?.name + ' Catalog' : 'Sialkot Sample Masters Catalog',
+          "description": seoDescription,
+          "numberOfItems": totalCount,
+          "itemListElement": displayProducts.slice(0, 10).map((p, i) => ({
             "@type": "ListItem",
-            "position": ${i + 1},
-            "name": "${p.title?.replace(/"/g, '\\"')}",
-            "url": "https://sialkotsamplemasters.com/shop/${p.slug}"
-          }`).join(',')}]`}
-        }
-      </script>
+            "position": i + 1,
+            "name": p.title,
+            "url": "https://sialkotsamplemasters.com/shop/" + p.slug,
+          })),
+        })
+      }} />
 
       <main className="min-h-screen bg-background">
         {/* ── Hero Banner ──────────────────────────────────────────── */}
