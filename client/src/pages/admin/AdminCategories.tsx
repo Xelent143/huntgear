@@ -57,8 +57,13 @@ const defaultSubcategory: SubcategoryFormData = {
 };
 
 export default function AdminCategories() {
-  const { data: categories, isLoading } = trpc.category.adminList.useQuery();
+  const { data: categories, isLoading, error } = trpc.category.adminList.useQuery();
   const utils = trpc.useUtils();
+  
+  // Debug: log any errors
+  if (error) {
+    console.error("Categories fetch error:", error);
+  }
   
   const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set());
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
@@ -254,12 +259,28 @@ export default function AdminCategories() {
               Loading categories...
             </div>
           ) : !categories || categories.length === 0 ? (
-            <div className="p-12 text-center text-muted-foreground">
-              <Folder className="w-12 h-12 mx-auto mb-4 opacity-30" />
-              <p>No categories found.</p>
-              <Button onClick={() => openCategoryDialog()} variant="outline" className="mt-4">
-                Create your first category
-              </Button>
+            <div className="p-12 text-center">
+              {error ? (
+                <>
+                  <div className="text-red-500 mb-2">⚠️ Error loading categories</div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Database tables may not exist. Run the SQL script or create categories manually.
+                  </p>
+                  <p className="text-xs text-muted-foreground mb-4 font-mono bg-secondary p-2 rounded">
+                    {error.message}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Folder className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                  <p className="text-muted-foreground">No categories found.</p>
+                </>
+              )}
+              <div className="flex gap-2 justify-center mt-4">
+                <Button onClick={() => openCategoryDialog()} variant="outline">
+                  <Plus className="w-4 h-4 mr-2" /> Create Category
+                </Button>
+              </div>
             </div>
           ) : (
             <ScrollArea className="h-[calc(100vh-280px)]">
