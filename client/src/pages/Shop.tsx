@@ -184,9 +184,10 @@ interface CategoryNavProps {
   activeSubCategory: string | null;
   onCategoryChange: (category: string | null, subCategory: string | null) => void;
   productCounts: Record<string, number>;
+  categories: typeof HARDCODED_CATEGORIES;
 }
 
-function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, productCounts }: CategoryNavProps) {
+function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, productCounts, categories }: CategoryNavProps) {
   const [expandedCategories, setExpandedCategories] = useState<string[]>(
     activeCategory ? [activeCategory] : []
   );
@@ -232,7 +233,7 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
 
       {/* Category Tree */}
       <div className="space-y-1">
-        {allCategories.map((category) => {
+        {categories.map((category) => {
           const isExpanded = expandedCategories.includes(category.slug);
           const isActive = activeCategory === category.slug;
           const hasSubCategories = category.subCategories.length > 0;
@@ -664,6 +665,7 @@ export default function Shop() {
                     activeSubCategory={activeSubCategory}
                     onCategoryChange={handleCategoryChange}
                     productCounts={productCounts}
+                    categories={allCategories}
                   />
                 </MobileFilterSheet>
               </div>
@@ -681,6 +683,7 @@ export default function Shop() {
                       activeSubCategory={activeSubCategory}
                       onCategoryChange={handleCategoryChange}
                       productCounts={productCounts}
+                      categories={allCategories}
                     />
                   </div>
                 </div>
