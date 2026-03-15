@@ -10,9 +10,14 @@ import { toast } from "sonner";
 
 export default function AdminProducts() {
     const [, setLocation] = useLocation();
-    const { data: products, isLoading } = trpc.product.adminList.useQuery();
+    const { data: products, isLoading, error } = trpc.product.adminList.useQuery();
     const utils = trpc.useUtils();
     const [searchTerm, setSearchTerm] = useState("");
+    
+    // Debug logging
+    console.log("Products data:", products);
+    console.log("Loading:", isLoading);
+    console.log("Error:", error);
 
     const deleteMutation = trpc.product.delete.useMutation({
         onSuccess: () => { utils.product.adminList.invalidate(); toast.success("Product deleted"); },
@@ -66,6 +71,21 @@ export default function AdminProducts() {
                                         <td colSpan={4} className="px-6 py-12 text-center text-muted-foreground">
                                             <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
                                             Loading products...
+                                        </td>
+                                    </tr>
+                                ) : error ? (
+                                    <tr>
+                                        <td colSpan={4} className="px-6 py-12 text-center">
+                                            <div className="text-red-500 mb-2">⚠️ Error loading products</div>
+                                            <p className="text-sm text-muted-foreground">{error.message}</p>
+                                            <Button 
+                                                variant="outline" 
+                                                size="sm" 
+                                                className="mt-4"
+                                                onClick={() => utils.product.adminList.invalidate()}
+                                            >
+                                                Try Again
+                                            </Button>
                                         </td>
                                     </tr>
                                 ) : filtered.length === 0 ? (
