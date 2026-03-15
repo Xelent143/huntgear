@@ -161,10 +161,19 @@ export default function AdminNewProduct() {
 
     // Fetch existing product if editing
     // Fetch single product details if editing
-    const { data: editProduct } = trpc.product.byId.useQuery(
+    const { data: editProduct, isLoading: isLoadingProduct, error: productError } = trpc.product.byId.useQuery(
         { id: productId! },
         { enabled: isEdit && !!productId }
     );
+    
+    // Debug logging
+    useEffect(() => {
+        if (isEdit) {
+            console.log("Edit mode:", isEdit, "Product ID:", productId);
+            console.log("Edit product data:", editProduct);
+            console.log("Loading:", isLoadingProduct, "Error:", productError);
+        }
+    }, [isEdit, productId, editProduct, isLoadingProduct, productError]);
 
     const [isAiLoading, setIsAiLoading] = useState(false);
     const aiGenerateMutation = trpc.aiAgent.generateProduct.useMutation();
@@ -589,6 +598,34 @@ export default function AdminNewProduct() {
 
     return (
         <AdminLayout>
+            {/* Loading State for Edit Mode */}
+            {isEdit && isLoadingProduct && (
+                <div className="flex flex-col items-center justify-center py-20">
+                    <Loader2 className="w-12 h-12 animate-spin text-gold mb-4" />
+                    <p className="text-lg font-medium text-foreground">Loading product data...</p>
+                    <p className="text-sm text-muted-foreground mt-2">Please wait while we fetch the product details</p>
+                </div>
+            )}
+            
+            {/* Error State */}
+            {isEdit && productError && (
+                <div className="flex flex-col items-center justify-center py-20">
+                    <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+                    <p className="text-lg font-medium text-foreground">Failed to load product</p>
+                    <p className="text-sm text-muted-foreground mt-2">{productError.message}</p>
+                    <Button 
+                        variant="outline" 
+                        className="mt-4" 
+                        onClick={() => utils.product.byId.invalidate({ id: productId! })}
+                    >
+                        Try Again
+                    </Button>
+                </div>
+            )}
+            
+            {/* Show form only when not loading and no error */}
+            {(!isEdit || (!isLoadingProduct && !productError)) && (
+            <>
             {/* Floating Save Bar (Shopify Style) */}
             <div className={`fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}>
                 <div className="container max-w-7xl mx-auto h-16 flex items-center justify-between px-6">
@@ -959,6 +996,8 @@ export default function AdminNewProduct() {
                 </div>
 
             </div>
+            </>
+            )}
         </AdminLayout>
     );
 }
