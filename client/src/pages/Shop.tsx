@@ -232,7 +232,7 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
 
       {/* Category Tree */}
       <div className="space-y-1">
-        {SHOP_CATEGORIES.map((category) => {
+        {allCategories.map((category) => {
           const isExpanded = expandedCategories.includes(category.slug);
           const isActive = activeCategory === category.slug;
           const hasSubCategories = category.subCategories.length > 0;
@@ -429,14 +429,15 @@ export default function Shop() {
   const { data: apiCategories } = trpc.category.listWithSubs.useQuery();
   
   // Use API categories if available, otherwise fall back to hardcoded
-  const SHOP_CATEGORIES = useMemo(() => {
+  // Use API categories if available, otherwise fall back to hardcoded
+  const allCategories = useMemo(() => {
     return transformApiCategories(apiCategories) || HARDCODED_CATEGORIES;
   }, [apiCategories]);
   
   // Helper to get category by slug (works with both API and hardcoded)
   const getCategoryBySlug = useCallback((slug: string) => {
-    return SHOP_CATEGORIES.find(c => c.slug === slug);
-  }, [SHOP_CATEGORIES]);
+    return allCategories.find(c => c.slug === slug);
+  }, [allCategories]);
 
   // Filter and process products
   const displayProducts = useMemo(() => {
@@ -645,7 +646,7 @@ export default function Shop() {
         {/* ── Breadcrumb ───────────────────────────────────────────── */}
         <div className="border-b border-border bg-card/50">
           <div className="container py-3">
-            <BreadcrumbNav activeCategory={activeCategory} activeSubCategory={activeSubCategory} categories={SHOP_CATEGORIES} />
+            <BreadcrumbNav activeCategory={activeCategory} activeSubCategory={activeSubCategory} categories={allCategories} />
           </div>
         </div>
 

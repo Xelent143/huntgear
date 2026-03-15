@@ -5643,7 +5643,7 @@ const DEMO_PRODUCTS = [
     ]
   }
 ];
-const SHOP_CATEGORIES$1 = [
+const SHOP_CATEGORIES = [
   {
     id: "ski-wear",
     name: "Ski Wear",
@@ -5927,7 +5927,7 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
       }
     ),
     /* @__PURE__ */ jsx(Separator, { "data-loc": "client\\src\\pages\\Shop.tsx:231", className: "my-3" }),
-    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:234", className: "space-y-1", children: SHOP_CATEGORIES.map((category) => {
+    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:234", className: "space-y-1", children: allCategories.map((category) => {
       const isExpanded = expandedCategories.includes(category.slug);
       const isActive = activeCategory === category.slug;
       const hasSubCategories = category.subCategories.length > 0;
@@ -6062,12 +6062,12 @@ function Shop() {
     offset: 0
   });
   const { data: apiCategories } = trpc.category.listWithSubs.useQuery();
-  const SHOP_CATEGORIES2 = useMemo(() => {
-    return transformApiCategories(apiCategories) || SHOP_CATEGORIES$1;
+  const allCategories2 = useMemo(() => {
+    return transformApiCategories(apiCategories) || SHOP_CATEGORIES;
   }, [apiCategories]);
   const getCategoryBySlug = useCallback((slug) => {
-    return SHOP_CATEGORIES2.find((c) => c.slug === slug);
-  }, [SHOP_CATEGORIES2]);
+    return allCategories2.find((c) => c.slug === slug);
+  }, [allCategories2]);
   const displayProducts = useMemo(() => {
     let products2 = dbProducts && dbProducts.length > 0 ? dbProducts.map((p) => ({
       ...p,
@@ -6139,11 +6139,11 @@ function Shop() {
   const seoContent = activeCategory ? CATEGORY_SEO_CONTENT[activeCategory] : null;
   const seoTitle = activeSubCategory && activeCategory ? `${getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name} | ${getCategoryBySlug(activeCategory)?.name} | Sialkot Sample Masters` : seoContent?.title || (activeCategory ? `${getCategoryBySlug(activeCategory)?.name} | Custom Manufacturer | Sialkot Sample Masters` : "Shop Custom Streetwear | B2B Wholesale Catalog | Sialkot Sample Masters Pakistan");
   const seoDescription = seoContent?.description || (activeCategory ? `Custom ${getCategoryBySlug(activeCategory)?.name.toLowerCase()} manufacturing. Low MOQ from 50 pieces. OEM & private label services from Sialkot, Pakistan.` : "Browse Sialkot Sample Masters' B2B custom apparel catalog. Ski wear, streetwear, sportswear & more. Slab pricing, low MOQ from 50 pcs, private label manufacturing.");
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Shop.tsx:553", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Shop.tsx:554", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\Shop.tsx:554",
+        "data-loc": "client\\src\\pages\\Shop.tsx:555",
         title: seoTitle,
         description: seoDescription,
         keywords: seoContent?.keywords || "custom apparel manufacturer Pakistan, B2B clothing wholesale, private label manufacturing, low MOQ clothing supplier",
@@ -6156,7 +6156,7 @@ function Shop() {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("script", { "data-loc": "client\\src\\pages\\Shop.tsx:568", type: "application/ld+json", dangerouslySetInnerHTML: {
+    /* @__PURE__ */ jsx("script", { "data-loc": "client\\src\\pages\\Shop.tsx:569", type: "application/ld+json", dangerouslySetInnerHTML: {
       __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -6171,64 +6171,64 @@ function Shop() {
         }))
       })
     } }),
-    /* @__PURE__ */ jsxs("main", { "data-loc": "client\\src\\pages\\Shop.tsx:584", className: "min-h-screen bg-background", children: [
+    /* @__PURE__ */ jsxs("main", { "data-loc": "client\\src\\pages\\Shop.tsx:585", className: "min-h-screen bg-background", children: [
       /* @__PURE__ */ jsxs(
         "section",
         {
-          "data-loc": "client\\src\\pages\\Shop.tsx:586",
+          "data-loc": "client\\src\\pages\\Shop.tsx:587",
           className: "relative pt-16 pb-12 overflow-hidden",
           style: { backgroundImage: `url(${IMAGES.shopBg})`, backgroundSize: "cover", backgroundPosition: "center" },
           children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:590", className: "absolute inset-0 bg-black/60 backdrop-blur-[2px]" }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:591", className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:592", className: "max-w-3xl", children: [
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:593", direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:594", className: "flex items-center gap-2 mb-4", children: [
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:595", className: "h-px w-8 bg-gold" }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:596", className: "text-gold font-condensed text-sm uppercase tracking-widest", children: "Global Manufacturing Hub" })
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:591", className: "absolute inset-0 bg-black/60 backdrop-blur-[2px]" }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:592", className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:593", className: "max-w-3xl", children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:594", direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:595", className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:596", className: "h-px w-8 bg-gold" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:597", className: "text-gold font-condensed text-sm uppercase tracking-widest", children: "Global Manufacturing Hub" })
               ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:599", delay: 0.2, children: /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\Shop.tsx:600", className: "font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-tight", children: activeCategory ? /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:600", delay: 0.2, children: /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\Shop.tsx:601", className: "font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-tight", children: activeCategory ? /* @__PURE__ */ jsxs(Fragment, { children: [
                 getCategoryBySlug(activeCategory)?.icon,
                 " ",
                 getCategoryBySlug(activeCategory)?.name
               ] }) : activeSubCategory ? /* @__PURE__ */ jsx(Fragment, { children: getCategoryBySlug(activeCategory || "")?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name }) : /* @__PURE__ */ jsxs(Fragment, { children: [
                 "Premium B2B ",
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:611", className: "text-gradient-gold italic", children: "Apparel Catalog" })
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:612", className: "text-gradient-gold italic", children: "Apparel Catalog" })
               ] }) }) }),
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:616", delay: 0.3, children: /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:617", className: "text-slate-200 text-lg max-w-xl leading-relaxed mb-6", children: activeCategory ? getCategoryBySlug(activeCategory)?.description : "Direct from Sialkot to your warehouse. Explore our export-quality collections across streetwear, sportswear, and technical garments." }) }),
-              /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\Shop.tsx:626", className: "flex flex-wrap gap-x-6 gap-y-2", stagger: 0.05, children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:617", delay: 0.3, children: /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:618", className: "text-slate-200 text-lg max-w-xl leading-relaxed mb-6", children: activeCategory ? getCategoryBySlug(activeCategory)?.description : "Direct from Sialkot to your warehouse. Explore our export-quality collections across streetwear, sportswear, and technical garments." }) }),
+              /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\Shop.tsx:627", className: "flex flex-wrap gap-x-6 gap-y-2", stagger: 0.05, children: [
                 { icon: Star, text: "ISO 9001:2015" },
                 { icon: Package, text: "MOQ from 50 pcs" },
                 { icon: Truck, text: "Global DDP/FOB" },
                 { icon: Tag, text: "Tiered Pricing" }
-              ].map(({ icon: Icon, text }) => /* @__PURE__ */ jsx(AnimatedChild, { "data-loc": "client\\src\\pages\\Shop.tsx:633", direction: "left", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:634", className: "flex items-center gap-2 text-sm text-slate-300", children: [
-                /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\Shop.tsx:635", className: "w-4 h-4 text-gold" }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:636", className: "font-condensed font-semibold uppercase tracking-wider", children: text })
+              ].map(({ icon: Icon, text }) => /* @__PURE__ */ jsx(AnimatedChild, { "data-loc": "client\\src\\pages\\Shop.tsx:634", direction: "left", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:635", className: "flex items-center gap-2 text-sm text-slate-300", children: [
+                /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\Shop.tsx:636", className: "w-4 h-4 text-gold" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:637", className: "font-condensed font-semibold uppercase tracking-wider", children: text })
               ] }) }, text)) })
             ] }) })
           ]
         }
       ),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:646", className: "border-b border-border bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:647", className: "container py-3", children: /* @__PURE__ */ jsx(BreadcrumbNav, { "data-loc": "client\\src\\pages\\Shop.tsx:648", activeCategory, activeSubCategory, categories: SHOP_CATEGORIES2 }) }) }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:653", className: "container py-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:654", className: "flex flex-col lg:flex-row gap-6", children: [
-        /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\pages\\Shop.tsx:657", className: "w-full lg:w-64 flex-shrink-0", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:659", className: "block lg:hidden mb-4", children: /* @__PURE__ */ jsx(MobileFilterSheet, { "data-loc": "client\\src\\pages\\Shop.tsx:660", activeCategory, activeSubCategory, children: /* @__PURE__ */ jsx(
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:647", className: "border-b border-border bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:648", className: "container py-3", children: /* @__PURE__ */ jsx(BreadcrumbNav, { "data-loc": "client\\src\\pages\\Shop.tsx:649", activeCategory, activeSubCategory, categories: allCategories2 }) }) }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:654", className: "container py-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:655", className: "flex flex-col lg:flex-row gap-6", children: [
+        /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\pages\\Shop.tsx:658", className: "w-full lg:w-64 flex-shrink-0", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:660", className: "block lg:hidden mb-4", children: /* @__PURE__ */ jsx(MobileFilterSheet, { "data-loc": "client\\src\\pages\\Shop.tsx:661", activeCategory, activeSubCategory, children: /* @__PURE__ */ jsx(
             CategorySidebar,
             {
-              "data-loc": "client\\src\\pages\\Shop.tsx:661",
+              "data-loc": "client\\src\\pages\\Shop.tsx:662",
               activeCategory,
               activeSubCategory,
               onCategoryChange: handleCategoryChange,
               productCounts
             }
           ) }) }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:671", className: "hidden lg:block", style: { display: "block !important" }, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:672", className: "bg-card border border-border rounded-xl p-4 sticky top-24", style: { position: "sticky", top: "96px" }, children: [
-            /* @__PURE__ */ jsxs("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:673", className: "font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground", children: [
-              /* @__PURE__ */ jsx(List, { "data-loc": "client\\src\\pages\\Shop.tsx:674", className: "w-4 h-4" }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:672", className: "hidden lg:block", style: { display: "block !important" }, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:673", className: "bg-card border border-border rounded-xl p-4 sticky top-24", style: { position: "sticky", top: "96px" }, children: [
+            /* @__PURE__ */ jsxs("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:674", className: "font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground", children: [
+              /* @__PURE__ */ jsx(List, { "data-loc": "client\\src\\pages\\Shop.tsx:675", className: "w-4 h-4" }),
               "Categories"
             ] }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:677", className: "max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin", children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:678", className: "max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin", children: /* @__PURE__ */ jsx(
               CategorySidebar,
               {
-                "data-loc": "client\\src\\pages\\Shop.tsx:678",
+                "data-loc": "client\\src\\pages\\Shop.tsx:679",
                 activeCategory,
                 activeSubCategory,
                 onCategoryChange: handleCategoryChange,
@@ -6237,36 +6237,36 @@ function Shop() {
             ) })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:690", className: "flex-1 min-w-0", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:692", className: "bg-card border border-border rounded-xl p-4 mb-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:693", className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:695", className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:696", className: "font-condensed font-bold text-lg", children: activeSubCategory && activeCategory ? getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name : activeCategory ? getCategoryBySlug(activeCategory)?.name : "All Products" }),
-              /* @__PURE__ */ jsxs(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:704", variant: "outline", className: "text-xs", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:691", className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:693", className: "bg-card border border-border rounded-xl p-4 mb-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:694", className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:696", className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:697", className: "font-condensed font-bold text-lg", children: activeSubCategory && activeCategory ? getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name : activeCategory ? getCategoryBySlug(activeCategory)?.name : "All Products" }),
+              /* @__PURE__ */ jsxs(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:705", variant: "outline", className: "text-xs", children: [
                 totalCount,
                 " items"
               ] }),
               (activeCategory || activeSubCategory) && /* @__PURE__ */ jsxs(
                 Button,
                 {
-                  "data-loc": "client\\src\\pages\\Shop.tsx:708",
+                  "data-loc": "client\\src\\pages\\Shop.tsx:709",
                   variant: "ghost",
                   size: "sm",
                   onClick: () => handleCategoryChange(null, null),
                   className: "text-xs h-7 px-2",
                   children: [
-                    /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\Shop.tsx:714", className: "w-3 h-3 mr-1" }),
+                    /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\Shop.tsx:715", className: "w-3 h-3 mr-1" }),
                     "Clear"
                   ]
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:721", className: "flex items-center gap-3 w-full sm:w-auto", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:722", className: "relative flex-1 sm:w-64", children: [
-                /* @__PURE__ */ jsx(Search, { "data-loc": "client\\src\\pages\\Shop.tsx:723", className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:722", className: "flex items-center gap-3 w-full sm:w-auto", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:723", className: "relative flex-1 sm:w-64", children: [
+                /* @__PURE__ */ jsx(Search, { "data-loc": "client\\src\\pages\\Shop.tsx:724", className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
                 /* @__PURE__ */ jsx(
                   Input,
                   {
-                    "data-loc": "client\\src\\pages\\Shop.tsx:724",
+                    "data-loc": "client\\src\\pages\\Shop.tsx:725",
                     placeholder: "Search products...",
                     value: searchQuery,
                     onChange: (e) => setSearchQuery(e.target.value),
@@ -6277,57 +6277,57 @@ function Shop() {
               /* @__PURE__ */ jsxs(
                 "select",
                 {
-                  "data-loc": "client\\src\\pages\\Shop.tsx:731",
+                  "data-loc": "client\\src\\pages\\Shop.tsx:732",
                   value: sortBy,
                   onChange: (e) => setSortBy(e.target.value),
                   className: "bg-secondary border-border rounded-md text-sm px-3 h-10 text-muted-foreground focus:ring-1 focus:ring-gold outline-none cursor-pointer",
                   children: [
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:736", value: "featured", children: "Featured" }),
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:737", value: "name", children: "Name (A-Z)" }),
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:738", value: "price-low", children: "Price: Low to High" })
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:737", value: "featured", children: "Featured" }),
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:738", value: "name", children: "Name (A-Z)" }),
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:739", value: "price-low", children: "Price: Low to High" })
                   ]
                 }
               )
             ] })
           ] }) }),
-          isLoading ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:746", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx(ProductCardSkeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:747" }, i)) }) : displayProducts.length === 0 ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:750", className: "text-center py-24 bg-card border border-border rounded-xl", children: [
-            /* @__PURE__ */ jsx(Package, { "data-loc": "client\\src\\pages\\Shop.tsx:751", className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
-            /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:752", className: "font-serif text-2xl text-foreground mb-2", children: "No products found" }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:753", className: "text-muted-foreground mb-6 max-w-md mx-auto", children: "Try adjusting your filters or search query. We have products across all major apparel categories." }),
-            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:756", onClick: () => {
+          isLoading ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:747", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx(ProductCardSkeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:748" }, i)) }) : displayProducts.length === 0 ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:751", className: "text-center py-24 bg-card border border-border rounded-xl", children: [
+            /* @__PURE__ */ jsx(Package, { "data-loc": "client\\src\\pages\\Shop.tsx:752", className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
+            /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:753", className: "font-serif text-2xl text-foreground mb-2", children: "No products found" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:754", className: "text-muted-foreground mb-6 max-w-md mx-auto", children: "Try adjusting your filters or search query. We have products across all major apparel categories." }),
+            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:757", onClick: () => {
               handleCategoryChange(null, null);
               setSearchQuery("");
             }, children: "Clear All Filters" })
           ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-            !activeCategory && !debouncedSearch && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:764", className: "mb-10", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:765", className: "flex items-center gap-3 mb-6", children: [
-                /* @__PURE__ */ jsx(Star, { "data-loc": "client\\src\\pages\\Shop.tsx:766", className: "w-5 h-5 text-gold" }),
-                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:767", className: "font-condensed text-lg font-bold uppercase tracking-wider text-foreground", children: "Featured Products" }),
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:768", className: "flex-1 h-px bg-border" })
+            !activeCategory && !debouncedSearch && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:765", className: "mb-10", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:766", className: "flex items-center gap-3 mb-6", children: [
+                /* @__PURE__ */ jsx(Star, { "data-loc": "client\\src\\pages\\Shop.tsx:767", className: "w-5 h-5 text-gold" }),
+                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:768", className: "font-condensed text-lg font-bold uppercase tracking-wider text-foreground", children: "Featured Products" }),
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:769", className: "flex-1 h-px bg-border" })
               ] }),
-              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:770", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: displayProducts.filter((p) => p.isFeatured).slice(0, 4).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:772", product: p }, `featured-${p.id}`)) })
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:771", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: displayProducts.filter((p) => p.isFeatured).slice(0, 4).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:773", product: p }, `featured-${p.id}`)) })
             ] }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:779", className: cn(
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:780", className: cn(
               "grid gap-5",
               viewMode === "grid" ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-4" : "grid-cols-1"
-            ), children: displayProducts.filter((p) => !(!activeCategory && !debouncedSearch && p.isFeatured)).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:788", product: p }, p.id)) })
+            ), children: displayProducts.filter((p) => !(!activeCategory && !debouncedSearch && p.isFeatured)).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:789", product: p }, p.id)) })
           ] })
         ] })
       ] }) }),
-      activeCategory && /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Shop.tsx:799", className: "py-16 bg-card border-t border-border mt-12", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:800", className: "container", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:801", className: "max-w-4xl mx-auto text-center", children: [
-        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:802", className: "font-serif text-3xl font-bold mb-4", children: [
+      activeCategory && /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Shop.tsx:800", className: "py-16 bg-card border-t border-border mt-12", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:801", className: "container", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:802", className: "max-w-4xl mx-auto text-center", children: [
+        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:803", className: "font-serif text-3xl font-bold mb-4", children: [
           "Custom ",
           getCategoryBySlug(activeCategory)?.name,
           " Manufacturing"
         ] }),
-        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\Shop.tsx:805", className: "text-muted-foreground text-lg leading-relaxed mb-8", children: [
+        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\Shop.tsx:806", className: "text-muted-foreground text-lg leading-relaxed mb-8", children: [
           "Looking for a reliable ",
           getCategoryBySlug(activeCategory)?.name.toLowerCase(),
           " manufacturer in Pakistan? Sialkot Sample Masters offers premium quality with low MOQ starting at 50 pieces. OEM and private label services available for global brands."
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:810", className: "flex flex-wrap justify-center gap-4", children: [
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:811", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:812", className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-widest", children: "Request Quote" }) }),
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:816", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:817", variant: "outline", className: "font-condensed font-bold uppercase tracking-widest", children: "Contact Sales" }) })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:811", className: "flex flex-wrap justify-center gap-4", children: [
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:812", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:813", className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-widest", children: "Request Quote" }) }),
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:817", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:818", variant: "outline", className: "font-condensed font-bold uppercase tracking-widest", children: "Contact Sales" }) })
         ] })
       ] }) }) })
     ] })
