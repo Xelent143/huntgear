@@ -20,7 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface SlabRow { minQty: number; maxQty: number | null; pricePerUnit: string; label: string; sortOrder: number; }
 interface SizeRow { [key: string]: string; }
 
-const CATEGORIES = ["Hunting Wear", "Sports Wear", "Ski Wear", "Tech Wear", "Streetwear", "Martial Arts Wear"];
+// Categories are now fetched from API
 
 // ─── Shared Components (SlabEditor & SizeChartEditor) ─────────────────────────
 
@@ -185,10 +185,15 @@ export default function AdminNewProduct() {
     const [uploadingImages, setUploadingImages] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // Fetch categories from API
+    const { data: categories } = trpc.category.listWithSubs.useQuery();
+
     const [form, setForm] = useState({
         title: "",
         slug: "",
         category: "Streetwear",
+        categoryId: null as number | null,
+        subcategoryId: null as number | null,
         shortDescription: "",
         description: "",
         manufacturingStory: "",
@@ -232,6 +237,8 @@ export default function AdminNewProduct() {
                 title: editProduct.title ?? "",
                 slug: editProduct.slug ?? "",
                 category: editProduct.category ?? "Streetwear",
+                categoryId: (editProduct as any).categoryId ?? null,
+                subcategoryId: (editProduct as any).subcategoryId ?? null,
                 shortDescription: editProduct.shortDescription ?? "",
                 description: editProduct.description ?? "",
                 manufacturingStory: (editProduct as any).manufacturingStory ?? "",
@@ -751,15 +758,51 @@ export default function AdminNewProduct() {
                                     <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) }))} placeholder="e.g. Custom Waterproof Ski Jacket" className="bg-background h-12 text-lg font-serif" />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
                                         <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Category <span className="text-red-500">*</span></Label>
-                                        <Select value={form.category} onValueChange={v => setForm(f => ({ ...f, category: v }))}>
+                                        <Select 
+                                            value={form.categoryId?.toString() || ""} 
+                                            onValueChange={v => {
+                                                const catId = parseInt(v);
+                                                const cat = categories?.find(c => c.id === catId);
+                                                setForm(f => ({ 
+                                                    ...f, 
+                                                    categoryId: catId,
+                                                    category: cat?.name || f.category,
+                                                    subcategoryId: null 
+                                                }));
+                                            }}
+                                        >
                                             <SelectTrigger className="bg-background h-12">
-                                                <SelectValue />
+                                                <SelectValue placeholder="Select category" />
                                             </SelectTrigger>
                                             <SelectContent className="bg-card">
-                                                {CATEGORIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                                                {categories?.map(c => (
+                                                    <SelectItem key={c.id} value={c.id.toString()}>
+                                                        {c.icon} {c.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div>
+                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Subcategory</Label>
+                                        <Select 
+                                            value={form.subcategoryId?.toString() || ""} 
+                                            onValueChange={v => setForm(f => ({ ...f, subcategoryId: v ? parseInt(v) : null }))}
+                                            disabled={!form.categoryId}
+                                        >
+                                            <SelectTrigger className="bg-background h-12">
+                                                <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-card">
+                                                <SelectItem value="">None</SelectItem>
+                                                {categories?.find(c => c.id === form.categoryId)?.subcategories?.map(s => (
+                                                    <SelectItem key={s.id} value={s.id.toString()}>
+                                                        {s.name}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </div>

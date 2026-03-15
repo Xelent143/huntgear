@@ -13,6 +13,7 @@ var schema_exports = {};
 __export(schema_exports, {
   blogPosts: () => blogPosts,
   cartItems: () => cartItems,
+  categories: () => categories,
   contactSubmissions: () => contactSubmissions,
   inquiryNotes: () => inquiryNotes,
   knowledgeBase: () => knowledgeBase,
@@ -26,6 +27,7 @@ __export(schema_exports, {
   shippingZones: () => shippingZones,
   sizeCharts: () => sizeCharts,
   slabPrices: () => slabPrices,
+  subcategories: () => subcategories,
   techPackImages: () => techPackImages,
   techPacks: () => techPacks,
   testimonials: () => testimonials,
@@ -41,7 +43,7 @@ import {
   boolean,
   decimal
 } from "drizzle-orm/mysql-core";
-var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages, inquiryNotes, knowledgeBase, savedTryOnModels;
+var users, products, productImages, slabPrices, sizeCharts, shippingZones, cartItems, orders, rfqSubmissions, blogPosts, portfolioItems, portfolioImages, testimonials, contactSubmissions, techPacks, techPackImages, inquiryNotes, knowledgeBase, savedTryOnModels, categories, subcategories;
 var init_schema = __esm({
   "drizzle/schema.ts"() {
     "use strict";
@@ -65,6 +67,9 @@ var init_schema = __esm({
       slug: varchar("slug", { length: 255 }).notNull().unique(),
       title: varchar("title", { length: 500 }).notNull(),
       category: varchar("category", { length: 100 }).notNull(),
+      // legacy field - keep for compatibility
+      categoryId: int("category_id"),
+      subcategoryId: int("subcategory_id"),
       description: text("description"),
       shortDescription: varchar("shortDescription", { length: 500 }),
       mainImage: varchar("mainImage", { length: 1e3 }),
@@ -334,6 +339,34 @@ var init_schema = __esm({
       // The high-res URL of the model image
       createdAt: timestamp("createdAt").defaultNow().notNull()
     });
+    categories = mysqlTable("categories", {
+      id: int("id").autoincrement().primaryKey(),
+      name: varchar("name", { length: 100 }).notNull(),
+      slug: varchar("slug", { length: 100 }).notNull().unique(),
+      icon: varchar("icon", { length: 50 }).default(""),
+      description: text("description"),
+      imageUrl: varchar("image_url", { length: 1e3 }),
+      sortOrder: int("sort_order").default(0).notNull(),
+      isActive: boolean("is_active").default(true).notNull(),
+      seoTitle: varchar("seo_title", { length: 255 }),
+      seoDescription: text("seo_description"),
+      seoKeywords: text("seo_keywords"),
+      createdAt: timestamp("created_at").defaultNow().notNull(),
+      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
+    });
+    subcategories = mysqlTable("subcategories", {
+      id: int("id").autoincrement().primaryKey(),
+      categoryId: int("category_id").notNull(),
+      name: varchar("name", { length: 100 }).notNull(),
+      slug: varchar("slug", { length: 100 }).notNull(),
+      description: text("description"),
+      sortOrder: int("sort_order").default(0).notNull(),
+      isActive: boolean("is_active").default(true).notNull(),
+      createdAt: timestamp("created_at").defaultNow().notNull(),
+      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
+    }, (table) => ({
+      uniqueCategorySubcategory: { unique: [table.categoryId, table.slug] }
+    }));
   }
 });
 
@@ -366,22 +399,27 @@ __export(db_exports, {
   addProductImage: () => addProductImage,
   addTechPackImage: () => addTechPackImage,
   clearCart: () => clearCart,
+  createCategory: () => createCategory,
   createContactSubmission: () => createContactSubmission,
   createOrder: () => createOrder,
   createPortfolioItem: () => createPortfolioItem,
   createProduct: () => createProduct,
   createRfqSubmission: () => createRfqSubmission,
   createShippingZone: () => createShippingZone,
+  createSubcategory: () => createSubcategory,
   createTechPack: () => createTechPack,
+  deleteCategory: () => deleteCategory,
   deleteKnowledgeBaseEntry: () => deleteKnowledgeBaseEntry,
   deletePortfolioImage: () => deletePortfolioImage,
   deletePortfolioItem: () => deletePortfolioItem,
   deleteProduct: () => deleteProduct,
   deleteProductImage: () => deleteProductImage,
   deleteShippingZone: () => deleteShippingZone,
+  deleteSubcategory: () => deleteSubcategory,
   findShippingZoneForCountry: () => findShippingZoneForCountry,
   getActiveProducts: () => getActiveProducts,
   getActiveShippingZones: () => getActiveShippingZones,
+  getAllCategories: () => getAllCategories,
   getAllKnowledgeBase: () => getAllKnowledgeBase,
   getAllOrders: () => getAllOrders,
   getAllProducts: () => getAllProducts,
@@ -390,6 +428,9 @@ __export(db_exports, {
   getAllTechPacks: () => getAllTechPacks,
   getBlogPostBySlug: () => getBlogPostBySlug,
   getCartItems: () => getCartItems,
+  getCategoriesWithSubcategories: () => getCategoriesWithSubcategories,
+  getCategoryById: () => getCategoryById,
+  getCategoryBySlug: () => getCategoryBySlug,
   getDb: () => getDb,
   getFeaturedPortfolioItems: () => getFeaturedPortfolioItems,
   getFeaturedProducts: () => getFeaturedProducts,
@@ -408,6 +449,8 @@ __export(db_exports, {
   getSavedTryOnModels: () => getSavedTryOnModels,
   getSizeChart: () => getSizeChart,
   getSlabPrices: () => getSlabPrices,
+  getSubcategoriesByCategoryId: () => getSubcategoriesByCategoryId,
+  getSubcategoryById: () => getSubcategoryById,
   getTechPackById: () => getTechPackById,
   getTechPackImages: () => getTechPackImages,
   getUserByOpenId: () => getUserByOpenId,
@@ -418,11 +461,13 @@ __export(db_exports, {
   reorderProductImages: () => reorderProductImages,
   setSlabPrices: () => setSlabPrices,
   updateCartItemQty: () => updateCartItemQty,
+  updateCategory: () => updateCategory,
   updateOrderStatus: () => updateOrderStatus,
   updatePortfolioItem: () => updatePortfolioItem,
   updateProduct: () => updateProduct,
   updateRfqStatus: () => updateRfqStatus,
   updateShippingZone: () => updateShippingZone,
+  updateSubcategory: () => updateSubcategory,
   updateTechPackStatus: () => updateTechPackStatus,
   upsertCartItem: () => upsertCartItem,
   upsertSizeChart: () => upsertSizeChart,
@@ -915,6 +960,87 @@ async function getTechPackImages(techPackId) {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(techPackImages).where(eq(techPackImages.techPackId, techPackId)).orderBy(techPackImages.sortOrder);
+}
+async function getAllCategories(opts) {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions = opts?.includeInactive ? void 0 : eq(categories.isActive, true);
+  return db.select().from(categories).where(conditions).orderBy(categories.sortOrder, categories.name);
+}
+async function getCategoryById(id) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+  return result[0];
+}
+async function getCategoryBySlug(slug) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
+  return result[0];
+}
+async function createCategory(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(categories).values(data).$returningId();
+  const [category] = await db.select().from(categories).where(eq(categories.id, result.id)).limit(1);
+  return category;
+}
+async function updateCategory(id, data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(categories).set(data).where(eq(categories.id, id));
+}
+async function deleteCategory(id) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(categories).where(eq(categories.id, id));
+}
+async function getSubcategoriesByCategoryId(categoryId, opts) {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions = [eq(subcategories.categoryId, categoryId)];
+  if (!opts?.includeInactive) {
+    conditions.push(eq(subcategories.isActive, true));
+  }
+  return db.select().from(subcategories).where(and(...conditions)).orderBy(subcategories.sortOrder, subcategories.name);
+}
+async function getSubcategoryById(id) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const result = await db.select().from(subcategories).where(eq(subcategories.id, id)).limit(1);
+  return result[0];
+}
+async function createSubcategory(data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(subcategories).values(data).$returningId();
+  const [subcategory] = await db.select().from(subcategories).where(eq(subcategories.id, result.id)).limit(1);
+  return subcategory;
+}
+async function updateSubcategory(id, data) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(subcategories).set(data).where(eq(subcategories.id, id));
+}
+async function deleteSubcategory(id) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(subcategories).where(eq(subcategories.id, id));
+}
+async function getCategoriesWithSubcategories(opts) {
+  const db = await getDb();
+  if (!db) return [];
+  const cats = await getAllCategories(opts);
+  const result = [];
+  for (const cat of cats) {
+    const subs = await getSubcategoriesByCategoryId(cat.id, opts);
+    result.push({
+      ...cat,
+      subcategories: subs
+    });
+  }
+  return result;
 }
 var _db;
 var init_db = __esm({
@@ -2457,6 +2583,8 @@ var productRouter = router({
     title: z3.string().min(1).max(500),
     slug: z3.string().min(1).max(255).regex(/^[a-z0-9-]+$/),
     category: z3.string().min(1).max(100),
+    categoryId: z3.number().int().positive().optional().nullable(),
+    subcategoryId: z3.number().int().positive().optional().nullable(),
     description: z3.string().optional(),
     shortDescription: z3.string().max(500).optional(),
     mainImage: z3.string().optional(),
@@ -2497,6 +2625,8 @@ var productRouter = router({
     title: z3.string().min(1).max(500).optional(),
     slug: z3.string().min(1).max(255).regex(/^[a-z0-9-]+$/).optional(),
     category: z3.string().min(1).max(100).optional(),
+    categoryId: z3.number().int().positive().optional().nullable(),
+    subcategoryId: z3.number().int().positive().optional().nullable(),
     description: z3.string().optional(),
     shortDescription: z3.string().max(500).optional(),
     mainImage: z3.string().optional(),
@@ -3224,6 +3354,82 @@ var techPackRouter = router({
     return { success: true };
   })
 });
+var categoryRouter = router({
+  // Public endpoints
+  list: publicProcedure.input(z3.object({ includeInactive: z3.boolean().optional() }).optional()).query(({ input }) => getAllCategories({ includeInactive: input?.includeInactive })),
+  listWithSubs: publicProcedure.input(z3.object({ includeInactive: z3.boolean().optional() }).optional()).query(({ input }) => getCategoriesWithSubcategories({ includeInactive: input?.includeInactive })),
+  bySlug: publicProcedure.input(z3.object({ slug: z3.string() })).query(async ({ input }) => {
+    const category = await getCategoryBySlug(input.slug);
+    if (!category) return null;
+    const subcategories2 = await getSubcategoriesByCategoryId(category.id);
+    return { ...category, subcategories: subcategories2 };
+  }),
+  subcategories: publicProcedure.input(z3.object({ categoryId: z3.number().int().positive() })).query(({ input }) => getSubcategoriesByCategoryId(input.categoryId)),
+  // Admin endpoints
+  adminList: adminProcedure3.input(z3.object({ includeInactive: z3.boolean().optional() }).optional()).query(({ input }) => getCategoriesWithSubcategories({ includeInactive: input?.includeInactive ?? true })),
+  create: adminProcedure3.input(z3.object({
+    name: z3.string().min(1).max(100),
+    slug: z3.string().min(1).max(100).regex(/^[a-z0-9-]+$/),
+    icon: z3.string().max(50).optional(),
+    description: z3.string().optional(),
+    imageUrl: z3.string().optional(),
+    sortOrder: z3.number().int().default(0),
+    isActive: z3.boolean().default(true),
+    seoTitle: z3.string().max(255).optional(),
+    seoDescription: z3.string().optional(),
+    seoKeywords: z3.string().optional()
+  })).mutation(async ({ input }) => {
+    return createCategory(input);
+  }),
+  update: adminProcedure3.input(z3.object({
+    id: z3.number().int().positive(),
+    name: z3.string().min(1).max(100).optional(),
+    slug: z3.string().min(1).max(100).regex(/^[a-z0-9-]+$/).optional(),
+    icon: z3.string().max(50).optional(),
+    description: z3.string().optional(),
+    imageUrl: z3.string().optional(),
+    sortOrder: z3.number().int().optional(),
+    isActive: z3.boolean().optional(),
+    seoTitle: z3.string().max(255).optional(),
+    seoDescription: z3.string().optional(),
+    seoKeywords: z3.string().optional()
+  })).mutation(async ({ input }) => {
+    const { id, ...data } = input;
+    await updateCategory(id, data);
+    return { success: true };
+  }),
+  delete: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+    await deleteCategory(input.id);
+    return { success: true };
+  }),
+  // Subcategory admin endpoints
+  createSubcategory: adminProcedure3.input(z3.object({
+    categoryId: z3.number().int().positive(),
+    name: z3.string().min(1).max(100),
+    slug: z3.string().min(1).max(100).regex(/^[a-z0-9-]+$/),
+    description: z3.string().optional(),
+    sortOrder: z3.number().int().default(0),
+    isActive: z3.boolean().default(true)
+  })).mutation(async ({ input }) => {
+    return createSubcategory(input);
+  }),
+  updateSubcategory: adminProcedure3.input(z3.object({
+    id: z3.number().int().positive(),
+    name: z3.string().min(1).max(100).optional(),
+    slug: z3.string().min(1).max(100).regex(/^[a-z0-9-]+$/).optional(),
+    description: z3.string().optional(),
+    sortOrder: z3.number().int().optional(),
+    isActive: z3.boolean().optional()
+  })).mutation(async ({ input }) => {
+    const { id, ...data } = input;
+    await updateSubcategory(id, data);
+    return { success: true };
+  }),
+  deleteSubcategory: adminProcedure3.input(z3.object({ id: z3.number().int().positive() })).mutation(async ({ input }) => {
+    await deleteSubcategory(input.id);
+    return { success: true };
+  })
+});
 var appRouter = router({
   system: systemRouter,
   auth: router({
@@ -3235,6 +3441,7 @@ var appRouter = router({
     })
   }),
   product: productRouter,
+  category: categoryRouter,
   shipping: shippingRouter,
   cart: cartRouter,
   order: orderRouter,

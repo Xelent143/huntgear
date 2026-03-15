@@ -42,6 +42,10 @@ import {
   // Tech Packs
   createTechPack, getTechPackById, getAllTechPacks, updateTechPackStatus,
   addTechPackImage, getTechPackImages,
+  // Categories
+  getAllCategories, getCategoryById, getCategoryBySlug, createCategory, updateCategory, deleteCategory,
+  getSubcategoriesByCategoryId, getSubcategoryById, createSubcategory, updateSubcategory, deleteSubcategory,
+  getCategoriesWithSubcategories,
 } from "./db";
 import { storagePut } from "./storage";
 import { nanoid } from "nanoid";
@@ -124,6 +128,8 @@ const productRouter = router({
       title: z.string().min(1).max(500),
       slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/),
       category: z.string().min(1).max(100),
+      categoryId: z.number().int().positive().optional().nullable(),
+      subcategoryId: z.number().int().positive().optional().nullable(),
       description: z.string().optional(),
       shortDescription: z.string().max(500).optional(),
       mainImage: z.string().optional(),
@@ -168,6 +174,8 @@ const productRouter = router({
       title: z.string().min(1).max(500).optional(),
       slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/).optional(),
       category: z.string().min(1).max(100).optional(),
+      categoryId: z.number().int().positive().optional().nullable(),
+      subcategoryId: z.number().int().positive().optional().nullable(),
       description: z.string().optional(),
       shortDescription: z.string().max(500).optional(),
       mainImage: z.string().optional(),
@@ -1092,6 +1100,117 @@ const techPackRouter = router({
     }),
 });
 
+// ─── Category router ──────────────────────────────────────────────────────────
+
+const categoryRouter = router({
+  // Public endpoints
+  list: publicProcedure
+    .input(z.object({ includeInactive: z.boolean().optional() }).optional())
+    .query(({ input }) => getAllCategories({ includeInactive: input?.includeInactive })),
+
+  listWithSubs: publicProcedure
+    .input(z.object({ includeInactive: z.boolean().optional() }).optional())
+    .query(({ input }) => getCategoriesWithSubcategories({ includeInactive: input?.includeInactive })),
+
+  bySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      const category = await getCategoryBySlug(input.slug);
+      if (!category) return null;
+      const subcategories = await getSubcategoriesByCategoryId(category.id);
+      return { ...category, subcategories };
+    }),
+
+  subcategories: publicProcedure
+    .input(z.object({ categoryId: z.number().int().positive() }))
+    .query(({ input }) => getSubcategoriesByCategoryId(input.categoryId)),
+
+  // Admin endpoints
+  adminList: adminProcedure
+    .input(z.object({ includeInactive: z.boolean().optional() }).optional())
+    .query(({ input }) => getCategoriesWithSubcategories({ includeInactive: input?.includeInactive ?? true })),
+
+  create: adminProcedure
+    .input(z.object({
+      name: z.string().min(1).max(100),
+      slug: z.string().min(1).max(100).regex(/^[a-z0-9-]+$/),
+      icon: z.string().max(50).optional(),
+      description: z.string().optional(),
+      imageUrl: z.string().optional(),
+      sortOrder: z.number().int().default(0),
+      isActive: z.boolean().default(true),
+      seoTitle: z.string().max(255).optional(),
+      seoDescription: z.string().optional(),
+      seoKeywords: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      return createCategory(input);
+    }),
+
+  update: adminProcedure
+    .input(z.object({
+      id: z.number().int().positive(),
+      name: z.string().min(1).max(100).optional(),
+      slug: z.string().min(1).max(100).regex(/^[a-z0-9-]+$/).optional(),
+      icon: z.string().max(50).optional(),
+      description: z.string().optional(),
+      imageUrl: z.string().optional(),
+      sortOrder: z.number().int().optional(),
+      isActive: z.boolean().optional(),
+      seoTitle: z.string().max(255).optional(),
+      seoDescription: z.string().optional(),
+      seoKeywords: z.string().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const { id, ...data } = input;
+      await updateCategory(id, data);
+      return { success: true };
+    }),
+
+  delete: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .mutation(async ({ input }) => {
+      await deleteCategory(input.id);
+      return { success: true };
+    }),
+
+  // Subcategory admin endpoints
+  createSubcategory: adminProcedure
+    .input(z.object({
+      categoryId: z.number().int().positive(),
+      name: z.string().min(1).max(100),
+      slug: z.string().min(1).max(100).regex(/^[a-z0-9-]+$/),
+      description: z.string().optional(),
+      sortOrder: z.number().int().default(0),
+      isActive: z.boolean().default(true),
+    }))
+    .mutation(async ({ input }) => {
+      return createSubcategory(input);
+    }),
+
+  updateSubcategory: adminProcedure
+    .input(z.object({
+      id: z.number().int().positive(),
+      name: z.string().min(1).max(100).optional(),
+      slug: z.string().min(1).max(100).regex(/^[a-z0-9-]+$/).optional(),
+      description: z.string().optional(),
+      sortOrder: z.number().int().optional(),
+      isActive: z.boolean().optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const { id, ...data } = input;
+      await updateSubcategory(id, data);
+      return { success: true };
+    }),
+
+  deleteSubcategory: adminProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .mutation(async ({ input }) => {
+      await deleteSubcategory(input.id);
+      return { success: true };
+    }),
+});
+
 // ─── App router ───────────────────────────────────────────────────────────────
 
 export const appRouter = router({
@@ -1105,6 +1224,7 @@ export const appRouter = router({
     }),
   }),
   product: productRouter,
+  category: categoryRouter,
   shipping: shippingRouter,
   cart: cartRouter,
   order: orderRouter,

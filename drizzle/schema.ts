@@ -35,7 +35,9 @@ export const products = mysqlTable("products", {
   id: int("id").autoincrement().primaryKey(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   title: varchar("title", { length: 500 }).notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(), // legacy field - keep for compatibility
+  categoryId: int("category_id"),
+  subcategoryId: int("subcategory_id"),
   description: text("description"),
   shortDescription: varchar("shortDescription", { length: 500 }),
   mainImage: varchar("mainImage", { length: 1000 }),
@@ -384,3 +386,43 @@ export const savedTryOnModels = mysqlTable("saved_tryon_models", {
 
 export type SavedTryOnModel = typeof savedTryOnModels.$inferSelect;
 export type InsertSavedTryOnModel = typeof savedTryOnModels.$inferInsert;
+
+// ─── Categories ───────────────────────────────────────────────────────────────
+
+export const categories = mysqlTable("categories", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  icon: varchar("icon", { length: 50 }).default(""),
+  description: text("description"),
+  imageUrl: varchar("image_url", { length: 1000 }),
+  sortOrder: int("sort_order").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  seoTitle: varchar("seo_title", { length: 255 }),
+  seoDescription: text("seo_description"),
+  seoKeywords: text("seo_keywords"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Category = typeof categories.$inferSelect;
+export type InsertCategory = typeof categories.$inferInsert;
+
+// ─── Subcategories ────────────────────────────────────────────────────────────
+
+export const subcategories = mysqlTable("subcategories", {
+  id: int("id").autoincrement().primaryKey(),
+  categoryId: int("category_id").notNull(),
+  name: varchar("name", { length: 100 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull(),
+  description: text("description"),
+  sortOrder: int("sort_order").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  uniqueCategorySubcategory: { unique: [table.categoryId, table.slug] },
+}));
+
+export type Subcategory = typeof subcategories.$inferSelect;
+export type InsertSubcategory = typeof subcategories.$inferInsert;

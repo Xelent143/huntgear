@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, List, Grid3X3, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, Calculator, TrendingDown, FileWarning, XCircle, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Camera, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, List, Grid3X3, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, Calculator, TrendingDown, FileWarning, XCircle, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Camera, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -31,6 +31,7 @@ import * as z from "zod";
 import { z as z$1 } from "zod";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
+import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { EffectComposer, Bloom, Vignette, Selection } from "@react-three/postprocessing";
 import { KernelSize, BlendFunction } from "postprocessing";
@@ -5642,7 +5643,7 @@ const DEMO_PRODUCTS = [
     ]
   }
 ];
-const SHOP_CATEGORIES = [
+const SHOP_CATEGORIES$1 = [
   {
     id: "ski-wear",
     name: "Ski Wear",
@@ -5749,9 +5750,6 @@ const SHOP_CATEGORIES = [
     ]
   }
 ];
-function getCategoryBySlug(slug) {
-  return SHOP_CATEGORIES.find((cat) => cat.slug === slug);
-}
 const CATEGORY_SEO_CONTENT = {
   "ski-wear": {
     title: "Custom Ski Wear Manufacturer | Jackets, Pants & Base Layers | Sialkot Pakistan",
@@ -5789,21 +5787,37 @@ const CATEGORY_SEO_CONTENT = {
     keywords: "security uniform manufacturer, tactical shirt supplier, duty pants manufacturer Pakistan, hi-vis jacket supplier, security apparel wholesale, uniform supplier"
   }
 };
+function transformApiCategories(apiCategories) {
+  if (!apiCategories || apiCategories.length === 0) return null;
+  return apiCategories.map((cat) => ({
+    id: String(cat.id),
+    name: cat.name,
+    slug: cat.slug,
+    description: cat.description || "",
+    icon: cat.icon || "📁",
+    subCategories: (cat.subcategories || []).map((sub) => ({
+      id: String(sub.id),
+      name: sub.name,
+      slug: sub.slug,
+      description: sub.description || ""
+    }))
+  }));
+}
 function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
-  return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:58", className: "relative group/card", children: /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:59", href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:77", className: "relative group/card", children: /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:78", href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs(
     "article",
     {
-      "data-loc": "client\\src\\pages\\Shop.tsx:60",
+      "data-loc": "client\\src\\pages\\Shop.tsx:79",
       className: "group relative bg-card border border-border rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-foreground/10 hover:border-gold/40",
       onMouseEnter: () => setHovered(true),
       onMouseLeave: () => setHovered(false),
       children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:66", className: "relative aspect-[2/3] overflow-hidden bg-secondary", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:85", className: "relative aspect-[2/3] overflow-hidden bg-secondary", children: [
           /* @__PURE__ */ jsx(
             "img",
             {
-              "data-loc": "client\\src\\pages\\Shop.tsx:67",
+              "data-loc": "client\\src\\pages\\Shop.tsx:86",
               src: product.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
               alt: product.title,
               className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110",
@@ -5811,49 +5825,49 @@ function ProductCard({ product }) {
               decoding: "async"
             }
           ),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:75", className: `absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`, children: /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:76", className: "flex items-center gap-2 text-white font-condensed font-semibold tracking-wider text-sm uppercase border border-white/60 px-4 py-2 rounded", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:94", className: `absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`, children: /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:95", className: "flex items-center gap-2 text-white font-condensed font-semibold tracking-wider text-sm uppercase border border-white/60 px-4 py-2 rounded", children: [
             "View Product ",
-            /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Shop.tsx:77", className: "w-4 h-4" })
+            /* @__PURE__ */ jsx(ArrowRight, { "data-loc": "client\\src\\pages\\Shop.tsx:96", className: "w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:81", className: "absolute top-3 left-3 flex flex-col gap-1", children: [
-            product.isFeatured && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:83", className: "bg-gold text-black text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded", children: "Featured" }),
-            product.freeShipping && /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:88", className: "bg-green-600 text-white text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Truck, { "data-loc": "client\\src\\pages\\Shop.tsx:89", className: "w-2.5 h-2.5" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:100", className: "absolute top-3 left-3 flex flex-col gap-1", children: [
+            product.isFeatured && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:102", className: "bg-gold text-black text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded", children: "Featured" }),
+            product.freeShipping && /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:107", className: "bg-green-600 text-white text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Truck, { "data-loc": "client\\src\\pages\\Shop.tsx:108", className: "w-2.5 h-2.5" }),
               " Free Ship"
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:96", className: "p-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:97", className: "flex items-center gap-2 mb-1", children: [
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:98", className: "text-xs text-gold font-condensed font-semibold uppercase tracking-widest", children: product.category }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:115", className: "p-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:116", className: "flex items-center gap-2 mb-1", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:117", className: "text-xs text-gold font-condensed font-semibold uppercase tracking-widest", children: product.category }),
             product.subCategory && /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:101", className: "w-3 h-3 text-muted-foreground" }),
-              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:102", className: "text-xs text-muted-foreground", children: product.subCategory })
+              /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:120", className: "w-3 h-3 text-muted-foreground" }),
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:121", className: "text-xs text-muted-foreground", children: product.subCategory })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:106", className: "text-foreground font-serif font-semibold text-base leading-snug mb-2 group-hover:text-gold transition-colors", children: product.title }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:109", className: "text-muted-foreground text-xs leading-relaxed mb-3 line-clamp-2", children: product.shortDescription }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:110", className: "flex items-center justify-between border-t border-border pt-4 mt-3", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:111", className: "flex flex-col items-center", children: [
-              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:112", className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Starting from" }),
-              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:113", className: "text-gold font-condensed font-bold text-lg leading-none", children: product.startingPrice ?? "Request Quote" })
+          /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:125", className: "text-foreground font-serif font-semibold text-base leading-snug mb-2 group-hover:text-gold transition-colors", children: product.title }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:128", className: "text-muted-foreground text-xs leading-relaxed mb-3 line-clamp-2", children: product.shortDescription }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:129", className: "flex items-center justify-between border-t border-border pt-4 mt-3", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:130", className: "flex flex-col items-center", children: [
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:131", className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Starting from" }),
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:132", className: "text-gold font-condensed font-bold text-lg leading-none", children: product.startingPrice ?? "Request Quote" })
             ] }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:116", className: "flex flex-col items-center justify-center translate-y-1", children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:135", className: "flex flex-col items-center justify-center translate-y-1", children: /* @__PURE__ */ jsx(
               Link,
               {
-                "data-loc": "client\\src\\pages\\Shop.tsx:117",
+                "data-loc": "client\\src\\pages\\Shop.tsx:136",
                 href: "/customize",
                 onClick: (e) => e.stopPropagation(),
                 className: "group/btn",
-                children: /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:122", className: "flex items-center gap-1.5 text-[10px] font-condensed font-bold uppercase tracking-wider bg-[#b07d3b] text-white px-4 py-2 rounded shadow-md hover:bg-[#c99551] transition-all transform group-hover/btn:scale-105", children: [
-                  /* @__PURE__ */ jsx(Palette, { "data-loc": "client\\src\\pages\\Shop.tsx:123", className: "w-3.5 h-3.5" }),
+                children: /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:141", className: "flex items-center gap-1.5 text-[10px] font-condensed font-bold uppercase tracking-wider bg-[#b07d3b] text-white px-4 py-2 rounded shadow-md hover:bg-[#c99551] transition-all transform group-hover/btn:scale-105", children: [
+                  /* @__PURE__ */ jsx(Palette, { "data-loc": "client\\src\\pages\\Shop.tsx:142", className: "w-3.5 h-3.5" }),
                   "Customize"
                 ] })
               }
             ) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:129", className: "flex flex-col items-center", children: [
-              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:130", className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Min. Order" }),
-              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:131", className: "text-foreground font-condensed font-semibold text-lg leading-none", children: product.moq ?? "50 pcs" })
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:148", className: "flex flex-col items-center", children: [
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:149", className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Min. Order" }),
+              /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:150", className: "text-foreground font-condensed font-semibold text-lg leading-none", children: product.moq ?? "50 pcs" })
             ] })
           ] })
         ] })
@@ -5862,16 +5876,16 @@ function ProductCard({ product }) {
   ) }) });
 }
 function ProductCardSkeleton() {
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:145", className: "bg-card border border-border rounded-lg overflow-hidden", children: [
-    /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:146", className: "aspect-[2/3] w-full" }),
-    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:147", className: "p-4 space-y-2", children: [
-      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:148", className: "h-3 w-16" }),
-      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:149", className: "h-5 w-3/4" }),
-      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:150", className: "h-3 w-full" }),
-      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:151", className: "h-3 w-2/3" }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:152", className: "flex justify-between pt-1", children: [
-        /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:153", className: "h-6 w-16" }),
-        /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:154", className: "h-6 w-16" })
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:164", className: "bg-card border border-border rounded-lg overflow-hidden", children: [
+    /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:165", className: "aspect-[2/3] w-full" }),
+    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:166", className: "p-4 space-y-2", children: [
+      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:167", className: "h-3 w-16" }),
+      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:168", className: "h-5 w-3/4" }),
+      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:169", className: "h-3 w-full" }),
+      /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:170", className: "h-3 w-2/3" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:171", className: "flex justify-between pt-1", children: [
+        /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:172", className: "h-6 w-16" }),
+        /* @__PURE__ */ jsx(Skeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:173", className: "h-6 w-16" })
       ] })
     ] })
   ] });
@@ -5893,35 +5907,35 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
   const getTotalCount = (categoryId) => {
     return productCounts[categoryId] || 0;
   };
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:192", className: "space-y-2", children: [
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:211", className: "space-y-2", children: [
     /* @__PURE__ */ jsxs(
       "button",
       {
-        "data-loc": "client\\src\\pages\\Shop.tsx:194",
+        "data-loc": "client\\src\\pages\\Shop.tsx:213",
         onClick: () => onCategoryChange(null, null),
         className: cn(
           "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
           !activeCategory ? "bg-gold text-black" : "text-foreground hover:bg-secondary"
         ),
         children: [
-          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:203", className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx(Grid3X3, { "data-loc": "client\\src\\pages\\Shop.tsx:204", className: "w-4 h-4" }),
+          /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:222", className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx(Grid3X3, { "data-loc": "client\\src\\pages\\Shop.tsx:223", className: "w-4 h-4" }),
             "All Products"
           ] }),
-          /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:207", variant: !activeCategory ? "secondary" : "outline", className: "text-xs", children: Object.values(productCounts).reduce((a, b) => a + b, 0) })
+          /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:226", variant: !activeCategory ? "secondary" : "outline", className: "text-xs", children: Object.values(productCounts).reduce((a, b) => a + b, 0) })
         ]
       }
     ),
-    /* @__PURE__ */ jsx(Separator, { "data-loc": "client\\src\\pages\\Shop.tsx:212", className: "my-3" }),
-    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:215", className: "space-y-1", children: SHOP_CATEGORIES.map((category) => {
+    /* @__PURE__ */ jsx(Separator, { "data-loc": "client\\src\\pages\\Shop.tsx:231", className: "my-3" }),
+    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:234", className: "space-y-1", children: SHOP_CATEGORIES.map((category) => {
       const isExpanded = expandedCategories.includes(category.slug);
       const isActive = activeCategory === category.slug;
       const hasSubCategories = category.subCategories.length > 0;
-      return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:222", className: "space-y-1", children: [
+      return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:241", className: "space-y-1", children: [
         /* @__PURE__ */ jsxs(
           "button",
           {
-            "data-loc": "client\\src\\pages\\Shop.tsx:224",
+            "data-loc": "client\\src\\pages\\Shop.tsx:243",
             onClick: () => {
               if (hasSubCategories) {
                 toggleCategory(category.slug);
@@ -5933,16 +5947,16 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
               isActive && !activeSubCategory ? "bg-gold/10 text-gold border border-gold/20" : "text-foreground hover:bg-secondary"
             ),
             children: [
-              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:238", className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:239", className: "text-base", children: category.icon }),
+              /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\Shop.tsx:257", className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:258", className: "text-base", children: category.icon }),
                 category.name
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:242", className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:243", variant: "outline", className: "text-xs text-muted-foreground", children: getTotalCount(category.slug) }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:261", className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:262", variant: "outline", className: "text-xs text-muted-foreground", children: getTotalCount(category.slug) }),
                 hasSubCategories && /* @__PURE__ */ jsx(
                   ChevronDown,
                   {
-                    "data-loc": "client\\src\\pages\\Shop.tsx:247",
+                    "data-loc": "client\\src\\pages\\Shop.tsx:266",
                     className: cn(
                       "w-4 h-4 text-muted-foreground transition-transform duration-200",
                       isExpanded && "rotate-180"
@@ -5953,20 +5967,20 @@ function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, 
             ]
           }
         ),
-        hasSubCategories && isExpanded && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:259", className: "ml-4 pl-4 border-l border-border space-y-1 animate-in slide-in-from-top-1 duration-200", children: category.subCategories.map((sub) => {
+        hasSubCategories && isExpanded && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:278", className: "ml-4 pl-4 border-l border-border space-y-1 animate-in slide-in-from-top-1 duration-200", children: category.subCategories.map((sub) => {
           const isSubActive = activeSubCategory === sub.slug && isActive;
           return /* @__PURE__ */ jsxs(
             "button",
             {
-              "data-loc": "client\\src\\pages\\Shop.tsx:263",
+              "data-loc": "client\\src\\pages\\Shop.tsx:282",
               onClick: () => onCategoryChange(category.slug, sub.slug),
               className: cn(
                 "w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-all duration-200",
                 isSubActive ? "bg-gold text-black font-medium" : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
               ),
               children: [
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:273", children: sub.name }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:274", className: "text-xs opacity-60", children: productCounts[`${category.slug}-${sub.slug}`] || 0 })
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:292", children: sub.name }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:293", className: "text-xs opacity-60", children: productCounts[`${category.slug}-${sub.slug}`] || 0 })
               ]
             },
             sub.id
@@ -5982,38 +5996,39 @@ function MobileFilterSheet({
   activeSubCategory
 }) {
   const [open, setOpen] = useState(false);
-  return /* @__PURE__ */ jsxs(Sheet, { "data-loc": "client\\src\\pages\\Shop.tsx:304", open, onOpenChange: setOpen, children: [
-    /* @__PURE__ */ jsx(SheetTrigger, { "data-loc": "client\\src\\pages\\Shop.tsx:305", asChild: true, children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:306", variant: "outline", size: "sm", className: "lg:hidden gap-2", children: [
-      /* @__PURE__ */ jsx(Filter, { "data-loc": "client\\src\\pages\\Shop.tsx:307", className: "w-4 h-4" }),
+  return /* @__PURE__ */ jsxs(Sheet, { "data-loc": "client\\src\\pages\\Shop.tsx:323", open, onOpenChange: setOpen, children: [
+    /* @__PURE__ */ jsx(SheetTrigger, { "data-loc": "client\\src\\pages\\Shop.tsx:324", asChild: true, children: /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:325", variant: "outline", size: "sm", className: "lg:hidden gap-2", children: [
+      /* @__PURE__ */ jsx(Filter, { "data-loc": "client\\src\\pages\\Shop.tsx:326", className: "w-4 h-4" }),
       "Filters",
-      (activeCategory || activeSubCategory) && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:310", variant: "secondary", className: "ml-1 text-xs", children: "1" })
+      (activeCategory || activeSubCategory) && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:329", variant: "secondary", className: "ml-1 text-xs", children: "1" })
     ] }) }),
-    /* @__PURE__ */ jsxs(SheetContent, { "data-loc": "client\\src\\pages\\Shop.tsx:314", side: "left", className: "w-[300px] sm:w-[350px] p-0", children: [
-      /* @__PURE__ */ jsx(SheetHeader, { "data-loc": "client\\src\\pages\\Shop.tsx:315", className: "p-4 pb-2", children: /* @__PURE__ */ jsxs(SheetTitle, { "data-loc": "client\\src\\pages\\Shop.tsx:316", className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx(Filter, { "data-loc": "client\\src\\pages\\Shop.tsx:317", className: "w-5 h-5" }),
+    /* @__PURE__ */ jsxs(SheetContent, { "data-loc": "client\\src\\pages\\Shop.tsx:333", side: "left", className: "w-[300px] sm:w-[350px] p-0", children: [
+      /* @__PURE__ */ jsx(SheetHeader, { "data-loc": "client\\src\\pages\\Shop.tsx:334", className: "p-4 pb-2", children: /* @__PURE__ */ jsxs(SheetTitle, { "data-loc": "client\\src\\pages\\Shop.tsx:335", className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx(Filter, { "data-loc": "client\\src\\pages\\Shop.tsx:336", className: "w-5 h-5" }),
         "Filter Products"
       ] }) }),
-      /* @__PURE__ */ jsx(ScrollArea, { "data-loc": "client\\src\\pages\\Shop.tsx:321", className: "h-[calc(100vh-80px)] px-4 pb-4", children })
+      /* @__PURE__ */ jsx(ScrollArea, { "data-loc": "client\\src\\pages\\Shop.tsx:340", className: "h-[calc(100vh-80px)] px-4 pb-4", children })
     ] })
   ] });
 }
 function BreadcrumbNav({
   activeCategory,
-  activeSubCategory
+  activeSubCategory,
+  categories: categories2
 }) {
-  const category = activeCategory ? getCategoryBySlug(activeCategory) : null;
+  const category = activeCategory ? categories2.find((c) => c.slug === activeCategory) : null;
   const subCategory = category && activeSubCategory ? category.subCategories.find((s2) => s2.slug === activeSubCategory) : null;
-  return /* @__PURE__ */ jsxs("nav", { "data-loc": "client\\src\\pages\\Shop.tsx:344", className: "flex items-center gap-2 text-sm text-muted-foreground mb-4", children: [
-    /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:345", href: "/", className: "hover:text-foreground transition-colors", children: "Home" }),
-    /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:346", className: "w-4 h-4" }),
-    /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:347", href: "/shop", className: "hover:text-foreground transition-colors", children: "Shop" }),
+  return /* @__PURE__ */ jsxs("nav", { "data-loc": "client\\src\\pages\\Shop.tsx:365", className: "flex items-center gap-2 text-sm text-muted-foreground mb-4", children: [
+    /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:366", href: "/", className: "hover:text-foreground transition-colors", children: "Home" }),
+    /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:367", className: "w-4 h-4" }),
+    /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:368", href: "/shop", className: "hover:text-foreground transition-colors", children: "Shop" }),
     category && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:351", className: "w-4 h-4" }),
-      /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:352", className: cn("hover:text-foreground transition-colors", !subCategory && "text-foreground font-medium"), children: category.name })
+      /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:372", className: "w-4 h-4" }),
+      /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:373", className: cn("hover:text-foreground transition-colors", !subCategory && "text-foreground font-medium"), children: category.name })
     ] }),
     subCategory && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:360", className: "w-4 h-4" }),
-      /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:361", className: "text-foreground font-medium", children: subCategory.name })
+      /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\Shop.tsx:381", className: "w-4 h-4" }),
+      /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:382", className: "text-foreground font-medium", children: subCategory.name })
     ] })
   ] });
 }
@@ -6046,6 +6061,13 @@ function Shop() {
     limit: 48,
     offset: 0
   });
+  const { data: apiCategories } = trpc.category.listWithSubs.useQuery();
+  const SHOP_CATEGORIES2 = useMemo(() => {
+    return transformApiCategories(apiCategories) || SHOP_CATEGORIES$1;
+  }, [apiCategories]);
+  const getCategoryBySlug = useCallback((slug) => {
+    return SHOP_CATEGORIES2.find((c) => c.slug === slug);
+  }, [SHOP_CATEGORIES2]);
   const displayProducts = useMemo(() => {
     let products2 = dbProducts && dbProducts.length > 0 ? dbProducts.map((p) => ({
       ...p,
@@ -6117,11 +6139,11 @@ function Shop() {
   const seoContent = activeCategory ? CATEGORY_SEO_CONTENT[activeCategory] : null;
   const seoTitle = activeSubCategory && activeCategory ? `${getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name} | ${getCategoryBySlug(activeCategory)?.name} | Sialkot Sample Masters` : seoContent?.title || (activeCategory ? `${getCategoryBySlug(activeCategory)?.name} | Custom Manufacturer | Sialkot Sample Masters` : "Shop Custom Streetwear | B2B Wholesale Catalog | Sialkot Sample Masters Pakistan");
   const seoDescription = seoContent?.description || (activeCategory ? `Custom ${getCategoryBySlug(activeCategory)?.name.toLowerCase()} manufacturing. Low MOQ from 50 pieces. OEM & private label services from Sialkot, Pakistan.` : "Browse Sialkot Sample Masters' B2B custom apparel catalog. Ski wear, streetwear, sportswear & more. Slab pricing, low MOQ from 50 pcs, private label manufacturing.");
-  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Shop.tsx:519", children: [
+  return /* @__PURE__ */ jsxs(PageWrapper, { "data-loc": "client\\src\\pages\\Shop.tsx:553", children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        "data-loc": "client\\src\\pages\\Shop.tsx:520",
+        "data-loc": "client\\src\\pages\\Shop.tsx:554",
         title: seoTitle,
         description: seoDescription,
         keywords: seoContent?.keywords || "custom apparel manufacturer Pakistan, B2B clothing wholesale, private label manufacturing, low MOQ clothing supplier",
@@ -6134,7 +6156,7 @@ function Shop() {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("script", { "data-loc": "client\\src\\pages\\Shop.tsx:534", type: "application/ld+json", dangerouslySetInnerHTML: {
+    /* @__PURE__ */ jsx("script", { "data-loc": "client\\src\\pages\\Shop.tsx:568", type: "application/ld+json", dangerouslySetInnerHTML: {
       __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -6149,64 +6171,64 @@ function Shop() {
         }))
       })
     } }),
-    /* @__PURE__ */ jsxs("main", { "data-loc": "client\\src\\pages\\Shop.tsx:550", className: "min-h-screen bg-background", children: [
+    /* @__PURE__ */ jsxs("main", { "data-loc": "client\\src\\pages\\Shop.tsx:584", className: "min-h-screen bg-background", children: [
       /* @__PURE__ */ jsxs(
         "section",
         {
-          "data-loc": "client\\src\\pages\\Shop.tsx:552",
+          "data-loc": "client\\src\\pages\\Shop.tsx:586",
           className: "relative pt-16 pb-12 overflow-hidden",
           style: { backgroundImage: `url(${IMAGES.shopBg})`, backgroundSize: "cover", backgroundPosition: "center" },
           children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:556", className: "absolute inset-0 bg-black/60 backdrop-blur-[2px]" }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:557", className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:558", className: "max-w-3xl", children: [
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:559", direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:560", className: "flex items-center gap-2 mb-4", children: [
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:561", className: "h-px w-8 bg-gold" }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:562", className: "text-gold font-condensed text-sm uppercase tracking-widest", children: "Global Manufacturing Hub" })
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:590", className: "absolute inset-0 bg-black/60 backdrop-blur-[2px]" }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:591", className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:592", className: "max-w-3xl", children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:593", direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:594", className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:595", className: "h-px w-8 bg-gold" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:596", className: "text-gold font-condensed text-sm uppercase tracking-widest", children: "Global Manufacturing Hub" })
               ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:565", delay: 0.2, children: /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\Shop.tsx:566", className: "font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-tight", children: activeCategory ? /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:599", delay: 0.2, children: /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\Shop.tsx:600", className: "font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-tight", children: activeCategory ? /* @__PURE__ */ jsxs(Fragment, { children: [
                 getCategoryBySlug(activeCategory)?.icon,
                 " ",
                 getCategoryBySlug(activeCategory)?.name
               ] }) : activeSubCategory ? /* @__PURE__ */ jsx(Fragment, { children: getCategoryBySlug(activeCategory || "")?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name }) : /* @__PURE__ */ jsxs(Fragment, { children: [
                 "Premium B2B ",
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:577", className: "text-gradient-gold italic", children: "Apparel Catalog" })
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:611", className: "text-gradient-gold italic", children: "Apparel Catalog" })
               ] }) }) }),
-              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:582", delay: 0.3, children: /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:583", className: "text-slate-200 text-lg max-w-xl leading-relaxed mb-6", children: activeCategory ? getCategoryBySlug(activeCategory)?.description : "Direct from Sialkot to your warehouse. Explore our export-quality collections across streetwear, sportswear, and technical garments." }) }),
-              /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\Shop.tsx:592", className: "flex flex-wrap gap-x-6 gap-y-2", stagger: 0.05, children: [
+              /* @__PURE__ */ jsx(FadeIn, { "data-loc": "client\\src\\pages\\Shop.tsx:616", delay: 0.3, children: /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:617", className: "text-slate-200 text-lg max-w-xl leading-relaxed mb-6", children: activeCategory ? getCategoryBySlug(activeCategory)?.description : "Direct from Sialkot to your warehouse. Explore our export-quality collections across streetwear, sportswear, and technical garments." }) }),
+              /* @__PURE__ */ jsx(StaggerChildren, { "data-loc": "client\\src\\pages\\Shop.tsx:626", className: "flex flex-wrap gap-x-6 gap-y-2", stagger: 0.05, children: [
                 { icon: Star, text: "ISO 9001:2015" },
                 { icon: Package, text: "MOQ from 50 pcs" },
                 { icon: Truck, text: "Global DDP/FOB" },
                 { icon: Tag, text: "Tiered Pricing" }
-              ].map(({ icon: Icon, text }) => /* @__PURE__ */ jsx(AnimatedChild, { "data-loc": "client\\src\\pages\\Shop.tsx:599", direction: "left", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:600", className: "flex items-center gap-2 text-sm text-slate-300", children: [
-                /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\Shop.tsx:601", className: "w-4 h-4 text-gold" }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:602", className: "font-condensed font-semibold uppercase tracking-wider", children: text })
+              ].map(({ icon: Icon, text }) => /* @__PURE__ */ jsx(AnimatedChild, { "data-loc": "client\\src\\pages\\Shop.tsx:633", direction: "left", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:634", className: "flex items-center gap-2 text-sm text-slate-300", children: [
+                /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\Shop.tsx:635", className: "w-4 h-4 text-gold" }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\Shop.tsx:636", className: "font-condensed font-semibold uppercase tracking-wider", children: text })
               ] }) }, text)) })
             ] }) })
           ]
         }
       ),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:612", className: "border-b border-border bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:613", className: "container py-3", children: /* @__PURE__ */ jsx(BreadcrumbNav, { "data-loc": "client\\src\\pages\\Shop.tsx:614", activeCategory, activeSubCategory }) }) }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:619", className: "container py-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:620", className: "flex flex-col lg:flex-row gap-6", children: [
-        /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\pages\\Shop.tsx:623", className: "w-full lg:w-64 flex-shrink-0", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:625", className: "block lg:hidden mb-4", children: /* @__PURE__ */ jsx(MobileFilterSheet, { "data-loc": "client\\src\\pages\\Shop.tsx:626", activeCategory, activeSubCategory, children: /* @__PURE__ */ jsx(
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:646", className: "border-b border-border bg-card/50", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:647", className: "container py-3", children: /* @__PURE__ */ jsx(BreadcrumbNav, { "data-loc": "client\\src\\pages\\Shop.tsx:648", activeCategory, activeSubCategory, categories: SHOP_CATEGORIES2 }) }) }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:653", className: "container py-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:654", className: "flex flex-col lg:flex-row gap-6", children: [
+        /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\pages\\Shop.tsx:657", className: "w-full lg:w-64 flex-shrink-0", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:659", className: "block lg:hidden mb-4", children: /* @__PURE__ */ jsx(MobileFilterSheet, { "data-loc": "client\\src\\pages\\Shop.tsx:660", activeCategory, activeSubCategory, children: /* @__PURE__ */ jsx(
             CategorySidebar,
             {
-              "data-loc": "client\\src\\pages\\Shop.tsx:627",
+              "data-loc": "client\\src\\pages\\Shop.tsx:661",
               activeCategory,
               activeSubCategory,
               onCategoryChange: handleCategoryChange,
               productCounts
             }
           ) }) }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:637", className: "hidden lg:block", style: { display: "block !important" }, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:638", className: "bg-card border border-border rounded-xl p-4 sticky top-24", style: { position: "sticky", top: "96px" }, children: [
-            /* @__PURE__ */ jsxs("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:639", className: "font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground", children: [
-              /* @__PURE__ */ jsx(List, { "data-loc": "client\\src\\pages\\Shop.tsx:640", className: "w-4 h-4" }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:671", className: "hidden lg:block", style: { display: "block !important" }, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:672", className: "bg-card border border-border rounded-xl p-4 sticky top-24", style: { position: "sticky", top: "96px" }, children: [
+            /* @__PURE__ */ jsxs("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:673", className: "font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground", children: [
+              /* @__PURE__ */ jsx(List, { "data-loc": "client\\src\\pages\\Shop.tsx:674", className: "w-4 h-4" }),
               "Categories"
             ] }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:643", className: "max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin", children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:677", className: "max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin", children: /* @__PURE__ */ jsx(
               CategorySidebar,
               {
-                "data-loc": "client\\src\\pages\\Shop.tsx:644",
+                "data-loc": "client\\src\\pages\\Shop.tsx:678",
                 activeCategory,
                 activeSubCategory,
                 onCategoryChange: handleCategoryChange,
@@ -6215,36 +6237,36 @@ function Shop() {
             ) })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:656", className: "flex-1 min-w-0", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:658", className: "bg-card border border-border rounded-xl p-4 mb-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:659", className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:661", className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:662", className: "font-condensed font-bold text-lg", children: activeSubCategory && activeCategory ? getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name : activeCategory ? getCategoryBySlug(activeCategory)?.name : "All Products" }),
-              /* @__PURE__ */ jsxs(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:670", variant: "outline", className: "text-xs", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:690", className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:692", className: "bg-card border border-border rounded-xl p-4 mb-6", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:693", className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:695", className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:696", className: "font-condensed font-bold text-lg", children: activeSubCategory && activeCategory ? getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name : activeCategory ? getCategoryBySlug(activeCategory)?.name : "All Products" }),
+              /* @__PURE__ */ jsxs(Badge, { "data-loc": "client\\src\\pages\\Shop.tsx:704", variant: "outline", className: "text-xs", children: [
                 totalCount,
                 " items"
               ] }),
               (activeCategory || activeSubCategory) && /* @__PURE__ */ jsxs(
                 Button,
                 {
-                  "data-loc": "client\\src\\pages\\Shop.tsx:674",
+                  "data-loc": "client\\src\\pages\\Shop.tsx:708",
                   variant: "ghost",
                   size: "sm",
                   onClick: () => handleCategoryChange(null, null),
                   className: "text-xs h-7 px-2",
                   children: [
-                    /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\Shop.tsx:680", className: "w-3 h-3 mr-1" }),
+                    /* @__PURE__ */ jsx(X$1, { "data-loc": "client\\src\\pages\\Shop.tsx:714", className: "w-3 h-3 mr-1" }),
                     "Clear"
                   ]
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:687", className: "flex items-center gap-3 w-full sm:w-auto", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:688", className: "relative flex-1 sm:w-64", children: [
-                /* @__PURE__ */ jsx(Search, { "data-loc": "client\\src\\pages\\Shop.tsx:689", className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:721", className: "flex items-center gap-3 w-full sm:w-auto", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:722", className: "relative flex-1 sm:w-64", children: [
+                /* @__PURE__ */ jsx(Search, { "data-loc": "client\\src\\pages\\Shop.tsx:723", className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
                 /* @__PURE__ */ jsx(
                   Input,
                   {
-                    "data-loc": "client\\src\\pages\\Shop.tsx:690",
+                    "data-loc": "client\\src\\pages\\Shop.tsx:724",
                     placeholder: "Search products...",
                     value: searchQuery,
                     onChange: (e) => setSearchQuery(e.target.value),
@@ -6255,57 +6277,57 @@ function Shop() {
               /* @__PURE__ */ jsxs(
                 "select",
                 {
-                  "data-loc": "client\\src\\pages\\Shop.tsx:697",
+                  "data-loc": "client\\src\\pages\\Shop.tsx:731",
                   value: sortBy,
                   onChange: (e) => setSortBy(e.target.value),
                   className: "bg-secondary border-border rounded-md text-sm px-3 h-10 text-muted-foreground focus:ring-1 focus:ring-gold outline-none cursor-pointer",
                   children: [
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:702", value: "featured", children: "Featured" }),
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:703", value: "name", children: "Name (A-Z)" }),
-                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:704", value: "price-low", children: "Price: Low to High" })
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:736", value: "featured", children: "Featured" }),
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:737", value: "name", children: "Name (A-Z)" }),
+                    /* @__PURE__ */ jsx("option", { "data-loc": "client\\src\\pages\\Shop.tsx:738", value: "price-low", children: "Price: Low to High" })
                   ]
                 }
               )
             ] })
           ] }) }),
-          isLoading ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:712", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx(ProductCardSkeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:713" }, i)) }) : displayProducts.length === 0 ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:716", className: "text-center py-24 bg-card border border-border rounded-xl", children: [
-            /* @__PURE__ */ jsx(Package, { "data-loc": "client\\src\\pages\\Shop.tsx:717", className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
-            /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:718", className: "font-serif text-2xl text-foreground mb-2", children: "No products found" }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:719", className: "text-muted-foreground mb-6 max-w-md mx-auto", children: "Try adjusting your filters or search query. We have products across all major apparel categories." }),
-            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:722", onClick: () => {
+          isLoading ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:746", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx(ProductCardSkeleton, { "data-loc": "client\\src\\pages\\Shop.tsx:747" }, i)) }) : displayProducts.length === 0 ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:750", className: "text-center py-24 bg-card border border-border rounded-xl", children: [
+            /* @__PURE__ */ jsx(Package, { "data-loc": "client\\src\\pages\\Shop.tsx:751", className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
+            /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:752", className: "font-serif text-2xl text-foreground mb-2", children: "No products found" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\Shop.tsx:753", className: "text-muted-foreground mb-6 max-w-md mx-auto", children: "Try adjusting your filters or search query. We have products across all major apparel categories." }),
+            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:756", onClick: () => {
               handleCategoryChange(null, null);
               setSearchQuery("");
             }, children: "Clear All Filters" })
           ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-            !activeCategory && !debouncedSearch && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:730", className: "mb-10", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:731", className: "flex items-center gap-3 mb-6", children: [
-                /* @__PURE__ */ jsx(Star, { "data-loc": "client\\src\\pages\\Shop.tsx:732", className: "w-5 h-5 text-gold" }),
-                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:733", className: "font-condensed text-lg font-bold uppercase tracking-wider text-foreground", children: "Featured Products" }),
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:734", className: "flex-1 h-px bg-border" })
+            !activeCategory && !debouncedSearch && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:764", className: "mb-10", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:765", className: "flex items-center gap-3 mb-6", children: [
+                /* @__PURE__ */ jsx(Star, { "data-loc": "client\\src\\pages\\Shop.tsx:766", className: "w-5 h-5 text-gold" }),
+                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\Shop.tsx:767", className: "font-condensed text-lg font-bold uppercase tracking-wider text-foreground", children: "Featured Products" }),
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:768", className: "flex-1 h-px bg-border" })
               ] }),
-              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:736", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: displayProducts.filter((p) => p.isFeatured).slice(0, 4).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:738", product: p }, `featured-${p.id}`)) })
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:770", className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: displayProducts.filter((p) => p.isFeatured).slice(0, 4).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:772", product: p }, `featured-${p.id}`)) })
             ] }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:745", className: cn(
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:779", className: cn(
               "grid gap-5",
               viewMode === "grid" ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-4" : "grid-cols-1"
-            ), children: displayProducts.filter((p) => !(!activeCategory && !debouncedSearch && p.isFeatured)).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:754", product: p }, p.id)) })
+            ), children: displayProducts.filter((p) => !(!activeCategory && !debouncedSearch && p.isFeatured)).map((p) => /* @__PURE__ */ jsx(ProductCard, { "data-loc": "client\\src\\pages\\Shop.tsx:788", product: p }, p.id)) })
           ] })
         ] })
       ] }) }),
-      activeCategory && /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Shop.tsx:765", className: "py-16 bg-card border-t border-border mt-12", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:766", className: "container", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:767", className: "max-w-4xl mx-auto text-center", children: [
-        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:768", className: "font-serif text-3xl font-bold mb-4", children: [
+      activeCategory && /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\Shop.tsx:799", className: "py-16 bg-card border-t border-border mt-12", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\Shop.tsx:800", className: "container", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:801", className: "max-w-4xl mx-auto text-center", children: [
+        /* @__PURE__ */ jsxs("h2", { "data-loc": "client\\src\\pages\\Shop.tsx:802", className: "font-serif text-3xl font-bold mb-4", children: [
           "Custom ",
           getCategoryBySlug(activeCategory)?.name,
           " Manufacturing"
         ] }),
-        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\Shop.tsx:771", className: "text-muted-foreground text-lg leading-relaxed mb-8", children: [
+        /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\Shop.tsx:805", className: "text-muted-foreground text-lg leading-relaxed mb-8", children: [
           "Looking for a reliable ",
           getCategoryBySlug(activeCategory)?.name.toLowerCase(),
           " manufacturer in Pakistan? Sialkot Sample Masters offers premium quality with low MOQ starting at 50 pieces. OEM and private label services available for global brands."
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:776", className: "flex flex-wrap justify-center gap-4", children: [
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:777", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:778", className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-widest", children: "Request Quote" }) }),
-          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:782", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:783", variant: "outline", className: "font-condensed font-bold uppercase tracking-widest", children: "Contact Sales" }) })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\Shop.tsx:810", className: "flex flex-wrap justify-center gap-4", children: [
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:811", href: "/rfq", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:812", className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-widest", children: "Request Quote" }) }),
+          /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\pages\\Shop.tsx:816", href: "/contact", children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\Shop.tsx:817", variant: "outline", className: "font-condensed font-bold uppercase tracking-widest", children: "Contact Sales" }) })
         ] })
       ] }) }) })
     ] })
@@ -9230,6 +9252,7 @@ const NAVIGATION = [
   { name: "Orders", href: "/admin-saad/orders", icon: ShoppingBag },
   { name: "Inquiries", href: "/admin-saad/inquiries", icon: MessageSquare },
   { name: "Products", href: "/admin-saad/products", icon: Package },
+  { name: "Categories", href: "/admin-saad/categories", icon: FolderTree },
   { name: "Customers", href: "/admin-saad/customers", icon: Users },
   { name: "Content", href: "/admin-saad/content", icon: Image$1 },
   { name: "AI Studio", href: "/admin-saad/ai-studio", icon: Wand2 },
@@ -9246,65 +9269,65 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
     isMobileOpen && /* @__PURE__ */ jsx(
       "div",
       {
-        "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:33",
+        "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:35",
         className: "fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden",
         onClick: () => setMobileOpen(false)
       }
     ),
-    /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:40", className: `
+    /* @__PURE__ */ jsxs("aside", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:42", className: `
         fixed lg:sticky top-0 left-0 z-50 h-screen w-[260px] bg-[#0c0c0e] flex flex-col transition-transform duration-300 ease-out
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `, children: [
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:45", className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:46", href: "/", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:47", className: "flex items-center gap-3 cursor-pointer group", children: [
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:48", className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:49", className: "text-black font-extrabold text-sm", children: "S" }) }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:51", className: "leading-none", children: [
-          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:52", className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Sialkot Sample" }),
-          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:53", className: "text-gold/80 font-condensed font-semibold text-[11px] tracking-[0.12em] uppercase block mt-0.5", children: "Admin Panel" })
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:47", className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:48", href: "/", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:49", className: "flex items-center gap-3 cursor-pointer group", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:50", className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:51", className: "text-black font-extrabold text-sm", children: "S" }) }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:53", className: "leading-none", children: [
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:54", className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Sialkot Sample" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:55", className: "text-gold/80 font-condensed font-semibold text-[11px] tracking-[0.12em] uppercase block mt-0.5", children: "Admin Panel" })
         ] })
       ] }) }) }),
-      /* @__PURE__ */ jsxs("nav", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:60", className: "flex-1 overflow-y-auto py-5 px-3 space-y-0.5 scrollbar-none", children: [
-        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:61", className: "text-[10px] font-condensed font-bold uppercase tracking-[0.2em] text-white/30 px-3 mb-3", children: "Main Menu" }),
+      /* @__PURE__ */ jsxs("nav", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:62", className: "flex-1 overflow-y-auto py-5 px-3 space-y-0.5 scrollbar-none", children: [
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:63", className: "text-[10px] font-condensed font-bold uppercase tracking-[0.2em] text-white/30 px-3 mb-3", children: "Main Menu" }),
         NAVIGATION.map((item) => {
           const active = isActive(item.href, item.exact);
-          return /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:67", href: item.href, children: /* @__PURE__ */ jsxs(
+          return /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:69", href: item.href, children: /* @__PURE__ */ jsxs(
             "div",
             {
-              "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:68",
+              "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:70",
               className: `
                     relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium cursor-pointer transition-all duration-200 group
                     ${active ? "bg-white/[0.08] text-white" : "text-white/50 hover:bg-white/[0.04] hover:text-white/80"}
                   `,
               onClick: () => setMobileOpen(false),
               children: [
-                active && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:80", className: "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-gold rounded-r-full" }),
-                /* @__PURE__ */ jsx(item.icon, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:83", className: `w-[18px] h-[18px] shrink-0 transition-colors ${active ? "text-gold" : "text-white/40 group-hover:text-white/60"}` }),
-                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:84", className: "flex-1", children: item.name }),
-                active && /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:87", className: "w-3.5 h-3.5 text-white/30" })
+                active && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:82", className: "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-gold rounded-r-full" }),
+                /* @__PURE__ */ jsx(item.icon, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:85", className: `w-[18px] h-[18px] shrink-0 transition-colors ${active ? "text-gold" : "text-white/40 group-hover:text-white/60"}` }),
+                /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:86", className: "flex-1", children: item.name }),
+                active && /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:89", className: "w-3.5 h-3.5 text-white/30" })
               ]
             }
           ) }, item.name);
         })
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:96", className: "border-t border-white/[0.06] p-3 shrink-0 space-y-2", children: [
-        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:98", href: "/", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:99", className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
-          /* @__PURE__ */ jsx(Store, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:100", className: "w-[18px] h-[18px] text-white/30 group-hover:text-white/50" }),
-          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:101", children: "Visit Store" }),
-          /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:102", className: "w-3 h-3 ml-auto text-white/20" })
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:98", className: "border-t border-white/[0.06] p-3 shrink-0 space-y-2", children: [
+        /* @__PURE__ */ jsx(Link, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:100", href: "/", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:101", className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
+          /* @__PURE__ */ jsx(Store, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:102", className: "w-[18px] h-[18px] text-white/30 group-hover:text-white/50" }),
+          /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:103", children: "Visit Store" }),
+          /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:104", className: "w-3 h-3 ml-auto text-white/20" })
         ] }) }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:107", className: "flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/[0.03]", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:108", className: "w-8 h-8 rounded-full bg-gradient-to-br from-gold/30 to-gold/10 border border-gold/20 flex items-center justify-center text-gold font-bold text-xs shrink-0", children: user?.name?.charAt(0).toUpperCase() || "A" }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:111", className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:112", className: "text-white text-xs font-medium truncate", children: user?.name || "Admin" }),
-            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:113", className: "text-white/30 text-[10px] truncate", children: user?.email || "admin" })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:109", className: "flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/[0.03]", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:110", className: "w-8 h-8 rounded-full bg-gradient-to-br from-gold/30 to-gold/10 border border-gold/20 flex items-center justify-center text-gold font-bold text-xs shrink-0", children: user?.name?.charAt(0).toUpperCase() || "A" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:113", className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:114", className: "text-white text-xs font-medium truncate", children: user?.name || "Admin" }),
+            /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:115", className: "text-white/30 text-[10px] truncate", children: user?.email || "admin" })
           ] }),
           /* @__PURE__ */ jsx(
             "button",
             {
-              "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:115",
+              "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:117",
               onClick: () => logout(),
               className: "w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-all shrink-0",
               title: "Sign Out",
-              children: /* @__PURE__ */ jsx(LogOut, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:120", className: "w-4 h-4" })
+              children: /* @__PURE__ */ jsx(LogOut, { "data-loc": "client\\src\\components\\admin\\AdminSidebar.tsx:122", className: "w-4 h-4" })
             }
           )
         ] })
@@ -12712,6 +12735,624 @@ function AdminSettings() {
     ] }) })
   ] }) });
 }
+function Collapsible({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(CollapsiblePrimitive.Root, { "data-loc": "client\\src\\components\\ui\\collapsible.tsx:6", "data-slot": "collapsible", ...props });
+}
+function CollapsibleTrigger({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    CollapsiblePrimitive.CollapsibleTrigger,
+    {
+      "data-loc": "client\\src\\components\\ui\\collapsible.tsx:13",
+      "data-slot": "collapsible-trigger",
+      ...props
+    }
+  );
+}
+function CollapsibleContent({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    CollapsiblePrimitive.CollapsibleContent,
+    {
+      "data-loc": "client\\src\\components\\ui\\collapsible.tsx:24",
+      "data-slot": "collapsible-content",
+      ...props
+    }
+  );
+}
+const defaultCategory = {
+  name: "",
+  slug: "",
+  icon: "",
+  description: "",
+  imageUrl: "",
+  sortOrder: 0,
+  isActive: true,
+  seoTitle: "",
+  seoDescription: "",
+  seoKeywords: ""
+};
+const defaultSubcategory = {
+  name: "",
+  slug: "",
+  description: "",
+  sortOrder: 0,
+  isActive: true
+};
+function AdminCategories() {
+  const { data: categories2, isLoading } = trpc.category.adminList.useQuery();
+  const utils = trpc.useUtils();
+  const [expandedCategories, setExpandedCategories] = useState(/* @__PURE__ */ new Set());
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [isSubcategoryDialogOpen, setIsSubcategoryDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteType, setDeleteType] = useState("category");
+  const [deleteId, setDeleteId] = useState(null);
+  const [categoryForm, setCategoryForm] = useState(defaultCategory);
+  const [subcategoryForm, setSubcategoryForm] = useState(defaultSubcategory);
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
+  const createCategory = trpc.category.create.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsCategoryDialogOpen(false);
+      setCategoryForm(defaultCategory);
+      toast.success("Category created successfully");
+    },
+    onError: (error) => toast.error("Failed to create category: " + error.message)
+  });
+  const updateCategory = trpc.category.update.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsCategoryDialogOpen(false);
+      setCategoryForm(defaultCategory);
+      toast.success("Category updated successfully");
+    },
+    onError: (error) => toast.error("Failed to update category: " + error.message)
+  });
+  const deleteCategory = trpc.category.delete.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsDeleteDialogOpen(false);
+      toast.success("Category deleted successfully");
+    },
+    onError: (error) => toast.error("Failed to delete category: " + error.message)
+  });
+  const createSubcategory = trpc.category.createSubcategory.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsSubcategoryDialogOpen(false);
+      setSubcategoryForm(defaultSubcategory);
+      toast.success("Subcategory created successfully");
+    },
+    onError: (error) => toast.error("Failed to create subcategory: " + error.message)
+  });
+  const updateSubcategory = trpc.category.updateSubcategory.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsSubcategoryDialogOpen(false);
+      setSubcategoryForm(defaultSubcategory);
+      toast.success("Subcategory updated successfully");
+    },
+    onError: (error) => toast.error("Failed to update subcategory: " + error.message)
+  });
+  const deleteSubcategory = trpc.category.deleteSubcategory.useMutation({
+    onSuccess: () => {
+      utils.category.adminList.invalidate();
+      setIsDeleteDialogOpen(false);
+      toast.success("Subcategory deleted successfully");
+    },
+    onError: (error) => toast.error("Failed to delete subcategory: " + error.message)
+  });
+  const toggleExpand = (id) => {
+    const newExpanded = new Set(expandedCategories);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedCategories(newExpanded);
+  };
+  const openCategoryDialog = (category) => {
+    if (category) {
+      setCategoryForm({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        icon: category.icon || "",
+        description: category.description || "",
+        imageUrl: category.imageUrl || "",
+        sortOrder: category.sortOrder,
+        isActive: category.isActive,
+        seoTitle: category.seoTitle || "",
+        seoDescription: category.seoDescription || "",
+        seoKeywords: category.seoKeywords || ""
+      });
+    } else {
+      setCategoryForm(defaultCategory);
+    }
+    setIsCategoryDialogOpen(true);
+  };
+  const openSubcategoryDialog = (categoryId, subcategory) => {
+    setActiveCategoryId(categoryId);
+    if (subcategory) {
+      setSubcategoryForm({
+        id: subcategory.id,
+        categoryId,
+        name: subcategory.name,
+        slug: subcategory.slug,
+        description: subcategory.description || "",
+        sortOrder: subcategory.sortOrder,
+        isActive: subcategory.isActive
+      });
+    } else {
+      setSubcategoryForm({ ...defaultSubcategory, categoryId });
+    }
+    setIsSubcategoryDialogOpen(true);
+  };
+  const openDeleteDialog = (type, id) => {
+    setDeleteType(type);
+    setDeleteId(id);
+    setIsDeleteDialogOpen(true);
+  };
+  const handleSaveCategory = () => {
+    if (!categoryForm.name || !categoryForm.slug) {
+      toast.error("Name and slug are required");
+      return;
+    }
+    const data = { ...categoryForm };
+    delete data.id;
+    if (categoryForm.id) {
+      updateCategory.mutate({ id: categoryForm.id, ...data });
+    } else {
+      createCategory.mutate(data);
+    }
+  };
+  const handleSaveSubcategory = () => {
+    if (!subcategoryForm.name || !subcategoryForm.slug) {
+      toast.error("Name and slug are required");
+      return;
+    }
+    const data = { ...subcategoryForm };
+    delete data.id;
+    delete data.categoryId;
+    if (subcategoryForm.id && activeCategoryId) {
+      updateSubcategory.mutate({ id: subcategoryForm.id, ...data });
+    } else if (activeCategoryId) {
+      createSubcategory.mutate({ categoryId: activeCategoryId, ...data });
+    }
+  };
+  const handleDelete = () => {
+    if (!deleteId) return;
+    if (deleteType === "category") {
+      deleteCategory.mutate({ id: deleteId });
+    } else {
+      deleteSubcategory.mutate({ id: deleteId });
+    }
+  };
+  const generateSlug = (name) => {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  };
+  return /* @__PURE__ */ jsxs(AdminLayout, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:236", children: [
+    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:237", className: "space-y-6", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:238", className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:239", children: [
+          /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:240", className: "font-serif text-2xl font-bold text-foreground", children: "Categories" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:241", className: "text-sm text-muted-foreground mt-1", children: "Manage product categories and subcategories" })
+        ] }),
+        /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:245", onClick: () => openCategoryDialog(), className: "bg-gold text-black hover:bg-gold-light", children: [
+          /* @__PURE__ */ jsx(Plus, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:246", className: "w-4 h-4 mr-2" }),
+          " Add Category"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:250", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: isLoading ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:252", className: "p-12 text-center text-muted-foreground", children: [
+        /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:253", className: "w-6 h-6 animate-spin mx-auto mb-2" }),
+        "Loading categories..."
+      ] }) : !categories2 || categories2.length === 0 ? /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:257", className: "p-12 text-center text-muted-foreground", children: [
+        /* @__PURE__ */ jsx(Folder, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:258", className: "w-12 h-12 mx-auto mb-4 opacity-30" }),
+        /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:259", children: "No categories found." }),
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:260", onClick: () => openCategoryDialog(), variant: "outline", className: "mt-4", children: "Create your first category" })
+      ] }) : /* @__PURE__ */ jsx(ScrollArea, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:265", className: "h-[calc(100vh-280px)]", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:266", className: "divide-y divide-border", children: categories2.map((category) => /* @__PURE__ */ jsxs(
+        Collapsible,
+        {
+          "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:268",
+          open: expandedCategories.has(category.id),
+          onOpenChange: () => toggleExpand(category.id),
+          children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:273", className: "flex items-center gap-3 p-4 hover:bg-secondary/20 transition-colors group", children: [
+              /* @__PURE__ */ jsx(CollapsibleTrigger, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:274", asChild: true, children: /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:275", variant: "ghost", size: "icon", className: "h-8 w-8 shrink-0", children: expandedCategories.has(category.id) ? /* @__PURE__ */ jsx(ChevronDown, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:277", className: "w-4 h-4" }) : /* @__PURE__ */ jsx(ChevronRight, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:279", className: "w-4 h-4" }) }) }),
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:284", className: "text-2xl shrink-0", children: category.icon || "📁" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:286", className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:287", className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:288", className: "font-semibold text-foreground", children: category.name }),
+                  !category.isActive && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:290", variant: "secondary", className: "text-xs", children: "Inactive" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:293", className: "text-xs text-muted-foreground", children: [
+                  "/",
+                  category.slug,
+                  " • ",
+                  category.subcategories?.length || 0,
+                  " subcategories"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:298", className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:299",
+                    variant: "ghost",
+                    size: "icon",
+                    className: "h-8 w-8",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      openCategoryDialog(category);
+                    },
+                    children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:305", className: "w-4 h-4" })
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:307",
+                    variant: "ghost",
+                    size: "icon",
+                    className: "h-8 w-8 text-destructive hover:text-destructive",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      openDeleteDialog("category", category.id);
+                    },
+                    children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:313", className: "w-4 h-4" })
+                  }
+                )
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx(CollapsibleContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:318", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:319", className: "bg-secondary/20 border-t border-border", children: [
+              category.subcategories && category.subcategories.length > 0 ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:321", className: "divide-y divide-border/50", children: category.subcategories.map((sub) => /* @__PURE__ */ jsxs(
+                "div",
+                {
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:323",
+                  className: "flex items-center gap-3 pl-14 pr-4 py-3 hover:bg-secondary/30 transition-colors group",
+                  children: [
+                    /* @__PURE__ */ jsx(Tag, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:327", className: "w-4 h-4 text-muted-foreground shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:328", className: "flex-1 min-w-0", children: [
+                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:329", className: "flex items-center gap-2", children: [
+                        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:330", className: "text-sm font-medium", children: sub.name }),
+                        !sub.isActive && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:332", variant: "secondary", className: "text-xs", children: "Inactive" })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:335", className: "text-xs text-muted-foreground", children: [
+                        "/",
+                        sub.slug
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:337", className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
+                      /* @__PURE__ */ jsx(
+                        Button,
+                        {
+                          "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:338",
+                          variant: "ghost",
+                          size: "icon",
+                          className: "h-7 w-7",
+                          onClick: () => openSubcategoryDialog(category.id, sub),
+                          children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:344", className: "w-3.5 h-3.5" })
+                        }
+                      ),
+                      /* @__PURE__ */ jsx(
+                        Button,
+                        {
+                          "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:346",
+                          variant: "ghost",
+                          size: "icon",
+                          className: "h-7 w-7 text-destructive hover:text-destructive",
+                          onClick: () => openDeleteDialog("subcategory", sub.id),
+                          children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:352", className: "w-3.5 h-3.5" })
+                        }
+                      )
+                    ] })
+                  ]
+                },
+                sub.id
+              )) }) : /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:359", className: "pl-14 pr-4 py-6 text-sm text-muted-foreground text-center", children: "No subcategories yet" }),
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:363", className: "pl-14 pr-4 py-3 border-t border-border/50", children: /* @__PURE__ */ jsxs(
+                Button,
+                {
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:364",
+                  variant: "ghost",
+                  size: "sm",
+                  className: "text-xs",
+                  onClick: () => openSubcategoryDialog(category.id),
+                  children: [
+                    /* @__PURE__ */ jsx(Plus, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:370", className: "w-3.5 h-3.5 mr-1" }),
+                    " Add Subcategory"
+                  ]
+                }
+              ) })
+            ] }) })
+          ]
+        },
+        category.id
+      )) }) }) })
+    ] }),
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:384", open: isCategoryDialogOpen, onOpenChange: setIsCategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:385", className: "max-w-lg max-h-[90vh] overflow-y-auto", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:386", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:387", children: categoryForm.id ? "Edit Category" : "Add Category" }) }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:389", className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:390", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:391", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:392", children: "Name *" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:393",
+                value: categoryForm.name,
+                onChange: (e) => {
+                  const name = e.target.value;
+                  setCategoryForm((prev) => ({
+                    ...prev,
+                    name,
+                    slug: prev.id ? prev.slug : generateSlug(name)
+                  }));
+                },
+                placeholder: "e.g., Ski Wear"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:406", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:407", children: "Slug *" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:408",
+                value: categoryForm.slug,
+                onChange: (e) => setCategoryForm((prev) => ({ ...prev, slug: e.target.value })),
+                placeholder: "e.g., ski-wear"
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:415", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:416", children: "Icon (emoji)" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:417",
+              value: categoryForm.icon,
+              onChange: (e) => setCategoryForm((prev) => ({ ...prev, icon: e.target.value })),
+              placeholder: "e.g., ⛷️ or /images/icon.svg"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:423", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:424", children: "Description" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:425",
+              value: categoryForm.description,
+              onChange: (e) => setCategoryForm((prev) => ({ ...prev, description: e.target.value })),
+              placeholder: "Brief description of this category"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:431", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:432", children: "Image URL" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:433",
+              value: categoryForm.imageUrl,
+              onChange: (e) => setCategoryForm((prev) => ({ ...prev, imageUrl: e.target.value })),
+              placeholder: "https://..."
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:439", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:440", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:441", children: "Sort Order" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:442",
+                type: "number",
+                value: categoryForm.sortOrder,
+                onChange: (e) => setCategoryForm((prev) => ({ ...prev, sortOrder: parseInt(e.target.value) || 0 }))
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:448", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:449", className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:450",
+                type: "checkbox",
+                checked: categoryForm.isActive,
+                onChange: (e) => setCategoryForm((prev) => ({ ...prev, isActive: e.target.checked })),
+                className: "rounded border-border"
+              }
+            ),
+            "Active"
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:460", className: "border-t border-border pt-4", children: [
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:461", className: "text-sm font-semibold mb-3", children: "SEO Settings" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:462", className: "space-y-3", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:463", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:464", children: "SEO Title" }),
+              /* @__PURE__ */ jsx(
+                Input,
+                {
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:465",
+                  value: categoryForm.seoTitle,
+                  onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoTitle: e.target.value })),
+                  placeholder: "Custom page title for SEO"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:471", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:472", children: "SEO Description" }),
+              /* @__PURE__ */ jsx(
+                Input,
+                {
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:473",
+                  value: categoryForm.seoDescription,
+                  onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoDescription: e.target.value })),
+                  placeholder: "Meta description for search engines"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:479", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:480", children: "SEO Keywords" }),
+              /* @__PURE__ */ jsx(
+                Input,
+                {
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:481",
+                  value: categoryForm.seoKeywords,
+                  onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoKeywords: e.target.value })),
+                  placeholder: "keyword1, keyword2, keyword3"
+                }
+              )
+            ] })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:490", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:491", variant: "outline", onClick: () => setIsCategoryDialogOpen(false), children: "Cancel" }),
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:492",
+            onClick: handleSaveCategory,
+            disabled: createCategory.isPending || updateCategory.isPending,
+            className: "bg-gold text-black hover:bg-gold-light",
+            children: [
+              (createCategory.isPending || updateCategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:498", className: "w-4 h-4 mr-2 animate-spin" }),
+              categoryForm.id ? "Update" : "Create"
+            ]
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:507", open: isSubcategoryDialogOpen, onOpenChange: setIsSubcategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:508", className: "max-w-lg", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:509", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:510", children: subcategoryForm.id ? "Edit Subcategory" : "Add Subcategory" }) }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:512", className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:513", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:514", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:515", children: "Name *" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:516",
+                value: subcategoryForm.name,
+                onChange: (e) => {
+                  const name = e.target.value;
+                  setSubcategoryForm((prev) => ({
+                    ...prev,
+                    name,
+                    slug: prev.id ? prev.slug : generateSlug(name)
+                  }));
+                },
+                placeholder: "e.g., Ski Jackets"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:529", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:530", children: "Slug *" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:531",
+                value: subcategoryForm.slug,
+                onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, slug: e.target.value })),
+                placeholder: "e.g., ski-jackets"
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:538", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:539", children: "Description" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:540",
+              value: subcategoryForm.description,
+              onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, description: e.target.value })),
+              placeholder: "Brief description"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:546", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:547", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:548", children: "Sort Order" }),
+            /* @__PURE__ */ jsx(
+              Input,
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:549",
+                type: "number",
+                value: subcategoryForm.sortOrder,
+                onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, sortOrder: parseInt(e.target.value) || 0 }))
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:555", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:556", className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:557",
+                type: "checkbox",
+                checked: subcategoryForm.isActive,
+                onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, isActive: e.target.checked })),
+                className: "rounded border-border"
+              }
+            ),
+            "Active"
+          ] }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:568", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:569", variant: "outline", onClick: () => setIsSubcategoryDialogOpen(false), children: "Cancel" }),
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:570",
+            onClick: handleSaveSubcategory,
+            disabled: createSubcategory.isPending || updateSubcategory.isPending,
+            className: "bg-gold text-black hover:bg-gold-light",
+            children: [
+              (createSubcategory.isPending || updateSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:576", className: "w-4 h-4 mr-2 animate-spin" }),
+              subcategoryForm.id ? "Update" : "Create"
+            ]
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:585", open: isDeleteDialogOpen, onOpenChange: setIsDeleteDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:586", className: "max-w-md", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:587", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:588", children: "Confirm Delete" }) }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:590", className: "py-4", children: /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:591", className: "text-muted-foreground", children: [
+        "Are you sure you want to delete this ",
+        deleteType,
+        "? This action cannot be undone.",
+        deleteType === "category" && " All subcategories will also be deleted."
+      ] }) }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:596", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:597", variant: "outline", onClick: () => setIsDeleteDialogOpen(false), children: "Cancel" }),
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:598",
+            variant: "destructive",
+            onClick: handleDelete,
+            disabled: deleteCategory.isPending || deleteSubcategory.isPending,
+            children: [
+              (deleteCategory.isPending || deleteSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:604", className: "w-4 h-4 mr-2 animate-spin" }),
+              "Delete"
+            ]
+          }
+        )
+      ] })
+    ] }) })
+  ] });
+}
 function Switch({
   className,
   ...props
@@ -12739,7 +13380,6 @@ function Switch({
     }
   );
 }
-const CATEGORIES = ["Hunting Wear", "Sports Wear", "Ski Wear", "Tech Wear", "Streetwear", "Martial Arts Wear"];
 function SlabEditor({ slabs, onChange }) {
   const add = () => onChange([...slabs, { minQty: 1, maxQty: null, pricePerUnit: "0.00", label: "", sortOrder: slabs.length }]);
   const remove = (i) => onChange(slabs.filter((_, idx) => idx !== i));
@@ -12852,10 +13492,13 @@ function AdminNewProduct() {
   const [pendingMainImageIndex, setPendingMainImageIndex] = useState(0);
   const [uploadingImages, setUploadingImages] = useState(false);
   const fileInputRef = useRef(null);
+  const { data: categories2 } = trpc.category.listWithSubs.useQuery();
   const [form, setForm] = useState({
     title: "",
     slug: "",
     category: "Streetwear",
+    categoryId: null,
+    subcategoryId: null,
     shortDescription: "",
     description: "",
     manufacturingStory: "",
@@ -12895,6 +13538,8 @@ function AdminNewProduct() {
         title: editProduct.title ?? "",
         slug: editProduct.slug ?? "",
         category: editProduct.category ?? "Streetwear",
+        categoryId: editProduct.categoryId ?? null,
+        subcategoryId: editProduct.subcategoryId ?? null,
         shortDescription: editProduct.shortDescription ?? "",
         description: editProduct.description ?? "",
         manufacturingStory: editProduct.manufacturingStory ?? "",
@@ -13209,103 +13854,103 @@ function AdminNewProduct() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
   const isPending = createMutation.isPending || updateMutation.isPending || uploadingImages;
-  return /* @__PURE__ */ jsxs(AdminLayout, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:580", children: [
-    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:582", className: `fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:583", className: "container max-w-7xl mx-auto h-16 flex items-center justify-between px-6", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:584", className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:585", className: "w-2 h-2 rounded-full bg-gold animate-pulse" }),
-        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:586", className: "text-sm font-bold text-background uppercase tracking-widest hidden sm:inline", children: "Unsaved Changes" })
+  return /* @__PURE__ */ jsxs(AdminLayout, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:587", children: [
+    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:589", className: `fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:590", className: "container max-w-7xl mx-auto h-16 flex items-center justify-between px-6", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:591", className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:592", className: "w-2 h-2 rounded-full bg-gold animate-pulse" }),
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:593", className: "text-sm font-bold text-background uppercase tracking-widest hidden sm:inline", children: "Unsaved Changes" })
       ] }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:588", className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:589", variant: "ghost", className: "text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs", onClick: () => {
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:595", className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:596", variant: "ghost", className: "text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs", onClick: () => {
           setForm(initialForm);
           setIsDirty(false);
         }, children: "Discard" }),
-        /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:592", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8", children: [
-          isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:593", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:593", className: "w-4 h-4 mr-2" }),
+        /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:599", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8", children: [
+          isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", className: "w-4 h-4 mr-2" }),
           isEdit ? "Save Changes" : "Publish Product"
         ] })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", className: "space-y-8 pb-20", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:602", className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:603", children: [
-          /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:604", className: "font-serif text-2xl font-bold text-foreground", children: isEdit ? "Edit Product" : "Add New Product" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:607", className: "text-sm text-muted-foreground mt-1 hidden sm:block", children: isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI" })
+    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:607", className: "space-y-8 pb-20", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:609", className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:610", children: [
+          /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:611", className: "font-serif text-2xl font-bold text-foreground", children: isEdit ? "Edit Product" : "Add New Product" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:614", className: "text-sm text-muted-foreground mt-1 hidden sm:block", children: isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:611", className: "flex items-center gap-3", children: [
-          form.slug && /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:613", variant: "secondary", onClick: () => window.open(`/shop/${form.slug}`, "_blank"), disabled: isPending, title: "Save changes first before previewing if you made edits.", className: "hidden sm:inline-flex", children: [
-            /* @__PURE__ */ jsx(Eye, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:614", className: "w-4 h-4 mr-2" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:618", className: "flex items-center gap-3", children: [
+          form.slug && /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:620", variant: "secondary", onClick: () => window.open(`/shop/${form.slug}`, "_blank"), disabled: isPending, title: "Save changes first before previewing if you made edits.", className: "hidden sm:inline-flex", children: [
+            /* @__PURE__ */ jsx(Eye, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:621", className: "w-4 h-4 mr-2" }),
             " Preview"
           ] }),
-          /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:617", variant: "outline", onClick: () => setLocation("/admin-saad/products"), disabled: isPending, children: "Discard" }),
-          /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:620", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-gold-light", children: [
-            isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:621", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:621", className: "w-4 h-4 mr-2" }),
+          /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:624", variant: "outline", onClick: () => setLocation("/admin-saad/products"), disabled: isPending, children: "Discard" }),
+          /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:627", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-gold-light", children: [
+            isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", className: "w-4 h-4 mr-2" }),
             uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", className: "bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:629", className: "p-8", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:630", className: "flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:631", className: "w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto", children: /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:632", className: "w-8 h-8 text-gold" }) }),
-          /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:634", className: "text-2xl font-serif font-bold text-foreground mb-2", children: "Step 1: Product Photography Setup" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:635", className: "text-muted-foreground max-w-xl mx-auto", children: "Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing." })
+      /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:635", className: "bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:636", className: "p-8", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:637", className: "flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:638", className: "w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto", children: /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:639", className: "w-8 h-8 text-gold" }) }),
+          /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:641", className: "text-2xl font-serif font-bold text-foreground mb-2", children: "Step 1: Product Photography Setup" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:642", className: "text-muted-foreground max-w-xl mx-auto", children: "Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing." })
         ] }),
-        /* @__PURE__ */ jsxs(Tabs, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:640", defaultValue: "upload", className: "w-full", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:641", className: "flex justify-center mb-8", children: /* @__PURE__ */ jsxs(TabsList, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:642", className: "bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto", children: [
-            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:643", value: "upload", className: "rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:644", className: "w-4 h-4" }),
+        /* @__PURE__ */ jsxs(Tabs, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:647", defaultValue: "upload", className: "w-full", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:648", className: "flex justify-center mb-8", children: /* @__PURE__ */ jsxs(TabsList, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:649", className: "bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto", children: [
+            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:650", value: "upload", className: "rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:651", className: "w-4 h-4" }),
               "Manual Photo Upload"
             ] }),
-            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:647", value: "tryon", className: "rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(Camera, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:648", className: "w-4 h-4" }),
+            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:654", value: "tryon", className: "rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(Camera, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:655", className: "w-4 h-4" }),
               "Virtual Try-On Studio"
             ] })
           ] }) }),
-          /* @__PURE__ */ jsxs(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:654", value: "upload", className: "space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:655", className: "w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]", onClick: () => fileInputRef.current?.click(), children: [
-              /* @__PURE__ */ jsx("input", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:656", type: "file", multiple: true, accept: "image/*", className: "hidden", ref: fileInputRef, onChange: handleFileSelect }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:657", className: "flex flex-col items-center", children: [
-                /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:658", className: "w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" }),
-                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:659", className: "text-lg font-bold text-foreground", children: "Click to Upload Images" }),
-                /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:660", className: "text-sm text-muted-foreground mt-2 max-w-md text-center", children: "Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP." })
+          /* @__PURE__ */ jsxs(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:661", value: "upload", className: "space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:662", className: "w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]", onClick: () => fileInputRef.current?.click(), children: [
+              /* @__PURE__ */ jsx("input", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:663", type: "file", multiple: true, accept: "image/*", className: "hidden", ref: fileInputRef, onChange: handleFileSelect }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:664", className: "flex flex-col items-center", children: [
+                /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:665", className: "w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" }),
+                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:666", className: "text-lg font-bold text-foreground", children: "Click to Upload Images" }),
+                /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:667", className: "text-sm text-muted-foreground mt-2 max-w-md text-center", children: "Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP." })
               ] })
             ] }),
-            pendingImages.length > 0 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:667", className: "w-full mt-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:668", className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4", children: pendingImages.map((img, i) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:670", className: "relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md", children: [
-              /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:671", src: img.preview, alt: `Preview ${i}`, className: "w-full h-full object-cover" }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:672", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
-                pendingMainImageIndex !== i && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:674", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
+            pendingImages.length > 0 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:674", className: "w-full mt-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:675", className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4", children: pendingImages.map((img, i) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:677", className: "relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md", children: [
+              /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:678", src: img.preview, alt: `Preview ${i}`, className: "w-full h-full object-cover" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:679", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
+                pendingMainImageIndex !== i && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:681", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
                   e.stopPropagation();
                   setPendingMainImageIndex(i);
                 }, children: "Main" }),
-                /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:678", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
+                /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:685", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
                   e.stopPropagation();
                   removePendingImage(i);
-                }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:679", className: "w-4 h-4" }) })
+                }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:686", className: "w-4 h-4" }) })
               ] }),
-              pendingMainImageIndex === i && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:682", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
+              pendingMainImageIndex === i && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:689", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
             ] }, i)) }) }),
             /* @__PURE__ */ jsx(
               Button,
               {
-                "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:689",
+                "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:696",
                 size: "lg",
                 onClick: handleAiFill,
                 disabled: isAiLoading || pendingImages.length === 0 && !form.title.trim(),
                 className: "w-full max-w-md bg-foreground text-background hover:bg-foreground/90 font-bold overflow-hidden",
-                children: isAiLoading ? /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:696", className: "flex items-center", children: [
-                  /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:696", className: "w-5 h-5 animate-spin mr-3" }),
+                children: isAiLoading ? /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:703", className: "flex items-center", children: [
+                  /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:703", className: "w-5 h-5 animate-spin mr-3" }),
                   " Auto-writing Listing..."
-                ] }) : /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:698", className: "flex items-center", children: [
-                  /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:698", className: "w-5 h-5 mr-3" }),
+                ] }) : /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:705", className: "flex items-center", children: [
+                  /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:705", className: "w-5 h-5 mr-3" }),
                   " Auto-Fill Listing Details"
                 ] })
               }
             )
           ] }),
-          /* @__PURE__ */ jsx(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:703", value: "tryon", className: "animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0", children: /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsx(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:710", value: "tryon", className: "animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0", children: /* @__PURE__ */ jsx(
             VirtualTryOnAgent,
             {
-              "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:704",
+              "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:711",
               onUseImage: async (url) => {
                 handleTryOnImagesBatch([{ url, base64: "", mimeType: "" }]);
               },
@@ -13316,151 +13961,191 @@ function AdminNewProduct() {
           ) })
         ] })
       ] }) }),
-      isEdit && editProduct?.images?.length > 0 && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:715", className: "space-y-2 mt-4 pt-4 border-t border-border", children: [
-        /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:716", className: "text-xs text-muted-foreground uppercase tracking-wider", children: "Current Images" }),
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:717", className: "grid grid-cols-2 md:grid-cols-4 gap-3", children: editProduct?.images.map((img) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:719", className: "relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all", children: [
-          /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:720", src: img.imageUrl, alt: img.altText || "Product Image", className: "w-full h-full object-cover" }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:721", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
-            form.mainImage !== img.imageUrl && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:723", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
+      isEdit && editProduct?.images?.length > 0 && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:722", className: "space-y-2 mt-4 pt-4 border-t border-border", children: [
+        /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:723", className: "text-xs text-muted-foreground uppercase tracking-wider", children: "Current Images" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:724", className: "grid grid-cols-2 md:grid-cols-4 gap-3", children: editProduct?.images.map((img) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:726", className: "relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all", children: [
+          /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:727", src: img.imageUrl, alt: img.altText || "Product Image", className: "w-full h-full object-cover" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:728", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
+            form.mainImage !== img.imageUrl && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:730", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
               e.stopPropagation();
               setForm((f) => ({ ...f, mainImage: img.imageUrl }));
               setPendingMainImageIndex(-1);
             }, children: "Set Main" }),
-            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:727", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
+            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:734", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
               e.stopPropagation();
               if (confirm("Delete this image?")) deleteImageMutation.mutate({ id: img.id });
-            }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:728", className: "w-4 h-4" }) })
+            }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:735", className: "w-4 h-4" }) })
           ] }),
-          form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:731", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
+          form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:738", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
         ] }, img.id)) })
       ] }),
-      /* @__PURE__ */ jsx("hr", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:738", className: "border-border" }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:740", className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:743", className: "lg:col-span-8 space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:744", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:745", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:746", className: "font-serif text-lg font-bold text-foreground", children: "Basic Information" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:748", className: "p-6 space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:749", children: [
-                /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:750", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+      /* @__PURE__ */ jsx("hr", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:745", className: "border-border" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:747", className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:750", className: "lg:col-span-8 space-y-8", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:751", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:752", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:753", className: "font-serif text-lg font-bold text-foreground", children: "Basic Information" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:755", className: "p-6 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:756", children: [
+                /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                   "Product Title ",
-                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:750", className: "text-red-500", children: "*" })
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", className: "text-red-500", children: "*" })
                 ] }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:751", value: form.title, onChange: (e) => setForm((f) => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) })), placeholder: "e.g. Custom Waterproof Ski Jacket", className: "bg-background h-12 text-lg font-serif" })
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:758", value: form.title, onChange: (e) => setForm((f) => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) })), placeholder: "e.g. Custom Waterproof Ski Jacket", className: "bg-background h-12 text-lg font-serif" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:754", className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:755", children: [
-                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:756", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:761", className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:762", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:763", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                     "Category ",
-                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:756", className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:763", className: "text-red-500", children: "*" })
                   ] }),
-                  /* @__PURE__ */ jsxs(Select, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", value: form.category, onValueChange: (v) => setForm((f) => ({ ...f, category: v })), children: [
-                    /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:758", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:759" }) }),
-                    /* @__PURE__ */ jsx(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:761", className: "bg-card", children: CATEGORIES.map((c) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:762", value: c, children: c }, c)) })
-                  ] })
+                  /* @__PURE__ */ jsxs(
+                    Select,
+                    {
+                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:764",
+                      value: form.categoryId?.toString() || "",
+                      onValueChange: (v) => {
+                        const catId = parseInt(v);
+                        const cat = categories2?.find((c) => c.id === catId);
+                        setForm((f) => ({
+                          ...f,
+                          categoryId: catId,
+                          category: cat?.name || f.category,
+                          subcategoryId: null
+                        }));
+                      },
+                      children: [
+                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:777", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:778", placeholder: "Select category" }) }),
+                        /* @__PURE__ */ jsx(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:780", className: "bg-card", children: categories2?.map((c) => /* @__PURE__ */ jsxs(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:782", value: c.id.toString(), children: [
+                          c.icon,
+                          " ",
+                          c.name
+                        ] }, c.id)) })
+                      ]
+                    }
+                  )
                 ] }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:766", children: [
-                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:767", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:789", children: [
+                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:790", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Subcategory" }),
+                  /* @__PURE__ */ jsxs(
+                    Select,
+                    {
+                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:791",
+                      value: form.subcategoryId?.toString() || "",
+                      onValueChange: (v) => setForm((f) => ({ ...f, subcategoryId: v ? parseInt(v) : null })),
+                      disabled: !form.categoryId,
+                      children: [
+                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:796", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:797", placeholder: form.categoryId ? "Select subcategory" : "Select category first" }) }),
+                        /* @__PURE__ */ jsxs(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:799", className: "bg-card", children: [
+                          /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", value: "", children: "None" }),
+                          categories2?.find((c) => c.id === form.categoryId)?.subcategories?.map((s2) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:802", value: s2.id.toString(), children: s2.name }, s2.id))
+                        ] })
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:809", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:810", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                     "URL Slug ",
-                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:767", className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:810", className: "text-red-500", children: "*" })
                   ] }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:768", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:811", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:772", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:773", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:774", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:815", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:816", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:777", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:778", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:779", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:820", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:821", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:822", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:782", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:783", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:784", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:825", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:826", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:827", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:787", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:788", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:789", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
-                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:791", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:792", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:830", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:831", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:832", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
+                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:834", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:835", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:799", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:801", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:803", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:804", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:805", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:806", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:842", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:843", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:844", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:846", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:847", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:848", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:849", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:808", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:809", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:810", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:851", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:852", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:812", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:813", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:814", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:855", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:856", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:857", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:816", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:818", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:859", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:860", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:861", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:823", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:824", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:825", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:827", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:828", value: sizeChart, onChange: setSizeChart }) })
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:866", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:868", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:870", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:871", value: sizeChart, onChange: setSizeChart }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:835", className: "lg:col-span-4 space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:836", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:837", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:838", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:840", className: "p-6 space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:841", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:842", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:843", className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:844", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:845", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", className: "lg:col-span-4 space-y-8", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:879", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:880", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:881", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:883", className: "p-6 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:884", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:885", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", className: "relative", children: [
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:888", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:848", slabs, onChange: setSlabs })
+              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:891", slabs, onChange: setSlabs })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:852", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:854", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:856", className: "p-6 space-y-4", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:895", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:896", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:897", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:899", className: "p-6 space-y-4", children: [
               { key: "isActive", label: "Active Status", desc: "Visible to customers", icon: Eye },
               { key: "isFeatured", label: "Featured Product", desc: "Highlight on homepage", icon: Star },
               { key: "freeShipping", label: "Free Shipping", desc: "Exempt from shipping costs", icon: Truck }
-            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:862", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:863", className: "flex gap-3", children: [
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:864", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:864", className: "w-5 h-5 text-gold" }) }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:865", children: [
-                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:866", className: "text-sm font-bold text-foreground", children: label }),
-                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
+            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:905", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:906", className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:907", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:907", className: "w-5 h-5 text-gold" }) }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:908", children: [
+                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:909", className: "text-sm font-bold text-foreground", children: label }),
+                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:910", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:870", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
+              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:913", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
             ] }, key)) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:876", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:877", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:880", className: "p-6 space-y-4", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:881", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:882", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:883", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:884", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:919", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:920", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:921", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:923", className: "p-6 space-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:924", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:925", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:927", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoTitle.length,
                   "/60 chars"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:888", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:929", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:930", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:931", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:890", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:891", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:892", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:893", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:933", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:934", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:935", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:936", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoDescription.length,
                   "/160 chars"
                 ] })
@@ -20051,69 +20736,70 @@ function TechPackCreator() {
 }
 const BARE_ROUTES = ["/admin-saad", "/customize", "/branding-studio"];
 function Router() {
-  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:58", children: [
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:59", path: "/", component: Home }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/about", component: About }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/services", component: Services }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/products", component: Products }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/portfolio", component: Portfolio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/blog", component: Blog }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/blog/calculate-cmt-costs-export-shipment", component: BlogCMTCosting }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/blog/3-mistakes-ordering-custom-patches-badges", component: BlogPatchMistakes }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/blog/:slug", component: BlogPost }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/rfq", component: RFQ }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/contact", component: Contact }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:79", path: "/shop", component: Shop }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/shop/:slug", component: ProductDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/manufacturing/:region", component: GeoLanding }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/checkout", component: Checkout }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:83", path: "/checkout/success", component: CheckoutSuccess }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/checkout/cancel", component: CheckoutCancel }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:86", path: "/customize", component: Customize }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/branding-studio", component: BrandingStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/tech-pack", component: TechPackCreator }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:90", path: "/admin-saad", component: AdminDashboard }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad/login", component: AdminLogin }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/orders", component: AdminOrders }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:94", path: "/admin-saad/inquiries", component: AdminInquiries }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:96", path: "/admin-saad/products", component: AdminProducts }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:98", path: "/admin-saad/content", component: AdminContent }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:99", path: "/admin-saad/settings", component: AdminSettings }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:101", path: "/admin-saad/product/new", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:102", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:103", path: "/404", component: NotFound }),
-    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:104", component: NotFound })
+  return /* @__PURE__ */ jsxs(Switch$1, { "data-loc": "client\\src\\App.tsx:59", children: [
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:60", path: "/", component: Home }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:61", path: "/about", component: About }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:62", path: "/services", component: Services }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:63", path: "/products", component: Products }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:64", path: "/portfolio", component: Portfolio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:65", path: "/blog", component: Blog }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:66", path: "/blog/cmt-outsourcing-guide-sialkot", component: BlogCMTGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:67", path: "/blog/sublimation-printing-guide-sportswear", component: BlogSublimationGuide }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:68", path: "/blog/cad-vs-manual-pattern-drafting-guide", component: BlogCADvsManual }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:69", path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:70", path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:71", path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:72", path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:73", path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:74", path: "/blog/calculate-cmt-costs-export-shipment", component: BlogCMTCosting }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:75", path: "/blog/3-mistakes-ordering-custom-patches-badges", component: BlogPatchMistakes }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:76", path: "/blog/:slug", component: BlogPost }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:77", path: "/rfq", component: RFQ }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:78", path: "/contact", component: Contact }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:80", path: "/shop", component: Shop }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:81", path: "/shop/:slug", component: ProductDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:82", path: "/manufacturing/:region", component: GeoLanding }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:83", path: "/checkout", component: Checkout }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:84", path: "/checkout/success", component: CheckoutSuccess }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:85", path: "/checkout/cancel", component: CheckoutCancel }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:87", path: "/customize", component: Customize }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:88", path: "/branding-studio", component: BrandingStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:89", path: "/tech-pack", component: TechPackCreator }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:91", path: "/admin-saad", component: AdminDashboard }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:92", path: "/admin-saad/login", component: AdminLogin }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:93", path: "/admin-saad/orders", component: AdminOrders }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:94", path: "/admin-saad/orders/:id", component: AdminOrderDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:95", path: "/admin-saad/inquiries", component: AdminInquiries }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:96", path: "/admin-saad/inquiries/:id", component: AdminInquiryDetail }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:97", path: "/admin-saad/products", component: AdminProducts }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:98", path: "/admin-saad/ai-studio", component: AdminAIStudio }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:99", path: "/admin-saad/content", component: AdminContent }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:100", path: "/admin-saad/settings", component: AdminSettings }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:101", path: "/admin-saad/categories", component: AdminCategories }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:103", path: "/admin-saad/product/new", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:104", path: "/admin-saad/product/edit/:id", component: AdminNewProduct }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:105", path: "/404", component: NotFound }),
+    /* @__PURE__ */ jsx(Route, { "data-loc": "client\\src\\App.tsx:106", component: NotFound })
   ] });
 }
 function Layout() {
   const [location] = useLocation();
   const isBare = BARE_ROUTES.some((r) => location.startsWith(r));
   if (isBare) {
-    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:115", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:116" }) });
+    return /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\App.tsx:117", className: "min-h-screen bg-background text-foreground", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:118" }) });
   }
-  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:122", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
-    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:123" }),
-    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:124" }),
-    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:125", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:126" }) }),
-    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:128" }),
-    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:129" })
+  return /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\App.tsx:124", className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+    /* @__PURE__ */ jsx(ScrollToTop, { "data-loc": "client\\src\\App.tsx:125" }),
+    /* @__PURE__ */ jsx(Navbar, { "data-loc": "client\\src\\App.tsx:126" }),
+    /* @__PURE__ */ jsx("main", { "data-loc": "client\\src\\App.tsx:127", className: "flex-1", children: /* @__PURE__ */ jsx(Router, { "data-loc": "client\\src\\App.tsx:128" }) }),
+    /* @__PURE__ */ jsx(Footer, { "data-loc": "client\\src\\App.tsx:130" }),
+    /* @__PURE__ */ jsx(CartDrawer, { "data-loc": "client\\src\\App.tsx:131" })
   ] });
 }
 function App() {
-  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:136", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:137", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:138", children: [
-    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:139" }),
-    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:140" })
+  return /* @__PURE__ */ jsx(ErrorBoundary, { "data-loc": "client\\src\\App.tsx:138", children: /* @__PURE__ */ jsx(ThemeProvider, { "data-loc": "client\\src\\App.tsx:139", defaultTheme: "light", children: /* @__PURE__ */ jsxs(TooltipProvider, { "data-loc": "client\\src\\App.tsx:140", children: [
+    /* @__PURE__ */ jsx(Toaster, { "data-loc": "client\\src\\App.tsx:141" }),
+    /* @__PURE__ */ jsx(Layout, { "data-loc": "client\\src\\App.tsx:142" })
   ] }) }) });
 }
 async function render(url) {

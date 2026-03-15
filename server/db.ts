@@ -20,6 +20,8 @@ import {
   InsertInquiryNote, inquiryNotes,
   InsertKnowledgeBaseEntry, knowledgeBase,
   InsertSavedTryOnModel, savedTryOnModels, SavedTryOnModel,
+  InsertCategory, categories,
+  InsertSubcategory, subcategories,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -632,5 +634,109 @@ export async function getTechPackImages(techPackId: number) {
     .orderBy(techPackImages.sortOrder);
 }
 
+// ─── Categories ───────────────────────────────────────────────────────────────
+
+export async function getAllCategories(opts?: { includeInactive?: boolean }) {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions = opts?.includeInactive ? undefined : eq(categories.isActive, true);
+  return db.select().from(categories)
+    .where(conditions)
+    .orderBy(categories.sortOrder, categories.name);
+}
+
+export async function getCategoryById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getCategoryBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
+  return result[0];
+}
+
+export async function createCategory(data: InsertCategory) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(categories).values(data).$returningId();
+  const [category] = await db.select().from(categories).where(eq(categories.id, result.id)).limit(1);
+  return category;
+}
+
+export async function updateCategory(id: number, data: Partial<InsertCategory>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(categories).set(data).where(eq(categories.id, id));
+}
+
+export async function deleteCategory(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(categories).where(eq(categories.id, id));
+}
+
+// ─── Subcategories ────────────────────────────────────────────────────────────
+
+export async function getSubcategoriesByCategoryId(categoryId: number, opts?: { includeInactive?: boolean }) {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions: any[] = [eq(subcategories.categoryId, categoryId)];
+  if (!opts?.includeInactive) {
+    conditions.push(eq(subcategories.isActive, true));
+  }
+  return db.select().from(subcategories)
+    .where(and(...conditions))
+    .orderBy(subcategories.sortOrder, subcategories.name);
+}
+
+export async function getSubcategoryById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(subcategories).where(eq(subcategories.id, id)).limit(1);
+  return result[0];
+}
+
+export async function createSubcategory(data: InsertSubcategory) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(subcategories).values(data).$returningId();
+  const [subcategory] = await db.select().from(subcategories).where(eq(subcategories.id, result.id)).limit(1);
+  return subcategory;
+}
+
+export async function updateSubcategory(id: number, data: Partial<InsertSubcategory>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(subcategories).set(data).where(eq(subcategories.id, id));
+}
+
+export async function deleteSubcategory(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(subcategories).where(eq(subcategories.id, id));
+}
+
+export async function getCategoriesWithSubcategories(opts?: { includeInactive?: boolean }) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const cats = await getAllCategories(opts);
+  const result = [];
+  
+  for (const cat of cats) {
+    const subs = await getSubcategoriesByCategoryId(cat.id, opts);
+    result.push({
+      ...cat,
+      subcategories: subs,
+    });
+  }
+  
+  return result;
+}
+
 // Re-export types for convenience
-export type { Order, Product, ProductImage, SlabPrice, SizeChart, ShippingZone, PortfolioItem, PortfolioImage, TechPack, TechPackImage } from "../drizzle/schema";
+export type { Order, Product, ProductImage, SlabPrice, SizeChart, ShippingZone, PortfolioItem, PortfolioImage, TechPack, TechPackImage, Category, Subcategory } from "../drizzle/schema";

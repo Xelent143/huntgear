@@ -29,7 +29,26 @@ import {
 } from "lucide-react";
 import { IMAGES } from "@/lib/images";
 import { DEMO_PRODUCTS } from "@/lib/demo-products";
-import { SHOP_CATEGORIES, getCategoryBySlug, CATEGORY_SEO_CONTENT } from "@/lib/shop-categories";
+import { SHOP_CATEGORIES as HARDCODED_CATEGORIES, getCategoryBySlug as getHardcodedCategory, CATEGORY_SEO_CONTENT } from "@/lib/shop-categories";
+
+// Transform API category to match hardcoded format
+function transformApiCategories(apiCategories: any[] | undefined) {
+  if (!apiCategories || apiCategories.length === 0) return null;
+  
+  return apiCategories.map(cat => ({
+    id: String(cat.id),
+    name: cat.name,
+    slug: cat.slug,
+    description: cat.description || "",
+    icon: cat.icon || "📁",
+    subCategories: (cat.subcategories || []).map((sub: any) => ({
+      id: String(sub.id),
+      name: sub.name,
+      slug: sub.slug,
+      description: sub.description || "",
+    })),
+  }));
+}
 import { cn } from "@/lib/utils";
 
 // VERSION: 2.0 - SIDEBAR NAVIGATION REDESIGN - 2026-03-15
@@ -330,12 +349,14 @@ function MobileFilterSheet({
 
 function BreadcrumbNav({ 
   activeCategory, 
-  activeSubCategory 
+  activeSubCategory,
+  categories,
 }: { 
   activeCategory: string | null; 
   activeSubCategory: string | null;
+  categories: typeof HARDCODED_CATEGORIES;
 }) {
-  const category = activeCategory ? getCategoryBySlug(activeCategory) : null;
+  const category = activeCategory ? categories.find(c => c.slug === activeCategory) : null;
   const subCategory = category && activeSubCategory 
     ? category.subCategories.find(s => s.slug === activeSubCategory) 
     : null;
@@ -403,6 +424,19 @@ export default function Shop() {
     limit: 48,
     offset: 0,
   });
+
+  // Fetch categories from API
+  const { data: apiCategories } = trpc.category.listWithSubs.useQuery();
+  
+  // Use API categories if available, otherwise fall back to hardcoded
+  const SHOP_CATEGORIES = useMemo(() => {
+    return transformApiCategories(apiCategories) || HARDCODED_CATEGORIES;
+  }, [apiCategories]);
+  
+  // Helper to get category by slug (works with both API and hardcoded)
+  const getCategoryBySlug = useCallback((slug: string) => {
+    return SHOP_CATEGORIES.find(c => c.slug === slug);
+  }, [SHOP_CATEGORIES]);
 
   // Filter and process products
   const displayProducts = useMemo(() => {
@@ -611,7 +645,7 @@ export default function Shop() {
         {/* ── Breadcrumb ───────────────────────────────────────────── */}
         <div className="border-b border-border bg-card/50">
           <div className="container py-3">
-            <BreadcrumbNav activeCategory={activeCategory} activeSubCategory={activeSubCategory} />
+            <BreadcrumbNav activeCategory={activeCategory} activeSubCategory={activeSubCategory} categories={SHOP_CATEGORIES} />
           </div>
         </div>
 

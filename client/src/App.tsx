@@ -44,6 +44,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminAIStudio from "./pages/admin/AdminAIStudio";
 import AdminContent from "./pages/admin/AdminContent";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminCategories from "./pages/admin/AdminCategories";
 import AdminNewProduct from "./pages/AdminNewProduct";
 import Customize from "./pages/Customize";
 import BrandingStudio from "./pages/BrandingStudio";
@@ -97,6 +98,7 @@ function Router() {
       <Route path="/admin-saad/ai-studio" component={AdminAIStudio} />
       <Route path="/admin-saad/content" component={AdminContent} />
       <Route path="/admin-saad/settings" component={AdminSettings} />
+      <Route path="/admin-saad/categories" component={AdminCategories} />
 
       <Route path="/admin-saad/product/new" component={AdminNewProduct} />
       <Route path="/admin-saad/product/edit/:id" component={AdminNewProduct} />
