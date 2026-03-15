@@ -4,20 +4,32 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, Loader2, Image as ImageIcon, Eye, Edit, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Plus, Loader2, Image as ImageIcon, Eye, Edit, Trash2, X, Save } from "lucide-react";
 import { toast } from "sonner";
+
+interface QuickEditForm {
+    id: number;
+    title: string;
+    samplePrice: string;
+    weight: string;
+    categoryId: number | null;
+    subcategoryId: number | null;
+}
 
 export default function AdminProducts() {
     const [, setLocation] = useLocation();
     const { data: products, isLoading, error } = trpc.product.adminList.useQuery();
+    const { data: categories } = trpc.category.listWithSubs.useQuery();
     const utils = trpc.useUtils();
     const [searchTerm, setSearchTerm] = useState("");
     
-    // Debug logging
-    console.log("Products data:", products);
-    console.log("Loading:", isLoading);
-    console.log("Error:", error);
+    // Quick Edit Dialog State
+    const [quickEditOpen, setQuickEditOpen] = useState(false);
+    const [quickEditForm, setQuickEditForm] = useState<QuickEditForm | null>(null);
 
     const deleteMutation = trpc.product.delete.useMutation({
         onSuccess: () => { utils.product.adminList.invalidate(); toast.success("Product deleted"); },
@@ -27,7 +39,41 @@ export default function AdminProducts() {
         onSuccess: () => { utils.product.adminList.invalidate(); toast.success("Status updated"); },
     });
 
+    const quickUpdateMutation = trpc.product.update.useMutation({
+        onSuccess: () => {
+            utils.product.adminList.invalidate();
+            toast.success("Product updated successfully");
+            setQuickEditOpen(false);
+            setQuickEditForm(null);
+        },
+        onError: (error) => toast.error("Failed to update: " + error.message),
+    });
+
     const filtered = products?.filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase())) ?? [];
+
+    const openQuickEdit = (product: any) => {
+        setQuickEditForm({
+            id: product.id,
+            title: product.title,
+            samplePrice: product.samplePrice || "",
+            weight: product.weight || "",
+            categoryId: product.categoryId || null,
+            subcategoryId: product.subcategoryId || null,
+        });
+        setQuickEditOpen(true);
+    };
+
+    const handleQuickUpdate = () => {
+        if (!quickEditForm) return;
+        
+        quickUpdateMutation.mutate({
+            id: quickEditForm.id,
+            samplePrice: quickEditForm.samplePrice,
+            weight: quickEditForm.weight,
+            categoryId: quickEditForm.categoryId,
+            subcategoryId: quickEditForm.subcategoryId,
+        });
+    };
 
     return (
         <AdminLayout>
@@ -130,13 +176,16 @@ export default function AdminProducts() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-2">
-                                                <Button size="icon" variant="ghost" onClick={() => window.open(`/shop/${product.slug}`, '_blank')} className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                                <Button size="icon" variant="ghost" onClick={() => window.open(`/shop/${product.slug}`, '_blank')} className="h-8 w-8 text-muted-foreground hover:text-foreground" title="View">
                                                     <Eye className="w-4 h-4" />
                                                 </Button>
-                                                <Button size="icon" variant="ghost" onClick={() => setLocation(`/admin-saad/product/edit/${product.id}`)} className="h-8 w-8 text-muted-foreground hover:text-gold">
+                                                <Button size="sm" variant="ghost" onClick={() => openQuickEdit(product)} className="h-8 text-xs text-gold hover:text-gold hover:bg-gold/10" title="Quick Edit">
+                                                    <Edit className="w-3.5 h-3.5 mr-1" /> Quick
+                                                </Button>
+                                                <Button size="icon" variant="ghost" onClick={() => setLocation(`/admin-saad/product/edit/${product.id}`)} className="h-8 w-8 text-muted-foreground hover:text-gold" title="Full Edit">
                                                     <Edit className="w-4 h-4" />
                                                 </Button>
-                                                <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete product?')) deleteMutation.mutate({ id: product.id }) }} className="h-8 w-8 text-muted-foreground hover:text-destructive">
+                                                <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete product?')) deleteMutation.mutate({ id: product.id }) }} className="h-8 w-8 text-muted-foreground hover:text-destructive" title="Delete">
                                                     <Trash2 className="w-4 h-4" />
                                                 </Button>
                                             </div>
@@ -148,6 +197,109 @@ export default function AdminProducts() {
                     </div>
                 </div>
             </div>
+
+            {/* Quick Edit Dialog */}
+            <Dialog open={quickEditOpen} onOpenChange={setQuickEditOpen}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Edit className="w-5 h-5 text-gold" />
+                            Quick Edit Product
+                        </DialogTitle>
+                    </DialogHeader>
+                    
+                    {quickEditForm && (
+                        <div className="space-y-4 py-4">
+                            <div className="bg-secondary/30 p-3 rounded-lg">
+                                <p className="font-medium text-sm">{quickEditForm.title}</p>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase tracking-wider text-muted-foreground">Sample Price ($)</Label>
+                                    <Input
+                                        type="number"
+                                        step="0.01"
+                                        value={quickEditForm.samplePrice}
+                                        onChange={(e) => setQuickEditForm(f => f ? { ...f, samplePrice: e.target.value } : null)}
+                                        placeholder="0.00"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-xs uppercase tracking-wider text-muted-foreground">Weight (kg)</Label>
+                                    <Input
+                                        type="number"
+                                        step="0.001"
+                                        value={quickEditForm.weight}
+                                        onChange={(e) => setQuickEditForm(f => f ? { ...f, weight: e.target.value } : null)}
+                                        placeholder="0.000"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs uppercase tracking-wider text-muted-foreground">Category</Label>
+                                <Select
+                                    value={quickEditForm.categoryId?.toString() || ""}
+                                    onValueChange={(v) => {
+                                        const catId = parseInt(v);
+                                        setQuickEditForm(f => f ? { ...f, categoryId: catId, subcategoryId: null } : null);
+                                    }}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {categories?.map(c => (
+                                            <SelectItem key={c.id} value={c.id.toString()}>
+                                                {c.icon} {c.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs uppercase tracking-wider text-muted-foreground">Subcategory</Label>
+                                <Select
+                                    value={quickEditForm.subcategoryId?.toString() || ""}
+                                    onValueChange={(v) => setQuickEditForm(f => f ? { ...f, subcategoryId: parseInt(v) } : null)}
+                                    disabled={!quickEditForm.categoryId}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder={quickEditForm.categoryId ? "Select subcategory" : "Select category first"} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {categories?.find(c => c.id === quickEditForm.categoryId)?.subcategories?.map(s => (
+                                            <SelectItem key={s.id} value={s.id.toString()}>
+                                                {s.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                    )}
+
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setQuickEditOpen(false)}>
+                            <X className="w-4 h-4 mr-2" /> Cancel
+                        </Button>
+                        <Button 
+                            onClick={handleQuickUpdate}
+                            disabled={quickUpdateMutation.isPending}
+                            className="bg-gold text-black hover:bg-gold-light"
+                        >
+                            {quickUpdateMutation.isPending ? (
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            ) : (
+                                <Save className="w-4 h-4 mr-2" />
+                            )}
+                            Save Changes
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </AdminLayout>
     );
 }
