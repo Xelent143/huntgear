@@ -532,7 +532,11 @@ async function getUserByOpenId(openId) {
 }
 async function getActiveProducts(opts) {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) {
+    console.error("[getActiveProducts] Database connection failed");
+    return [];
+  }
+  console.log("[getActiveProducts] Fetching products with opts:", opts);
   const conditions = [eq(products.isActive, true)];
   if (opts?.category && opts.category !== "all") {
     const category = await db.select().from(categories).where(eq(categories.slug, opts.category)).limit(1);
@@ -557,7 +561,14 @@ async function getActiveProducts(opts) {
       )
     );
   }
-  return db.select().from(products).where(and(...conditions)).orderBy(products.sortOrder, desc(products.createdAt)).limit(opts?.limit ?? 50).offset(opts?.offset ?? 0);
+  try {
+    const results = await db.select().from(products).where(and(...conditions)).orderBy(products.sortOrder, desc(products.createdAt)).limit(opts?.limit ?? 50).offset(opts?.offset ?? 0);
+    console.log("[getActiveProducts] Returned", results.length, "products");
+    return results;
+  } catch (error) {
+    console.error("[getActiveProducts] Error fetching products:", error);
+    return [];
+  }
 }
 async function getAllProducts() {
   const db = await getDb();

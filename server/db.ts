@@ -78,7 +78,12 @@ export async function getUserByOpenId(openId: string) {
 
 export async function getActiveProducts(opts?: { category?: string; subcategory?: string; search?: string; limit?: number; offset?: number }) {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) {
+    console.error("[getActiveProducts] Database connection failed");
+    return [];
+  }
+  
+  console.log("[getActiveProducts] Fetching products with opts:", opts);
   const conditions = [eq(products.isActive, true)];
   
   // Filter by category slug - need to join with categories table or use category_id
@@ -110,11 +115,18 @@ export async function getActiveProducts(opts?: { category?: string; subcategory?
       )!
     );
   }
-  return db.select().from(products)
-    .where(and(...conditions))
-    .orderBy(products.sortOrder, desc(products.createdAt))
-    .limit(opts?.limit ?? 50)
-    .offset(opts?.offset ?? 0);
+  try {
+    const results = await db.select().from(products)
+      .where(and(...conditions))
+      .orderBy(products.sortOrder, desc(products.createdAt))
+      .limit(opts?.limit ?? 50)
+      .offset(opts?.offset ?? 0);
+    console.log("[getActiveProducts] Returned", results.length, "products");
+    return results;
+  } catch (error) {
+    console.error("[getActiveProducts] Error fetching products:", error);
+    return [];
+  }
 }
 
 export async function getAllProducts() {
