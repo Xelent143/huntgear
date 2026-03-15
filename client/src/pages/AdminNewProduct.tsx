@@ -797,12 +797,19 @@ export default function AdminNewProduct() {
                                                 <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
                                             </SelectTrigger>
                                             <SelectContent className="bg-card">
-                                                <SelectItem value="">None</SelectItem>
-                                                {categories?.find(c => c.id === form.categoryId)?.subcategories?.map(s => (
-                                                    <SelectItem key={s.id} value={s.id.toString()}>
-                                                        {s.name}
-                                                    </SelectItem>
-                                                ))}
+                                                <SelectItem value="">-- None --</SelectItem>
+                                                {(() => {
+                                                    const selectedCategory = categories?.find(c => c.id === form.categoryId);
+                                                    const subs = selectedCategory?.subcategories || [];
+                                                    if (subs.length === 0 && form.categoryId) {
+                                                        return <SelectItem value="_empty" disabled>No subcategories found</SelectItem>;
+                                                    }
+                                                    return subs.map(s => (
+                                                        <SelectItem key={s.id} value={s.id.toString()}>
+                                                            {s.name}
+                                                        </SelectItem>
+                                                    ));
+                                                })()}
                                             </SelectContent>
                                         </Select>
                                     </div>

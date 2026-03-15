@@ -14038,116 +14038,123 @@ function AdminNewProduct() {
                       children: [
                         /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:796", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:797", placeholder: form.categoryId ? "Select subcategory" : "Select category first" }) }),
                         /* @__PURE__ */ jsxs(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:799", className: "bg-card", children: [
-                          /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", value: "", children: "None" }),
-                          categories2?.find((c) => c.id === form.categoryId)?.subcategories?.map((s2) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:802", value: s2.id.toString(), children: s2.name }, s2.id))
+                          /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", value: "", children: "-- None --" }),
+                          (() => {
+                            const selectedCategory = categories2?.find((c) => c.id === form.categoryId);
+                            const subs = selectedCategory?.subcategories || [];
+                            if (subs.length === 0 && form.categoryId) {
+                              return /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:805", value: "_empty", disabled: true, children: "No subcategories found" });
+                            }
+                            return subs.map((s2) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:808", value: s2.id.toString(), children: s2.name }, s2.id));
+                          })()
                         ] })
                       ]
                     }
                   )
                 ] }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:809", children: [
-                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:810", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:816", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                     "URL Slug ",
-                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:810", className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", className: "text-red-500", children: "*" })
                   ] }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:811", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:818", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:815", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:816", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:822", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:823", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:824", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:820", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:821", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:822", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:827", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:828", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:829", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:825", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:826", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:827", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:832", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:833", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:834", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:830", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:831", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:832", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
-                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:834", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:835", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:837", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:838", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:839", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
+                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:841", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:842", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:842", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:843", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:844", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:846", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:847", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:848", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:849", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:849", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:850", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:851", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:854", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:855", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:856", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:851", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:852", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:858", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:859", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:860", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:855", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:856", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:857", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:862", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:863", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:864", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:859", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:860", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:861", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:866", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:868", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:866", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:868", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:870", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:871", value: sizeChart, onChange: setSizeChart }) })
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:873", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:874", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:875", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:877", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", value: sizeChart, onChange: setSizeChart }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", className: "lg:col-span-4 space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:879", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:880", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:881", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:883", className: "p-6 space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:884", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:885", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:888", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:885", className: "lg:col-span-4 space-y-8", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:888", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:890", className: "p-6 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:891", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:892", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:893", className: "relative", children: [
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:894", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:895", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:891", slabs, onChange: setSlabs })
+              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:898", slabs, onChange: setSlabs })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:895", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:896", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:897", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:899", className: "p-6 space-y-4", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:902", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:903", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:904", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:906", className: "p-6 space-y-4", children: [
               { key: "isActive", label: "Active Status", desc: "Visible to customers", icon: Eye },
               { key: "isFeatured", label: "Featured Product", desc: "Highlight on homepage", icon: Star },
               { key: "freeShipping", label: "Free Shipping", desc: "Exempt from shipping costs", icon: Truck }
-            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:905", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:906", className: "flex gap-3", children: [
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:907", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:907", className: "w-5 h-5 text-gold" }) }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:908", children: [
-                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:909", className: "text-sm font-bold text-foreground", children: label }),
-                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:910", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
+            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:912", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:913", className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:914", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:914", className: "w-5 h-5 text-gold" }) }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:915", children: [
+                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:916", className: "text-sm font-bold text-foreground", children: label }),
+                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:917", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:913", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
+              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:920", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
             ] }, key)) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:919", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:920", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:921", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:923", className: "p-6 space-y-4", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:924", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:925", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:927", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:927", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:928", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:930", className: "p-6 space-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:931", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:932", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:933", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:934", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoTitle.length,
                   "/60 chars"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:929", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:930", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:931", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:936", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:937", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:938", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:933", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:934", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:935", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:936", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:940", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:941", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:942", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:943", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoDescription.length,
                   "/160 chars"
                 ] })
