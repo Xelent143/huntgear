@@ -801,7 +801,6 @@ export default function AdminNewProduct() {
                                                 <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
                                             </SelectTrigger>
                                             <SelectContent className="bg-card">
-                                                <SelectItem value="">-- Select Subcategory --</SelectItem>
                                                 {(() => {
                                                     const selectedCategory = categories?.find(c => c.id === form.categoryId);
                                                     const subs = selectedCategory?.subcategories || [];
