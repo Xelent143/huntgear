@@ -534,7 +534,20 @@ async function getActiveProducts(opts) {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true)];
-  if (opts?.category && opts.category !== "all") conditions.push(eq(products.category, opts.category));
+  if (opts?.category && opts.category !== "all") {
+    const category = await db.select().from(categories).where(eq(categories.slug, opts.category)).limit(1);
+    if (category.length > 0) {
+      conditions.push(eq(products.categoryId, category[0].id));
+    } else {
+      conditions.push(eq(products.category, opts.category));
+    }
+  }
+  if (opts?.subcategory && opts.subcategory !== "all") {
+    const subcategory = await db.select().from(subcategories).where(eq(subcategories.slug, opts.subcategory)).limit(1);
+    if (subcategory.length > 0) {
+      conditions.push(eq(products.subcategoryId, subcategory[0].id));
+    }
+  }
   if (opts?.search) {
     conditions.push(
       or(
@@ -2545,6 +2558,7 @@ var slabSchema = z3.object({
 var productRouter = router({
   list: publicProcedure.input(z3.object({
     category: z3.string().optional(),
+    subcategory: z3.string().optional(),
     search: z3.string().optional(),
     limit: z3.number().int().min(1).max(100).default(24),
     offset: z3.number().int().min(0).default(0)

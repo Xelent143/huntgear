@@ -421,6 +421,7 @@ export default function Shop() {
 
   const { data: dbProducts, isLoading } = trpc.product.list.useQuery({
     category: activeCategory || undefined,
+    subcategory: activeSubCategory || undefined,
     search: debouncedSearch || undefined,
     limit: 48,
     offset: 0,
@@ -518,18 +519,45 @@ export default function Shop() {
     return products;
   }, [dbProducts, activeCategory, activeSubCategory, debouncedSearch, sortBy]);
 
-  // Calculate product counts for sidebar
+  // Calculate product counts for sidebar from actual products
   const productCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     
-    // Count by category
-    DEMO_PRODUCTS.forEach(p => {
-      const catSlug = p.category.toLowerCase().replace(/\s+/g, "-");
-      counts[catSlug] = (counts[catSlug] || 0) + 1;
+    if (!dbProducts || dbProducts.length === 0) {
+      // Fallback to demo products count
+      DEMO_PRODUCTS.forEach(p => {
+        const catSlug = p.category.toLowerCase().replace(/\s+/g, "-");
+        counts[catSlug] = (counts[catSlug] || 0) + 1;
+      });
+      return counts;
+    }
+    
+    // Count real products by matching categoryId to category slug
+    dbProducts.forEach((p: any) => {
+      // Find category by ID
+      const category = allCategories.find(c => c.id === String(p.categoryId));
+      if (category) {
+        counts[category.slug] = (counts[category.slug] || 0) + 1;
+        
+        // Count by subcategory too
+        if (p.subcategoryId) {
+          const subcategory = category.subCategories.find(s => s.id === String(p.subcategoryId));
+          if (subcategory) {
+            const key = `${category.slug}-${subcategory.slug}`;
+            counts[key] = (counts[key] || 0) + 1;
+          }
+        }
+      } else {
+        // Fallback: try to match by category name string
+        const catSlug = p.category?.toLowerCase().replace(/\s+/g, "-") || "";
+        if (catSlug) {
+          counts[catSlug] = (counts[catSlug] || 0) + 1;
+        }
+      }
     });
 
     return counts;
-  }, []);
+  }, [dbProducts, allCategories]);
 
   const totalCount = displayProducts.length;
 

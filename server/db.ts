@@ -76,11 +76,31 @@ export async function getUserByOpenId(openId: string) {
 
 // ─── Products ─────────────────────────────────────────────────────────────────
 
-export async function getActiveProducts(opts?: { category?: string; search?: string; limit?: number; offset?: number }) {
+export async function getActiveProducts(opts?: { category?: string; subcategory?: string; search?: string; limit?: number; offset?: number }) {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true)];
-  if (opts?.category && opts.category !== "all") conditions.push(eq(products.category, opts.category));
+  
+  // Filter by category slug - need to join with categories table or use category_id
+  if (opts?.category && opts.category !== "all") {
+    // Get category ID from slug
+    const category = await db.select().from(categories).where(eq(categories.slug, opts.category)).limit(1);
+    if (category.length > 0) {
+      conditions.push(eq(products.categoryId, category[0].id));
+    } else {
+      // Fallback to old category string for backward compatibility
+      conditions.push(eq(products.category, opts.category));
+    }
+  }
+  
+  // Filter by subcategory slug
+  if (opts?.subcategory && opts.subcategory !== "all") {
+    const subcategory = await db.select().from(subcategories).where(eq(subcategories.slug, opts.subcategory)).limit(1);
+    if (subcategory.length > 0) {
+      conditions.push(eq(products.subcategoryId, subcategory[0].id));
+    }
+  }
+  
   if (opts?.search) {
     conditions.push(
       or(

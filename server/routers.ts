@@ -78,6 +78,7 @@ const productRouter = router({
   list: publicProcedure
     .input(z.object({
       category: z.string().optional(),
+      subcategory: z.string().optional(),
       search: z.string().optional(),
       limit: z.number().int().min(1).max(100).default(24),
       offset: z.number().int().min(0).default(0),
