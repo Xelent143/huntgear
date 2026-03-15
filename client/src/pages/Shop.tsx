@@ -32,6 +32,9 @@ import { DEMO_PRODUCTS } from "@/lib/demo-products";
 import { SHOP_CATEGORIES, getCategoryBySlug, CATEGORY_SEO_CONTENT } from "@/lib/shop-categories";
 import { cn } from "@/lib/utils";
 
+// VERSION: 2.0 - SIDEBAR NAVIGATION REDESIGN - 2026-03-15
+// Force rebuild cache-bust
+
 // ─── Product Card ─────────────────────────────────────────────────────────────
 
 interface ProductType {
