@@ -50,7 +50,7 @@ const products = [
   { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/shop", category: "Security Uniforms", tag: "Guard" },
   { name: "Tech Wear", image: IMAGES.catTechwear, href: "/shop", category: "Tech Wear", tag: "Utility" },
   { name: "Ski Wear", image: IMAGES.catSki, href: "/shop", category: "Ski Wear", tag: "Alpine" },
-  { name: "Martial Arts Wear", image: IMAGES.catMedical, href: "/shop", category: "Martial Arts", tag: "BJJ / MMA" },
+  { name: "Martial Arts Wear", image: IMAGES.catMartialArts, href: "/shop", category: "Martial Arts", tag: "BJJ / MMA" },
 ];
 
 const testimonials = [

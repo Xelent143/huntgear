@@ -31,6 +31,7 @@ export const IMAGES = {
   catSecurityUniforms: "/cat_security_1772542311636.png",
   catStreetwear: "/cat_streetwear_1772542290412.png",
   catHunting: "/cat_hunting_1772542272039.png",
+  catMartialArts: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&q=85",
   // Manufacturing / Geo Landing
   mfgHero: "/manufacturing-hero.png",
   mfgProcess: "/manufacturing-process.png",
