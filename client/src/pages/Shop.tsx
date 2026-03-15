@@ -519,12 +519,22 @@ export default function Shop() {
     return products;
   }, [dbProducts, activeCategory, activeSubCategory, debouncedSearch, sortBy]);
 
+  // DEBUG: Log data for troubleshooting
+  useEffect(() => {
+    console.log("=== SHOP DEBUG ===");
+    console.log("dbProducts:", dbProducts);
+    console.log("allCategories:", allCategories);
+    console.log("First product categoryId:", dbProducts?.[0]?.categoryId);
+    console.log("First product subcategoryId:", dbProducts?.[0]?.subcategoryId);
+    console.log("First category id:", allCategories?.[0]?.id);
+  }, [dbProducts, allCategories]);
+
   // Calculate product counts for sidebar from actual products
   const productCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     
     if (!dbProducts || dbProducts.length === 0) {
-      // Fallback to demo products count
+      console.log("No dbProducts, using DEMO_PRODUCTS");
       DEMO_PRODUCTS.forEach(p => {
         const catSlug = p.category.toLowerCase().replace(/\s+/g, "-");
         counts[catSlug] = (counts[catSlug] || 0) + 1;
@@ -532,22 +542,33 @@ export default function Shop() {
       return counts;
     }
     
+    console.log("Calculating counts from", dbProducts.length, "products");
+    
     // Count real products by matching categoryId to category slug
     dbProducts.forEach((p: any) => {
-      // Find category by ID
-      const category = allCategories.find(c => c.id === String(p.categoryId));
+      console.log("Processing product:", p.id, "categoryId:", p.categoryId, "subcategoryId:", p.subcategoryId);
+      
+      // Find category by ID (convert both to string for comparison)
+      const category = allCategories.find(c => String(c.id) === String(p.categoryId));
+      
       if (category) {
+        console.log("Found category:", category.slug);
         counts[category.slug] = (counts[category.slug] || 0) + 1;
         
         // Count by subcategory too
         if (p.subcategoryId) {
-          const subcategory = category.subCategories.find(s => s.id === String(p.subcategoryId));
+          const subcategory = category.subCategories.find(s => String(s.id) === String(p.subcategoryId));
           if (subcategory) {
             const key = `${category.slug}-${subcategory.slug}`;
+            console.log("Found subcategory:", key);
             counts[key] = (counts[key] || 0) + 1;
+          } else {
+            console.log("Subcategory not found for id:", p.subcategoryId);
+            console.log("Available subcategories:", category.subCategories.map(s => ({id: s.id, name: s.name})));
           }
         }
       } else {
+        console.log("Category not found for id:", p.categoryId);
         // Fallback: try to match by category name string
         const catSlug = p.category?.toLowerCase().replace(/\s+/g, "-") || "";
         if (catSlug) {
@@ -556,6 +577,7 @@ export default function Shop() {
       }
     });
 
+    console.log("Final counts:", counts);
     return counts;
   }, [dbProducts, allCategories]);
 
