@@ -12993,18 +12993,21 @@ function AdminCategories() {
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:319", className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
-                /* @__PURE__ */ jsx(
+                /* @__PURE__ */ jsxs(
                   Button,
                   {
                     "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:320",
                     variant: "ghost",
-                    size: "icon",
-                    className: "h-8 w-8",
+                    size: "sm",
+                    className: "h-8 text-xs text-gold",
                     onClick: (e) => {
                       e.stopPropagation();
-                      openCategoryDialog(category);
+                      openSubcategoryDialog(category.id);
                     },
-                    children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:326", className: "w-4 h-4" })
+                    children: [
+                      /* @__PURE__ */ jsx(Plus, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:326", className: "w-3.5 h-3.5 mr-1" }),
+                      " Add Subcategory"
+                    ]
                   }
                 ),
                 /* @__PURE__ */ jsx(
@@ -13013,72 +13016,86 @@ function AdminCategories() {
                     "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:328",
                     variant: "ghost",
                     size: "icon",
+                    className: "h-8 w-8",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      openCategoryDialog(category);
+                    },
+                    children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:334", className: "w-4 h-4" })
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:336",
+                    variant: "ghost",
+                    size: "icon",
                     className: "h-8 w-8 text-destructive hover:text-destructive",
                     onClick: (e) => {
                       e.stopPropagation();
                       openDeleteDialog("category", category.id);
                     },
-                    children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:334", className: "w-4 h-4" })
+                    children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:342", className: "w-4 h-4" })
                   }
                 )
               ] })
             ] }),
-            /* @__PURE__ */ jsx(CollapsibleContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:339", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:340", className: "bg-secondary/20 border-t border-border", children: [
-              category.subcategories && category.subcategories.length > 0 ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:342", className: "divide-y divide-border/50", children: category.subcategories.map((sub) => /* @__PURE__ */ jsxs(
+            /* @__PURE__ */ jsx(CollapsibleContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:347", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:348", className: "bg-secondary/20 border-t border-border", children: [
+              category.subcategories && category.subcategories.length > 0 ? /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:350", className: "divide-y divide-border/50", children: category.subcategories.map((sub) => /* @__PURE__ */ jsxs(
                 "div",
                 {
-                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:344",
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:352",
                   className: "flex items-center gap-3 pl-14 pr-4 py-3 hover:bg-secondary/30 transition-colors group",
                   children: [
-                    /* @__PURE__ */ jsx(Tag, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:348", className: "w-4 h-4 text-muted-foreground shrink-0" }),
-                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:349", className: "flex-1 min-w-0", children: [
-                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:350", className: "flex items-center gap-2", children: [
-                        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:351", className: "text-sm font-medium", children: sub.name }),
-                        !sub.isActive && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:353", variant: "secondary", className: "text-xs", children: "Inactive" })
+                    /* @__PURE__ */ jsx(Tag, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:356", className: "w-4 h-4 text-muted-foreground shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:357", className: "flex-1 min-w-0", children: [
+                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:358", className: "flex items-center gap-2", children: [
+                        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:359", className: "text-sm font-medium", children: sub.name }),
+                        !sub.isActive && /* @__PURE__ */ jsx(Badge, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:361", variant: "secondary", className: "text-xs", children: "Inactive" })
                       ] }),
-                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:356", className: "text-xs text-muted-foreground", children: [
+                      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:364", className: "text-xs text-muted-foreground", children: [
                         "/",
                         sub.slug
                       ] })
                     ] }),
-                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:358", className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
-                      /* @__PURE__ */ jsx(
-                        Button,
-                        {
-                          "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:359",
-                          variant: "ghost",
-                          size: "icon",
-                          className: "h-7 w-7",
-                          onClick: () => openSubcategoryDialog(category.id, sub),
-                          children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:365", className: "w-3.5 h-3.5" })
-                        }
-                      ),
+                    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:366", className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
                       /* @__PURE__ */ jsx(
                         Button,
                         {
                           "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:367",
                           variant: "ghost",
                           size: "icon",
+                          className: "h-7 w-7",
+                          onClick: () => openSubcategoryDialog(category.id, sub),
+                          children: /* @__PURE__ */ jsx(Edit2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:373", className: "w-3.5 h-3.5" })
+                        }
+                      ),
+                      /* @__PURE__ */ jsx(
+                        Button,
+                        {
+                          "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:375",
+                          variant: "ghost",
+                          size: "icon",
                           className: "h-7 w-7 text-destructive hover:text-destructive",
                           onClick: () => openDeleteDialog("subcategory", sub.id),
-                          children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:373", className: "w-3.5 h-3.5" })
+                          children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:381", className: "w-3.5 h-3.5" })
                         }
                       )
                     ] })
                   ]
                 },
                 sub.id
-              )) }) : /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:380", className: "pl-14 pr-4 py-6 text-sm text-muted-foreground text-center", children: "No subcategories yet" }),
-              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:384", className: "pl-14 pr-4 py-3 border-t border-border/50", children: /* @__PURE__ */ jsxs(
+              )) }) : /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:388", className: "pl-14 pr-4 py-6 text-sm text-muted-foreground text-center", children: "No subcategories yet" }),
+              /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:392", className: "pl-14 pr-4 py-3 border-t border-border/50", children: /* @__PURE__ */ jsxs(
                 Button,
                 {
-                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:385",
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:393",
                   variant: "ghost",
                   size: "sm",
                   className: "text-xs",
                   onClick: () => openSubcategoryDialog(category.id),
                   children: [
-                    /* @__PURE__ */ jsx(Plus, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:391", className: "w-3.5 h-3.5 mr-1" }),
+                    /* @__PURE__ */ jsx(Plus, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:399", className: "w-3.5 h-3.5 mr-1" }),
                     " Add Subcategory"
                   ]
                 }
@@ -13089,16 +13106,16 @@ function AdminCategories() {
         category.id
       )) }) }) })
     ] }),
-    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:405", open: isCategoryDialogOpen, onOpenChange: setIsCategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:406", className: "max-w-lg max-h-[90vh] overflow-y-auto", children: [
-      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:407", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:408", children: categoryForm.id ? "Edit Category" : "Add Category" }) }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:410", className: "space-y-4 py-4", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:411", className: "grid grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:412", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:413", children: "Name *" }),
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:413", open: isCategoryDialogOpen, onOpenChange: setIsCategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:414", className: "max-w-lg max-h-[90vh] overflow-y-auto", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:415", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:416", children: categoryForm.id ? "Edit Category" : "Add Category" }) }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:418", className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:419", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:420", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:421", children: "Name *" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:414",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:422",
                 value: categoryForm.name,
                 onChange: (e) => {
                   const name = e.target.value;
@@ -13112,12 +13129,12 @@ function AdminCategories() {
               }
             )
           ] }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:427", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:428", children: "Slug *" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:435", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:436", children: "Slug *" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:429",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:437",
                 value: categoryForm.slug,
                 onChange: (e) => setCategoryForm((prev) => ({ ...prev, slug: e.target.value })),
                 placeholder: "e.g., ski-wear"
@@ -13125,60 +13142,60 @@ function AdminCategories() {
             )
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:436", className: "space-y-2", children: [
-          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:437", children: "Icon (emoji)" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:444", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:445", children: "Icon (emoji)" }),
           /* @__PURE__ */ jsx(
             Input,
             {
-              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:438",
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:446",
               value: categoryForm.icon,
               onChange: (e) => setCategoryForm((prev) => ({ ...prev, icon: e.target.value })),
               placeholder: "e.g., ⛷️ or /images/icon.svg"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:444", className: "space-y-2", children: [
-          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:445", children: "Description" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:452", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:453", children: "Description" }),
           /* @__PURE__ */ jsx(
             Input,
             {
-              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:446",
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:454",
               value: categoryForm.description,
               onChange: (e) => setCategoryForm((prev) => ({ ...prev, description: e.target.value })),
               placeholder: "Brief description of this category"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:452", className: "space-y-2", children: [
-          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:453", children: "Image URL" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:460", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:461", children: "Image URL" }),
           /* @__PURE__ */ jsx(
             Input,
             {
-              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:454",
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:462",
               value: categoryForm.imageUrl,
               onChange: (e) => setCategoryForm((prev) => ({ ...prev, imageUrl: e.target.value })),
               placeholder: "https://..."
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:460", className: "grid grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:461", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:462", children: "Sort Order" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:468", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:469", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:470", children: "Sort Order" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:463",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:471",
                 type: "number",
                 value: categoryForm.sortOrder,
                 onChange: (e) => setCategoryForm((prev) => ({ ...prev, sortOrder: parseInt(e.target.value) || 0 }))
               }
             )
           ] }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:469", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:470", className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:477", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:478", className: "flex items-center gap-2", children: [
             /* @__PURE__ */ jsx(
               "input",
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:471",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:479",
                 type: "checkbox",
                 checked: categoryForm.isActive,
                 onChange: (e) => setCategoryForm((prev) => ({ ...prev, isActive: e.target.checked })),
@@ -13188,39 +13205,39 @@ function AdminCategories() {
             "Active"
           ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:481", className: "border-t border-border pt-4", children: [
-          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:482", className: "text-sm font-semibold mb-3", children: "SEO Settings" }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:483", className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:484", className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:485", children: "SEO Title" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:489", className: "border-t border-border pt-4", children: [
+          /* @__PURE__ */ jsx("h4", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:490", className: "text-sm font-semibold mb-3", children: "SEO Settings" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:491", className: "space-y-3", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:492", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:493", children: "SEO Title" }),
               /* @__PURE__ */ jsx(
                 Input,
                 {
-                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:486",
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:494",
                   value: categoryForm.seoTitle,
                   onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoTitle: e.target.value })),
                   placeholder: "Custom page title for SEO"
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:492", className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:493", children: "SEO Description" }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:500", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:501", children: "SEO Description" }),
               /* @__PURE__ */ jsx(
                 Input,
                 {
-                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:494",
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:502",
                   value: categoryForm.seoDescription,
                   onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoDescription: e.target.value })),
                   placeholder: "Meta description for search engines"
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:500", className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:501", children: "SEO Keywords" }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:508", className: "space-y-2", children: [
+              /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:509", children: "SEO Keywords" }),
               /* @__PURE__ */ jsx(
                 Input,
                 {
-                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:502",
+                  "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:510",
                   value: categoryForm.seoKeywords,
                   onChange: (e) => setCategoryForm((prev) => ({ ...prev, seoKeywords: e.target.value })),
                   placeholder: "keyword1, keyword2, keyword3"
@@ -13230,33 +13247,33 @@ function AdminCategories() {
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:511", children: [
-        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:512", variant: "outline", onClick: () => setIsCategoryDialogOpen(false), children: "Cancel" }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:519", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:520", variant: "outline", onClick: () => setIsCategoryDialogOpen(false), children: "Cancel" }),
         /* @__PURE__ */ jsxs(
           Button,
           {
-            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:513",
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:521",
             onClick: handleSaveCategory,
             disabled: createCategory.isPending || updateCategory.isPending,
             className: "bg-gold text-black hover:bg-gold-light",
             children: [
-              (createCategory.isPending || updateCategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:519", className: "w-4 h-4 mr-2 animate-spin" }),
+              (createCategory.isPending || updateCategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:527", className: "w-4 h-4 mr-2 animate-spin" }),
               categoryForm.id ? "Update" : "Create"
             ]
           }
         )
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:528", open: isSubcategoryDialogOpen, onOpenChange: setIsSubcategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:529", className: "max-w-lg", children: [
-      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:530", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:531", children: subcategoryForm.id ? "Edit Subcategory" : "Add Subcategory" }) }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:533", className: "space-y-4 py-4", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:534", className: "grid grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:535", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:536", children: "Name *" }),
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:536", open: isSubcategoryDialogOpen, onOpenChange: setIsSubcategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:537", className: "max-w-lg", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:538", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:539", children: subcategoryForm.id ? "Edit Subcategory" : "Add Subcategory" }) }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:541", className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:542", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:543", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:544", children: "Name *" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:537",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:545",
                 value: subcategoryForm.name,
                 onChange: (e) => {
                   const name = e.target.value;
@@ -13270,12 +13287,12 @@ function AdminCategories() {
               }
             )
           ] }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:550", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:551", children: "Slug *" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:558", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:559", children: "Slug *" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:552",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:560",
                 value: subcategoryForm.slug,
                 onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, slug: e.target.value })),
                 placeholder: "e.g., ski-jackets"
@@ -13283,36 +13300,36 @@ function AdminCategories() {
             )
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:559", className: "space-y-2", children: [
-          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:560", children: "Description" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:567", className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:568", children: "Description" }),
           /* @__PURE__ */ jsx(
             Input,
             {
-              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:561",
+              "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:569",
               value: subcategoryForm.description,
               onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, description: e.target.value })),
               placeholder: "Brief description"
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:567", className: "grid grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:568", className: "space-y-2", children: [
-            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:569", children: "Sort Order" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:575", className: "grid grid-cols-2 gap-4", children: [
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:576", className: "space-y-2", children: [
+            /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:577", children: "Sort Order" }),
             /* @__PURE__ */ jsx(
               Input,
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:570",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:578",
                 type: "number",
                 value: subcategoryForm.sortOrder,
                 onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, sortOrder: parseInt(e.target.value) || 0 }))
               }
             )
           ] }),
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:576", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:577", className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:584", className: "space-y-2", children: /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:585", className: "flex items-center gap-2", children: [
             /* @__PURE__ */ jsx(
               "input",
               {
-                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:578",
+                "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:586",
                 type: "checkbox",
                 checked: subcategoryForm.isActive,
                 onChange: (e) => setSubcategoryForm((prev) => ({ ...prev, isActive: e.target.checked })),
@@ -13323,42 +13340,42 @@ function AdminCategories() {
           ] }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:589", children: [
-        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:590", variant: "outline", onClick: () => setIsSubcategoryDialogOpen(false), children: "Cancel" }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:597", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:598", variant: "outline", onClick: () => setIsSubcategoryDialogOpen(false), children: "Cancel" }),
         /* @__PURE__ */ jsxs(
           Button,
           {
-            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:591",
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:599",
             onClick: handleSaveSubcategory,
             disabled: createSubcategory.isPending || updateSubcategory.isPending,
             className: "bg-gold text-black hover:bg-gold-light",
             children: [
-              (createSubcategory.isPending || updateSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:597", className: "w-4 h-4 mr-2 animate-spin" }),
+              (createSubcategory.isPending || updateSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:605", className: "w-4 h-4 mr-2 animate-spin" }),
               subcategoryForm.id ? "Update" : "Create"
             ]
           }
         )
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:606", open: isDeleteDialogOpen, onOpenChange: setIsDeleteDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:607", className: "max-w-md", children: [
-      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:608", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:609", children: "Confirm Delete" }) }),
-      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:611", className: "py-4", children: /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:612", className: "text-muted-foreground", children: [
+    /* @__PURE__ */ jsx(Dialog, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:614", open: isDeleteDialogOpen, onOpenChange: setIsDeleteDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:615", className: "max-w-md", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:616", children: /* @__PURE__ */ jsx(DialogTitle, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:617", children: "Confirm Delete" }) }),
+      /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:619", className: "py-4", children: /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:620", className: "text-muted-foreground", children: [
         "Are you sure you want to delete this ",
         deleteType,
         "? This action cannot be undone.",
         deleteType === "category" && " All subcategories will also be deleted."
       ] }) }),
-      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:617", children: [
-        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:618", variant: "outline", onClick: () => setIsDeleteDialogOpen(false), children: "Cancel" }),
+      /* @__PURE__ */ jsxs(DialogFooter, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:625", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:626", variant: "outline", onClick: () => setIsDeleteDialogOpen(false), children: "Cancel" }),
         /* @__PURE__ */ jsxs(
           Button,
           {
-            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:619",
+            "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:627",
             variant: "destructive",
             onClick: handleDelete,
             disabled: deleteCategory.isPending || deleteSubcategory.isPending,
             children: [
-              (deleteCategory.isPending || deleteSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:625", className: "w-4 h-4 mr-2 animate-spin" }),
+              (deleteCategory.isPending || deleteSubcategory.isPending) && /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\admin\\AdminCategories.tsx:633", className: "w-4 h-4 mr-2 animate-spin" }),
               "Delete"
             ]
           }
@@ -13834,6 +13851,10 @@ function AdminNewProduct() {
       toast.error("Title, slug, and category are required");
       return;
     }
+    if (!form.subcategoryId) {
+      toast.error("Please select a subcategory for proper product organization");
+      return;
+    }
     const payload = {
       ...form,
       slabs,
@@ -13868,103 +13889,103 @@ function AdminNewProduct() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
   const isPending = createMutation.isPending || updateMutation.isPending || uploadingImages;
-  return /* @__PURE__ */ jsxs(AdminLayout, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:587", children: [
-    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:589", className: `fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:590", className: "container max-w-7xl mx-auto h-16 flex items-center justify-between px-6", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:591", className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:592", className: "w-2 h-2 rounded-full bg-gold animate-pulse" }),
-        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:593", className: "text-sm font-bold text-background uppercase tracking-widest hidden sm:inline", children: "Unsaved Changes" })
-      ] }),
+  return /* @__PURE__ */ jsxs(AdminLayout, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:591", children: [
+    /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:593", className: `fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`, children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:594", className: "container max-w-7xl mx-auto h-16 flex items-center justify-between px-6", children: [
       /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:595", className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:596", variant: "ghost", className: "text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs", onClick: () => {
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:596", className: "w-2 h-2 rounded-full bg-gold animate-pulse" }),
+        /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:597", className: "text-sm font-bold text-background uppercase tracking-widest hidden sm:inline", children: "Unsaved Changes" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:599", className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", variant: "ghost", className: "text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs", onClick: () => {
           setForm(initialForm);
           setIsDirty(false);
         }, children: "Discard" }),
-        /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:599", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8", children: [
-          isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:600", className: "w-4 h-4 mr-2" }),
+        /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:603", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8", children: [
+          isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:604", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:604", className: "w-4 h-4 mr-2" }),
           isEdit ? "Save Changes" : "Publish Product"
         ] })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:607", className: "space-y-8 pb-20", children: [
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:609", className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:610", children: [
-          /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:611", className: "font-serif text-2xl font-bold text-foreground", children: isEdit ? "Edit Product" : "Add New Product" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:614", className: "text-sm text-muted-foreground mt-1 hidden sm:block", children: isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI" })
+    /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:611", className: "space-y-8 pb-20", children: [
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:613", className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:614", children: [
+          /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:615", className: "font-serif text-2xl font-bold text-foreground", children: isEdit ? "Edit Product" : "Add New Product" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:618", className: "text-sm text-muted-foreground mt-1 hidden sm:block", children: isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:618", className: "flex items-center gap-3", children: [
-          form.slug && /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:620", variant: "secondary", onClick: () => window.open(`/shop/${form.slug}`, "_blank"), disabled: isPending, title: "Save changes first before previewing if you made edits.", className: "hidden sm:inline-flex", children: [
-            /* @__PURE__ */ jsx(Eye, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:621", className: "w-4 h-4 mr-2" }),
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:622", className: "flex items-center gap-3", children: [
+          form.slug && /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:624", variant: "secondary", onClick: () => window.open(`/shop/${form.slug}`, "_blank"), disabled: isPending, title: "Save changes first before previewing if you made edits.", className: "hidden sm:inline-flex", children: [
+            /* @__PURE__ */ jsx(Eye, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:625", className: "w-4 h-4 mr-2" }),
             " Preview"
           ] }),
-          /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:624", variant: "outline", onClick: () => setLocation("/admin-saad/products"), disabled: isPending, children: "Discard" }),
-          /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:627", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-gold-light", children: [
-            isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", className: "w-4 h-4 mr-2" }),
+          /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:628", variant: "outline", onClick: () => setLocation("/admin-saad/products"), disabled: isPending, children: "Discard" }),
+          /* @__PURE__ */ jsxs(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:631", onClick: handleSubmit, disabled: isPending, className: "bg-gold text-black hover:bg-gold-light", children: [
+            isPending ? /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:632", className: "w-4 h-4 animate-spin mr-2" }) : /* @__PURE__ */ jsx(Save, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:632", className: "w-4 h-4 mr-2" }),
             uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:635", className: "bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:636", className: "p-8", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:637", className: "flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:638", className: "w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto", children: /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:639", className: "w-8 h-8 text-gold" }) }),
-          /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:641", className: "text-2xl font-serif font-bold text-foreground mb-2", children: "Step 1: Product Photography Setup" }),
-          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:642", className: "text-muted-foreground max-w-xl mx-auto", children: "Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing." })
+      /* @__PURE__ */ jsx("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:639", className: "bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto", children: /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:640", className: "p-8", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:641", className: "flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:642", className: "w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto", children: /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:643", className: "w-8 h-8 text-gold" }) }),
+          /* @__PURE__ */ jsx("h2", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:645", className: "text-2xl font-serif font-bold text-foreground mb-2", children: "Step 1: Product Photography Setup" }),
+          /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:646", className: "text-muted-foreground max-w-xl mx-auto", children: "Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing." })
         ] }),
-        /* @__PURE__ */ jsxs(Tabs, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:647", defaultValue: "upload", className: "w-full", children: [
-          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:648", className: "flex justify-center mb-8", children: /* @__PURE__ */ jsxs(TabsList, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:649", className: "bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto", children: [
-            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:650", value: "upload", className: "rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:651", className: "w-4 h-4" }),
+        /* @__PURE__ */ jsxs(Tabs, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:651", defaultValue: "upload", className: "w-full", children: [
+          /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:652", className: "flex justify-center mb-8", children: /* @__PURE__ */ jsxs(TabsList, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:653", className: "bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto", children: [
+            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:654", value: "upload", className: "rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:655", className: "w-4 h-4" }),
               "Manual Photo Upload"
             ] }),
-            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:654", value: "tryon", className: "rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(Camera, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:655", className: "w-4 h-4" }),
+            /* @__PURE__ */ jsxs(TabsTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:658", value: "tryon", className: "rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(Camera, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:659", className: "w-4 h-4" }),
               "Virtual Try-On Studio"
             ] })
           ] }) }),
-          /* @__PURE__ */ jsxs(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:661", value: "upload", className: "space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center", children: [
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:662", className: "w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]", onClick: () => fileInputRef.current?.click(), children: [
-              /* @__PURE__ */ jsx("input", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:663", type: "file", multiple: true, accept: "image/*", className: "hidden", ref: fileInputRef, onChange: handleFileSelect }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:664", className: "flex flex-col items-center", children: [
-                /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:665", className: "w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" }),
-                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:666", className: "text-lg font-bold text-foreground", children: "Click to Upload Images" }),
-                /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:667", className: "text-sm text-muted-foreground mt-2 max-w-md text-center", children: "Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP." })
+          /* @__PURE__ */ jsxs(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:665", value: "upload", className: "space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center", children: [
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:666", className: "w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]", onClick: () => fileInputRef.current?.click(), children: [
+              /* @__PURE__ */ jsx("input", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:667", type: "file", multiple: true, accept: "image/*", className: "hidden", ref: fileInputRef, onChange: handleFileSelect }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:668", className: "flex flex-col items-center", children: [
+                /* @__PURE__ */ jsx(ImagePlus, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:669", className: "w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" }),
+                /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:670", className: "text-lg font-bold text-foreground", children: "Click to Upload Images" }),
+                /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:671", className: "text-sm text-muted-foreground mt-2 max-w-md text-center", children: "Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP." })
               ] })
             ] }),
-            pendingImages.length > 0 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:674", className: "w-full mt-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:675", className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4", children: pendingImages.map((img, i) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:677", className: "relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md", children: [
-              /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:678", src: img.preview, alt: `Preview ${i}`, className: "w-full h-full object-cover" }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:679", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
-                pendingMainImageIndex !== i && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:681", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
+            pendingImages.length > 0 && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:678", className: "w-full mt-4", children: /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:679", className: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4", children: pendingImages.map((img, i) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:681", className: "relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md", children: [
+              /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:682", src: img.preview, alt: `Preview ${i}`, className: "w-full h-full object-cover" }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:683", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
+                pendingMainImageIndex !== i && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:685", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
                   e.stopPropagation();
                   setPendingMainImageIndex(i);
                 }, children: "Main" }),
-                /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:685", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
+                /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:689", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
                   e.stopPropagation();
                   removePendingImage(i);
-                }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:686", className: "w-4 h-4" }) })
+                }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:690", className: "w-4 h-4" }) })
               ] }),
-              pendingMainImageIndex === i && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:689", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
+              pendingMainImageIndex === i && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:693", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
             ] }, i)) }) }),
             /* @__PURE__ */ jsx(
               Button,
               {
-                "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:696",
+                "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:700",
                 size: "lg",
                 onClick: handleAiFill,
                 disabled: isAiLoading || pendingImages.length === 0 && !form.title.trim(),
                 className: "w-full max-w-md bg-foreground text-background hover:bg-foreground/90 font-bold overflow-hidden",
-                children: isAiLoading ? /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:703", className: "flex items-center", children: [
-                  /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:703", className: "w-5 h-5 animate-spin mr-3" }),
+                children: isAiLoading ? /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:707", className: "flex items-center", children: [
+                  /* @__PURE__ */ jsx(Loader2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:707", className: "w-5 h-5 animate-spin mr-3" }),
                   " Auto-writing Listing..."
-                ] }) : /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:705", className: "flex items-center", children: [
-                  /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:705", className: "w-5 h-5 mr-3" }),
+                ] }) : /* @__PURE__ */ jsxs("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:709", className: "flex items-center", children: [
+                  /* @__PURE__ */ jsx(Sparkles, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:709", className: "w-5 h-5 mr-3" }),
                   " Auto-Fill Listing Details"
                 ] })
               }
             )
           ] }),
-          /* @__PURE__ */ jsx(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:710", value: "tryon", className: "animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0", children: /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsx(TabsContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:714", value: "tryon", className: "animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0", children: /* @__PURE__ */ jsx(
             VirtualTryOnAgent,
             {
-              "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:711",
+              "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:715",
               onUseImage: async (url) => {
                 handleTryOnImagesBatch([{ url, base64: "", mimeType: "" }]);
               },
@@ -13975,47 +13996,47 @@ function AdminNewProduct() {
           ) })
         ] })
       ] }) }),
-      isEdit && editProduct?.images?.length > 0 && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:722", className: "space-y-2 mt-4 pt-4 border-t border-border", children: [
-        /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:723", className: "text-xs text-muted-foreground uppercase tracking-wider", children: "Current Images" }),
-        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:724", className: "grid grid-cols-2 md:grid-cols-4 gap-3", children: editProduct?.images.map((img) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:726", className: "relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all", children: [
-          /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:727", src: img.imageUrl, alt: img.altText || "Product Image", className: "w-full h-full object-cover" }),
-          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:728", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
-            form.mainImage !== img.imageUrl && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:730", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
+      isEdit && editProduct?.images?.length > 0 && /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:726", className: "space-y-2 mt-4 pt-4 border-t border-border", children: [
+        /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:727", className: "text-xs text-muted-foreground uppercase tracking-wider", children: "Current Images" }),
+        /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:728", className: "grid grid-cols-2 md:grid-cols-4 gap-3", children: editProduct?.images.map((img) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:730", className: "relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all", children: [
+          /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:731", src: img.imageUrl, alt: img.altText || "Product Image", className: "w-full h-full object-cover" }),
+          /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:732", className: "absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2", children: [
+            form.mainImage !== img.imageUrl && /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:734", type: "button", size: "sm", variant: "secondary", className: "h-8 text-xs font-condensed", onClick: (e) => {
               e.stopPropagation();
               setForm((f) => ({ ...f, mainImage: img.imageUrl }));
               setPendingMainImageIndex(-1);
             }, children: "Set Main" }),
-            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:734", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
+            /* @__PURE__ */ jsx(Button, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:738", type: "button", size: "icon", variant: "destructive", className: "h-8 w-8 rounded-full", onClick: (e) => {
               e.stopPropagation();
               if (confirm("Delete this image?")) deleteImageMutation.mutate({ id: img.id });
-            }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:735", className: "w-4 h-4" }) })
+            }, children: /* @__PURE__ */ jsx(Trash2, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:739", className: "w-4 h-4" }) })
           ] }),
-          form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:738", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
+          form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:742", className: "absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow", children: "MAIN" })
         ] }, img.id)) })
       ] }),
-      /* @__PURE__ */ jsx("hr", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:745", className: "border-border" }),
-      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:747", className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:750", className: "lg:col-span-8 space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:751", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:752", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:753", className: "font-serif text-lg font-bold text-foreground", children: "Basic Information" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:755", className: "p-6 space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:756", children: [
-                /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+      /* @__PURE__ */ jsx("hr", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:749", className: "border-border" }),
+      /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:751", className: "grid grid-cols-1 lg:grid-cols-12 gap-8", children: [
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:754", className: "lg:col-span-8 space-y-8", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:755", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:756", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", className: "font-serif text-lg font-bold text-foreground", children: "Basic Information" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:759", className: "p-6 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:760", children: [
+                /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:761", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                   "Product Title ",
-                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:757", className: "text-red-500", children: "*" })
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:761", className: "text-red-500", children: "*" })
                 ] }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:758", value: form.title, onChange: (e) => setForm((f) => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) })), placeholder: "e.g. Custom Waterproof Ski Jacket", className: "bg-background h-12 text-lg font-serif" })
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:762", value: form.title, onChange: (e) => setForm((f) => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) })), placeholder: "e.g. Custom Waterproof Ski Jacket", className: "bg-background h-12 text-lg font-serif" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:761", className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:762", children: [
-                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:763", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:765", className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:766", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:767", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                     "Category ",
-                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:763", className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:767", className: "text-red-500", children: "*" })
                   ] }),
                   /* @__PURE__ */ jsxs(
                     Select,
                     {
-                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:764",
+                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:768",
                       value: form.categoryId?.toString() || "",
                       onValueChange: (v) => {
                         const catId = parseInt(v);
@@ -14028,8 +14049,8 @@ function AdminNewProduct() {
                         }));
                       },
                       children: [
-                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:777", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:778", placeholder: "Select category" }) }),
-                        /* @__PURE__ */ jsx(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:780", className: "bg-card", children: categories2?.map((c) => /* @__PURE__ */ jsxs(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:782", value: c.id.toString(), children: [
+                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:781", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:782", placeholder: "Select category" }) }),
+                        /* @__PURE__ */ jsx(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:784", className: "bg-card", children: categories2?.map((c) => /* @__PURE__ */ jsxs(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:786", value: c.id.toString(), children: [
                           c.icon,
                           " ",
                           c.name
@@ -14038,135 +14059,142 @@ function AdminNewProduct() {
                     }
                   )
                 ] }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:789", children: [
-                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:790", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Subcategory" }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:793", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:794", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+                    "Subcategory ",
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:794", className: "text-red-500", children: "*" })
+                  ] }),
                   /* @__PURE__ */ jsxs(
                     Select,
                     {
-                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:791",
+                      "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:795",
                       value: form.subcategoryId?.toString() || "",
                       onValueChange: (v) => setForm((f) => ({ ...f, subcategoryId: v ? parseInt(v) : null })),
                       disabled: !form.categoryId,
                       children: [
-                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:796", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:797", placeholder: form.categoryId ? "Select subcategory" : "Select category first" }) }),
-                        /* @__PURE__ */ jsxs(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:799", className: "bg-card", children: [
-                          /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", value: "", children: "-- None --" }),
+                        /* @__PURE__ */ jsx(SelectTrigger, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:800", className: "bg-background h-12", children: /* @__PURE__ */ jsx(SelectValue, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:801", placeholder: form.categoryId ? "Select subcategory" : "Select category first" }) }),
+                        /* @__PURE__ */ jsxs(SelectContent, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:803", className: "bg-card", children: [
+                          /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:804", value: "", children: "-- Select Subcategory --" }),
                           (() => {
                             const selectedCategory = categories2?.find((c) => c.id === form.categoryId);
                             const subs = selectedCategory?.subcategories || [];
                             if (subs.length === 0 && form.categoryId) {
-                              return /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:805", value: "_empty", disabled: true, children: "No subcategories found" });
+                              return /* @__PURE__ */ jsxs(Fragment, { children: [
+                                /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:811", value: "_empty", disabled: true, children: "No subcategories found" }),
+                                /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:812", value: "_create", disabled: true, children: "Go to Admin → Categories to add subcategories" })
+                              ] });
                             }
-                            return subs.map((s2) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:808", value: s2.id.toString(), children: s2.name }, s2.id));
+                            return subs.map((s2) => /* @__PURE__ */ jsx(SelectItem, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", value: s2.id.toString(), children: s2.name }, s2.id));
                           })()
                         ] })
                       ]
                     }
-                  )
+                  ),
+                  !form.subcategoryId && form.categoryId && /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:825", className: "text-xs text-amber-500 mt-1", children: "Please select a subcategory for proper product organization" })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:816", children: [
-                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:828", children: [
+                  /* @__PURE__ */ jsxs(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:829", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
                     "URL Slug ",
-                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:817", className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:829", className: "text-red-500", children: "*" })
                   ] }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:818", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:830", value: form.slug, onChange: (e) => setForm((f) => ({ ...f, slug: e.target.value })), className: "bg-background h-12 font-mono" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:822", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:823", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:824", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:834", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:835", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Short Description" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:836", value: form.shortDescription, onChange: (e) => setForm((f) => ({ ...f, shortDescription: e.target.value })), placeholder: "Brief product summary for cards...", className: "bg-background h-12" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:827", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:828", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:829", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:839", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:840", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Full Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:841", value: form.description, onChange: (e) => setForm((f) => ({ ...f, description: e.target.value })), rows: 6, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:832", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:833", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:834", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:844", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:845", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Story" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:846", value: form.manufacturingStory, onChange: (e) => setForm((f) => ({ ...f, manufacturingStory: e.target.value })), rows: 4, className: "bg-background leading-relaxed" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:837", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:838", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:839", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
-                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:841", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:842", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:849", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:850", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Manufacturing Infographic URL" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:851", value: form.manufacturingInfographic, onChange: (e) => setForm((f) => ({ ...f, manufacturingInfographic: e.target.value })), placeholder: "https://...", className: "bg-background h-12" }),
+                form.manufacturingInfographic && /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", className: "mt-2", children: /* @__PURE__ */ jsx("img", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:854", src: form.manufacturingInfographic, alt: "Infographic", className: "max-h-32 rounded border border-border" }) })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:849", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:850", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:851", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:853", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:854", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:855", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:856", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:858", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:859", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:860", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:862", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:863", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:864", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
-              ] }),
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:861", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:862", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:863", className: "font-serif text-lg font-bold text-foreground", children: "Specs & Variations" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:865", className: "p-6 grid grid-cols-1 md:grid-cols-2 gap-6", children: [
               /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:866", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:868", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:867", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Material" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:868", value: form.material, onChange: (e) => setForm((f) => ({ ...f, material: e.target.value })), placeholder: "100% Cotton", className: "bg-background" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:870", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:871", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Weight (kg)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:872", value: form.weight, onChange: (e) => setForm((f) => ({ ...f, weight: e.target.value })), placeholder: "0.5", type: "number", step: "0.01", className: "bg-background" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:874", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:875", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Colors (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:876", value: form.availableColors, onChange: (e) => setForm((f) => ({ ...f, availableColors: e.target.value })), className: "bg-background font-mono text-sm" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:879", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sizes (JSON Array)" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:880", value: form.availableSizes, onChange: (e) => setForm((f) => ({ ...f, availableSizes: e.target.value })), className: "bg-background font-mono text-sm" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:873", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:874", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:875", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:877", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:878", value: sizeChart, onChange: setSizeChart }) })
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:885", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "font-serif text-lg font-bold text-foreground", children: "Size Chart" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:889", className: "p-6", children: /* @__PURE__ */ jsx(SizeChartEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:890", value: sizeChart, onChange: setSizeChart }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:885", className: "lg:col-span-4 space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:886", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:887", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:888", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:890", className: "p-6 space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:891", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:892", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:893", className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:894", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
-                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:895", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
+        /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:897", className: "lg:col-span-4 space-y-8", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:898", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:899", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:900", className: "font-serif text-lg font-bold text-foreground", children: "Pricing & MOQ" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:902", className: "p-6 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:903", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:904", className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: "Sample Price (USD)" }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:905", className: "relative", children: [
+                  /* @__PURE__ */ jsx("span", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:906", className: "absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold", children: "$" }),
+                  /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:907", value: form.samplePrice, onChange: (e) => setForm((f) => ({ ...f, samplePrice: e.target.value })), placeholder: "25.00", className: "bg-background h-12 pl-8 text-lg font-semibold" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:898", slabs, onChange: setSlabs })
+              /* @__PURE__ */ jsx(SlabEditor, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:910", slabs, onChange: setSlabs })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:902", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:903", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:904", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:906", className: "p-6 space-y-4", children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:914", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:915", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:916", className: "font-serif text-lg font-bold text-foreground", children: "Visibility" }) }),
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:918", className: "p-6 space-y-4", children: [
               { key: "isActive", label: "Active Status", desc: "Visible to customers", icon: Eye },
               { key: "isFeatured", label: "Featured Product", desc: "Highlight on homepage", icon: Star },
               { key: "freeShipping", label: "Free Shipping", desc: "Exempt from shipping costs", icon: Truck }
-            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:912", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:913", className: "flex gap-3", children: [
-                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:914", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:914", className: "w-5 h-5 text-gold" }) }),
-                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:915", children: [
-                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:916", className: "text-sm font-bold text-foreground", children: label }),
-                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:917", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
+            ].map(({ key, label, desc, icon: Icon }) => /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:924", className: "flex items-start justify-between bg-background rounded-lg p-4 border border-border", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:925", className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", className: "mt-1", children: /* @__PURE__ */ jsx(Icon, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", className: "w-5 h-5 text-gold" }) }),
+                /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:927", children: [
+                  /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:928", className: "text-sm font-bold text-foreground", children: label }),
+                  /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:929", className: "text-xs text-muted-foreground leading-tight mt-1", children: desc })
                 ] })
               ] }),
-              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:920", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
+              /* @__PURE__ */ jsx(Switch, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:932", checked: form[key], onCheckedChange: (v) => setForm((f) => ({ ...f, [key]: v })), className: "mt-1" })
             ] }, key)) })
           ] }),
-          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:926", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
-            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:927", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:928", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
-            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:930", className: "p-6 space-y-4", children: [
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:931", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:932", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:933", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:934", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
+          /* @__PURE__ */ jsxs("section", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:938", className: "bg-card border border-border rounded-xl shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:939", className: "bg-secondary/40 px-6 py-4 border-b border-border", children: /* @__PURE__ */ jsx("h3", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:940", className: "font-serif text-lg font-bold text-foreground", children: "Search Engine (SEO)" }) }),
+            /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:942", className: "p-6 space-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:943", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:944", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Title" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:945", value: form.seoTitle, onChange: (e) => setForm((f) => ({ ...f, seoTitle: e.target.value })), className: "bg-background" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:946", className: `text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoTitle.length,
                   "/60 chars"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:936", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:937", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
-                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:938", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:948", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:949", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Keywords" }),
+                /* @__PURE__ */ jsx(Input, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:950", value: form.seoKeywords, onChange: (e) => setForm((f) => ({ ...f, seoKeywords: e.target.value })), className: "bg-background" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:940", children: [
-                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:941", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
-                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:942", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
-                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:943", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
+              /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:952", children: [
+                /* @__PURE__ */ jsx(Label, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:953", className: "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block", children: "Meta Description" }),
+                /* @__PURE__ */ jsx(Textarea, { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:954", value: form.seoDescription, onChange: (e) => setForm((f) => ({ ...f, seoDescription: e.target.value })), rows: 4, className: "bg-background resize-none text-xs" }),
+                /* @__PURE__ */ jsxs("p", { "data-loc": "client\\src\\pages\\AdminNewProduct.tsx:955", className: `text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`, children: [
                   form.seoDescription.length,
                   "/160 chars"
                 ] })

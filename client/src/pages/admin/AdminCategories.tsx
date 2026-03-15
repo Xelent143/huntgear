@@ -319,6 +319,14 @@ export default function AdminCategories() {
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           variant="ghost"
+                          size="sm"
+                          className="h-8 text-xs text-gold"
+                          onClick={(e) => { e.stopPropagation(); openSubcategoryDialog(category.id); }}
+                        >
+                          <Plus className="w-3.5 h-3.5 mr-1" /> Add Subcategory
+                        </Button>
+                        <Button
+                          variant="ghost"
                           size="icon"
                           className="h-8 w-8"
                           onClick={(e) => { e.stopPropagation(); openCategoryDialog(category); }}

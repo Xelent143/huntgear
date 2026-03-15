@@ -545,6 +545,10 @@ export default function AdminNewProduct() {
             toast.error("Title, slug, and category are required");
             return;
         }
+        if (!form.subcategoryId) {
+            toast.error("Please select a subcategory for proper product organization");
+            return;
+        }
         const payload = {
             ...form,
             slabs,
@@ -787,7 +791,7 @@ export default function AdminNewProduct() {
                                         </Select>
                                     </div>
                                     <div>
-                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Subcategory</Label>
+                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Subcategory <span className="text-red-500">*</span></Label>
                                         <Select 
                                             value={form.subcategoryId?.toString() || ""} 
                                             onValueChange={v => setForm(f => ({ ...f, subcategoryId: v ? parseInt(v) : null }))}
@@ -797,12 +801,17 @@ export default function AdminNewProduct() {
                                                 <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
                                             </SelectTrigger>
                                             <SelectContent className="bg-card">
-                                                <SelectItem value="">-- None --</SelectItem>
+                                                <SelectItem value="">-- Select Subcategory --</SelectItem>
                                                 {(() => {
                                                     const selectedCategory = categories?.find(c => c.id === form.categoryId);
                                                     const subs = selectedCategory?.subcategories || [];
                                                     if (subs.length === 0 && form.categoryId) {
-                                                        return <SelectItem value="_empty" disabled>No subcategories found</SelectItem>;
+                                                        return (
+                                                            <>
+                                                                <SelectItem value="_empty" disabled>No subcategories found</SelectItem>
+                                                                <SelectItem value="_create" disabled>Go to Admin → Categories to add subcategories</SelectItem>
+                                                            </>
+                                                        );
                                                     }
                                                     return subs.map(s => (
                                                         <SelectItem key={s.id} value={s.id.toString()}>
@@ -812,6 +821,9 @@ export default function AdminNewProduct() {
                                                 })()}
                                             </SelectContent>
                                         </Select>
+                                        {!form.subcategoryId && form.categoryId && (
+                                            <p className="text-xs text-amber-500 mt-1">Please select a subcategory for proper product organization</p>
+                                        )}
                                     </div>
                                     <div>
                                         <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">URL Slug <span className="text-red-500">*</span></Label>
