@@ -9259,7 +9259,7 @@ function AdminLogin() {
             "data-loc": "client\\src\\pages\\AdminLogin.tsx:66",
             id: "email",
             type: "email",
-            placeholder: "admin@sialkotsamplemasters.com",
+            placeholder: "admin@xelenthuntgear.com",
             value: email,
             onChange: (e) => setEmail(e.target.value),
             required: true
