@@ -97,7 +97,7 @@ export const DEMO_PRODUCTS = [
     // ── Streetwear ──
     {
         id: 7, slug: "heavyweight-oversized-hoodie", title: "450GSM Heavyweight Oversized Hoodie",
-        category: "Streetwear", subCategory: "Hoodies", shortDescription: "Premium drop-shoulder boxy fit hoodie.",
+        category: "Technical Gear", subCategory: "Hoodies", shortDescription: "Premium drop-shoulder boxy fit hoodie.",
         description: "Premium blank and custom heavyweight hoodies for streetwear brands. 450GSM French terry cotton.",
         mainImage: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=85",
         samplePrice: "45.00", material: "450 GSM French Terry Cotton",

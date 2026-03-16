@@ -233,7 +233,7 @@ export function AnimatedGoldLine({ className }: { className?: string }) {
   return (
     <motion.div
       ref={ref}
-      className={`h-px bg-gold ${className ?? ""}`}
+      className={`h-px bg-[#ff6b00] ${className ?? ""}`}
       initial={{ scaleX: 0, originX: 0 }}
       animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
       transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.1 }}
@@ -301,7 +301,7 @@ export function SectionHeading({
     >
       {label && (
         <motion.span
-          className="font-condensed text-gold text-xs tracking-[0.3em] uppercase mb-3"
+          className="font-condensed text-[#ff6b00] text-xs tracking-[0.3em] uppercase mb-3"
           variants={fadeInDown}
         >
           {label}
@@ -315,14 +315,14 @@ export function SectionHeading({
       </motion.h2>
       {subtitle && (
         <motion.p
-          className="text-muted-foreground mt-4 max-w-2xl leading-relaxed"
+          className="text-white/70 mt-4 max-w-2xl leading-relaxed"
           variants={fadeInUp}
         >
           {subtitle}
         </motion.p>
       )}
       <motion.div
-        className="mt-5 h-px bg-gold w-16"
+        className="mt-5 h-px bg-[#ff6b00] w-16"
         initial={{ scaleX: 0 }}
         style={{ originX: align === "center" ? 0.5 : 0 }}
         animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}

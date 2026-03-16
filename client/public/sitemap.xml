@@ -1,235 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <!-- Homepage -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sialkotsamplemasters.com/</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://xelenthuntgear.com/</loc>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
   </url>
-
-  <!-- About Us -->
   <url>
-    <loc>https://sialkotsamplemasters.com/about</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://xelenthuntgear.com/products</loc>
     <priority>0.9</priority>
-  </url>
-
-  <!-- Services -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/services</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Products -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/products</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Product Anchors -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/products#tshirts</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/products#hoodies</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/products#joggers</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/products#sweatshirts</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/products#bombers</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Shop -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/shop</loc>
-    <lastmod>2026-03-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
-
-  <!-- Shop Categories -->
   <url>
-    <loc>https://sialkotsamplemasters.com/shop?category=Streetwear</loc>
-    <lastmod>2026-03-15</lastmod>
+    <loc>https://xelenthuntgear.com/about</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://xelenthuntgear.com/services</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://xelenthuntgear.com/shop</loc>
+    <priority>0.8</priority>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://xelenthuntgear.com/contact</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://xelenthuntgear.com/rfq</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://xelenthuntgear.com/portfolio</loc>
+    <priority>0.6</priority>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sialkotsamplemasters.com/shop?category=Sportswear</loc>
-    <lastmod>2026-03-15</lastmod>
+    <loc>https://xelenthuntgear.com/blog</loc>
+    <priority>0.6</priority>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sialkotsamplemasters.com/shop?category=Hunting%20Wear</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/shop?category=BJJ%20Kimonos</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Portfolio -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/portfolio</loc>
-    <lastmod>2026-03-15</lastmod>
+    <loc>https://xelenthuntgear.com/customize</loc>
+    <priority>0.5</priority>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
-
-  <!-- Blog -->
   <url>
-    <loc>https://sialkotsamplemasters.com/blog</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Blog Posts -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/how-to-find-streetwear-manufacturer-pakistan</loc>
-    <lastmod>2026-02-15</lastmod>
+    <loc>https://xelenthuntgear.com/branding-studio</loc>
+    <priority>0.5</priority>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sialkotsamplemasters.com/blog/cmt-outsourcing-guide-sialkot</loc>
-    <lastmod>2026-03-12</lastmod>
+    <loc>https://xelenthuntgear.com/tech-pack</loc>
+    <priority>0.5</priority>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/sublimation-printing-guide-sportswear</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/cad-vs-manual-pattern-drafting-guide</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/apparel-manufacturing-qc-checklist</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/3-mistakes-ordering-custom-patches-badges</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/calculate-cmt-costs-export-shipment</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/cad-grading-international-sizing-importance</loc>
-    <lastmod>2026-03-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/3d-puff-embroidery-streetwear-impact</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/5-signs-change-sublimation-vendor</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/low-moq-streetwear-manufacturing-guide</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/private-label-hunting-wear-complete-guide</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/ski-wear-fabric-guide-b2b</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/techwear-trends-2026-b2b-guide</loc>
-    <lastmod>2026-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sialkotsamplemasters.com/blog/pakistan-garment-manufacturing-sialkot</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- RFQ -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/rfq</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Contact -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/contact</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Customize/Design Studio -->
-  <url>
-    <loc>https://sialkotsamplemasters.com/customize</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
 </urlset>

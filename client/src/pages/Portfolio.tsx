@@ -1,569 +1,203 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X, ZoomIn, Tag, MapPin, Search, Filter } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { Link } from "wouter";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { IMAGES } from "@/lib/images";
+import { motion } from "framer-motion";
 import { FadeIn, StaggerChildren, AnimatedChild, PageWrapper } from "@/components/animations";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-interface PortfolioImage {
-  id: number;
-  imageUrl: string;
-  altText?: string | null;
-  caption?: string | null;
-  sortOrder: number;
-}
-
-interface PortfolioItemWithImages {
-  id: number;
-  title: string;
-  category: string;
-  description?: string | null;
-  tags?: string | null;
-  coverImage?: string | null;
-  isFeatured: boolean;
-  geoTarget?: string | null;
-  images: PortfolioImage[];
-}
-
-// ─── Sliding Image Card ───────────────────────────────────────────────────────
-
-function PortfolioCard({
-  item,
-  onOpenLightbox,
-}: {
-  item: PortfolioItemWithImages;
-  onOpenLightbox: (item: PortfolioItemWithImages, index: number) => void;
-}) {
-  const [currentImg, setCurrentImg] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const images = item.images.length > 0
-    ? item.images
-    : item.coverImage
-      ? [{ id: 0, imageUrl: item.coverImage, altText: item.title, caption: null, sortOrder: 0 }]
-      : [];
-
-  const hasMultiple = images.length > 1;
-
-  // Auto-slide on hover
-  useEffect(() => {
-    if (isHovered && hasMultiple) {
-      intervalRef.current = setInterval(() => {
-        setCurrentImg(prev => (prev + 1) % images.length);
-      }, 1200);
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (!isHovered) setCurrentImg(0);
-    }
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [isHovered, hasMultiple, images.length]);
-
-  const prev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImg(i => (i - 1 + images.length) % images.length);
-  };
-  const next = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImg(i => (i + 1) % images.length);
-  };
-
-  const tags: string[] = (() => {
-    try { return item.tags ? JSON.parse(item.tags) : []; }
-    catch { return []; }
-  })();
-
-  if (images.length === 0) {
-    return (
-      <div className="rounded-xl overflow-hidden bg-secondary border border-border aspect-square flex items-center justify-center">
-        <span className="text-muted-foreground text-sm">No images</span>
-      </div>
-    );
-  }
-
-  return (
-    <motion.div
-      className="group relative rounded-xl overflow-hidden bg-card border border-border cursor-pointer"
-      whileHover={{ y: -4, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
-      transition={{ duration: 0.25 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onOpenLightbox(item, currentImg)}
-    >
-      {/* Image container */}
-      <div className="relative aspect-square overflow-hidden bg-secondary">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentImg}
-            src={images[currentImg].imageUrl}
-            alt={images[currentImg].altText || item.title}
-            className="w-full h-full object-cover"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-          />
-        </AnimatePresence>
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        {/* Zoom icon */}
-        <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <ZoomIn className="w-4 h-4 text-white" />
-        </div>
-
-        {/* Featured badge */}
-        {item.isFeatured && (
-          <div className="absolute top-3 left-3 bg-[#C9A84C] text-black text-xs font-bold px-2 py-1 rounded-full">
-            Featured
-          </div>
-        )}
-
-        {/* Image counter */}
-        {hasMultiple && (
-          <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-            {currentImg + 1}/{images.length}
-          </div>
-        )}
-
-        {/* Prev/Next arrows */}
-        {hasMultiple && isHovered && (
-          <>
-            <button
-              onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full p-1.5 transition-all"
-            >
-              <ChevronLeft className="w-4 h-4 text-white" />
-            </button>
-            <button
-              onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full p-1.5 transition-all"
-            >
-              <ChevronRight className="w-4 h-4 text-white" />
-            </button>
-          </>
-        )}
-
-        {/* Dot indicators */}
-        {hasMultiple && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.stopPropagation(); setCurrentImg(i); }}
-                className={`h-1.5 rounded-full transition-all ${i === currentImg ? "bg-[#C9A84C] w-3" : "bg-white/50 w-1.5"}`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Card info */}
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="text-foreground font-semibold text-sm leading-tight line-clamp-2">{item.title}</h3>
-          <Badge variant="outline" className="text-[#C9A84C] border-[#C9A84C]/40 text-xs shrink-0">
-            {item.category}
-          </Badge>
-        </div>
-        {item.description && (
-          <p className="text-muted-foreground text-xs line-clamp-2 mb-2">{item.description}</p>
-        )}
-        <div className="flex items-center justify-between">
-          <div className="flex flex-wrap gap-1">
-            {tags.slice(0, 2).map((tag: string) => (
-              <span key={tag} className="text-muted-foreground text-xs flex items-center gap-0.5">
-                <Tag className="w-2.5 h-2.5" />{tag}
-              </span>
-            ))}
-          </div>
-          {item.geoTarget && (
-            <span className="text-muted-foreground text-xs flex items-center gap-0.5">
-              <MapPin className="w-2.5 h-2.5" />{item.geoTarget.split(",")[0]}
-            </span>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── Lightbox ─────────────────────────────────────────────────────────────────
-
-function Lightbox({
-  item,
-  initialIndex,
-  onClose,
-}: {
-  item: PortfolioItemWithImages;
-  initialIndex: number;
-  onClose: () => void;
-}) {
-  const [current, setCurrent] = useState(initialIndex);
-  const images = item.images.length > 0
-    ? item.images
-    : item.coverImage
-      ? [{ id: 0, imageUrl: item.coverImage, altText: item.title, caption: null, sortOrder: 0 }]
-      : [];
-
-  const prev = useCallback(() => setCurrent(i => (i - 1 + images.length) % images.length), [images.length]);
-  const next = useCallback(() => setCurrent(i => (i + 1) % images.length), [images.length]);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, prev, next]);
-
-  const tags: string[] = (() => {
-    try { return item.tags ? JSON.parse(item.tags) : []; }
-    catch { return []; }
-  })();
-
-  return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-6xl flex flex-col lg:flex-row gap-4 items-center"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Main image */}
-        <div className="relative flex-1 min-h-0">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={current}
-              src={images[current]?.imageUrl}
-              alt={images[current]?.altText || item.title}
-              className="w-full max-h-[75vh] object-contain rounded-xl"
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.25 }}
-            />
-          </AnimatePresence>
-
-          {images.length > 1 && (
-            <>
-              <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#C9A84C] hover:text-black text-white rounded-full p-3 transition-all">
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#C9A84C] hover:text-black text-white rounded-full p-3 transition-all">
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-sm px-3 py-1 rounded-full">
-                {current + 1} / {images.length}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Info panel */}
-        <div className="lg:w-72 bg-card/95 backdrop-blur-sm rounded-xl p-5 border border-border">
-          <Badge className="bg-[#C9A84C]/20 text-[#C9A84C] border-[#C9A84C]/30 mb-3">{item.category}</Badge>
-          <h2 className="text-foreground font-bold text-lg mb-2">{item.title}</h2>
-          {item.description && <p className="text-muted-foreground text-sm mb-3">{item.description}</p>}
-          {images[current]?.caption && (
-            <p className="text-muted-foreground text-xs italic mb-3 border-l-2 border-gold/40 pl-2">{images[current].caption}</p>
-          )}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {tags.map((tag: string) => (
-                <span key={tag} className="bg-secondary text-secondary-foreground text-xs px-2 py-0.5 rounded-full">{tag}</span>
-              ))}
-            </div>
-          )}
-          {item.geoTarget && (
-            <div className="flex items-center gap-1.5 text-muted-foreground text-xs">
-              <MapPin className="w-3 h-3" />
-              <span>Ships to: {item.geoTarget}</span>
-            </div>
-          )}
-          {/* Thumbnail strip */}
-          {images.length > 1 && (
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {images.map((img, i) => (
-                <button
-                  key={img.id}
-                  onClick={() => setCurrent(i)}
-                  className={`w-12 h-12 rounded-md overflow-hidden border-2 transition-all ${i === current ? "border-[#C9A84C]" : "border-transparent opacity-60 hover:opacity-100"}`}
-                >
-                  <img src={img.imageUrl} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Close */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 bg-card/90 hover:bg-secondary text-foreground rounded-full p-2 transition-all border border-border"
-      >
-        <X className="w-5 h-5" />
-      </button>
-    </motion.div>
-  );
-}
-
-// ─── Category Filter Bar ──────────────────────────────────────────────────────
-
-const STATIC_CATEGORIES = [
-  "All",
-  "Hunting Wear",
-  "Sports Wear",
-  "Ski Wear",
-  "Tech Wear",
-  "Streetwear",
-  "Martial Arts Wear",
+const portfolioItems = [
+  {
+    id: 1,
+    title: "Whitetail Pro Line",
+    client: "Backcountry Hunters USA",
+    category: "Hunting Jackets",
+    image: IMAGES.catHunting,
+    tags: ["20K Waterproof", "Insulated", "Custom Camo"]
+  },
+  {
+    id: 2,
+    title: "Elk Hunter Series",
+    client: "Alpine Gear Co.",
+    category: "Layering System",
+    image: IMAGES.catSports,
+    tags: ["Merino Base", "Mid Layer", "Shell"]
+  },
+  {
+    id: 3,
+    title: "Waterfowl Collection",
+    client: "Marsh Masters",
+    category: "Waterfowl Gear",
+    image: IMAGES.catStreetwear,
+    tags: ["Waders", "Jackets", "Blind Camo"]
+  },
+  {
+    id: 4,
+    title: "Tactical Hunt Line",
+    client: "Tactical Outdoors",
+    category: "Tactical Wear",
+    image: IMAGES.catTechwear,
+    tags: ["MOLLE", "Ripstop", "Olive Drab"]
+  },
+  {
+    id: 5,
+    title: "Turkey Hunt Pro",
+    client: "Spring Thunder",
+    category: "Spring Gear",
+    image: IMAGES.catSecurityUniforms,
+    tags: ["Vests", "Masks", "Vest Camo"]
+  },
+  {
+    id: 6,
+    title: "Western Big Game",
+    client: "Mountain Pursuit",
+    category: "Western Hunting",
+    image: IMAGES.catHunting,
+    tags: ["Lightweight", "Packable", "Vias Camo"]
+  },
 ];
 
-function CategoryFilterBar({
-  active,
-  onChange,
-  counts,
-}: {
-  active: string;
-  onChange: (cat: string) => void;
-  counts: Record<string, number>;
-}) {
-  return (
-    <div
-      className="flex gap-2 overflow-x-auto pb-2"
-      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-    >
-      {STATIC_CATEGORIES.map(cat => {
-        const count = cat === "All"
-          ? Object.values(counts).reduce((a, b) => a + b, 0)
-          : (counts[cat] ?? 0);
-        const isActive = active === cat;
-        return (
-          <motion.button
-            key={cat}
-            onClick={() => onChange(cat)}
-            whileTap={{ scale: 0.95 }}
-            className={`relative shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${isActive
-              ? "bg-gold text-white shadow-lg shadow-gold/20"
-              : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 border border-border"
-              }`}
-          >
-            {cat}
-            {count > 0 && (
-              <span className={`ml-1.5 text-xs ${isActive ? "text-white/70" : "text-muted-foreground"}`}>
-                ({count})
-              </span>
-            )}
-          </motion.button>
-        );
-      })}
-    </div>
-  );
-}
-
-// ─── Empty State ──────────────────────────────────────────────────────────────
-
-function EmptyState({ category }: { category: string }) {
-  return (
-    <div className="col-span-full flex flex-col items-center justify-center py-24 text-center">
-      <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4">
-        <Filter className="w-7 h-7 text-muted-foreground" />
-      </div>
-      <h3 className="text-foreground font-semibold text-lg mb-2">
-        {category === "All" ? "No portfolio items yet" : `No ${category} items yet`}
-      </h3>
-      <p className="text-muted-foreground text-sm max-w-xs">
-        Portfolio items will appear here once they are added via the admin panel.
-      </p>
-    </div>
-  );
-}
-
-// ─── Main Portfolio Page ──────────────────────────────────────────────────────
-
 export default function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [search, setSearch] = useState("");
-  const [lightboxItem, setLightboxItem] = useState<PortfolioItemWithImages | null>(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-
-  const { data: items = [], isLoading } = trpc.portfolio.list.useQuery(
-    { category: activeCategory === "All" ? undefined : activeCategory },
-    { staleTime: 30_000 }
-  );
-
-  // All items for count calculation
-  const { data: allItems = [] } = trpc.portfolio.list.useQuery(undefined, { staleTime: 60_000 });
-  const counts = (allItems as unknown as { category: string }[]).reduce((acc: Record<string, number>, item) => {
-    acc[item.category] = (acc[item.category] ?? 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Client-side search
-  const filtered = search.trim()
-    ? (items as unknown as PortfolioItemWithImages[]).filter(item =>
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description?.toLowerCase().includes(search.toLowerCase()) ||
-      item.tags?.toLowerCase().includes(search.toLowerCase())
-    )
-    : (items as unknown as PortfolioItemWithImages[]);
-
-  const openLightbox = useCallback((item: PortfolioItemWithImages, index: number) => {
-    setLightboxItem(item);
-    setLightboxIndex(index);
-  }, []);
-
-  const closeLightbox = useCallback(() => setLightboxItem(null), []);
-
   return (
     <PageWrapper>
       <SEOHead
-        title="Portfolio | Custom Apparel Manufacturing | Sialkot Sample Masters"
-        description="Browse our portfolio of custom hunting wear, sportswear, ski wear, techwear, streetwear, and martial arts apparel manufactured in Sialkot, Pakistan for global brands."
-        keywords="custom apparel portfolio, streetwear manufacturer portfolio, hunting wear manufacturer, ski wear manufacturer Pakistan, techwear manufacturer Sialkot, martial arts wear manufacturer"
+        title="Portfolio | Xelent Huntgear Manufacturing Work"
+        description="View our portfolio of custom hunting apparel manufacturing. Waterproof jackets, camo systems, tactical gear produced for global brands. B2B case studies."
         canonical="/portfolio"
-        breadcrumbs={[
-          { name: "Home", item: "/" },
-          { name: "Portfolio", item: "/portfolio" },
-        ]}
       />
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
 
-        {/* Hero */}
-        <section className="relative pt-16 pb-16 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.08),transparent_60%)]" />
-          <div className="container max-w-7xl mx-auto px-4 relative">
-            <FadeIn>
-              <div className="text-center mb-12">
-                <span className="inline-block text-[#C9A84C] text-xs font-bold tracking-[0.25em] uppercase mb-4 border border-[#C9A84C]/30 px-4 py-1.5 rounded-full">
-                  Our Work
-                </span>
-                <h1
-                  className="text-4xl md:text-6xl font-bold text-foreground mb-4"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Product Portfolio
-                </h1>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  Explore our manufacturing capabilities across 6 apparel categories. Every piece crafted in Sialkot, Pakistan for global brands.
-                </p>
-              </div>
-            </FadeIn>
+      {/* ═══════════════════════════════════════════════════════════════════════
+          HERO SECTION
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-[60vh] bg-black overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={IMAGES.portfolioBg} alt="Portfolio" className="w-full h-full object-cover opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" />
+        </div>
 
-            {/* Search */}
-            <FadeIn delay={0.1}>
-              <div className="relative max-w-md mx-auto mb-8">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  placeholder="Search portfolio..."
-                  className="pl-10 bg-secondary border-border text-foreground placeholder:text-muted-foreground focus:border-gold rounded-full"
-                />
-              </div>
-            </FadeIn>
+        <div className="relative z-10 min-h-[60vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4"
+            >
+              Our Work
+            </motion.p>
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6"
+            >
+              Manufacturing
+              <span className="block text-[#ff6b00] italic font-light">Portfolio</span>
+            </motion.h1>
 
-            {/* Category filter */}
-            <FadeIn delay={0.15}>
-              <CategoryFilterBar
-                active={activeCategory}
-                onChange={cat => { setActiveCategory(cat); setSearch(""); }}
-                counts={counts}
-              />
-            </FadeIn>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-white/80 text-lg max-w-2xl leading-relaxed"
+            >
+              Selected projects showcasing our expertise in hunting apparel manufacturing. 
+              From waterproof shells to custom camo systems, see what we've built for brands worldwide.
+            </motion.p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Grid */}
-        <section className="pb-24">
-          <div className="container max-w-7xl mx-auto px-4">
-            {isLoading ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="aspect-square rounded-xl bg-secondary animate-pulse" />
-                ))}
-              </div>
-            ) : filtered.length === 0 ? (
-              <div className="grid grid-cols-1">
-                <EmptyState category={activeCategory} />
-              </div>
-            ) : (
-              <StaggerChildren className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filtered.map(item => (
-                  <AnimatedChild key={item.id}>
-                    <PortfolioCard item={item} onOpenLightbox={openLightbox} />
-                  </AnimatedChild>
-                ))}
-              </StaggerChildren>
-            )}
+      {/* ═══════════════════════════════════════════════════════════════════════
+          PORTFOLIO GRID
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 lg:py-28 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" stagger={0.1}>
+            {portfolioItems.map((item) => (
+              <AnimatedChild key={item.id} direction="up">
+                <div className="group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1">
+                        {item.category}
+                      </span>
+                    </div>
 
-            {!isLoading && filtered.length > 0 && (
-              <p className="text-center text-muted-foreground text-sm mt-8">
-                Showing {filtered.length} item{filtered.length !== 1 ? "s" : ""}
-                {activeCategory !== "All" ? ` in ${activeCategory}` : ""}
-              </p>
-            )}
-          </div>
-        </section>
+                    {/* View Button */}
+                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-10 h-10 bg-[#ff6b00] flex items-center justify-center">
+                        <ExternalLink className="w-5 h-5 text-black" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-6">
+                    <p className="text-white/40 text-xs uppercase tracking-wider mb-2">{item.client}</p>
+                    <h3 className="text-white font-condensed font-bold text-xl uppercase mb-4 group-hover:text-[#ff6b00] transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="text-white/50 text-xs border border-white/10 px-2 py-1">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </AnimatedChild>
+            ))}
+          </StaggerChildren>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <section className="py-20 border-t border-border">
-          <FadeIn>
-            <div className="container max-w-3xl mx-auto px-4 text-center">
-              <h2
-                className="text-3xl font-bold text-foreground mb-4"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                Ready to Create Your Collection?
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Get a custom sample or bulk quote for any of our 6 apparel categories. Low MOQ, fast turnaround, worldwide shipping.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
-                  onClick={() => window.location.href = "/rfq"}
-                  className="bg-gold hover:bg-gold-dark text-white font-semibold px-8"
-                >
-                  Request a Quote
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => window.location.href = "/contact"}
-                  className="border-border text-foreground hover:bg-secondary px-8"
-                >
-                  Contact Us
-                </Button>
-              </div>
-            </div>
-          </FadeIn>
-        </section>
-
-        <Footer />
-      </div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxItem && (
-          <Lightbox item={lightboxItem} initialIndex={lightboxIndex} onClose={closeLightbox} />
-        )}
-      </AnimatePresence>
+      {/* ═══════════════════════════════════════════════════════════════════════
+          CTA
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 bg-[#0d0d0d] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Ready to Create Your
+            <span className="block text-[#ff6b00]">Next Collection?</span>
+          </h2>
+          <p className="text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto">
+            Let's discuss your hunting apparel manufacturing needs. 
+            Get a free quote with 7-day sample turnaround.
+          </p>
+          <Link href="/rfq">
+            <Button className="bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]">
+              Start Your Project <ArrowRight className="ml-3 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
     </PageWrapper>
   );
 }

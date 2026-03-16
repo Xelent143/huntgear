@@ -1,36 +1,27 @@
 User-agent: *
 Allow: /
-
-# Sitemaps
-Sitemap: https://sialkotsamplemasters.com/sitemap.xml
-
-# Allow important pages
-Allow: /products
-Allow: /shop
-Allow: /portfolio
-Allow: /blog
-Allow: /about
-Allow: /services
-Allow: /contact
-Allow: /rfq
-
-# Disallow admin and system paths
-Disallow: /api/
 Disallow: /admin/
-Disallow: /admin-login
-Disallow: /checkout
-Disallow: /cart
-Disallow: /_next/
-Disallow: /static/
+Disallow: /admin-saad/
+Disallow: /checkout/
+Disallow: /api/
 
-# Crawl-delay for responsible crawling
-Crawl-delay: 1
+Sitemap: https://xelenthuntgear.com/sitemap.xml
 
-# Special rules for specific bots
-User-agent: Googlebot
+# AI Crawlers - Allow for GEO optimization
+User-agent: GPTBot
 Allow: /
-Crawl-delay: 0.5
 
-User-agent: Bingbot
+User-agent: ChatGPT-User
 Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Rate limiting for crawlers
 Crawl-delay: 1

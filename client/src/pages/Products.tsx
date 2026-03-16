@@ -4,150 +4,153 @@ import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
 import { FadeIn, StaggerChildren, AnimatedChild, HoverCard, PageWrapper } from "@/components/animations";
+import { Breadcrumb, predefinedBreadcrumbs } from "@/components/Breadcrumb";
 
 const products = [
   {
-    id: "sportswear",
-    name: "Custom Sportswear",
-    tag: "Athletic Performance",
-    image: IMAGES.catSports,
-    description:
-      "High-performance athletic apparel built for serious athletes and sports brands. From customized basketball and soccer uniforms to ice hockey, baseball, and American football jerseys. Engineered with advanced moisture-wicking and four-way stretch fabrics.",
-    specs: [
-      { label: "Fabric Options", value: "Polyester Interlock, Spandex Blend, Mesh, Heavyweight Knit" },
-      { label: "Sub-Categories", value: "Basketball, Soccer, Baseball, American Football, Ice Hockey" },
-      { label: "Weight Range", value: "140 GSM – 260 GSM" },
-      { label: "Customization", value: "Sublimation, Tackle Twill, Screen Print, Embroidery" },
-      { label: "Minimum Order", value: "50 Pieces/Style" },
-      { label: "Lead Time", value: "25–35 Days (Bulk)" },
-    ],
-    features: [
-      "Full 360° sublimation printing available",
-      "Reinforced flatlock seam construction",
-      "Player numbering and naming customization",
-      "Breathable, moisture-wicking technology",
-      "Anti-pilling fabric treatment",
-      "Pantone color matching for team colors",
-    ],
-  },
-  {
-    id: "hunting-wear",
-    name: "Custom Hunting Wear",
-    tag: "Tactical Grade",
+    id: "hunting-jackets",
+    name: "Hunting Jackets & Outerwear",
+    tag: "Field Tested",
     image: IMAGES.catHunting,
     description:
-      "Engineered for the field. Our custom hunting wear combines military-grade durability with advanced concealment technology. From multicam jackets to ripstop cargo pants, every piece is built to perform in demanding outdoor environments.",
+      "Premium hunting jackets engineered for every season and terrain. From insulated late-season parkas to lightweight early-season shells, our outerwear delivers unmatched weather protection, silent movement, and strategic camo patterns designed by hunters for hunters.",
     specs: [
-      { label: "Fabric Options", value: "Ripstop Nylon, Cotton-Poly Blend, Softshell, Fleece Lining" },
-      { label: "Camo Patterns", value: "Multicam, Woodland, Digital, Custom Print Available" },
-      { label: "Weight Range", value: "180 GSM – 320 GSM" },
-      { label: "Customization", value: "Embroidery, Screen Print, Sublimation, Laser Cut Patches" },
+      { label: "Shell Fabrics", value: "Quiet brushed polyester, Softshell, 3-Layer waterproof laminate" },
+      { label: "Insulation", value: "Primaloft Gold, Thinsulate, Premium down blend" },
+      { label: "Camo Options", value: "Realtree EDGE, Mossy Oak Break-Up, Kryptek, Custom prints" },
+      { label: "Waterproofing", value: "10,000mm – 20,000mm (ISO 811 Certified)" },
+      { label: "Breathability", value: "8,000 – 15,000 g/m²/24h (ASTM E96)" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "30–40 Days (Bulk)" },
     ],
     features: [
-      "YKK zippers with silent pull tabs",
-      "Velcro patch panels for morale patches",
-      "Articulated knee and elbow panels",
-      "Scent-control fabric treatment available",
-      "Reinforced stress-point stitching",
-      "Custom woven labels and hang tags",
+      "Silent brushed fabric eliminates noise in the field",
+      "Scent-control technology with antimicrobial treatment",
+      "Strategic ventilation zippers for temperature regulation",
+      "Magnetic closures on pockets for silent access",
+      "Kill-switch D-ring and license holder",
+      "Customizable internal embroidered labels",
     ],
   },
   {
-    id: "streetwear",
-    name: "Custom Streetwear",
-    tag: "Lifestyle & Urban",
-    image: IMAGES.catStreetwear,
+    id: "hunting-pants",
+    name: "Hunting Pants & Bibs",
+    tag: "Tactical Grade",
+    image: IMAGES.catSports,
     description:
-      "Premium custom streetwear manufactured for brands that demand quality. From heavyweight oversized hoodies and bomber jackets to cargo joggers and graphic tees, our streetwear line is built on 400-GSM French terry, premium nylon, and ring-spun cotton.",
+      "Rugged hunting pants and bibs built to withstand brush, briars, and miles of backcountry hiking. Articulated knees, gusseted crotches, and reinforced high-wear zones ensure durability season after season. Available in multiple camo patterns and solid earth tones.",
     specs: [
-      { label: "Fabric Options", value: "400 GSM French Terry, Ring-Spun Cotton, Nylon Ripstop, Fleece" },
-      { label: "Weight Range", value: "280 GSM – 450 GSM" },
-      { label: "Fits Available", value: "Oversized, Boxy, Regular, Slim" },
-      { label: "Customization", value: "DTG, DTF, Embroidery, Puff Print, Woven Labels" },
+      { label: "Fabric Options", value: "6.5oz canvas, Stretch woven, Waterproof/breathable laminate" },
+      { label: "Reinforcement", value: "Cordura knee panels, Double-layer seat" },
+      { label: "Camo Patterns", value: "Realtree, Mossy Oak, Kryptek, Solids" },
+      { label: "Breathability", value: "High-permeability ASTM E96 compliant" },
+      { label: "Features", value: "Articulated knees, Gusseted crotch, Boot zipper" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "25–35 Days (Bulk)" },
     ],
     features: [
-      "Custom pre-shrunk garment washes",
-      "Vintage fades, acid wash, and tie-dye",
-      "Gold/silver premium hardware options",
-      "Eco-friendly fabric options available",
-      "Private label packaging",
-      "Expert pattern drafting in-house",
+      "Reinforced knees and seat for durability",
+      "Silent snap closures won't spook game",
+      "Multiple cargo pockets with secure closures",
+      "Side zippers for easy on/off over boots",
+      "Suspender-compatible design",
+      "Scent-blocking fabric treatment",
+    ],
+  },
+  {
+    id: "base-layers",
+    name: "Base Layers & Mid Layers",
+    tag: "Performance",
+    image: IMAGES.catTechwear,
+    description:
+      "Technical base and mid layers that regulate body temperature across all hunting conditions. Moisture-wicking merino wool blends, grid fleece mid layers, and thermal compression gear keep hunters comfortable from dawn sit to dusk stalk.",
+    specs: [
+      { label: "Base Materials", value: "Merino wool blend, Synthetic grid fleece, Compression knit" },
+      { label: "Mid Layer", value: "Grid fleece, Thermal waffle, Softshell hybrid" },
+      { label: "Weight Range", value: "Lightweight (150gsm) to Expedition (400gsm)" },
+      { label: "Technology", value: "Moisture-wicking, Odor control, Thermal regulation" },
+      { label: "Minimum Order", value: "50 Pieces/Style" },
+      { label: "Lead Time", value: "25–35 Days (Bulk)" },
+    ],
+    features: [
+      "Merino wool naturally resists odor",
+      "Flatlock seams prevent chafing under packs",
+      "UPF 30+ sun protection for early season",
+      "Thumb loops keep sleeves in place",
+      "Drop-tail hem for coverage while sitting",
+      "Custom colorways and branding available",
     ],
   },
   {
     id: "security-uniforms",
-    name: "Custom Security Uniforms",
-    tag: "Professional Guard",
+    name: "Security & Tactical Uniforms",
+    tag: "Pro Duty",
     image: IMAGES.catSecurityUniforms,
     description:
-      "Authoritative, durable, and comfortable security uniforms designed for 12-hour shifts. We supply global security firms with tactical polos, high-visibility vest systems, reinforced trousers, and weather-resistant outerwear.",
+      "High-performance security and tactical uniforms designed for professional guards, law enforcement, and private security firms. Our garments combine professional appearance with tactical functionality, featuring durable ripstop fabrics, reinforced stitching, and integrated duty belt compatibility.",
     specs: [
-      { label: "Fabric Options", value: "Poly-Cotton Twill, Ripstop, Moisture-Wicking Pique" },
-      { label: "Weight Range", value: "180 GSM – 260 GSM" },
-      { label: "Visibility", value: "3M Reflective Taping Available" },
-      { label: "Customization", value: "Direct Embroidery, Epaulets, Heat Transfer Badges" },
+      { label: "Fabric Options", value: "Poly-cotton ripstop, Tactical stretch woven, Teflon™ coated" },
+      { label: "Durability", value: "Reinforced elbows/knees, Bar-tack stitching at stress points" },
+      { label: "Features", value: "Badge tabs, Epaulettes, Hidden document pockets" },
+      { label: "Safety", value: "High-visibility options, Slash-resistant lining available" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "25–35 Days (Bulk)" },
     ],
     features: [
-      "Teflon® stain-resistant coating options",
-      "Mic loops and badge tabs",
-      "Reinforced knees and gusseted crotches",
-      "Permanent press finishes",
-      "Hidden tactical pockets",
-      "Custom brass or silver button details",
+      "Moisture-wicking mesh interior for all-day comfort",
+      "Gusseted construction for full range of motion",
+      "Hidden tactical pockets for gear storage",
+      "Permanent military creases for sharp professional look",
+      "Stain and liquid repellent fabric treatment",
+      "Custom department embroidery and patch options",
     ],
   },
   {
-    id: "techwear",
-    name: "Custom Techwear",
-    tag: "Utility & Futurism",
-    image: IMAGES.catTechwear,
-    description:
-      "Where function meets futurism. Our custom techwear line is engineered for the modern environment — modular utility vests, articulated cargo pants, and multi-pocket shell jackets. Built from DWR-coated technical fabrics with precision construction.",
-    specs: [
-      { label: "Fabric Options", value: "Nylon Ripstop, Cordura, DWR-Coated Shell, Stretch Woven" },
-      { label: "Hardware", value: "ITW Nexus Buckles, YKK Aquaguard Zippers, D-Rings" },
-      { label: "Weight Range", value: "160 GSM – 300 GSM" },
-      { label: "Customization", value: "Laser Etching, Embroidery, Woven Patches, Custom Hardware" },
-      { label: "Minimum Order", value: "50 Pieces/Style" },
-      { label: "Lead Time", value: "30–40 Days (Bulk)" },
-    ],
-    features: [
-      "Modular attachment points (MOLLE/PALS)",
-      "Waterproof zipped pockets",
-      "Articulated patterning for unrestricted movement",
-      "Custom internal organization systems",
-      "Laser-cut ventilation panels",
-      "Matte and tonal colorway options",
-    ],
-  },
-  {
-    id: "ski-wear",
-    name: "Custom Ski Wear",
-    tag: "Alpine Technical",
+    id: "cold-weather",
+    name: "Cold Weather & Late Season",
+    tag: "Extreme",
     image: IMAGES.catSki,
     description:
-      "Technical ski and snowboard apparel manufactured to the highest alpine standards. Our custom ski wear features waterproof-breathable shells, sealed seams, and insulated linings designed for extreme cold-weather performance.",
+      "Heavy-duty late season gear for sub-zero hunts. Insulated bibs, parkas with wind-blocking technology, and hand-warmer muffs designed for all-day sits in frigid conditions. When the rut is on and temperatures drop, this gear keeps hunters in the field longer.",
     specs: [
-      { label: "Fabric Options", value: "Gore-Tex Compatible, 3-Layer Shell, Softshell, Primaloft Insulation" },
-      { label: "Waterproofing", value: "10,000mm – 20,000mm HH Rating, Taped Seams" },
-      { label: "Breathability", value: "10,000g – 20,000g/m²/24hr MVTR" },
-      { label: "Customization", value: "Embroidery, Screen Print, Woven Labels, Custom Lining Print" },
+      { label: "Insulation", value: "200g-400g Thinsulate, Down-fill, Synthetic loft" },
+      { label: "Outer Shell", value: "Waterproof/breathable, Wind-blocking membrane" },
+      { label: "Temperature Rating", value: "0°F to -20°F comfort range" },
+      { label: "Extras", value: "Hand warmer pockets, Fleece-lined collar" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "35–45 Days (Bulk)" },
     ],
     features: [
-      "Fully taped critical seams",
-      "Powder skirt and snow gaiters",
-      "Helmet-compatible hood design",
-      "Articulated patterning for full mobility",
-      "Lift pass pocket and goggle wipe",
-      "Custom color blocking and branding",
+      "Heat-retaining interior lining reflects body heat",
+      "Two-way front zipper for sitting comfort",
+      "Insulated detachable hood",
+      "Snow skirt keeps powder out",
+      "Oversized hand warmer pockets",
+      "Quiet fabric technology eliminates swishing",
+    ],
+  },
+  {
+    id: "technical-gear",
+    name: "Technical Field Gear",
+    tag: "Pro-Series",
+    image: IMAGES.catHuntingGear,
+    description:
+      "Full private label manufacturing for hunting brands, outfitters, and retailers. From concept sketches to finished garments, we handle pattern development, fabric sourcing, prototyping, and production. Create your own hunting gear line with professional-grade quality.",
+    specs: [
+      { label: "Services", value: "Design, Pattern making, Sampling, Full production" },
+      { label: "Labeling", value: "Woven labels, Hang tags, Poly bags, Cartons" },
+      { label: "Decoration", value: "Embroidery, Screen print, Heat transfer, Woven patches" },
+      { label: "Customization", value: "Colors, Patterns, Fits, Features per spec" },
+      { label: "Minimum Order", value: "50 Pieces/Style" },
+      { label: "Lead Time", value: "7 Days (Sample) | 30–45 Days (Bulk)" },
+    ],
+    features: [
+      "Tech pack development from sketches or ideas",
+      "3D prototyping for fit verification",
+      "Full compliance with hunting safety standards",
+      "Blaze orange requirements for all states",
+      "Small batch production for boutique brands",
+      "Dropshipping and fulfillment support",
     ],
   },
 ];
@@ -156,9 +159,9 @@ export default function Products() {
   return (
     <PageWrapper>
       <SEOHead
-        title="Custom Hunting, Sports, Ski, Tech, Streetwear & Martial Arts Manufacturer Pakistan"
-        description="Sialkot Sample Masters manufactures premium custom apparel across 6 categories: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear. Low MOQ from 50 pcs. Private label available. Pakistan manufacturer serving 40+ countries."
-        keywords="custom hunting wear manufacturer Pakistan, custom sports wear manufacturer, ski wear manufacturer Pakistan, techwear manufacturer, custom streetwear manufacturer Sialkot, martial arts wear manufacturer Pakistan, BJJ gi manufacturer, custom apparel manufacturer Pakistan"
+        title="Custom Hunting Apparel Manufacturer | Xelent Huntgear Pakistan"
+        description="Xelent Huntgear manufactures premium custom hunting apparel: jackets, pants, base layers, vests, and cold weather gear. Private label hunting clothing manufacturer in Pakistan. Low MOQ from 50 pieces. Realtree & Mossy Oak camo patterns."
+        keywords="custom hunting apparel manufacturer, hunting clothing manufacturer Pakistan, private label hunting gear, Realtree camo manufacturer, hunting jacket supplier, hunting pants manufacturer, custom hunting vest, blaze orange gear manufacturer"
         canonical="/products"
         breadcrumbs={[
           { name: "Home", item: "/" },
@@ -166,24 +169,45 @@ export default function Products() {
         ]}
       />
 
+      {/* Breadcrumb Navigation */}
+      <div className="bg-[#0a0a0a] border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb items={predefinedBreadcrumbs.products} />
+        </div>
+      </div>
+
       {/* Hero */}
-      <section className="relative pt-16 pb-20 bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative pt-20 pb-32 overflow-hidden bg-[#111111]">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 w-full h-full"
+            style={{
+              backgroundImage: `url(${IMAGES.productsHeroBg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#0d0d0d]" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn direction="down" delay={0.1}>
-            <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Product Catalog</p>
+            <p className="text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Product Catalog</p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1 className="font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6 speakable-title">
+            <h1 className="font-serif text-5xl sm:text-6xl font-bold text-white mb-6 speakable-title">
               6 Specialist Categories,
               <br />
-              <span className="text-gradient-gold italic">One Trusted Manufacturer</span>
+              <span className="text-gradient-orange italic">One Trusted Manufacturer</span>
             </h1>
-            <p className="speakable-description hidden">Sialkot Sample Masters specializes in manufacturing custom hunting wear, sports wear, ski wear, tech wear, streetwear, and security uniforms in Pakistan.</p>
+            <p className="speakable-description hidden">Xelent Huntgear specializes in manufacturing custom hunting apparel including jackets, pants, base layers, and accessories for hunting brands worldwide.</p>
           </FadeIn>
           <FadeIn delay={0.3}>
             <div className="gold-divider mx-auto" />
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-6">
-              From alpine ski shells to competition-grade gis — Sialkot Sample Masters manufactures across six high-demand performance and lifestyle categories, all from our facility in Sialkot, Pakistan.
+            <p className="text-white/70 text-lg max-w-2xl mx-auto mt-6">
+              From early season base layers to late season insulated parkas — Xelent Huntgear manufactures premium hunting apparel built for the field. Realtree & Mossy Oak licensed camo. Low MOQ from 50 pieces.
             </p>
           </FadeIn>
           {/* Category Quick Nav */}
@@ -193,9 +217,9 @@ export default function Products() {
                 <a
                   key={p.id}
                   href={`#${p.id}`}
-                  className="text-xs font-condensed font-semibold tracking-widest uppercase px-4 py-2 border border-gold/30 text-gold hover:bg-gold/10 rounded-sm transition-colors"
+                  className="text-xs font-condensed font-semibold tracking-widest uppercase px-4 py-2 border border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/10 rounded-sm transition-colors"
                 >
-                  {p.name.replace("Custom ", "")}
+                  {p.name.replace("Hunting ", "").replace("Custom ", "").replace(" & Accessories", "").replace(" & Late Season", "").replace(" & Bibs", "").replace(" & Mid Layers", "").replace(" & Outerwear", "")}
                 </a>
               ))}
             </div>
@@ -204,7 +228,7 @@ export default function Products() {
       </section>
 
       {/* Products */}
-      <section className="section-padding">
+      <section className="section-padding bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28">
           {products.map((product, i) => (
             <FadeIn key={product.id} direction={i % 2 === 0 ? "left" : "right"}>
@@ -221,7 +245,7 @@ export default function Products() {
                     loading="lazy"
                   />
                   {product.tag && (
-                    <div className="absolute top-4 left-4 bg-gold text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
+                    <div className="absolute top-4 left-4 bg-[#ff6b00] text-black text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
                       {product.tag}
                     </div>
                   )}
@@ -230,20 +254,20 @@ export default function Products() {
 
                 {/* Content */}
                 <div className={`${i % 2 !== 0 ? "lg:order-1" : ""} text-left`}>
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3">{product.name}</h2>
+                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3">{product.name}</h2>
                   <div className="gold-divider" />
-                  <p className="text-muted-foreground leading-relaxed mt-4 mb-6">{product.description}</p>
+                  <p className="text-white/70 leading-relaxed mt-4 mb-6">{product.description}</p>
 
                   {/* Specs Table */}
-                  <div className="bg-card border border-border rounded-sm overflow-hidden mb-6 text-left">
-                    <div className="px-4 py-2.5 border-b border-border bg-background/50">
-                      <h3 className="font-condensed font-semibold text-foreground uppercase tracking-widest text-xs">Technical Specifications</h3>
+                  <div className="bg-[#111111] border border-white/10 rounded-sm overflow-hidden mb-6 text-left">
+                    <div className="px-4 py-2.5 border-b border-white/10 bg-[#0d0d0d]/50">
+                      <h3 className="font-condensed font-semibold text-white uppercase tracking-widest text-xs">Technical Specifications</h3>
                     </div>
-                    <div className="divide-y divide-border">
+                    <div className="divide-y divide-white/10">
                       {product.specs.map((spec) => (
                         <div key={spec.label} className="flex px-4 py-2.5">
-                          <span className="text-muted-foreground text-sm w-40 shrink-0 font-medium">{spec.label}</span>
-                          <span className="text-foreground text-sm">{spec.value}</span>
+                          <span className="text-white/70 text-sm w-40 shrink-0 font-medium">{spec.label}</span>
+                          <span className="text-white text-sm">{spec.value}</span>
                         </div>
                       ))}
                     </div>
@@ -251,12 +275,12 @@ export default function Products() {
 
                   {/* Features */}
                   <div className="mb-8 text-left">
-                    <h3 className="font-condensed font-semibold text-foreground uppercase tracking-widest text-xs mb-3">Key Features</h3>
+                    <h3 className="font-condensed font-semibold text-white uppercase tracking-widest text-xs mb-3">Key Features</h3>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {product.features.map((f) => (
                         <li key={f} className="flex items-start gap-2.5">
-                          <CheckCircle className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                          <span className="text-foreground text-sm">{f}</span>
+                          <CheckCircle className="w-4 h-4 text-[#ff6b00] shrink-0 mt-0.5" />
+                          <span className="text-white text-sm">{f}</span>
                         </li>
                       ))}
                     </ul>
@@ -264,12 +288,12 @@ export default function Products() {
 
                   <div className="flex flex-wrap gap-3 justify-start">
                     <Link href="/rfq">
-                      <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm">
+                      <Button className="bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm">
                         Get a Quote <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </Link>
                     <Link href="/shop">
-                      <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent">
+                      <Button variant="outline" className="border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent">
                         View in Shop
                       </Button>
                     </Link>
@@ -282,24 +306,24 @@ export default function Products() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-card border-t border-border">
+      <section className="section-padding bg-[#111111] border-t border-white/10">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <FadeIn>
-            <h2 className="font-serif text-4xl font-bold text-foreground mb-4">
-              Need a Custom Category?
+            <h2 className="font-serif text-4xl font-bold text-white mb-4">
+              Build Your Hunting Brand
             </h2>
-            <p className="text-muted-foreground mb-8">
-              We manufacture beyond these six categories. If you have a specific product in mind, our design and production team will work with you from concept to delivery.
+            <p className="text-white/70 mb-8">
+              From concept to field-ready gear — we help hunting brands bring their vision to life. Tech pack development, prototyping, licensed camo patterns, and full-scale production. Your brand, built for the hunt.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/rfq">
-                <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm">
-                  Request Custom Quote
+                <Button className="bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm">
+                  Start Your Line
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
-                  Contact Us
+                <Button variant="outline" className="border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
+                  Talk to Our Team
                 </Button>
               </Link>
             </div>

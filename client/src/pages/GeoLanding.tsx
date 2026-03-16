@@ -53,9 +53,9 @@ export default function GeoLanding() {
     return (
         <PageWrapper>
             <SEOHead
-                title={`Premier Streetwear Manufacturer for ${data.name} Brands | Sialkot Sample Masters`}
-                description={`Custom apparel manufacturing for ${data.name} based streetwear brands. High-quality production, low MOQ, and fast shipping to ${data.name}. Direct from Sialkot factory.`}
-                keywords={`streetwear manufacturer ${data.name}, custom clothing supplier ${data.name}, wholesale apparel ${data.name}, garment factory Pakistan`}
+                title={`Premier Performance Apparel Manufacturing Specialists for ${data.name} Brands | Sialkot Sample Masters`}
+                description={`Custom apparel manufacturing for ${data.name} based Performance Apparel brands. High-quality production, low MOQ, and fast shipping to ${data.name}. Direct from Sialkot factory.`}
+                keywords={`performance apparel manufacturer ${data.name}, custom clothing supplier ${data.name}, wholesale apparel ${data.name}, garment factory Pakistan`}
                 canonical={`/manufacturing/${region || "usa"}`}
             />
 

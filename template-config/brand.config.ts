@@ -11,38 +11,38 @@
 
 export const BRAND_CONFIG = {
   // ═════════════════════════════════════════════════════════════════════════════
-  // SITE IDENTITY
+  // SITE IDENTITY - XELENT HUNTGEAR
   // ═════════════════════════════════════════════════════════════════════════════
   
   /** Your company/brand name - appears in header, footer, emails */
-  siteName: "Sialkot Sample Masters",
+  siteName: "Xelent Huntgear",
   
   /** Short tagline for SEO and hero sections */
-  tagline: "Premium Apparel Manufacturing Partner",
+  tagline: "Premium Hunting Apparel & Outdoor Gear",
   
   /** Full legal company name */
-  legalName: "Sialkot Sample Masters Pvt. Ltd.",
+  legalName: "Xelent Huntgear",
   
   /** Company registration number (optional) */
   registrationNumber: "",
   
   /** Year company was established (for "Since XXXX" displays) */
-  establishedYear: 2009,
+  establishedYear: 2020,
   
   /** Site URL (without trailing slash) */
-  siteUrl: "https://yoursite.com",
+  siteUrl: "https://xelenthuntgear.com",
   
   /** Support email address */
-  supportEmail: "support@yoursite.com",
+  supportEmail: "info@xelenthuntgear.com",
   
   /** Sales/inquiries email */
-  salesEmail: "sales@yoursite.com",
+  salesEmail: "info@xelenthuntgear.com",
   
   /** Primary contact phone (with country code) */
-  phone: "+92-XXX-XXXXXXX",
+  phone: "+92-302-2922242",
   
   /** WhatsApp number (if different from phone) */
-  whatsappNumber: "+92-XXX-XXXXXXX",
+  whatsappNumber: "+92-302-2922242",
   
   // ═════════════════════════════════════════════════════════════════════════════
   // BUSINESS DETAILS
@@ -52,19 +52,19 @@ export const BRAND_CONFIG = {
   location: "Sialkot, Pakistan",
   
   /** Full address (multi-line supported with \n) */
-  fullAddress: "123 Industrial Area\nSialkot, Punjab 51310\nPakistan",
+  fullAddress: "Sialkot Industrial Estate\nSialkot, Punjab 51310\nPakistan",
   
   /** Primary export markets (for GEO targeting) */
-  targetMarkets: ["USA", "UK", "Canada", "Australia", "EU"],
+  targetMarkets: ["USA", "Canada", "UK", "Australia", "EU", "Middle East"],
   
   /** Industries you serve */
   industries: [
-    "Fashion Brands",
-    "Corporate Uniforms", 
-    "Sports Teams",
-    "Tactical/Security",
-    "Streetwear Labels",
-    "Outdoor/Apparel"
+    "Hunting Enthusiasts",
+    "Outdoor Sports",
+    "Tactical/Survival",
+    "Shooting Clubs",
+    "Hunting Outfitters",
+    "Wildlife Conservation"
   ],
   
   // ═════════════════════════════════════════════════════════════════════════════
@@ -72,9 +72,9 @@ export const BRAND_CONFIG = {
   // ═════════════════════════════════════════════════════════════════════════════
   
   social: {
-    instagram: "https://instagram.com/yourbrand",
-    facebook: "https://facebook.com/yourbrand",
-    linkedin: "https://linkedin.com/company/yourbrand",
+    instagram: "https://instagram.com/xelenthuntgear",
+    facebook: "https://facebook.com/xelenthuntgear",
+    linkedin: "https://linkedin.com/company/xelenthuntgear",
     twitter: "",
     youtube: "",
     tiktok: "",

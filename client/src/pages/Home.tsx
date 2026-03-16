@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, CheckCircle, Globe, Package, Star, Award, Users, Zap, ChevronRight, Leaf, Shield, Sun, Heart, Scale } from "lucide-react";
+import { ArrowRight, ChevronRight, Award, Globe, Package, Zap, CheckCircle, Shield, Target, Wind, Thermometer, Droplets } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
@@ -9,124 +9,141 @@ import {
   StaggerChildren,
   AnimatedChild,
   CountUp,
-  HoverCard,
   PageWrapper,
-  SectionHeading,
-  fadeInUp,
-  fadeInDown,
-  fadeInLeft,
-  fadeInRight,
 } from "@/components/animations";
 
+// Stats
 const stats = [
-  { value: 15, suffix: "+", label: "Years of Excellence", icon: Award },
-  { value: 500, suffix: "+", label: "Global Brands Served", icon: Globe },
-  { value: 40, suffix: "+", label: "Countries Exported To", icon: Package },
-  { value: 50, suffix: "K+", label: "Units Produced Monthly", icon: Zap },
+  { value: 15, suffix: "+", label: "Years", sublabel: "Excellence" },
+  { value: 500, suffix: "+", label: "Brands", sublabel: "Served" },
+  { value: 40, suffix: "+", label: "Countries", sublabel: "Exported" },
+  { value: 50, suffix: "K+", label: "Units", sublabel: "Monthly" },
 ];
 
-const services = [
+// Product Categories with hunting focus
+const categories = [
   {
-    title: "Eco-Friendly Production",
-    description: "80% of our energy comes from renewable solar power. We incorporate eco-friendly fabrics and sustainable practices into every run.",
-    icon: "⚡",
+    name: "Outerwear",
+    items: "Shells • Insulated • Softshell",
+    image: IMAGES.catHunting,
+    tag: "20K Waterproof"
   },
   {
-    title: "Comprehensive Facilities",
-    description: "In-house pattern drafting, sublimation, screen printing, embroidery, DTF, DTG, and modern sewing lines with 50+ machines.",
-    icon: "🏭",
+    name: "Mid Layers",
+    items: "Fleece • Down • Synthetic",
+    image: IMAGES.catSports,
+    tag: "Thermal"
   },
   {
-    title: "ISO-Grade Assurance",
-    description: "Zero-defect delivery guarantee. Strict QC processes ensuring top quality across sportswear, streetwear, and tactical gear.",
-    icon: "✅",
-  }
+    name: "Base Layers",
+    items: "Merino • Synthetic • Blends",
+    image: IMAGES.catHuntingGear,
+    tag: "Moisture Wicking"
+  },
+  {
+    name: "Bottoms",
+    items: "Pants • Bibs • Shorts",
+    image: IMAGES.catTechwear,
+    tag: "Reinforced"
+  },
 ];
 
-const products = [
-  { name: "Sportswear", image: IMAGES.catSports, href: "/shop", category: "Sports Wear", tag: "Athletic" },
-  { name: "Hunting Wear", image: IMAGES.catHunting, href: "/shop", category: "Hunting Wear", tag: "MIL-SPEC" },
-  { name: "Streetwear", image: IMAGES.catStreetwear, href: "/shop", category: "Streetwear", tag: "Lifestyle" },
-  { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/shop", category: "Security Uniforms", tag: "Guard" },
-  { name: "Tech Wear", image: IMAGES.catTechwear, href: "/shop", category: "Tech Wear", tag: "Utility" },
-  { name: "Ski Wear", image: IMAGES.catSki, href: "/shop", category: "Ski Wear", tag: "Alpine" },
-  { name: "Martial Arts Wear", image: IMAGES.catMartialArts, href: "/shop", category: "Martial Arts", tag: "BJJ / MMA" },
+// Technical capabilities with images for redesign
+const capabilities = [
+  {
+    title: "Waterproof Production",
+    desc: "20K/20K Seam-Sealed",
+    detail: "Advanced moisture protection using high-performance membranes and precision seam-sealing technology.",
+    image: IMAGES.capWaterproof
+  },
+  {
+    title: "Camo Pattern Design",
+    desc: "Custom Terrains",
+    detail: "Proprietary camouflage systems engineered for specific environments, from alpine peaks to deep timber.",
+    image: IMAGES.capCamoDesign
+  },
+  {
+    title: "Scent Control Tech",
+    desc: "Silver-Ion Integration",
+    detail: "Odor-absorbing fabric treatments that keep you undetected in the heat of the pursuit.",
+    image: IMAGES.capScentControl
+  },
 ];
 
+// Hunt types for the visual grid - Redesigned with images and descriptions
+const huntTypes = [
+  {
+    species: "Whitetail",
+    season: "Sep - Jan",
+    terrain: "Deep Woods",
+    color: "#2d5016",
+    description: "Silent, scent-controlled gear engineered for close-range timber pursuits.",
+    image: IMAGES.specWhitetail
+  },
+  {
+    species: "Elk",
+    season: "Sep - Nov",
+    terrain: "Alpine Peaks",
+    color: "#4a3728",
+    description: "Breathable, high-mobility layering systems for demanding mountain ascents.",
+    image: IMAGES.specElk
+  },
+  {
+    species: "Waterfowl",
+    season: "Oct - Feb",
+    terrain: "Frozen Wetlands",
+    color: "#1e3a5f",
+    description: "20K waterproof shells and insulated systems for harsh wet environments.",
+    image: IMAGES.specWaterfowl
+  },
+  {
+    species: "Turkey",
+    season: "Apr - May",
+    terrain: "Mixed Hardwoods",
+    color: "#5c4a2a",
+    description: "Full-coverage concealment systems with precision camo for wary spring gobblers.",
+    image: IMAGES.specTurkey
+  },
+  {
+    species: "Mule Deer",
+    season: "Sep - Nov",
+    terrain: "High Desert",
+    color: "#8b6914",
+    description: "Versatile, windproof systems designed for glassing and spot-and-stalk hunts.",
+    image: IMAGES.specMuleDeer
+  },
+  {
+    species: "Predator",
+    season: "Year-round",
+    terrain: "Open Country",
+    color: "#3d3d3d",
+    description: "Tactical-grade concealment gear for long-range surveillance and fast performance.",
+    image: IMAGES.specPredator
+  },
+];
+
+// Testimonials
 const testimonials = [
   {
-    name: "Marcus Johnson",
-    title: "Founder, UrbanThread Co.",
-    country: "🇺🇸",
-    countryName: "USA",
-    rating: 5,
-    text: "Sialkot Sample Masters has been our manufacturing partner for 3 years. The quality is consistently exceptional, and their team is incredibly responsive. They've helped us scale from 500 to 10,000 units per month.",
+    quote: "The waterproof technology and attention to detail rivals any brand in our lineup. Xelent understands what hunters need.",
+    author: "Marcus Johnson",
+    role: "Product Director",
+    company: "Backcountry Hunters",
+    location: "USA"
   },
   {
-    name: "Sophie Laurent",
-    title: "Creative Director, Rue Noire",
-    country: "🇫🇷",
-    countryName: "France",
-    rating: 5,
-    text: "We've worked with manufacturers across Asia, but Sialkot Sample Masters stands apart. Their attention to detail, premium fabric sourcing, and on-time delivery make them our exclusive manufacturing partner.",
+    quote: "We've sourced from manufacturers across Asia. Xelent's quality control and camo pattern expertise are unmatched.",
+    author: "Sophie Laurent",
+    role: "Founder",
+    company: "Alpine Gear Co.",
+    location: "France"
   },
   {
-    name: "James Chen",
-    title: "CEO, Pacific Street",
-    country: "🇦🇺",
-    countryName: "Australia",
-    rating: 5,
-    text: "The private label service is world-class. From custom woven labels to branded packaging, every detail was perfect. Our customers can't believe the quality comes from a B2B manufacturer.",
-  },
-];
-
-// ── Bento capability cards
-const bentoCards = [
-  { value: "50 pcs", label: "Min. Order Qty", icon: Package, accent: true },
-  { value: "7 Days", label: "Sample Turnaround", icon: Zap, accent: false },
-  { value: "40+", label: "Countries Served", icon: Globe, accent: false },
-  { value: "50K+", label: "Units / Month", icon: Award, accent: true },
-  { value: "99.8%", label: "QC Pass Rate", icon: CheckCircle, accent: false },
-  { value: "ISO 9001", label: "Certified Quality", icon: Shield, accent: false },
-  { value: "80% Solar", label: "Renewable Energy", icon: Sun, accent: true },
-  { value: "15+ Yrs", label: "Industry Expertise", icon: Star, accent: false },
-];
-
-// ── Partner brand types for ticker
-const partnerBrands = [
-  { name: "UrbanThread Co.", region: "🇺🇸 USA" },
-  { name: "Rue Noire Paris", region: "🇫🇷 France" },
-  { name: "Pacific Street", region: "🇦🇺 Australia" },
-  { name: "Nordic Sport Labs", region: "🇸🇪 Sweden" },
-  { name: "Alpha Tactical", region: "🇬🇧 UK" },
-  { name: "Desert Hawk Gear", region: "🇦🇪 UAE" },
-  { name: "Summit Alpine Co.", region: "🇩🇪 Germany" },
-  { name: "Bushcraft Nation", region: "🇨🇦 Canada" },
-  { name: "Athleisure Pro", region: "🇳🇱 Netherlands" },
-  { name: "StrikeForce MMA", region: "🇺🇸 USA" },
-  { name: "Kimono Masters", region: "🇧🇷 Brazil" },
-  { name: "Glacier Outfitters", region: "🇳🇿 New Zealand" },
-];
-
-// ── ESG Pillars
-const esgPillars = [
-  {
-    icon: Leaf,
-    title: "Environmental",
-    stat: "80% Solar",
-    body: "80% renewable solar-powered production. GOTS & OEKO-TEX certified fabrics. Water recycling across all dyeing processes.",
-  },
-  {
-    icon: Heart,
-    title: "Social",
-    stat: "250+ Workers",
-    body: "Living-wage workforce in Sialkot. Safe, air-conditioned factory floors with healthcare benefits and professional development.",
-  },
-  {
-    icon: Scale,
-    title: "Governance",
-    stat: "WRAP Certified",
-    body: "ISO 9001 quality management. WRAP-certified ethical production. Full audit-ready transparency with third-party QC available.",
+    quote: "From custom patterns to scent-control fabrics, every specification was executed perfectly. Our customers notice the difference.",
+    author: "James Chen",
+    role: "CEO",
+    company: "Outback Outfitters",
+    location: "Australia"
   },
 ];
 
@@ -134,625 +151,461 @@ export default function Home() {
   return (
     <PageWrapper>
       <SEOHead
-        title="Custom Streetwear & BJJ Kimonos Manufacturer | Sialkot Pakistan"
-        description="Sialkot Sample Masters is Pakistan's premier custom clothing manufacturer. Private label, low MOQ (50pcs), bulk orders for global brands in USA and UAE. T-shirts, hoodies, streetwear, and BJJ Kimonos. Get a free quote today."
-        keywords="custom streetwear manufacturer Pakistan, private label clothing USA, bulk streetwear supplier Sialkot, B2B apparel manufacturer Dubai UAE, custom hoodie manufacturer, wholesale BJJ Kimonos manufacturer, custom rashguards supplier Pakistan"
+        title="Premium Hunting Apparel Manufacturer | Xelent Huntgear"
+        description="Custom hunting gear manufacturer. Waterproof shells, insulated parkas, camo systems. B2B wholesale. Low MOQ 50pcs. Export to USA, Europe, Australia."
         canonical="/"
       />
 
-      {/* ── Hero Section ── */}
-      <section className="relative min-h-[100dvh] w-full overflow-hidden bg-[#0a0a0a]">
-        {/* Background Image with subtle Ken Burns zoom */}
-        <motion.div
-          className="absolute inset-0 z-0"
-          initial={{ scale: 1.06 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url(${IMAGES.heroCustomBg})`,
-              backgroundSize: "cover",
-              backgroundPosition: "60% center",
-            }}
+      {/* ═══════════════════════════════════════════════════════════════════════
+          HERO - Cinematic Full Screen
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={IMAGES.heroCustomBg}
+            alt="Professional Hunter in Xelent technical gear - Durable, waterproof performance apparel"
+            className="w-full h-full object-cover opacity-60"
           />
-          {/* LEFT vignette: deep dark panel for text — image intentionally dark on left */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/75 lg:via-[#0a0a0a]/50 to-transparent" />
-          {/* TOP vignette: for navbar breathing room */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-transparent to-transparent" />
-          {/* BOTTOM vignette: keep dark to match the overall Hero tone */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
-        </motion.div>
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+        </div>
 
-        {/* --- Layout Grid --- */}
-        <div className="relative z-10 flex flex-col min-h-[100dvh] max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
-
-          {/* === Top: vertical spacer for navbar === */}
-          <div className="pt-28 sm:pt-36 lg:pt-40" />
-
-          {/* === Main Content Block (left-aligned) === */}
-          <div className="flex flex-col items-start max-w-2xl xl:max-w-3xl mt-auto">
-
-            {/* Eyebrow / Category Chips */}
+        {/* Content */}
+        <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl">
+            {/* Tag */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="flex flex-wrap gap-2 mb-8"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 mb-8"
             >
-              {["Hunting Wear", "Sportswear", "Streetwear", "BJJ Kimonos"].map((cat) => (
-                <span
-                  key={cat}
-                  className="text-[10px] sm:text-[11px] font-condensed font-semibold tracking-[0.2em] uppercase text-white/60 border border-white/15 px-3 py-1.5 backdrop-blur-sm"
-                >
-                  {cat}
-                </span>
-              ))}
+              <span className="w-2 h-2 bg-[#ff6b00] animate-pulse" />
+              <span className="text-white text-xs font-condensed uppercase tracking-[0.2em]">Now Accepting SS2026 Orders</span>
             </motion.div>
 
-            {/* Main Heading */}
+            {/* Main Headline */}
             <motion.h1
-              className="font-serif text-[3.2rem] sm:text-[4.8rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] leading-[0.95] tracking-[-0.02em] text-white mb-7"
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.9] mb-6"
             >
-              Custom Apparel{" "}
-              <span className="italic font-light text-[#c9a96e]">Manufacturer</span>
+              Built for
+              <span className="block text-[#ff6b00] italic font-light">the Hunt.</span>
             </motion.h1>
 
-            {/* Divider line */}
-            <motion.div
-              className="w-16 h-[1.5px] bg-[#c9a96e] mb-6"
-              initial={{ scaleX: 0, originX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.55 }}
-            />
-
-            {/* Sub-copy */}
+            {/* Subheadline */}
             <motion.p
-              className="text-white/65 text-sm sm:text-base lg:text-[17px] leading-[1.75] max-w-lg mb-10 font-light"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.65 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl sm:text-2xl text-white font-light mb-4"
             >
-              B2B bulk manufacturing for global sportswear, streetwear, and martial arts brands. ISO 9001 certified. Low MOQ. Exporting daily to the USA, UAE & Europe.
+              Premium Hunting Apparel Manufacturer
             </motion.p>
 
-            {/* CTA Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row items-start gap-4 mb-14 sm:mb-16"
+            {/* Description */}
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.78 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-white/80 text-base sm:text-lg max-w-xl mb-6 leading-relaxed"
             >
-              {/* Primary button — solid gold */}
+              B2B manufacturing for hunting brands worldwide. Specialist in <span className="text-white font-semibold">ISO 811 certified 20,000mm waterproofing</span> and <span className="text-white font-semibold">ASTM E96 breathable</span> membranes. REACH & OEKO-TEX compliant production. Low MOQ 50pcs.
+            </motion.p>
+
+            {/* GEO BLUF: Key Takeaways */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              className="bg-white/5 backdrop-blur-sm border-l-4 border-[#ff6b00] p-6 mb-10 max-w-xl"
+            >
+              <h3 className="text-[#ff6b00] font-condensed font-bold uppercase tracking-widest text-xs mb-3">Key Manufacturing Takeaways</h3>
+              <ul className="text-white/70 text-sm space-y-2 font-light">
+                <li>• <span className="text-white font-medium">Specialization</span>: Technical Hunting Apparel & Tactical Security Uniforms</li>
+                <li>• <span className="text-white font-medium">Benchmarks</span>: 20K Waterproofing / 15K Breathability (ISO/ASTM)</li>
+                <li>• <span className="text-white font-medium">Compliance</span>: OEKO-TEX Standard 100 & REACH (EU) Certified</li>
+                <li>• <span className="text-white font-medium">Capability</span>: 3D Pattern Development, Laser Cutting, Ultrasonic Sealing</li>
+              </ul>
+            </motion.div>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-wrap gap-4"
+            >
               <Link href="/rfq">
-                <button className="group relative overflow-hidden bg-[#c9a96e] text-[#0a0a0a] font-condensed font-bold tracking-[0.18em] uppercase text-[11px] sm:text-xs px-9 py-4 h-auto transition-all duration-500 hover:bg-[#b8945a]">
-                  <span className="flex items-center gap-2.5">
-                    Get a Free Quote
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                <button className="group bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 shadow-[0_0_30px_rgba(255,107,0,0.4)] hover:shadow-[0_0_50px_rgba(255,107,0,0.6)]">
+                  <span className="flex items-center gap-3">
+                    Get Free Quote
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
               </Link>
-
-              {/* Secondary button — ghost */}
               <Link href="/portfolio">
-                <button className="group flex items-center gap-2.5 font-condensed font-semibold tracking-[0.15em] uppercase text-[11px] sm:text-xs text-white/70 hover:text-white border border-white/20 hover:border-white/50 px-9 py-4 transition-all duration-300 backdrop-blur-sm">
+                <button className="border border-white/40 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 backdrop-blur-sm bg-black/30">
                   View Portfolio
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </button>
               </Link>
             </motion.div>
-
-            {/* Trust Strip */}
-            <motion.div
-              className="flex flex-wrap items-center gap-x-6 gap-y-3 pb-10 sm:pb-14"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-            >
-              {[
-                { value: "15+", label: "Years" },
-                { value: "500+", label: "Brands" },
-                { value: "40+", label: "Countries" },
-                { value: "50K+", label: "Units / Month" },
-              ].map((s, i) => (
-                <div key={i} className="flex items-baseline gap-1.5">
-                  <span className="font-condensed font-bold text-white text-xl sm:text-2xl">{s.value}</span>
-                  <span className="font-condensed text-white/35 text-xs uppercase tracking-widest">{s.label}</span>
-                  {i < 3 && <span className="ml-4 text-white/15 text-sm font-light">|</span>}
-                </div>
-              ))}
-            </motion.div>
-
           </div>
+
+          {/* Stats Row - Moved into flow to prevent overlap */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="flex flex-wrap gap-x-12 gap-y-6 mt-16 pb-12"
+          >
+            {stats.map((stat, i) => (
+              <div key={i}>
+                <div className="text-3xl sm:text-4xl font-condensed font-bold text-white">
+                  <CountUp to={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">{stat.label}</div>
+                <div className="text-white/40 text-xs">{stat.sublabel}</div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Scroll indicator — bottom right */}
+        {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 right-8 lg:right-14 flex items-center gap-3 text-white/30"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.4 }}
+          transition={{ delay: 1 }}
+          className="absolute bottom-8 right-8 text-white/40 text-xs uppercase tracking-[0.3em] hidden lg:block"
         >
-          <span className="font-condensed text-[9px] tracking-[0.3em] uppercase">Scroll</span>
-          <motion.div
-            className="w-8 h-px bg-white/25"
-            animate={{ scaleX: [1, 0.35, 1], originX: 0 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="flex flex-col items-center gap-2">
+            <span>Scroll</span>
+            <div className="w-px h-8 bg-gradient-to-b from-[#ff6b00] to-transparent" />
+          </div>
         </motion.div>
       </section>
 
-      {/* ── Stats Section ── */}
-      < section className="bg-card border-y border-border py-12" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-8" stagger={0.12}>
-            {stats.map((stat) => (
-              <AnimatedChild key={stat.label} direction="up">
-                <div className="text-center">
-                  <stat.icon className="w-6 h-6 text-gold mx-auto mb-3" />
-                  <div className="text-3xl sm:text-4xl font-condensed font-bold text-foreground mb-1 stat-glow">
-                    <CountUp to={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-muted-foreground text-sm">{stat.label}</div>
-                </div>
-              </AnimatedChild>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section >
+      {/* ═══════════════════════════════════════════════════════════════════════
+          HUNT TYPES - Visual Species Grid
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]">Pursuit-Driven Manufacturing</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mt-3">Gear for Every Species</h2>
+          </div>
 
-      {/* ── Partner Brand Cloud ── */}
-      < section className="py-10 border-b border-border overflow-hidden bg-background" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-          <FadeIn>
-            <p className="text-center text-muted-foreground text-xs font-condensed font-semibold tracking-[0.25em] uppercase">
-              Trusted by 500+ Independent Brands Worldwide
-            </p>
-          </FadeIn>
-        </div>
-        <div className="relative overflow-hidden">
-          {/* Left/right fade masks */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-          <div className="flex animate-marquee-slow" aria-hidden="false">
-            {/* Duplicate the list twice so the animation is seamless */}
-            {[...partnerBrands, ...partnerBrands].map((brand, i) => (
-              <div
-                key={i}
-                className="partner-logo flex-shrink-0 mx-8 flex flex-col items-center gap-1 cursor-default"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {huntTypes.map((hunt, i) => (
+              <motion.div
+                key={hunt.species}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="group relative h-[300px] overflow-hidden bg-[#111111]"
               >
-                <div className="bg-card border border-border rounded-sm px-5 py-3 min-w-[160px] text-center hover:border-gold/30 transition-colors">
-                  <p className="font-condensed font-bold text-sm text-foreground tracking-wide">{brand.name}</p>
-                  <p className="text-muted-foreground text-xs mt-0.5">{brand.region}</p>
+                {/* Background Image */}
+                <img
+                  src={hunt.image}
+                  alt={`${hunt.species} hunting gear - ${hunt.description} Custom ${hunt.species} apparel manufactured by Xelent Huntgear`}
+                  className="absolute inset-0 w-full h-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-70"
+                />
+
+                {/* Accent Bar at Bottom */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1 z-20 transition-all duration-300 group-hover:h-2"
+                  style={{ backgroundColor: hunt.color }}
+                />
+
+                {/* Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10" />
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                  <div className="transform transition-transform duration-500 ease-out group-hover:-translate-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[#ff6b00] text-[10px] font-bold uppercase tracking-widest">{hunt.season}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/20" />
+                      <span className="text-white/40 text-[10px] font-bold uppercase tracking-widest">{hunt.terrain}</span>
+                    </div>
+
+                    <h3 className="text-white font-condensed font-bold text-3xl uppercase mb-2 group-hover:text-[#ff6b00] transition-colors">
+                      {hunt.species}
+                    </h3>
+
+                    {/* Brief Description - Hidden until hover */}
+                    <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+                      <p className="text-white/60 text-sm leading-relaxed max-w-[280px]">
+                        {hunt.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section >
+      </section>
 
-      {/* ── Services Overview ── */}
-      < section className="section-padding" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            label="What We Offer"
-            title="Complete B2B Manufacturing Solutions"
-            subtitle="From private label startups to established global brands, we provide end-to-end streetwear manufacturing services tailored to your business needs."
-            className="mb-16"
-          />
+      {/* ═══════════════════════════════════════════════════════════════════════
+          PRODUCT CATEGORIES - Large Cards
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+            <div>
+              <span className="text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]">Product Lines</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3">Complete Systems</h2>
+            </div>
+            <p className="text-white/60 max-w-md mt-4 md:mt-0">
+              From base layers to outer shells, manufacture complete layering systems for any hunt.
+            </p>
+          </div>
 
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.09}>
-            {services.map((service) => (
-              <AnimatedChild key={service.title} direction="scale">
-                <HoverCard className="h-full">
-                  <div className="bg-card border border-border rounded-sm p-6 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-colors duration-300 group h-full">
-                    <div className="text-3xl mb-4">{service.icon}</div>
-                    <h3 className="font-condensed font-bold text-lg text-foreground tracking-wide uppercase mb-2 group-hover:text-gold transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{service.description}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories.map((cat, i) => (
+              <motion.div
+                key={cat.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
+              >
+                <img
+                  src={cat.image}
+                  alt={`${cat.name} - ${cat.items} - Custom hunting ${cat.name.toLowerCase()} manufacturer Pakistan - ${cat.tag}`}
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+
+                {/* Tag */}
+                <div className="absolute top-4 left-4">
+                  <span className="bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1">
+                    {cat.tag}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-white font-condensed font-bold text-2xl uppercase mb-1 group-hover:text-[#ff6b00] transition-colors">
+                    {cat.name}
+                  </h3>
+                  <p className="text-white/60 text-sm">{cat.items}</p>
+                  <div className="mt-4 flex items-center gap-2 text-[#ff6b00] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
+                    <span className="text-xs font-bold uppercase tracking-wider">Explore</span>
+                    <ChevronRight className="w-4 h-4" />
                   </div>
-                </HoverCard>
-              </AnimatedChild>
+                </div>
+              </motion.div>
             ))}
-          </StaggerChildren>
-
-          <FadeIn className="text-center mt-10" delay={0.1}>
-            <Link href="/services">
-              <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
-                Explore All Services <ChevronRight className="ml-1 w-4 h-4" />
-              </Button>
-            </Link>
-          </FadeIn>
+          </div>
         </div>
-      </section >
+      </section>
 
-      {/* ── Products Preview ── */}
-      < section className="section-padding bg-card border-y border-border" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            label="Product Catalog"
-            title="Premium Streetwear Categories"
-            className="mb-16"
-          />
+      {/* ═══════════════════════════════════════════════════════════════════════
+          CAPABILITIES - Technical Grid
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]">Manufacturing Excellence</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3">Technical Capabilities</h2>
+          </div>
 
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.1}>
-            {products.map((product) => (
-              <AnimatedChild key={product.name} direction="scale">
-                <Link href={`${product.href}?category=${encodeURIComponent(product.category)}`}>
-                  <motion.div
-                    className="group relative overflow-hidden rounded-sm aspect-[4/5] cursor-pointer"
-                    whileHover={{ scale: 1.02, transition: { duration: 0.4 } }}
-                  >
-                    <img
-                      src={product.image}
-                      alt={`${product.name} - Custom ${product.category} Manufacturer Pakistan`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                      decoding="async"
-                      width="800"
-                      height="1000"
-                      itemProp="image"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                    {product.tag && (
-                      <div className="absolute top-4 left-4 bg-gold text-white text-[10px] font-condensed font-bold tracking-widest uppercase px-2.5 py-1 rounded-sm shadow-md">
-                        {product.tag}
-                      </div>
-                    )}
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%]">
-                      <div className="border border-white/40 group-hover:border-gold group-hover:bg-gold/10 transition-colors duration-300 py-3 text-center backdrop-blur-sm">
-                        <p className="text-white font-condensed font-bold text-lg uppercase tracking-wider group-hover:text-gold transition-colors">
-                          {product.name}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </Link>
-              </AnimatedChild>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {capabilities.map((cap, i) => (
+              <motion.div
+                key={cap.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative h-[450px] overflow-hidden"
+              >
+                {/* Background Image */}
+                <img
+                  src={cap.image}
+                  alt={`${cap.title} - ${cap.desc} Manufacturing Capability at Xelent Huntgear`}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+
+                {/* Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-[#ff6b00]/10 transition-colors duration-500" />
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end overflow-hidden">
+                  <div className="transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                    <span className="text-[#ff6b00] text-xs font-condensed font-bold uppercase tracking-[0.2em] mb-2 block">
+                      {cap.desc}
+                    </span>
+                    <h3 className="text-white font-condensed font-bold text-3xl uppercase mb-3">
+                      {cap.title}
+                    </h3>
+
+                    {/* Animated Description */}
+                    <motion.p
+                      className="text-white/70 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
+                    >
+                      {cap.detail}
+                    </motion.p>
+
+                    {/* Bottom Line */}
+                    <div className="mt-6 w-12 h-1 bg-[#ff6b00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                  </div>
+                </div>
+              </motion.div>
             ))}
-          </StaggerChildren>
-
-          <FadeIn className="text-center mt-10" delay={0.1}>
-            <Link href="/products">
-              <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm">
-                View Full Catalog <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </FadeIn>
+          </div>
         </div>
-      </section >
+      </section>
 
-      {/* ── About Preview / Why We're Different (Bento Grid) ── */}
-      < section className="section-padding" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ═══════════════════════════════════════════════════════════════════════
+          ABOUT / WHY US
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Image */}
-            <FadeIn direction="left">
-              <div className="relative">
-                <motion.div
-                  className="relative overflow-hidden rounded-sm aspect-[4/3]"
-                  whileHover={{ scale: 1.02, transition: { duration: 0.4 } }}
-                >
-                  <img
-                    src={IMAGES.aboutBg}
-                    alt="Sialkot Sample Masters manufacturing facility Sialkot Pakistan"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                    width="1200"
-                    height="900"
-                    itemProp="image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent" />
-                </motion.div>
-                {/* Floating badge */}
-                <motion.div
-                  className="absolute -bottom-6 -right-6 bg-gold text-background p-6 rounded-sm shadow-xl"
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-                >
-                  <div className="text-4xl font-condensed font-bold">15+</div>
-                  <div className="text-xs font-semibold uppercase tracking-widest mt-1">Years of<br />Excellence</div>
-                </motion.div>
+            <div className="relative">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={IMAGES.aboutBg}
+                  alt="Modern Hunting Apparel Manufacturing Site in Sialkot - ISO 9001 Certified Production"
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </FadeIn>
-
-            {/* Content + Bento Grid */}
-            <FadeIn direction="right" delay={0.1}>
-              <div>
-                <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">
-                  Why We're Different
-                </p>
-                <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 leading-tight">
-                  Pakistan's Most Trusted
-                  <br />
-                  <span className="text-gradient-gold italic">Streetwear Manufacturer</span>
-                </h2>
-                <div className="gold-divider" />
-                <p className="text-muted-foreground leading-relaxed mb-8 mt-4">
-                  Founded in Sialkot — Pakistan's garment manufacturing capital — we've been crafting premium custom streetwear for global brands since 2010. Our vertically integrated facility combines traditional craftsmanship with precision manufacturing technology.
-                </p>
-
-                {/* Bento Grid of Capabilities */}
-                <StaggerChildren className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8" stagger={0.05}>
-                  {bentoCards.map((card) => (
-                    <AnimatedChild key={card.label} direction="scale">
-                      <div className={`bento-card relative p-3 text-center border rounded-sm cursor-default ${card.accent
-                        ? "bg-gold/8 border-gold/25 hover:border-gold/50"
-                        : "bg-card border-border hover:border-gold/20"
-                        }`}>
-                        <card.icon className={`w-4 h-4 mx-auto mb-1.5 ${card.accent ? "text-gold" : "text-muted-foreground"}`} />
-                        <div className={`font-condensed font-bold text-base leading-none mb-1 ${card.accent ? "text-gold" : "text-foreground"}`}>
-                          {card.value}
-                        </div>
-                        <div className="text-muted-foreground text-[10px] uppercase tracking-wide leading-tight">
-                          {card.label}
-                        </div>
-                      </div>
-                    </AnimatedChild>
-                  ))}
-                </StaggerChildren>
-
-                <Link href="/about">
-                  <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
-                    Our Full Story <ChevronRight className="ml-1 w-4 h-4" />
-                  </Button>
-                </Link>
+              <div className="absolute -bottom-6 -right-6 bg-[#ff6b00] text-black p-6">
+                <div className="text-4xl font-condensed font-bold">15+</div>
+                <div className="text-xs font-bold uppercase tracking-wider">Years</div>
               </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section >
+            </div>
 
-      {/* ── Masters of the Craft ── */}
-      < section className="section-padding bg-card border-y border-border" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
-            <FadeIn direction="left">
-              <div>
-                <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">
-                  Masters of the Craft
-                </p>
-                <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 leading-tight">
-                  Built by People Who
-                  <br />
-                  <span className="text-gradient-gold italic">Live for Precision</span>
-                </h2>
-                <div className="gold-divider" />
+            <div>
+              <span className="text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]">About Xelent</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3 mb-6">
+                Pakistan's Premier
+                <span className="block text-[#ff6b00] italic font-light">Hunting Manufacturer</span>
+              </h2>
+              <div className="w-16 h-1 bg-[#ff6b00] mb-6" />
+              <p className="text-white/80 text-lg leading-relaxed mb-8">
+                Founded in Sialkot, we've been crafting premium hunting apparel since 2009.
+                Our vertically integrated facility specializes in waterproof gear, custom camo patterns,
+                and tactical equipment for brands worldwide.
+              </p>
 
-                {/* Founder quote */}
-                <div className="relative mt-6 mb-8 pl-6 border-l-2 border-gold/30">
-                  <span className="text-gold/20 font-serif text-7xl absolute -top-4 -left-3 leading-none select-none">"</span>
-                  <blockquote className="text-muted-foreground text-base leading-relaxed italic relative z-10">
-                    We started as a sample house with one mission: to make world-class garments from Sialkot. Today, our 250-strong team ships to 40+ countries — and every stitch still carries that same obsession with craft.
-                  </blockquote>
-                  <div className="mt-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0">
-                      <span className="text-gold font-condensed font-bold text-sm">SM</span>
-                    </div>
-                    <div>
-                      <p className="text-foreground font-semibold text-sm">The Founders</p>
-                      <p className="text-muted-foreground text-xs">Est. 2010 — Sialkot, Pakistan 🇵🇰</p>
-                    </div>
-                  </div>
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="border-l-2 border-[#ff6b00] pl-4">
+                  <div className="text-2xl font-condensed font-bold text-white">50 pcs</div>
+                  <div className="text-white/50 text-sm">Minimum Order</div>
                 </div>
-
-                {/* Team specialties */}
-                <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 gap-3" stagger={0.07}>
-                  {[
-                    { emoji: "✂️", title: "Pattern Engineering", desc: "CAD/CAM precision drafting" },
-                    { emoji: "🎨", title: "Textile Printing", desc: "Sublimation, DTF, Screen" },
-                    { emoji: "🧵", title: "Industrial Stitching", desc: "50+ specialized machines" },
-                    { emoji: "🔍", title: "Quality Control", desc: "ISO-grade inspection team" },
-                  ].map((spec) => (
-                    <AnimatedChild key={spec.title} direction="up">
-                      <div className="flex items-start gap-3 p-3 bg-background border border-border rounded-sm hover:border-gold/25 transition-colors group">
-                        <span className="text-xl flex-shrink-0 mt-0.5">{spec.emoji}</span>
-                        <div>
-                          <p className="font-condensed font-bold text-sm text-foreground uppercase tracking-wide group-hover:text-gold transition-colors">{spec.title}</p>
-                          <p className="text-muted-foreground text-xs">{spec.desc}</p>
-                        </div>
-                      </div>
-                    </AnimatedChild>
-                  ))}
-                </StaggerChildren>
-              </div>
-            </FadeIn>
-
-            {/* Factory imagery */}
-            <FadeIn direction="right" delay={0.15}>
-              <div className="relative">
-                <motion.div
-                  className="relative overflow-hidden rounded-sm aspect-[4/5]"
-                  whileHover={{ scale: 1.02, transition: { duration: 0.4 } }}
-                >
-                  <img
-                    src={IMAGES.servicesBg}
-                    alt="Sialkot Sample Masters skilled workforce and manufacturing precision"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                    width="1200"
-                    height="1500"
-                    itemProp="image"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  {/* Overlay stamp */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="border border-gold/30 bg-black/60 backdrop-blur-sm rounded-sm px-4 py-3">
-                      <p className="text-gold font-condensed font-bold text-xs tracking-widest uppercase mb-1">
-                        Est. 2010 — Sialkot, Pakistan
-                      </p>
-                      <p className="text-white/80 text-xs leading-relaxed">
-                        250+ skilled craftspeople. 50+ industrial machines. One standard: excellence.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-                {/* Floating stat */}
-                <motion.div
-                  className="absolute -top-5 -right-5 bg-gold text-background p-4 rounded-sm shadow-xl text-center"
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <div className="text-2xl font-condensed font-bold">250+</div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest mt-0.5">Skilled<br />Craftspeople</div>
-                </motion.div>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section >
-
-      {/* ── Testimonials ── */}
-      < section className="section-padding" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            label="Client Testimonials"
-            title="Trusted by Global Brand Owners"
-            className="mb-16"
-          />
-
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-6" stagger={0.13}>
-            {testimonials.map((testimonial) => (
-              <AnimatedChild key={testimonial.name} direction="up">
-                <HoverCard className="h-full">
-                  <div className="relative bg-card border border-border rounded-sm p-6 hover:border-gold/30 transition-colors duration-300 h-full flex flex-col overflow-hidden">
-                    {/* Decorative quote mark */}
-                    <span className="quote-mark">"</span>
-                    {/* Stars */}
-                    <div className="flex items-center gap-1 mb-4 relative z-10">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-gold text-gold" />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 italic flex-1 relative z-10">
-                      "{testimonial.text}"
-                    </p>
-                    <div className="flex items-center gap-3 pt-4 border-t border-border relative z-10">
-                      <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0">
-                        <Users className="w-5 h-5 text-gold" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-foreground font-semibold text-sm">{testimonial.name}</p>
-                        <p className="text-muted-foreground text-xs">{testimonial.title}</p>
-                      </div>
-                      {/* Country + Verified badge */}
-                      <div className="flex flex-col items-end gap-1">
-                        <span className="text-lg" title={testimonial.countryName}>{testimonial.country}</span>
-                        <span className="inline-flex items-center gap-1 bg-gold/10 text-gold text-[9px] font-condensed font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm border border-gold/20">
-                          <CheckCircle className="w-2.5 h-2.5" /> Verified
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </HoverCard>
-              </AnimatedChild>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section >
-
-      {/* ── ESG Commitment Ribbon ── */}
-      < section className="relative py-20 overflow-hidden border-y border-border"
-        style={{ background: "linear-gradient(135deg, #0a0a0f 0%, #0f1015 50%, #0a0a0f 100%)" }}>
-        {/* Background gold mesh */}
-        < div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: "radial-gradient(circle at 25% 50%, oklch(0.68 0.13 72) 0%, transparent 60%), radial-gradient(circle at 75% 50%, oklch(0.68 0.13 72) 0%, transparent 60%)" }} />
-
-        < div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
-          <FadeIn className="text-center mb-12">
-            <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">
-              Our Commitment to the Future
-            </p>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-4">
-              Sustainability at{" "}
-              <span className="text-gradient-gold italic">Industrial Scale</span>
-            </h2>
-            <div className="gold-divider mx-auto" />
-          </FadeIn>
-
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-0 relative" stagger={0.12}>
-            {esgPillars.map((pillar, i) => (
-              <AnimatedChild key={pillar.title} direction="up">
-                <div className={`relative p-8 text-center ${i < esgPillars.length - 1 ? "md:border-r border-gold/10" : ""}`}>
-                  {/* Icon circle */}
-                  <div className="w-16 h-16 rounded-full border-2 border-gold/30 bg-gold/5 flex items-center justify-center mx-auto mb-5 group-hover:border-gold/60 transition-colors">
-                    <pillar.icon className="w-7 h-7 text-gold" />
-                  </div>
-                  <p className="text-gold font-condensed font-bold text-2xl mb-1">{pillar.stat}</p>
-                  <h3 className="text-white font-condensed font-bold text-lg uppercase tracking-widest mb-3">{pillar.title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed max-w-xs mx-auto">{pillar.body}</p>
+                <div className="border-l-2 border-[#ff6b00] pl-4">
+                  <div className="text-2xl font-condensed font-bold text-white">7 Days</div>
+                  <div className="text-white/50 text-sm">Sample Turnaround</div>
                 </div>
-              </AnimatedChild>
-            ))}
-          </StaggerChildren>
+                <div className="border-l-2 border-[#ff6b00] pl-4">
+                  <div className="text-2xl font-condensed font-bold text-white">ISO 9001</div>
+                  <div className="text-white/50 text-sm">Certified Quality</div>
+                </div>
+                <div className="border-l-2 border-[#ff6b00] pl-4">
+                  <div className="text-2xl font-condensed font-bold text-white">24h</div>
+                  <div className="text-white/50 text-sm">Quote Response</div>
+                </div>
+              </div>
 
-          <FadeIn className="text-center mt-10" delay={0.2}>
-            <Link href="/about#certifications">
-              <Button variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent">
-                View Our Certifications <ChevronRight className="ml-1 w-4 h-4" />
-              </Button>
-            </Link>
-          </FadeIn>
-        </div >
-      </section >
-
-      {/* ── CTA Section ── */}
-      < section
-        className="relative py-28 overflow-hidden"
-        style={{
-          backgroundImage: `url(${IMAGES.ctaBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/85" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeIn direction="down">
-            <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-4">
-              Ready to Start?
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Let's Build Your
-              <br />
-              <span className="text-gradient-gold italic">Streetwear Brand Together</span>
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
-              Get a free, no-obligation quote within 24 hours. Our B2B specialists are ready to discuss your manufacturing needs.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/rfq">
-                <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm group">
-                  Request Free Quote
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="outline" className="border-foreground/30 text-foreground hover:border-gold hover:text-gold font-condensed font-semibold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm bg-transparent">
-                  Contact Our Team
+              <Link href="/about">
+                <Button variant="outline" className="border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00] hover:text-black font-condensed font-bold uppercase tracking-wider px-8 py-3">
+                  Our Story
                 </Button>
               </Link>
             </div>
-          </FadeIn>
+          </div>
         </div>
-      </section >
-    </PageWrapper >
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          TESTIMONIALS
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-20 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]">Testimonials</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mt-3">Trusted by Brands</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-[#111111] border border-white/10 p-8 hover:border-[#ff6b00]/30 transition-colors"
+              >
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, j) => (
+                    <div key={j} className="w-2 h-2 bg-[#ff6b00]" />
+                  ))}
+                </div>
+                <p className="text-white/80 text-base leading-relaxed mb-8">"{t.quote}"</p>
+                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                  <div className="w-10 h-10 bg-[#ff6b00]/20 flex items-center justify-center text-[#ff6b00] font-bold">
+                    {t.author[0]}
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold">{t.author}</div>
+                    <div className="text-white/50 text-sm">{t.role}, {t.company}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          CTA
+          ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="py-24 bg-[#0d0d0d] relative overflow-hidden">
+        {/* Subtle pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+            backgroundSize: '48px 48px'
+          }} />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Ready to Build Your
+            <span className="block text-[#ff6b00]">Hunting Brand?</span>
+          </h2>
+          <p className="text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto">
+            Get a free quote for custom manufacturing. Low MOQ 50pcs.
+            Fast sample turnaround. Premium quality guaranteed.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/rfq">
+              <button className="bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]">
+                Request Free Quote
+              </button>
+            </Link>
+            <Link href="/contact">
+              <button className="border border-white/30 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all bg-black/30 backdrop-blur">
+                Contact Sales
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </PageWrapper>
   );
 }

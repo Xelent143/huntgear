@@ -75,23 +75,23 @@ type CheckoutForm = z.infer<typeof checkoutSchema>;
 
 function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-20">
+    <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center py-20">
       <div className="max-w-lg w-full mx-auto text-center px-4">
-        <div className="w-20 h-20 bg-gold/10 border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-6">
-          <Check className="w-10 h-10 text-gold" />
+        <div className="w-20 h-20 bg-[#ff6b00]/10 border-2 border-[#ff6b00] rounded-full flex items-center justify-center mx-auto mb-6">
+          <Check className="w-10 h-10 text-[#ff6b00]" />
         </div>
         <h1 className="font-serif text-3xl font-bold text-foreground mb-3">Order Received!</h1>
-        <p className="text-muted-foreground mb-2">Your order has been successfully placed.</p>
-        <div className="bg-secondary rounded-lg p-4 my-6 border border-border">
-          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Order Number</p>
-          <p className="font-condensed font-bold text-xl text-gold">{orderNumber}</p>
+        <p className="text-white/70 mb-2">Your order has been successfully placed.</p>
+        <div className="bg-secondary rounded-lg p-4 my-6 border border-white/10">
+          <p className="text-xs text-white/70 uppercase tracking-wider mb-1">Order Number</p>
+          <p className="font-condensed font-bold text-xl text-[#ff6b00]">{orderNumber}</p>
         </div>
-        <p className="text-muted-foreground text-sm mb-8">
+        <p className="text-white/70 text-sm mb-8">
           Our team will review your order and contact you within <strong className="text-foreground">24 hours</strong> to confirm production details, payment, and shipping timeline.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href="/shop">
-            <Button className="bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider">
+            <Button className="bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider">
               Continue Shopping
             </Button>
           </Link>
@@ -181,12 +181,12 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
+      <main className="min-h-screen bg-[#0d0d0d] flex items-center justify-center">
         <div className="text-center">
-          <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" />
+          <ShoppingBag className="w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" />
           <h2 className="font-serif text-2xl text-foreground mb-2">Your cart is empty</h2>
           <Link href="/shop">
-            <Button className="mt-4 bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider">
+            <Button className="mt-4 bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider">
               Browse Catalog
             </Button>
           </Link>
@@ -202,15 +202,15 @@ export default function Checkout() {
         description="Complete your B2B order for custom streetwear from Sialkot Sample Masters Pakistan."
       />
 
-      <main className="min-h-screen bg-background py-12">
+      <main className="min-h-screen bg-[#0d0d0d] py-12">
         <div className="container max-w-5xl">
           {/* Header */}
           <div className="mb-8">
-            <Link href="/shop" className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-4">
+            <Link href="/shop" className="flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-4">
               <ArrowLeft className="w-4 h-4" /> Back to Shop
             </Link>
             <h1 className="font-serif text-3xl font-bold text-foreground">Checkout</h1>
-            <p className="text-muted-foreground mt-1">Complete your order details below. Our team will confirm within 24 hours.</p>
+            <p className="text-white/70 mt-1">Complete your order details below. Our team will confirm within 24 hours.</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -218,50 +218,50 @@ export default function Checkout() {
             <div className="lg:col-span-3">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Contact info */}
-                <div className="bg-card border border-border rounded-xl p-6">
+                <div className="bg-[#111111] border border-white/10 rounded-xl p-6">
                   <h2 className="font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                    <span className="w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold">1</span>
                     Contact Information
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Full Name *</Label>
-                      <Input {...register("customerName")} placeholder="John Smith" className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Full Name *</Label>
+                      <Input {...register("customerName")} placeholder="John Smith" className="bg-secondary border-white/10" />
                       {errors.customerName && <p className="text-destructive text-xs mt-1">{errors.customerName.message}</p>}
                     </div>
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Email *</Label>
-                      <Input {...register("customerEmail")} type="email" placeholder="john@brand.com" className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Email *</Label>
+                      <Input {...register("customerEmail")} type="email" placeholder="john@brand.com" className="bg-secondary border-white/10" />
                       {errors.customerEmail && <p className="text-destructive text-xs mt-1">{errors.customerEmail.message}</p>}
                     </div>
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Phone</Label>
-                      <Input {...register("customerPhone")} placeholder="+1 555 000 0000" className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Phone</Label>
+                      <Input {...register("customerPhone")} placeholder="+1 555 000 0000" className="bg-secondary border-white/10" />
                     </div>
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Company Name</Label>
-                      <Input {...register("companyName")} placeholder="Your Brand LLC" className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Company Name</Label>
+                      <Input {...register("companyName")} placeholder="Your Brand LLC" className="bg-secondary border-white/10" />
                     </div>
                   </div>
                 </div>
 
                 {/* Shipping address */}
-                <div className="bg-card border border-border rounded-xl p-6">
+                <div className="bg-[#111111] border border-white/10 rounded-xl p-6">
                   <h2 className="font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                    <span className="w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold">2</span>
                     Shipping Address
                   </h2>
                   <div className="space-y-4">
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Country *</Label>
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Country *</Label>
                       <Select
                         defaultValue="US"
                         onValueChange={(val) => setValue("countryCode", val)}
                       >
-                        <SelectTrigger className="bg-secondary border-border">
+                        <SelectTrigger className="bg-secondary border-white/10">
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
-                        <SelectContent className="bg-card border-border max-h-64">
+                        <SelectContent className="bg-[#111111] border-white/10 max-h-64">
                           {COUNTRIES.map(c => (
                             <SelectItem key={c.code} value={c.code}>{c.name}</SelectItem>
                           ))}
@@ -270,36 +270,36 @@ export default function Checkout() {
                       {errors.countryCode && <p className="text-destructive text-xs mt-1">{errors.countryCode.message}</p>}
                     </div>
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Address Line 1 *</Label>
-                      <Input {...register("addressLine1")} placeholder="123 Main Street" className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Address Line 1 *</Label>
+                      <Input {...register("addressLine1")} placeholder="123 Main Street" className="bg-secondary border-white/10" />
                       {errors.addressLine1 && <p className="text-destructive text-xs mt-1">{errors.addressLine1.message}</p>}
                     </div>
                     <div>
-                      <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Address Line 2</Label>
-                      <Input {...register("addressLine2")} placeholder="Suite, Floor, etc." className="bg-secondary border-border" />
+                      <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Address Line 2</Label>
+                      <Input {...register("addressLine2")} placeholder="Suite, Floor, etc." className="bg-secondary border-white/10" />
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                       <div className="col-span-2 sm:col-span-1">
-                        <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">City *</Label>
-                        <Input {...register("city")} placeholder="New York" className="bg-secondary border-border" />
+                        <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">City *</Label>
+                        <Input {...register("city")} placeholder="New York" className="bg-secondary border-white/10" />
                         {errors.city && <p className="text-destructive text-xs mt-1">{errors.city.message}</p>}
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">State / Region</Label>
-                        <Input {...register("state")} placeholder="NY" className="bg-secondary border-border" />
+                        <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">State / Region</Label>
+                        <Input {...register("state")} placeholder="NY" className="bg-secondary border-white/10" />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-1 block">Postal Code</Label>
-                        <Input {...register("postalCode")} placeholder="10001" className="bg-secondary border-border" />
+                        <Label className="text-xs text-white/70 uppercase tracking-wider mb-1 block">Postal Code</Label>
+                        <Input {...register("postalCode")} placeholder="10001" className="bg-secondary border-white/10" />
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Payment note */}
-                <div className="bg-card border border-border rounded-xl p-6">
+                <div className="bg-[#111111] border border-white/10 rounded-xl p-6">
                   <h2 className="font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    <span className="w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold">3</span>
                     Payment Method
                   </h2>
 
@@ -309,27 +309,27 @@ export default function Checkout() {
                     className="space-y-3"
                   >
                     {/* Stripe Option */}
-                    <label htmlFor="pay-stripe" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'stripe' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`}>
+                    <label htmlFor="pay-stripe" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'stripe' ? 'border-[#ff6b00] bg-[#ff6b00]/5' : 'border-white/10 bg-secondary/50 hover:bg-secondary/80'}`}>
                       <div className="flex items-start gap-3">
                         <RadioGroupItem value="stripe" id="pay-stripe" className="mt-1" />
                         <div className="flex-1">
                           <span className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
-                            <CreditCard className="w-4 h-4 text-gold" /> Credit Card / Apple Pay
+                            <CreditCard className="w-4 h-4 text-[#ff6b00]" /> Credit Card / Apple Pay
                           </span>
-                          <p className="text-xs text-muted-foreground mt-1">Pay securely right now via Stripe. We accept all major credit cards and digital wallets.</p>
+                          <p className="text-xs text-white/70 mt-1">Pay securely right now via Stripe. We accept all major credit cards and digital wallets.</p>
                         </div>
                       </div>
                     </label>
 
                     {/* Invoice Option */}
-                    <label htmlFor="pay-invoice" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'invoice' ? 'border-gold bg-gold/5' : 'border-border bg-secondary/50 hover:bg-secondary/80'}`}>
+                    <label htmlFor="pay-invoice" className={`relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === 'invoice' ? 'border-[#ff6b00] bg-[#ff6b00]/5' : 'border-white/10 bg-secondary/50 hover:bg-secondary/80'}`}>
                       <div className="flex items-start gap-3">
                         <RadioGroupItem value="invoice" id="pay-invoice" className="mt-1" />
                         <div className="flex-1">
                           <span className="text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2">
-                            <Receipt className="w-4 h-4 text-gold" /> Pay Later via Invoice
+                            <Receipt className="w-4 h-4 text-[#ff6b00]" /> Pay Later via Invoice
                           </span>
-                          <p className="text-xs text-muted-foreground mt-1">After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise.</p>
+                          <p className="text-xs text-white/70 mt-1">After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise.</p>
                         </div>
                       </div>
                     </label>
@@ -339,7 +339,7 @@ export default function Checkout() {
                 <Button
                   type="submit"
                   disabled={createOrder.isPending}
-                  className="w-full bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider py-6 text-base"
+                  className="w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider py-6 text-base"
                 >
                   {createOrder.isPending ? (
                     <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Placing Order...</>
@@ -353,7 +353,7 @@ export default function Checkout() {
             {/* ── Right: Order Summary ── */}
             <div className="lg:col-span-2">
               <div className="sticky top-24 space-y-4">
-                <div className="bg-card border border-border rounded-xl p-5">
+                <div className="bg-[#111111] border border-white/10 rounded-xl p-5">
                   <h2 className="font-condensed font-bold uppercase tracking-wider text-foreground mb-4">Order Summary</h2>
 
                   {/* Items */}
@@ -367,7 +367,7 @@ export default function Checkout() {
                         />
                         <div className="flex-1 min-w-0">
                           <p className="text-foreground text-xs font-semibold truncate">{item.title}</p>
-                          <p className="text-muted-foreground text-xs">
+                          <p className="text-white/70 text-xs">
                             {item.quantity} pcs{item.selectedSize ? ` · ${item.selectedSize}` : ""}
                           </p>
                         </div>
@@ -383,14 +383,14 @@ export default function Checkout() {
                   {/* Totals */}
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Subtotal</span>
+                      <span className="text-white/70">Subtotal</span>
                       <span className="text-foreground font-condensed font-semibold">${subtotal().toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground flex items-center gap-1">
+                      <span className="text-white/70 flex items-center gap-1">
                         <Truck className="w-3.5 h-3.5" /> Shipping
                         {shippingData && (
-                          <span className="text-xs text-muted-foreground">({shippingData.zoneName})</span>
+                          <span className="text-xs text-white/70">({shippingData.zoneName})</span>
                         )}
                       </span>
                       <span className="text-foreground font-condensed font-semibold">
@@ -404,21 +404,21 @@ export default function Checkout() {
                       </span>
                     </div>
                     {shippingData && !shippingData.freeShipping && (
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white/70">
                         Est. delivery: {shippingData.estimatedDays.min}–{shippingData.estimatedDays.max} business days
                       </p>
                     )}
                     <Separator className="bg-border" />
                     <div className="flex justify-between text-base">
                       <span className="font-semibold text-foreground">Total</span>
-                      <span className="font-condensed font-bold text-xl text-gold">${orderTotal.toFixed(2)}</span>
+                      <span className="font-condensed font-bold text-xl text-[#ff6b00]">${orderTotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Security badges */}
-                <div className="flex items-center gap-2 text-xs text-muted-foreground justify-center">
-                  <Shield className="w-4 h-4 text-gold" />
+                <div className="flex items-center gap-2 text-xs text-white/70 justify-center">
+                  <Shield className="w-4 h-4 text-[#ff6b00]" />
                   <span>Secure order. No payment required now.</span>
                 </div>
               </div>

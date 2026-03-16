@@ -46,7 +46,7 @@ function ZoomableImage({ src, alt }: { src: string; alt: string }) {
         draggable={false}
       />
       {!zoomed && (
-        <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur border border-border text-foreground text-[10px] uppercase tracking-widest px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
+        <div className="absolute bottom-4 right-4 bg-[#0d0d0d]/90 backdrop-blur border border-white/10 text-white text-[10px] uppercase tracking-widest px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
           <ZoomIn className="w-3.5 h-3.5" /> Hover to Zoom
         </div>
       )}
@@ -59,15 +59,15 @@ function AlibabaPricingTable({ slabs, formatCurrency }: { slabs: any[], formatCu
   if (!slabs || slabs.length === 0) return null;
 
   return (
-    <div className="flex bg-secondary/20 rounded border border-border overflow-hidden mb-6 divide-x divide-border">
+    <div className="flex bg-[#161616] rounded border border-white/10 overflow-hidden mb-6 divide-x divide-border">
       {slabs.slice(0, 3).map((slab, i) => {
         const qtyLabel = slab.maxQty ? `${slab.minQty} - ${slab.maxQty}` : `≥${slab.minQty}`;
         return (
-          <div key={i} className="flex-1 py-3 px-2 text-center hover:bg-secondary/40 transition-colors">
-            <div className="text-xl sm:text-2xl font-bold text-foreground">
+          <div key={i} className="flex-1 py-3 px-2 text-center hover:bg-[#1a1a1a] transition-colors">
+            <div className="text-xl sm:text-2xl font-bold text-white">
               {formatCurrency(slab.pricePerUnit)}
             </div>
-            <div className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 whitespace-nowrap">
+            <div className="text-[10px] sm:text-xs text-white/70 mt-0.5 whitespace-nowrap">
               {qtyLabel} {slab.label || "Pieces"}
             </div>
           </div>
@@ -90,21 +90,21 @@ function SizeChartModal({ sizeChart, open, onClose }: {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl bg-background border-border p-0 overflow-hidden">
-        <DialogHeader className="p-6 border-b border-border bg-secondary/30">
-          <DialogTitle className="font-serif text-2xl text-foreground flex items-center gap-2">
-            <Ruler className="w-5 h-5 text-gold" /> Comprehensive Tech Pack Size Guide
+      <DialogContent className="max-w-3xl bg-[#0d0d0d] border-white/10 p-0 overflow-hidden">
+        <DialogHeader className="p-6 border-b border-white/10 bg-[#161616]">
+          <DialogTitle className="font-serif text-2xl text-white flex items-center gap-2">
+            <Ruler className="w-5 h-5 text-[#ff6b00]" /> Comprehensive Tech Pack Size Guide
           </DialogTitle>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-white/70 mt-1">
             All measurements in <strong>{sizeChart.unit}</strong>. {sizeChart.notes && `Note: ${sizeChart.notes}`}
           </p>
         </DialogHeader>
         <div className="overflow-x-auto p-6">
-          <table className="w-full text-sm text-left border border-border">
-            <thead className="bg-secondary/50 text-foreground border-b border-border">
+          <table className="w-full text-sm text-left border border-white/10">
+            <thead className="bg-[#161616] text-white border-b border-white/10">
               <tr>
                 {columns.map(col => (
-                  <th key={col} className="px-4 py-3 font-semibold text-xs tracking-wider uppercase whitespace-nowrap border-r border-border last:border-0">
+                  <th key={col} className="px-4 py-3 font-semibold text-xs tracking-wider uppercase whitespace-nowrap border-r border-white/10 last:border-0">
                     {col}
                   </th>
                 ))}
@@ -112,9 +112,9 @@ function SizeChartModal({ sizeChart, open, onClose }: {
             </thead>
             <tbody className="divide-y divide-border">
               {rows.map((row, i) => (
-                <tr key={i} className="hover:bg-secondary/10 transition-colors">
+                <tr key={i} className="hover:bg-[#161616]/50 transition-colors">
                   {columns.map(col => (
-                    <td key={col} className={`px-4 py-3 whitespace-nowrap border-r border-border last:border-0 ${col.toLowerCase() === "size" ? "font-bold text-foreground bg-secondary/20" : "text-muted-foreground"}`}>
+                    <td key={col} className={`px-4 py-3 whitespace-nowrap border-r border-white/10 last:border-0 ${col.toLowerCase() === "size" ? "font-bold text-white bg-[#161616]" : "text-white/70"}`}>
                       {row[col]}
                     </td>
                   ))}
@@ -173,18 +173,18 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-[#f7f8fa] dark:bg-background pt-24 pb-12">
-        <div className="max-w-[1400px] mx-auto px-4"><div className="h-[600px] bg-secondary/50 animate-pulse rounded" /></div>
+      <main className="min-h-screen bg-[#0d0d0d] pt-24 pb-12">
+        <div className="max-w-[1400px] mx-auto px-4"><div className="h-[600px] bg-[#161616] animate-pulse rounded" /></div>
       </main>
     );
   }
 
   if (!product) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
+      <main className="min-h-screen bg-[#0d0d0d] flex items-center justify-center">
         <div className="text-center">
-          <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" />
-          <h2 className="font-serif text-2xl text-foreground mb-4">Product Not Found</h2>
+          <Package className="w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" />
+          <h2 className="font-serif text-2xl text-white mb-4">Product Not Found</h2>
           <Link href="/shop"><Button variant="outline">Back to Catalog</Button></Link>
         </div>
       </main>
@@ -278,17 +278,17 @@ export default function ProductDetail() {
         })
       }} />
 
-      <main className="min-h-screen bg-[#f5f5f5] dark:bg-[#0a0a0a]">
+      <main className="min-h-screen bg-[#0d0d0d]">
         {/* Top Breadcrumb Nav */}
-        <div className="bg-white dark:bg-card border-b border-border text-xs py-3 px-4 sm:px-8">
-          <div className="max-w-[1400px] mx-auto flex items-center gap-2 text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">Home</Link>
+        <div className="bg-[#111111] border-b border-white/10 text-xs py-3 px-4 sm:px-8">
+          <div className="max-w-[1400px] mx-auto flex items-center gap-2 text-white/70">
+            <Link href="/" className="hover:text-white">Home</Link>
             <span>&gt;</span>
-            <Link href="/shop" className="hover:text-foreground">Apparel Manufacturing</Link>
+            <Link href="/shop" className="hover:text-white">Apparel Manufacturing</Link>
             <span>&gt;</span>
-            <Link href={`/shop?category=${product.category}`} className="hover:text-foreground">{product.category}</Link>
+            <Link href={`/shop?category=${product.category}`} className="hover:text-white">{product.category}</Link>
             <span>&gt;</span>
-            <span className="text-foreground font-medium truncate">{product.title}</span>
+            <span className="text-white font-medium truncate">{product.title}</span>
           </div>
         </div>
 
@@ -297,7 +297,7 @@ export default function ProductDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
             {/* COLUMN 1: Image Gallery (Left, Span 4) */}
-            <div className="lg:col-span-4 bg-white dark:bg-card p-4 rounded-md shadow-sm border border-border sticky top-24">
+            <div className="lg:col-span-4 bg-[#111111] p-4 rounded-md shadow-sm border border-white/10 sticky top-24">
               <ZoomableImage src={activeImage.imageUrl} alt={`${activeImage.altText || product.title} - Apparel Manufacturer Sialkot`} />
 
               {/* Thumbnails */}
@@ -307,10 +307,10 @@ export default function ProductDetail() {
                     <button
                       key={img.id}
                       onClick={() => setActiveImageIdx(idx)}
-                      className={`w-16 h-20 shrink-0 rounded overflow-hidden border-2 transition-all ${idx === activeImageIdx ? "border-gold" : "border-transparent opacity-60 hover:opacity-100"
+                      className={`w-16 h-20 shrink-0 rounded overflow-hidden border-2 transition-all ${idx === activeImageIdx ? "border-[#ff6b00]" : "border-transparent opacity-60 hover:opacity-100"
                         }`}
                     >
-                      <img src={img.imageUrl} alt="thumbnail" className="w-full h-full object-cover bg-secondary/50" />
+                      <img src={img.imageUrl} alt="thumbnail" className="w-full h-full object-cover bg-[#161616]" />
                     </button>
                   ))}
                 </div>
@@ -321,13 +321,13 @@ export default function ProductDetail() {
             <div className="lg:col-span-5 bg-transparent lg:px-2 space-y-6">
               {/* Header Info */}
               <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-[28px] font-bold text-foreground leading-tight mb-3">
+                <h1 className="text-2xl sm:text-3xl lg:text-[28px] font-bold text-white leading-tight mb-3">
                   {product.title}
                 </h1>
 
 
 
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                <p className="text-white/70 text-sm leading-relaxed mb-4">
                   {product.shortDescription || product.material}
                 </p>
               </div>
@@ -336,22 +336,22 @@ export default function ProductDetail() {
               {slabs.length > 0 && <AlibabaPricingTable slabs={slabs} formatCurrency={formatCurrency} />}
 
               {/* Quick Specs List */}
-              <div className="bg-white dark:bg-card p-5 rounded-md border border-border shadow-sm text-sm space-y-3">
-                <div className="grid grid-cols-3 gap-2 border-b border-border pb-3">
-                  <span className="text-muted-foreground">Material:</span>
-                  <span className="col-span-2 text-foreground font-medium">{product.material || "Custom Export Quality Blend"}</span>
+              <div className="bg-[#111111] p-5 rounded-md border border-white/10 shadow-sm text-sm space-y-3">
+                <div className="grid grid-cols-3 gap-2 border-b border-white/10 pb-3">
+                  <span className="text-white/70">Material:</span>
+                  <span className="col-span-2 text-white font-medium">{product.material || "Custom Export Quality Blend"}</span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 border-b border-border pb-3">
-                  <span className="text-muted-foreground">Min. Order:</span>
-                  <span className="col-span-2 text-foreground font-medium">{slabs[0]?.minQty || 50} Pieces</span>
+                <div className="grid grid-cols-3 gap-2 border-b border-white/10 pb-3">
+                  <span className="text-white/70">Min. Order:</span>
+                  <span className="col-span-2 text-white font-medium">{slabs[0]?.minQty || 50} Pieces</span>
                 </div>
-                <div className="grid grid-cols-3 gap-2 border-b border-border pb-3">
-                  <span className="text-muted-foreground">Lead Time:</span>
-                  <span className="col-span-2 text-foreground font-medium">7 Days (Sample) | 21 Days (Bulk)</span>
+                <div className="grid grid-cols-3 gap-2 border-b border-white/10 pb-3">
+                  <span className="text-white/70">Lead Time:</span>
+                  <span className="col-span-2 text-white font-medium">7 Days (Sample) | 21 Days (Bulk)</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  <span className="text-muted-foreground">Customization:</span>
-                  <span className="col-span-2 text-foreground font-medium">OEM/ODM, Custom Logo, Custom Tags</span>
+                  <span className="text-white/70">Customization:</span>
+                  <span className="col-span-2 text-white font-medium">OEM/ODM, Custom Logo, Custom Tags</span>
                 </div>
               </div>
             </div>
@@ -360,14 +360,14 @@ export default function ProductDetail() {
             <div className="lg:col-span-3 space-y-4">
 
               {/* Action Box */}
-              <div className="bg-white dark:bg-card border border-border rounded-md p-5 shadow-lg sticky top-24">
-                <h3 className="font-bold text-foreground mb-4 pb-2 border-b border-border">Order Requirements</h3>
+              <div className="bg-[#111111] border border-white/10 rounded-md p-5 shadow-lg sticky top-24">
+                <h3 className="font-bold text-white mb-4 pb-2 border-b border-white/10">Order Requirements</h3>
 
                 {/* Size Selection */}
                 {availableSizes.length > 0 && (
                   <div className="mb-4">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs font-semibold text-foreground">Size:</span>
+                      <span className="text-xs font-semibold text-white">Size:</span>
                       {sizeChart && (
                         <button onClick={() => setSizeChartOpen(true)} className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline">
                           View Size Guide
@@ -377,7 +377,7 @@ export default function ProductDetail() {
                     <div className="flex flex-wrap gap-1.5">
                       {availableSizes.map(size => (
                         <button key={size} onClick={() => setSelectedSize(size)}
-                          className={`min-w-[40px] px-2 py-1.5 text-xs text-center border rounded-sm transition-all ${selectedSize === size ? "border-gold bg-gold/5 text-foreground font-bold" : "border-border text-muted-foreground hover:border-foreground"
+                          className={`min-w-[40px] px-2 py-1.5 text-xs text-center border rounded-sm transition-all ${selectedSize === size ? "border-[#ff6b00] bg-[#ff6b00]/5 text-white font-bold" : "border-white/10 text-white/70 hover:border-foreground"
                             }`}>
                           {size}
                         </button>
@@ -389,11 +389,11 @@ export default function ProductDetail() {
                 {/* Color Selection */}
                 {availableColors.length > 0 && (
                   <div className="mb-4">
-                    <span className="text-xs font-semibold text-foreground block mb-2">Color Setup:</span>
+                    <span className="text-xs font-semibold text-white block mb-2">Color Setup:</span>
                     <div className="flex flex-wrap gap-1.5">
                       {availableColors.map(color => (
                         <button key={color} onClick={() => setSelectedColor(color)}
-                          className={`px-3 py-1.5 text-xs border rounded-sm transition-all ${selectedColor === color ? "border-gold bg-gold/5 text-foreground font-bold" : "border-border text-muted-foreground hover:border-foreground"
+                          className={`px-3 py-1.5 text-xs border rounded-sm transition-all ${selectedColor === color ? "border-[#ff6b00] bg-[#ff6b00]/5 text-white font-bold" : "border-white/10 text-white/70 hover:border-foreground"
                             }`}>
                           {color}
                         </button>
@@ -404,37 +404,37 @@ export default function ProductDetail() {
 
                 {/* Quantity Input */}
                 <div className="mb-6">
-                  <span className="text-xs font-semibold text-foreground block mb-2">Quantity (Pieces):</span>
-                  <div className="flex items-center border border-border rounded-sm w-full">
-                    <button onClick={() => setQuantity(q => Math.max(1, q - 10))} className="w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg">−</button>
-                    <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="flex-1 h-10 text-center bg-transparent border-x border-border text-sm font-medium focus:outline-none" min={1} />
-                    <button onClick={() => setQuantity(q => q + 10)} className="w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg">+</button>
+                  <span className="text-xs font-semibold text-white block mb-2">Quantity (Pieces):</span>
+                  <div className="flex items-center border border-white/10 rounded-sm w-full">
+                    <button onClick={() => setQuantity(q => Math.max(1, q - 10))} className="w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#1a1a1a] text-white text-lg">−</button>
+                    <input type="number" value={quantity} onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} className="flex-1 h-10 text-center bg-transparent border-x border-white/10 text-sm font-medium focus:outline-none" min={1} />
+                    <button onClick={() => setQuantity(q => q + 10)} className="w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#1a1a1a] text-white text-lg">+</button>
                   </div>
                 </div>
 
                 {/* Pricing Summary */}
-                <div className="bg-secondary/30 p-3 rounded-sm mb-6 border border-border/50">
+                <div className="bg-[#161616] p-3 rounded-sm mb-6 border border-white/5">
                   <div className="flex justify-between items-center text-sm mb-1">
-                    <span className="text-muted-foreground">Unit Price:</span>
-                    <span className="font-semibold text-foreground">{formatCurrency(unitPrice)}</span>
+                    <span className="text-white/70">Unit Price:</span>
+                    <span className="font-semibold text-white">{formatCurrency(unitPrice)}</span>
                   </div>
-                  <div className="flex justify-between items-center pt-2 mt-2 border-t border-border/50">
-                    <span className="text-foreground font-bold">Subtotal:</span>
-                    <span className="font-bold text-xl text-gold-dark dark:text-gold-light">{formatCurrency(lineTotal)}</span>
+                  <div className="flex justify-between items-center pt-2 mt-2 border-t border-white/5">
+                    <span className="text-white font-bold">Subtotal:</span>
+                    <span className="font-bold text-xl text-[#ff6b00]">{formatCurrency(lineTotal)}</span>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-2.5">
-                  <Button onClick={handleStartOrder} className="w-full bg-gold hover:bg-gold/90 text-background font-bold rounded-full py-6">
+                  <Button onClick={handleStartOrder} className="w-full bg-[#ff6b00] hover:bg-[#ff6b00]/90 text-background font-bold rounded-full py-6">
                     Start Order
                   </Button>
-                  <Button onClick={handleAddToCart} variant="outline" className="w-full border-gold text-gold hover:bg-gold/10 font-bold rounded-full py-6">
+                  <Button onClick={handleAddToCart} variant="outline" className="w-full border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10 font-bold rounded-full py-6">
                     Add to Inquiry Cart
                   </Button>
 
                   <div className="text-center mt-2">
-                    <span className="text-[10px] text-muted-foreground flex justify-center items-center gap-1">
+                    <span className="text-[10px] text-white/70 flex justify-center items-center gap-1">
                       <Lock className="w-3 h-3" /> Safe & Secure Payments
                     </span>
                   </div>
@@ -449,12 +449,12 @@ export default function ProductDetail() {
 
         {/* ─── Below the Fold: Deep Scroll Content ─── */}
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-20">
-          <div className="bg-white dark:bg-card border border-border rounded-md shadow-sm overflow-hidden">
+          <div className="bg-[#111111] border border-white/10 rounded-md shadow-sm overflow-hidden">
 
             {/* Sticky Tab Menu */}
-            <div className="flex overflow-x-auto border-b border-border bg-secondary/20 sticky top-0 z-10 scrollbar-hide">
+            <div className="flex overflow-x-auto border-b border-white/10 bg-[#161616] sticky top-0 z-10 scrollbar-hide">
               {['Product Details', 'Technical Specifications', 'Manufacturing & Factory'].map((tab, i) => (
-                <button key={tab} className={`px-6 py-4 text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${i === 0 ? "text-gold border-b-2 border-gold bg-background" : "text-muted-foreground hover:text-foreground"}`}>
+                <button key={tab} className={`px-6 py-4 text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${i === 0 ? "text-[#ff6b00] border-b-2 border-[#ff6b00] bg-[#0d0d0d]" : "text-white/70 hover:text-white"}`}>
                   {tab}
                 </button>
               ))}
@@ -465,10 +465,10 @@ export default function ProductDetail() {
               {/* DESCRIPTION SECTION */}
               {product.description && (
                 <section>
-                  <h2 className="text-xl font-bold font-serif text-foreground mb-6 flex items-center gap-2">
-                    <span className="w-1 h-6 bg-gold rounded-full"></span> Product Overview
+                  <h2 className="text-xl font-bold font-serif text-white mb-6 flex items-center gap-2">
+                    <span className="w-1 h-6 bg-[#ff6b00] rounded-full"></span> Product Overview
                   </h2>
-                  <div className="text-muted-foreground text-sm leading-8 whitespace-pre-line max-w-4xl">
+                  <div className="text-white/70 text-sm leading-8 whitespace-pre-line max-w-4xl">
                     {product.description}
                   </div>
                 </section>
@@ -476,10 +476,10 @@ export default function ProductDetail() {
 
               {/* TECHNICAL SPECIFICATIONS TAB (Tabular) */}
               <section>
-                <h2 className="text-xl font-bold font-serif text-foreground mb-6 flex items-center gap-2">
-                  <span className="w-1 h-6 bg-gold rounded-full"></span> Technical Specifications
+                <h2 className="text-xl font-bold font-serif text-white mb-6 flex items-center gap-2">
+                  <span className="w-1 h-6 bg-[#ff6b00] rounded-full"></span> Technical Specifications
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 border-t border-l border-border rounded overflow-hidden text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 border-t border-l border-white/10 rounded overflow-hidden text-sm">
                   {[
                     { label: "Product Name", value: product.title },
                     { label: "Material Composition", value: product.material || "Refer to care label" },
@@ -494,9 +494,9 @@ export default function ProductDetail() {
                     { label: "Packaging Details", value: "1pc/polybag, 50pcs/carton (Custom pkg available)" },
                     { label: "Sample Time", value: "7-10 working days" },
                   ].map((row, i) => (
-                    <div key={i} className="flex border-b border-r border-border">
-                      <div className="w-1/3 bg-secondary/40 p-3 font-semibold text-muted-foreground">{row.label}</div>
-                      <div className="w-2/3 p-3 text-foreground">{row.value}</div>
+                    <div key={i} className="flex border-b border-r border-white/10">
+                      <div className="w-1/3 bg-[#1a1a1a] p-3 font-semibold text-white/70">{row.label}</div>
+                      <div className="w-2/3 p-3 text-white">{row.value}</div>
                     </div>
                   ))}
                 </div>
@@ -505,8 +505,8 @@ export default function ProductDetail() {
               {/* MANUFACTURING STORY & INFOGRAPHIC (Redesigned) */}
               {((product as any).manufacturingStory || (product as any).manufacturingInfographic) && (
                 <section>
-                  <h2 className="text-xl font-bold font-serif text-foreground mb-8 flex items-center gap-2">
-                    <span className="w-1 h-6 bg-gold rounded-full"></span> Manufacturing Process & Capability
+                  <h2 className="text-xl font-bold font-serif text-white mb-8 flex items-center gap-2">
+                    <span className="w-1 h-6 bg-[#ff6b00] rounded-full"></span> Manufacturing Process & Capability
                   </h2>
 
                   <div className="bg-zinc-950 rounded-xl overflow-hidden shadow-2xl">
@@ -533,7 +533,7 @@ export default function ProductDetail() {
                         <div key={i} className="relative aspect-square group bg-zinc-900 overflow-hidden">
                           <img src={step.img} alt={step.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-luminosity hover:mix-blend-normal" />
                           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
-                            <div className="text-gold font-condensed font-bold text-xl leading-none">0{i + 1}</div>
+                            <div className="text-[#ff6b00] font-condensed font-bold text-xl leading-none">0{i + 1}</div>
                             <div className="text-white text-xs font-semibold uppercase tracking-wider mt-1">{step.title} Sialkot Facility</div>
                           </div>
                         </div>
@@ -544,28 +544,28 @@ export default function ProductDetail() {
               )}
 
               {/* LOGISTICS & COMPANY TRUST SIGNALS */}
-              <section className="bg-secondary/20 rounded-xl p-8 border border-border mt-12">
-                <h3 className="text-lg font-bold text-foreground mb-6 uppercase tracking-wider">Packaging & Global Delivery</h3>
+              <section className="bg-[#161616] rounded-xl p-8 border border-white/10 mt-12">
+                <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">Packaging & Global Delivery</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="flex gap-4">
-                    <Package className="w-8 h-8 text-muted-foreground shrink-0" />
+                    <Package className="w-8 h-8 text-white/70 shrink-0" />
                     <div>
                       <h4 className="font-bold text-sm mb-1">Custom Packaging</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">Poly bags, frosted zipper bags, or custom branded boxes. Insert cards and silica gels included to prevent moisture damage during transit.</p>
+                      <p className="text-xs text-white/70 leading-relaxed">Poly bags, frosted zipper bags, or custom branded boxes. Insert cards and silica gels included to prevent moisture damage during transit.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <Truck className="w-8 h-8 text-muted-foreground shrink-0" />
+                    <Truck className="w-8 h-8 text-white/70 shrink-0" />
                     <div>
                       <h4 className="font-bold text-sm mb-1">Air & Sea Freight</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">Partnered with DHL, FedEx, and major sea lines. DDP (Delivered Duty Paid) options available for US and EU markets to handle all customs.</p>
+                      <p className="text-xs text-white/70 leading-relaxed">Partnered with DHL, FedEx, and major sea lines. DDP (Delivered Duty Paid) options available for US and EU markets to handle all customs.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <Factory className="w-8 h-8 text-muted-foreground shrink-0" />
+                    <Factory className="w-8 h-8 text-white/70 shrink-0" />
                     <div>
                       <h4 className="font-bold text-sm mb-1">Factory Direct</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">No middlemen. Manufactured in our Sialkot facility and shipped directly to your warehouse. Full supply chain transparency.</p>
+                      <p className="text-xs text-white/70 leading-relaxed">No middlemen. Manufactured in our Sialkot facility and shipped directly to your warehouse. Full supply chain transparency.</p>
                     </div>
                   </div>
                 </div>

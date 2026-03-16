@@ -6,7 +6,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-card border-t border-border text-left">
+    <footer className="bg-[#0d0d0d] border-t border-white/10 text-left">
       {/* ── Pre-footer CTA Strip ── */}
       <div className="bg-foreground text-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -21,7 +21,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <Link href="/rfq">
-                <button className="flex items-center gap-2 bg-gold text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-gold/90 transition-colors shadow-lg shadow-gold/20 group">
+                <button className="flex items-center gap-2 bg-[#ff6b00] text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-[#ff6b00]/90 transition-colors shadow-lg shadow-[#ff6b00]/20 group">
                   Request Free Quote
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -40,7 +40,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer - Dark Professional Theme */}
-      <div className="bg-[#0a0a0a] border-t border-border/50 pt-20 pb-10 text-left">
+      <div className="bg-[#0a0a0a] border-t border-white/5 pt-20 pb-10 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 items-start">
 
@@ -49,39 +49,39 @@ export default function Footer() {
               <Link href="/" className="flex items-center gap-3 mb-6">
                 <img
                   src={IMAGES.logoGold}
-                  alt="Sialkot Sample Masters Logo"
+                  alt="Xelent Huntgear Logo"
                   className="h-12 w-auto object-contain"
                 />
                 <div>
-                  <span className="text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Sialkot Sample</span>
-                  <span className="text-gold font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Masters</span>
+                  <span className="text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Xelent</span>
+                  <span className="text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Masters</span>
                 </div>
               </Link>
-              <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
-                Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, streetwear, tactical gear, and martial arts uniforms for global brands.
+              <p className="text-white/85 text-sm leading-relaxed mb-8 max-w-sm">
+                Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, technical apparel, tactical gear, and martial arts uniforms for global brands.
               </p>
 
               {/* Trust Badges */}
               <div className="flex flex-wrap gap-3 mb-8">
                 <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
-                  <span className="text-gold text-xs">🏅</span>
-                  <span className="text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase">ISO 9001:2015</span>
+                  <span className="text-[#ff6b00] text-xs">🏅</span>
+                  <span className="text-white text-[10px] font-condensed font-bold tracking-widest uppercase">ISO 9001:2015</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
                   <span className="text-green-500 text-xs">🌱</span>
-                  <span className="text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase">Eco-Friendly</span>
+                  <span className="text-white text-[10px] font-condensed font-bold tracking-widest uppercase">Eco-Friendly</span>
                 </div>
               </div>
 
               {/* Socials */}
               <div className="flex items-center gap-3">
-                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1">
                   <Instagram className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1">
                   <Linkedin className="w-4 h-4" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1">
+                <a href="#" className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1">
                   <Facebook className="w-4 h-4" />
                 </a>
               </div>
@@ -90,7 +90,7 @@ export default function Footer() {
             {/* Column 2: Manufacturing (Col Span 2) */}
             <div className="lg:col-span-2">
               <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 bg-gold inline-block"></span> Capabilities
+                <span className="w-2 h-2 bg-[#ff6b00] inline-block"></span> Capabilities
               </h3>
               <ul className="space-y-3">
                 {[
@@ -102,7 +102,7 @@ export default function Footer() {
                   "Tech Pack Design",
                 ].map((item) => (
                   <li key={item}>
-                    <Link href="/services" className="text-white/60 hover:text-gold text-sm transition-colors block">
+                    <Link href="/services" className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors block">
                       {item}
                     </Link>
                   </li>
@@ -113,7 +113,7 @@ export default function Footer() {
             {/* Column 3: Apparel Lines (Col Span 2) */}
             <div className="lg:col-span-2">
               <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 bg-gold inline-block"></span> Apparel Lines
+                <span className="w-2 h-2 bg-[#ff6b00] inline-block"></span> Apparel Lines
               </h3>
               <ul className="space-y-3">
                 {[
@@ -124,7 +124,7 @@ export default function Footer() {
                   { label: "Security Uniforms", href: "/products#security" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="text-white/60 hover:text-gold text-sm transition-colors block">
+                    <Link href={item.href} className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors block">
                       {item.label}
                     </Link>
                   </li>
@@ -135,29 +135,29 @@ export default function Footer() {
             {/* Column 4: Contact & Factory (Col Span 4) */}
             <div className="lg:col-span-4">
               <h3 className="text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 bg-gold inline-block"></span> Global Headquarters
+                <span className="w-2 h-2 bg-[#ff6b00] inline-block"></span> Global Headquarters
               </h3>
 
               <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-5">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-gold" />
+                  <div className="w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0">
+                    <MapPin className="w-4 h-4 text-[#ff6b00]" />
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-1">Factory Location</p>
-                    <p className="text-white/60 text-sm leading-relaxed">Sialkot Industrial Estate,<br />Sialkot 51310, Punjab, Pakistan</p>
+                    <p className="text-white/85 text-sm leading-relaxed">Sialkot Industrial Estate,<br />Sialkot 51310, Punjab, Pakistan</p>
                   </div>
                 </div>
 
                 <div className="w-full h-px bg-white/10" />
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-4 h-4 text-gold" />
+                  <div className="w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4 text-[#ff6b00]" />
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-1">Direct Sales / WhatsApp</p>
-                    <a href="tel:+923022922242" className="text-white/60 hover:text-gold text-sm transition-colors">
+                    <a href="tel:+923022922242" className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors">
                       +92 302 292 2242
                     </a>
                   </div>
@@ -166,12 +166,12 @@ export default function Footer() {
                 <div className="w-full h-px bg-white/10" />
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 text-gold" />
+                  <div className="w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0">
+                    <Mail className="w-4 h-4 text-[#ff6b00]" />
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-1">Email inquiries</p>
-                    <a href="mailto:info@sialkotsamplemasters.com" className="text-white/60 hover:text-gold text-sm transition-colors">
+                    <a href="mailto:info@sialkotsamplemasters.com" className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors">
                       info@sialkotsamplemasters.com
                     </a>
                   </div>
@@ -185,17 +185,17 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/40 text-xs font-medium tracking-wide">
-              © {currentYear} Sialkot Sample Masters. A globally recognized apparel manufacturer. All rights reserved.
+            <p className="text-white/60 text-xs font-medium tracking-wide">
+              © {currentYear} Xelent Huntgear. Premium Hunting Apparel Manufacturer. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <Link href="/privacy" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
+              <Link href="/privacy" className="text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
+              <Link href="/terms" className="text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors">
                 Terms of Manufacturing
               </Link>
-              <Link href="/shipping" className="text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors">
+              <Link href="/shipping" className="text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors">
                 Shipping & Returns
               </Link>
             </div>

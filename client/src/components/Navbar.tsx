@@ -21,7 +21,7 @@ function AnnouncementBar() {
 
   return (
     <motion.div
-      className="announcement-bar relative overflow-hidden"
+      className="relative overflow-hidden bg-[#0d0d0d] border-b border-white/10"
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: "auto", opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
@@ -29,20 +29,20 @@ function AnnouncementBar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-4 text-xs">
         <div className="flex items-center gap-2 text-center">
-          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
-          <span className="text-white/80">
-            <span className="text-gold font-semibold">Now Accepting Orders for SS2026</span>
-            {" — "}Sample turnaround in 7 days. Worldwide shipping available.
+          <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00] animate-pulse shrink-0" />
+          <span className="text-white/90">
+            <span className="text-[#ff6b00] font-semibold">New Fall/Winter Hunting Collection</span>
+            {" — "}Field-tested gear with 7-day sample turnaround
           </span>
           <Link href="/rfq">
-            <span className="hidden sm:inline-flex items-center gap-1 text-gold font-condensed font-bold uppercase tracking-wider hover:text-gold-light transition-colors cursor-pointer group">
+            <span className="hidden sm:inline-flex items-center gap-1 text-[#ff6b00] font-condensed font-bold uppercase tracking-wider hover:text-[#ff8533] transition-colors cursor-pointer group">
               Request a Sample Kit <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
           </Link>
         </div>
         <button
           onClick={dismiss}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors p-1"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1"
           aria-label="Dismiss announcement"
         >
           <X className="w-3.5 h-3.5" />
@@ -58,7 +58,7 @@ function AnnouncementBar() {
 const productCategories = [
   { name: "Sportswear & Team Kits", image: IMAGES.catSports, href: "/products#sportswear", tag: "Athletic" },
   { name: "Hunting Wear", image: IMAGES.catHunting, href: "/products#hunting-wear", tag: "MIL-SPEC" },
-  { name: "Streetwear", image: IMAGES.catStreetwear, href: "/products#streetwear", tag: "Lifestyle" },
+  { name: "Technical Apparel", image: IMAGES.catHuntingGear, href: "/products#technical-gear", tag: "Lifestyle" },
   { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/products#security-uniforms", tag: "Guard" },
   { name: "Tech Wear", image: IMAGES.catTechwear, href: "/products#techwear", tag: "Utility" },
   { name: "Ski Wear", image: IMAGES.catSki, href: "/products#ski-wear", tag: "Alpine" },
@@ -66,11 +66,11 @@ const productCategories = [
 
 // ── Megamenu: Company links ────────────────────────────────────────────────────
 const companyLinks = [
-  { label: "About Us", href: "/about", icon: Award, desc: "Our story, certifications & values" },
-  { label: "Our Services", href: "/services", icon: Factory, desc: "Manufacturing, private label, design" },
-  { label: "Create Tech Pack", href: "/tech-pack", icon: Factory, desc: "Free online spec builder" },
-  { label: "Portfolio", href: "/portfolio", icon: Globe, desc: "Completed work for global brands" },
-  { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Industry news & manufacturing guides" },
+  { label: "About Us", href: "/about", icon: Award, desc: "Heritage, mission & values" },
+  { label: "Our Services", href: "/services", icon: Factory, desc: "Custom hunting gear solutions" },
+  { label: "Create Tech Pack", href: "/tech-pack", icon: Factory, desc: "Build your gear specs" },
+  { label: "Portfolio", href: "/portfolio", icon: Globe, desc: "Field-proven products" },
+  { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Hunting tips & gear guides" },
 ];
 
 type MegamenuKey = "company" | "products" | null;
@@ -93,17 +93,19 @@ function ProductsMegamenu({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-card border border-border shadow-2xl shadow-foreground/10 rounded-sm overflow-hidden"
+      className="absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden"
       style={{ zIndex: 200 }}
     >
+      {/* Invisible hit bridge to prevent menu from closing when moving mouse from button to menu */}
+      <div className="absolute -top-3 left-0 right-0 h-3 pointer-events-auto" />
       {/* Header row */}
-      <div className="bg-secondary/60 px-6 py-3 border-b border-border flex items-center justify-between">
+      <div className="bg-[#161616] px-6 py-3 border-b border-white/10 flex items-center justify-between">
         <div>
-          <p className="font-condensed font-bold text-xs tracking-widest uppercase text-gold">Product Catalog</p>
-          <p className="text-foreground text-sm font-semibold">Premium Custom Apparel Categories</p>
+          <p className="font-condensed font-bold text-xs tracking-widest uppercase text-[#ff6b00]">Product Catalog</p>
+          <p className="text-white text-sm font-semibold">Premium Hunting Gear Categories</p>
         </div>
         <Link href="/products" onClick={onClose}>
-          <Button size="sm" className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1">
+          <Button size="sm" className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1">
             View All <ArrowRight className="w-3 h-3" />
           </Button>
         </Link>
@@ -114,7 +116,7 @@ function ProductsMegamenu({ onClose }: { onClose: () => void }) {
         {productCategories.map((cat) => (
           <Link key={cat.href} href={cat.href} onClick={onClose}>
             <div className="group relative overflow-hidden rounded-sm cursor-pointer m-1">
-              <div className="aspect-[3/4] overflow-hidden bg-secondary">
+              <div className="aspect-[3/4] overflow-hidden bg-[#0d0d0d]">
                 <img
                   src={cat.image}
                   alt={cat.name}
@@ -123,12 +125,12 @@ function ProductsMegamenu({ onClose }: { onClose: () => void }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               </div>
               {/* Tag */}
-              <div className="absolute top-2 left-2 bg-gold text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm">
+              <div className="absolute top-2 left-2 bg-[#ff6b00] text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm">
                 {cat.tag}
               </div>
               {/* Name */}
               <div className="absolute bottom-0 left-0 right-0 p-2">
-                <p className="text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-gold transition-colors">
+                <p className="text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-[#ff6b00] transition-colors">
                   {cat.name}
                 </p>
               </div>
@@ -138,10 +140,10 @@ function ProductsMegamenu({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* Footer strip */}
-      <div className="bg-secondary/40 border-t border-border px-6 py-2.5 flex items-center gap-6 text-xs text-muted-foreground">
+      <div className="bg-[#161616]/40 border-t border-white/10 px-6 py-2.5 flex items-center gap-6 text-xs text-white/70">
         {["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => (
           <span key={item} className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00]" />
             {item}
           </span>
         ))}
@@ -158,32 +160,34 @@ function CompanyMegamenu({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-0 w-72 bg-card border border-border shadow-2xl shadow-foreground/10 rounded-sm overflow-hidden"
+      className="absolute top-full left-0 w-72 bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden"
       style={{ zIndex: 200 }}
     >
+      {/* Invisible hit bridge to prevent menu from closing when moving mouse from button to menu */}
+      <div className="absolute -top-3 left-0 right-0 h-3 pointer-events-auto" />
       <div className="p-1">
         {companyLinks.map((link) => {
           const Icon = link.icon;
           return (
             <Link key={link.href} href={link.href} onClick={onClose}>
-              <div className="group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors cursor-pointer">
-                <div className="w-9 h-9 rounded-sm bg-secondary flex items-center justify-center shrink-0 group-hover:bg-gold/15 transition-colors">
-                  <Icon className="w-4 h-4 text-gold" />
+              <div className="group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-[#ff6b00]/5 transition-colors cursor-pointer">
+                <div className="w-9 h-9 rounded-sm bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/15 transition-colors">
+                  <Icon className="w-4 h-4 text-[#ff6b00]" />
                 </div>
                 <div>
-                  <p className="font-condensed font-bold text-sm text-foreground uppercase tracking-wide group-hover:text-gold transition-colors">
+                  <p className="font-condensed font-bold text-sm text-white uppercase tracking-wide group-hover:text-[#ff6b00] transition-colors">
                     {link.label}
                   </p>
-                  <p className="text-xs text-muted-foreground leading-tight">{link.desc}</p>
+                  <p className="text-xs text-white/60 leading-tight">{link.desc}</p>
                 </div>
               </div>
             </Link>
           );
         })}
       </div>
-      <div className="border-t border-border px-4 py-3">
+      <div className="border-t border-white/10 px-4 py-3">
         <Link href="/rfq" onClick={onClose}>
-          <button className="w-full text-xs font-condensed font-bold uppercase tracking-widest text-gold hover:text-gold-light transition-colors flex items-center justify-center gap-1 py-1">
+          <button className="w-full text-xs font-condensed font-bold uppercase tracking-widest text-[#ff6b00] hover:text-[#ff6b00]-light transition-colors flex items-center justify-center gap-1 py-1">
             Get a Free Quote <ArrowRight className="w-3 h-3" />
           </button>
         </Link>
@@ -199,12 +203,12 @@ function CartIconButton() {
   return (
     <button
       onClick={openCart}
-      className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
+      className="relative p-2 text-white/60 hover:text-white transition-colors"
       aria-label="Open cart"
     >
       <ShoppingCart className="w-5 h-5" />
       {totalQty > 0 && (
-        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#ff6b00] text-black text-[10px] font-bold rounded-full flex items-center justify-center">
           {totalQty > 9 ? "9+" : totalQty}
         </span>
       )}
@@ -239,7 +243,7 @@ export default function Navbar() {
   };
 
   const handleMouseLeave = () => {
-    closeTimer.current = setTimeout(() => setActiveMegamenu(null), 150);
+    closeTimer.current = setTimeout(() => setActiveMegamenu(null), 200);
   };
 
   const closeMegamenu = () => setActiveMegamenu(null);
@@ -250,8 +254,8 @@ export default function Navbar() {
       <nav
         ref={menuRef}
         className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
-          ? "bg-background/98 backdrop-blur-xl shadow-lg shadow-foreground/8 border-b border-border"
-          : "bg-background/95 backdrop-blur-md border-b border-border"
+          ? "bg-[#0a0a0a]/98 backdrop-blur-xl border-b border-white/10"
+          : "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/10"
           }`}
       >
 
@@ -278,15 +282,15 @@ export default function Navbar() {
                     onMouseLeave={handleMouseLeave}
                   >
                     <button
-                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors relative group ${activeMegamenu === link.megamenu ? "text-gold" : "text-muted-foreground hover:text-foreground"
+                      className={`flex items-center gap-1 px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors relative group ${activeMegamenu === link.megamenu ? "text-[#ff6b00]" : "text-white/70 hover:text-white"
                         }`}
                     >
                       {link.label}
                       <ChevronDown
-                        className={`w-3 h-3 transition-transform duration-200 ${activeMegamenu === link.megamenu ? "rotate-180 text-gold" : ""}`}
+                        className={`w-3 h-3 transition-transform duration-200 ${activeMegamenu === link.megamenu ? "rotate-180 text-[#ff6b00]" : ""}`}
                       />
                       {/* Animated underline */}
-                      <span className={`absolute bottom-0 left-4 right-4 h-px bg-gold origin-left transition-transform duration-300 ${activeMegamenu === link.megamenu ? "scale-x-100" : "scale-x-0"
+                      <span className={`absolute bottom-0 left-4 right-4 h-px bg-[#ff6b00] origin-left transition-transform duration-300 ${activeMegamenu === link.megamenu ? "scale-x-100" : "scale-x-0"
                         }`} />
                     </button>
 
@@ -309,12 +313,12 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href!}
-                    className={`relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors group ${location === link.href ? "text-gold" : "text-muted-foreground hover:text-foreground"
+                    className={`relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors group ${location === link.href ? "text-[#ff6b00]" : "text-white/70 hover:text-white"
                       }`}
                   >
                     {link.label}
                     {/* Animated underline */}
-                    <span className={`absolute bottom-0 left-4 right-4 h-px bg-gold origin-left transition-transform duration-300 ${location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    <span className={`absolute bottom-0 left-4 right-4 h-px bg-[#ff6b00] origin-left transition-transform duration-300 ${location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`} />
                   </Link>
                 )
@@ -325,7 +329,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3 shrink-0">
               <CartIconButton />
               <Link href="/rfq">
-                <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-gold/20 hover:shadow-gold/30 transition-all">
+                <Button className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-[#ff6b00]/20 hover:shadow-[#ff6b00]/30 transition-all">
                   Get a Quote
                 </Button>
               </Link>
@@ -335,7 +339,7 @@ export default function Navbar() {
             <div className="lg:hidden flex items-center gap-2">
               <CartIconButton />
               <button
-                className="text-foreground p-2"
+                className="text-white p-2"
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle menu"
               >
@@ -364,23 +368,23 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="lg:hidden absolute top-full left-0 w-full bg-background border-t border-border shadow-2xl h-[calc(100vh-80px)] overflow-y-auto"
+              className="lg:hidden absolute top-full left-0 w-full bg-[#0a0a0a] border-t border-white/10 shadow-2xl shadow-black/50 h-[calc(100vh-80px)] overflow-y-auto"
             >
               <div className="px-6 py-8 space-y-8 pb-32">
                 {/* Company section */}
                 <div className="space-y-4">
-                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3">Company</p>
+                  <p className="text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3">Company</p>
                   <div className="grid gap-2">
                     {companyLinks.map((link) => {
                       const Icon = link.icon;
                       return (
-                        <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className="flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 text-foreground transition-all group active:scale-[0.98]">
-                          <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shrink-0 group-hover:bg-gold/10 transition-colors shadow-inner">
-                            <Icon className="w-5 h-5 text-gold" />
+                        <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className="flex items-center gap-4 p-3 hover:bg-[#161616] text-white transition-all group active:scale-[0.98]">
+                          <div className="w-12 h-12 bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/20 transition-colors">
+                            <Icon className="w-5 h-5 text-[#ff6b00]" />
                           </div>
                           <div>
-                            <span className="block text-sm font-black uppercase tracking-widest group-hover:text-gold transition-colors">{link.label}</span>
-                            <span className="block text-xs text-muted-foreground mt-1 opacity-80">{link.desc}</span>
+                            <span className="block text-sm font-black uppercase tracking-widest group-hover:text-[#ff6b00] transition-colors">{link.label}</span>
+                            <span className="block text-xs text-white/50 mt-1">{link.desc}</span>
                           </div>
                         </Link>
                       );
@@ -390,7 +394,7 @@ export default function Navbar() {
 
                 {/* Quick Links */}
                 <div className="space-y-4 pt-4">
-                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3">Quick Links</p>
+                  <p className="text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3">Quick Links</p>
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { label: "Home", href: "/" },
@@ -404,7 +408,7 @@ export default function Navbar() {
                         key={link.href}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`flex justify-center items-center text-center p-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-gold/10 text-gold border border-gold/20" : "bg-card border border-border/50 hover:border-gold/30 hover:bg-secondary text-foreground"
+                        className={`flex justify-center items-center text-center p-4 text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"
                           }`}
                       >
                         {link.label}
@@ -416,7 +420,7 @@ export default function Navbar() {
                 {/* CTA */}
                 <div className="pt-6">
                   <Link href="/rfq" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full h-14 bg-gold text-black hover:bg-gold/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]">
+                    <Button className="w-full h-14 bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]">
                       Get a Free Quote
                     </Button>
                   </Link>

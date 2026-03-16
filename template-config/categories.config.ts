@@ -1,6 +1,6 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
- * PRODUCT CATEGORIES CONFIGURATION
+ * PRODUCT CATEGORIES CONFIGURATION - XELENT HUNTGEAR
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
  * Define your product categories and subcategories here.
@@ -39,206 +39,161 @@ export interface Category {
 
 export const CATEGORIES_CONFIG: Category[] = [
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 1: SKI WEAR
+  // CATEGORY 1: HUNTING JACKETS
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "ski-wear",
-    name: "Ski Wear",
-    slug: "ski-wear",
-    description: "Technical alpine apparel for skiing and snowboarding",
-    icon: "⛷️",
+    id: "hunting-jackets",
+    name: "Hunting Jackets",
+    slug: "hunting-jackets",
+    description: "Waterproof, insulated, and camouflage hunting jackets for all weather conditions",
+    icon: "🧥",
     showInNav: true,
     sortOrder: 1,
     seo: {
-      title: "Custom Ski Wear Manufacturer | Jackets, Pants & Base Layers | Sialkot Pakistan",
-      description: "Premium custom ski wear manufacturing. Waterproof ski jackets, insulated pants, base layers. Low MOQ 50pcs. B2B export to USA, Europe. 20K/20K waterproof ratings.",
-      keywords: "custom ski wear manufacturer, ski jacket manufacturer Pakistan, snow pants supplier, base layer manufacturer, alpine apparel manufacturer, ski wear wholesale",
+      title: "Custom Hunting Jackets Manufacturer | Camo & Waterproof | Xelent Huntgear Pakistan",
+      description: "Premium custom hunting jackets manufacturing. Waterproof camo jackets, insulated parkas, softshell jackets. Low MOQ 50pcs. B2B export to USA, Europe, Australia.",
+      keywords: "custom hunting jacket manufacturer, camo jacket supplier, waterproof hunting jacket Pakistan, insulated parka manufacturer, hunting apparel wholesale",
     },
     subCategories: [
-      { id: "ski-jackets", name: "Ski Jackets", slug: "ski-jackets", description: "Waterproof insulated jackets" },
-      { id: "ski-pants", name: "Ski Pants", slug: "ski-pants", description: "Snow pants and bibs" },
-      { id: "base-layers", name: "Base Layers", slug: "base-layers", description: "Thermal underlayers" },
-      { id: "mid-layers", name: "Mid Layers", slug: "mid-layers", description: "Fleeces and insulated mid-layers" },
-      { id: "ski-suits", name: "Ski Suits", slug: "ski-suits", description: "One-piece snowsuits" },
-      { id: "ski-accessories", name: "Accessories", slug: "ski-accessories", description: "Gloves, beanies, neck warmers" },
+      { id: "camo-jackets", name: "Camo Jackets", slug: "camo-jackets", description: "Camouflage pattern hunting jackets" },
+      { id: "waterproof-jackets", name: "Waterproof Jackets", slug: "waterproof-jackets", description: "Rainproof hunting outerwear" },
+      { id: "insulated-parkas", name: "Insulated Parkas", slug: "insulated-parkas", description: "Heavy winter hunting coats" },
+      { id: "softshell-jackets", name: "Softshell Jackets", slug: "softshell-jackets", description: "Lightweight flexible jackets" },
+      { id: "blaze-orange", name: "Blaze Orange", slug: "blaze-orange", description: "High-visibility safety jackets" },
+      { id: "vests", name: "Hunting Vests", slug: "vests", description: "Game and tactical vests" },
     ],
   },
   
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 2: SPORTS WEAR
+  // CATEGORY 2: HUNTING PANTS & BIBS
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "sports-wear",
-    name: "Sports Wear",
-    slug: "sports-wear",
-    description: "High-performance athletic apparel",
-    icon: "⚽",
+    id: "hunting-pants",
+    name: "Hunting Pants",
+    slug: "hunting-pants",
+    description: "Durable cargo pants, bibs, and trousers for hunting and outdoor activities",
+    icon: "👖",
     showInNav: true,
     sortOrder: 2,
     seo: {
-      title: "Custom Sportswear Manufacturer | Team Jerseys & Athletic Wear | Sialkot",
-      description: "High-performance custom sportswear manufacturing. Soccer kits, basketball jerseys, compression wear. Sublimation printing. MOQ from 50 pieces. Export quality.",
-      keywords: "custom sportswear manufacturer, team jersey supplier, soccer kit manufacturer, basketball jersey Pakistan, compression wear manufacturer, athletic apparel supplier",
+      title: "Custom Hunting Pants Manufacturer | Cargo & Bibs | Xelent Huntgear Pakistan",
+      description: "High-quality custom hunting pants manufacturing. Waterproof cargo pants, insulated bibs, tactical trousers. Durable fabrics. MOQ from 50 pieces.",
+      keywords: "custom hunting pants manufacturer, cargo pants supplier, hunting bib manufacturer Pakistan, tactical trousers, outdoor apparel wholesale",
     },
     subCategories: [
-      { id: "jerseys", name: "Jerseys", slug: "jerseys", description: "Team and custom jerseys" },
-      { id: "shorts", name: "Shorts", slug: "shorts", description: "Athletic shorts" },
-      { id: "compression", name: "Compression Wear", slug: "compression", description: "Base layers and compression gear" },
-      { id: "training-tops", name: "Training Tops", slug: "training-tops", description: "T-shirts and tanks" },
-      { id: "tracksuits", name: "Tracksuits", slug: "tracksuits", description: "Warm-up suits" },
-      { id: "team-kits", name: "Team Kits", slug: "team-kits", description: "Complete team uniforms" },
+      { id: "cargo-pants", name: "Cargo Pants", slug: "cargo-pants", description: "Multi-pocket hunting trousers" },
+      { id: "bib-overalls", name: "Bib Overalls", slug: "bib-overalls", description: "Insulated hunting bibs" },
+      { id: "waterproof-pants", name: "Waterproof Pants", slug: "waterproof-pants", description: "Rain gear bottoms" },
+      { id: "softshell-pants", name: "Softshell Pants", slug: "softshell-pants", description: "Flexible movement pants" },
+      { id: "convertible-pants", name: "Convertible Pants", slug: "convertible-pants", description: "Zip-off shorts/pants" },
+      { id: "base-layer-bottoms", name: "Base Layer Bottoms", slug: "base-layer-bottoms", description: "Thermal underwear pants" },
     ],
   },
   
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 3: HUNTING WEAR
+  // CATEGORY 3: CAMOUFLAGE GEAR
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "hunting-wear",
-    name: "Hunting Wear",
-    slug: "hunting-wear",
-    description: "Tactical and camouflage outdoor gear",
-    icon: "🦌",
+    id: "camo-gear",
+    name: "Camo Gear",
+    slug: "camo-gear",
+    description: "Full camouflage clothing and accessories for concealment",
+    icon: "🌿",
     showInNav: true,
     sortOrder: 3,
     seo: {
-      title: "Custom Hunting Wear Manufacturer | Camo Apparel & Tactical Gear | Sialkot",
-      description: "Tactical hunting wear manufacturing. Custom camo patterns, waterproof jackets, cargo pants. Silent fabric technology. B2B wholesale. Low MOQ options.",
-      keywords: "hunting wear manufacturer, camo apparel supplier, tactical gear manufacturer Pakistan, hunting jacket supplier, waterproof hunting gear, custom camo clothing",
+      title: "Custom Camo Gear Manufacturer | Camouflage Clothing | Xelent Huntgear Pakistan",
+      description: "Custom camouflage apparel manufacturing. Digital camo, woodland, desert patterns. Ghillie suits, camo accessories. Low MOQ. Export quality.",
+      keywords: "custom camo manufacturer, camouflage clothing supplier, digital camo Pakistan, ghillie suit manufacturer, camo gear wholesale",
     },
     subCategories: [
-      { id: "hunting-jackets", name: "Hunting Jackets", slug: "hunting-jackets", description: "Waterproof camo jackets" },
-      { id: "hunting-pants", name: "Hunting Pants", slug: "hunting-pants", description: "Cargo and field pants" },
-      { id: "hunting-vests", name: "Vests", slug: "hunting-vests", description: "Tactical and game vests" },
-      { id: "camo-gear", name: "Camo Gear", slug: "camo-gear", description: "Camouflage apparel" },
-      { id: "hunting-base", name: "Base Layers", slug: "hunting-base", description: "Scent-control underlayers" },
-      { id: "blaze-orange", name: "Blaze Orange", slug: "blaze-orange", description: "High-vis safety gear" },
+      { id: "woodland-camo", name: "Woodland Camo", slug: "woodland-camo", description: "Traditional forest patterns" },
+      { id: "digital-camo", name: "Digital Camo", slug: "digital-camo", description: "Modern pixelated patterns" },
+      { id: "desert-camo", name: "Desert Camo", slug: "desert-camo", description: "Arid environment patterns" },
+      { id: "snow-camo", name: "Snow Camo", slug: "snow-camo", description: "Winter white patterns" },
+      { id: "ghillie-suits", name: "Ghillie Suits", slug: "ghillie-suits", description: "Full concealment suits" },
+      { id: "camo-accessories", name: "Camo Accessories", slug: "camo-accessories", description: "Hats, gloves, face paint" },
     ],
   },
   
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 4: STREETWEAR
+  // CATEGORY 4: HUNTING SHIRTS
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "streetwear",
-    name: "Streetwear",
-    slug: "streetwear",
-    description: "Urban fashion and lifestyle apparel",
+    id: "hunting-shirts",
+    name: "Hunting Shirts",
+    slug: "hunting-shirts",
+    description: "Performance hunting shirts, flannels, and base layers",
     icon: "👕",
     showInNav: true,
     sortOrder: 4,
     seo: {
-      title: "Custom Streetwear Manufacturer | Hoodies, Tees & Joggers | Sialkot Pakistan",
-      description: "Premium streetwear manufacturing. 450GSM hoodies, vintage wash tees, cargo pants. OEM & private label. Low MOQ 50pcs. Fast turnaround for brands.",
-      keywords: "custom streetwear manufacturer, hoodie manufacturer Pakistan, t-shirt supplier, cargo pants manufacturer, vintage wash clothing, streetwear wholesale",
+      title: "Custom Hunting Shirts Manufacturer | Flannel & Performance | Xelent Huntgear",
+      description: "Custom hunting shirts manufacturing. Performance flannels, moisture-wicking shirts, thermal base layers. Scent control technology. B2B export.",
+      keywords: "custom hunting shirt manufacturer, flannel shirt supplier, performance hunting shirt Pakistan, base layer manufacturer, outdoor apparel",
     },
     subCategories: [
-      { id: "hoodies", name: "Hoodies", slug: "hoodies", description: "Pullover and zip hoodies" },
-      { id: "t-shirts", name: "T-Shirts", slug: "t-shirts", description: "Graphic and plain tees" },
-      { id: "sweatshirts", name: "Sweatshirts", slug: "sweatshirts", description: "Crew neck sweatshirts" },
-      { id: "joggers", name: "Joggers", slug: "joggers", description: "Sweatpants and joggers" },
-      { id: "cargo-pants", name: "Cargo Pants", slug: "cargo-pants", description: "Utility cargo pants" },
-      { id: "bomber-jackets", name: "Bomber Jackets", slug: "bomber-jackets", description: "MA-1 and varsity jackets" },
+      { id: "flannel-shirts", name: "Flannel Shirts", slug: "flannel-shirts", description: "Heavy cotton flannels" },
+      { id: "performance-shirts", name: "Performance Shirts", slug: "performance-shirts", description: "Moisture-wicking tops" },
+      { id: "long-sleeve", name: "Long Sleeve", slug: "long-sleeve", description: "Sun protection shirts" },
+      { id: "base-layer-tops", name: "Base Layer Tops", slug: "base-layer-tops", description: "Thermal underwear tops" },
+      { id: "hunting-polo", name: "Hunting Polo", slug: "hunting-polo", description: "Quick-dry polo shirts" },
+      { id: "quarter-zip", name: "Quarter Zip", slug: "quarter-zip", description: "Mid-layer pullovers" },
     ],
   },
   
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 5: TECH WEAR
+  // CATEGORY 5: OUTDOOR ACCESSORIES
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "tech-wear",
-    name: "Tech Wear",
-    slug: "tech-wear",
-    description: "Functional urban technical apparel",
-    icon: "🔧",
+    id: "outdoor-accessories",
+    name: "Outdoor Accessories",
+    slug: "outdoor-accessories",
+    description: "Hunting hats, gloves, gaiters, and essential gear",
+    icon: "🎒",
     showInNav: true,
     sortOrder: 5,
     seo: {
-      title: "Custom Tech Wear Manufacturer | Technical Urban Apparel | Sialkot",
-      description: "Advanced tech wear manufacturing. Waterproof shells, articulated pants, chest rigs. GORE-TEX compatible. Functional urban apparel for innovative brands.",
-      keywords: "tech wear manufacturer, technical apparel supplier, waterproof jacket manufacturer, urban tech clothing Pakistan, cargo pants manufacturer, tactical vest supplier",
+      title: "Hunting Accessories Manufacturer | Hats, Gloves & Gear | Xelent Huntgear",
+      description: "Custom hunting accessories manufacturing. Camo hats, insulated gloves, neck gaiters, boot gaiters. OEM & private label. Low MOQ.",
+      keywords: "hunting accessories manufacturer, camo hat supplier, hunting glove manufacturer Pakistan, neck gaiter, outdoor gear wholesale",
     },
     subCategories: [
-      { id: "tech-jackets", name: "Tech Jackets", slug: "tech-jackets", description: "Waterproof shells" },
-      { id: "tech-pants", name: "Tech Pants", slug: "tech-pants", description: "Articulated cargo pants" },
-      { id: "tech-vests", name: "Tech Vests", slug: "tech-vests", description: "Chest rigs and tactical vests" },
-      { id: "tech-bags", name: "Bags", slug: "tech-bags", description: "Sling bags and backpacks" },
-      { id: "tech-shorts", name: "Tech Shorts", slug: "tech-shorts", description: "Utility shorts" },
-      { id: "modular", name: "Modular Pieces", slug: "modular", description: "Detachable and convertible" },
+      { id: "hunting-hats", name: "Hunting Hats", slug: "hunting-hats", description: "Caps, beanies, boonie hats" },
+      { id: "gloves", name: "Gloves", slug: "gloves", description: "Insulated and shooting gloves" },
+      { id: "neck-gaiters", name: "Neck Gaiters", slug: "neck-gaiters", description: "Face and neck protection" },
+      { id: "boot-gaiters", name: "Boot Gaiters", slug: "boot-gaiters", description: "Snake and debris protection" },
+      { id: "belts", name: "Hunting Belts", slug: "belts", description: "Shell belts and tactical belts" },
+      { id: "socks", name: "Hunting Socks", slug: "socks", description: "Merino wool and cushioned socks" },
     ],
   },
   
   // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 6: MARTIAL ARTS
+  // CATEGORY 6: TACTICAL GEAR
   // ═════════════════════════════════════════════════════════════════════════════
   {
-    id: "martial-arts",
-    name: "Martial Arts Wear",
-    slug: "martial-arts",
-    description: "BJJ, MMA, and combat sports gear",
-    icon: "🥋",
+    id: "tactical-gear",
+    name: "Tactical Gear",
+    slug: "tactical-gear",
+    description: "Tactical vests, packs, and survival equipment",
+    icon: "🎯",
     showInNav: true,
     sortOrder: 6,
     seo: {
-      title: "Custom Martial Arts Wear | BJJ Gis, Rashguards & MMA Gear | Sialkot",
-      description: "Premium martial arts wear manufacturing. BJJ kimonos, rashguards, MMA shorts. IBJJF compliant. Pearl weave gis. Custom designs for academies. Low MOQ.",
-      keywords: "BJJ gi manufacturer, rashguard supplier, MMA shorts manufacturer Pakistan, martial arts wear supplier, custom kimono manufacturer, fight wear supplier",
+      title: "Tactical Gear Manufacturer | Vests, Packs & Equipment | Xelent Huntgear",
+      description: "Custom tactical gear manufacturing. Hunting vests, tactical backpacks, survival equipment. MOLLE compatible. Durable construction.",
+      keywords: "tactical gear manufacturer, hunting vest supplier, tactical backpack Pakistan, survival equipment, MOLLE gear wholesale",
     },
     subCategories: [
-      { id: "bjj-gis", name: "BJJ Gis", slug: "bjj-gis", description: "Brazilian Jiu-Jitsu kimonos" },
-      { id: "rashguards", name: "Rashguards", slug: "rashguards", description: "Compression rashguards" },
-      { id: "mma-shorts", name: "MMA Shorts", slug: "mma-shorts", description: "Fight shorts" },
-      { id: "spats", name: "Spats", slug: "spats", description: "Compression leggings" },
-      { id: "martial-arts-uniforms", name: "Uniforms", slug: "martial-arts-uniforms", description: "Karate, judo uniforms" },
-      { id: "fight-wear", name: "Fight Wear", slug: "fight-wear", description: "Training and competition gear" },
+      { id: "hunting-vests", name: "Hunting Vests", slug: "hunting-vests", description: "Game and utility vests" },
+      { id: "tactical-backpacks", name: "Tactical Backpacks", slug: "tactical-backpacks", description: "Hunting daypacks and packs" },
+      { id: "shell-bags", name: "Shell Bags", slug: "shell-bags", description: "Ammo and shot shell holders" },
+      { id: "range-bags", name: "Range Bags", slug: "range-bags", description: "Shooting equipment bags" },
+      { id: "slings", name: "Rifle Slings", slug: "slings", description: "Gun carrying straps" },
+      { id: "survival-gear", name: "Survival Gear", slug: "survival-gear", description: "Emergency equipment" },
     ],
   },
   
-  // ═════════════════════════════════════════════════════════════════════════════
-  // CATEGORY 7: SECURITY UNIFORMS
-  // ═════════════════════════════════════════════════════════════════════════════
-  {
-    id: "security-uniforms",
-    name: "Security Uniforms",
-    slug: "security-uniforms",
-    description: "Professional security and tactical uniforms",
-    icon: "👮",
-    showInNav: true,
-    sortOrder: 7,
-    seo: {
-      title: "Security Uniform Manufacturer | Tactical Uniforms & Hi-Vis | Sialkot",
-      description: "Professional security uniform manufacturing. Tactical shirts, duty pants, hi-vis jackets. Custom embroidery. Durable fabrics. B2B wholesale for security companies.",
-      keywords: "security uniform manufacturer, tactical shirt supplier, duty pants manufacturer Pakistan, hi-vis jacket supplier, security apparel wholesale, uniform supplier",
-    },
-    subCategories: [
-      { id: "security-shirts", name: "Security Shirts", slug: "security-shirts", description: "Polo and tactical shirts" },
-      { id: "security-pants", name: "Security Pants", slug: "security-pants", description: "Duty trousers" },
-      { id: "security-jackets", name: "Security Jackets", slug: "security-jackets", description: "Patrol and hi-vis jackets" },
-      { id: "tactical-gear", name: "Tactical Gear", slug: "tactical-gear", description: "Vests and duty belts" },
-      { id: "hi-vis", name: "Hi-Vis Wear", slug: "hi-vis", description: "High visibility clothing" },
-      { id: "uniform-sets", name: "Uniform Sets", slug: "uniform-sets", description: "Complete uniform packages" },
-    ],
-  },
-  
-  // ═════════════════════════════════════════════════════════════════════════════
-  // ADD NEW CATEGORIES HERE
-  // ═════════════════════════════════════════════════════════════════════════════
-  // Example:
-  // {
-  //   id: "workwear",
-  //   name: "Workwear",
-  //   slug: "workwear", 
-  //   description: "Industrial workwear and safety apparel",
-  //   icon: "🔨",
-  //   showInNav: true,
-  //   sortOrder: 8,
-  //   seo: {
-  //     title: "...",
-  //     description: "...",
-  //     keywords: "...",
-  //   },
-  //   subCategories: [...],
-  // },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════

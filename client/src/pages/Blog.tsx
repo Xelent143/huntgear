@@ -5,6 +5,37 @@ import { FadeIn, StaggerChildren, AnimatedChild, HoverCard, PageWrapper, Section
 import { IMAGES } from "@/lib/images";
 
 const posts = [
+  // Hunting Apparel Focus - New Posts
+  {
+    slug: "realtree-vs-mossy-oak-guide",
+    title: "Realtree vs Mossy Oak: Complete Guide for Hunting Apparel Brands",
+    excerpt: "Choosing between America's two biggest camouflage brands for your hunting apparel line. We break down licensing costs, terrain effectiveness, and ROI to help you make the right decision.",
+    category: "Camo Guide",
+    readTime: "15 min read",
+    date: "March 16, 2026",
+    image: IMAGES.catHunting,
+    featured: true,
+  },
+  {
+    slug: "scent-control-technology",
+    title: "Scent-Control Technology in Hunting Apparel: Silver-Ion vs Carbon",
+    excerpt: "Compare scent-control technologies for hunting clothing. Silver-ion antimicrobial vs activated carbon vs zeolite. Learn which technology works best for your hunting apparel line.",
+    category: "Technology Guide",
+    readTime: "12 min read",
+    date: "March 16, 2026",
+    image: IMAGES.catTechwear,
+    featured: false,
+  },
+  {
+    slug: "waterproof-ratings-guide",
+    title: "Waterproof Ratings Explained: 10K vs 20K for Hunting Jackets",
+    excerpt: "Understand waterproof ratings for hunting apparel. Learn what 10,000mm vs 20,000mm means, hydrostatic head testing, and which rating is right for different hunting conditions.",
+    category: "Technical Guide",
+    readTime: "10 min read",
+    date: "March 16, 2026",
+    image: IMAGES.capWaterproof,
+    featured: false,
+  },
   {
     slug: "how-to-find-streetwear-manufacturer-pakistan",
     title: "How to Find a Reliable Custom Streetwear Manufacturer in Pakistan",
@@ -186,30 +217,30 @@ export default function Blog() {
       />
 
       {/* Hero */}
-      <section className="relative pt-16 pb-16 bg-card border-b border-border">
+      <section className="relative pt-16 pb-16 bg-[#111111] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Insights & Guides</p>
+          <p className="text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Insights & Guides</p>
           <h1 className="font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6">
             The Sialkot Sample Masters
             <span className="text-gradient-gold italic"> Manufacturing Blog</span>
           </h1>
           <div className="gold-divider mx-auto" />
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mt-6">
+          <p className="text-white/70 text-lg max-w-xl mx-auto mt-6">
             Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts.
           </p>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="border-b border-border bg-card">
+      <section className="border-b border-white/10 bg-[#111111]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {categories.map((cat) => (
               <button
                 key={cat}
                 className={`shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All"
-                  ? "bg-gold text-background"
-                  : "border border-border text-muted-foreground hover:border-gold/30 hover:text-foreground"
+                  ? "bg-[#ff6b00] text-background"
+                  : "border border-white/10 text-white/70 hover:border-[#ff6b00]/30 hover:text-foreground"
                   }`}
               >
                 {cat}
@@ -224,9 +255,9 @@ export default function Blog() {
           {/* Featured Post */}
           {featured && (
             <div className="mb-16">
-              <p className="text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6">Featured Article</p>
+              <p className="text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-xs mb-6">Featured Article</p>
               <Link href={`/blog/${featured.slug}`}>
-                <div className="group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer">
+                <div className="group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer">
                   <div className="relative overflow-hidden aspect-[16/9] lg:aspect-auto">
                     <img
                       src={featured.image}
@@ -234,27 +265,27 @@ export default function Blog() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40" />
-                    <div className="absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm">
+                    <div className="absolute top-4 left-4 bg-[#ff6b00] text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm">
                       Featured
                     </div>
                   </div>
                   <div className="p-8 flex flex-col justify-center">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-gold text-xs font-condensed font-semibold tracking-widest uppercase">{featured.category}</span>
+                      <span className="text-[#ff6b00] text-xs font-condensed font-semibold tracking-widest uppercase">{featured.category}</span>
                       <span className="text-border">·</span>
-                      <span className="text-muted-foreground text-xs flex items-center gap-1">
+                      <span className="text-white/70 text-xs flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {featured.readTime}
                       </span>
                     </div>
-                    <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight">
+                    <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-[#ff6b00] transition-colors leading-tight">
                       {featured.title}
                     </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">{featured.excerpt}</p>
+                    <p className="text-white/70 text-sm leading-relaxed mb-6">{featured.excerpt}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground text-xs flex items-center gap-1">
+                      <span className="text-white/70 text-xs flex items-center gap-1">
                         <Calendar className="w-3 h-3" /> {featured.date}
                       </span>
-                      <span className="text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-[#ff6b00] font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all">
                         Read Article <ArrowRight className="w-3 h-3" />
                       </span>
                     </div>
@@ -268,7 +299,7 @@ export default function Blog() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rest.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`}>
-                <article className="group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col">
+                <article className="group bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer h-full flex flex-col">
                   <div className="relative overflow-hidden aspect-[16/9]">
                     <img
                       src={post.image}
@@ -278,21 +309,21 @@ export default function Blog() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     <div className="absolute top-3 left-3">
-                      <span className="bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm">
+                      <span className="bg-[#0d0d0d]/80 backdrop-blur-sm text-[#ff6b00] text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm">
                         {post.category}
                       </span>
                     </div>
                   </div>
                   <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1">
+                    <h3 className="font-serif text-lg font-bold text-foreground mb-3 group-hover:text-[#ff6b00] transition-colors leading-tight flex-1">
                       {post.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
-                    <div className="flex items-center justify-between pt-3 border-t border-border mt-auto">
-                      <span className="text-muted-foreground text-xs flex items-center gap-1">
+                    <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-auto">
+                      <span className="text-white/70 text-xs flex items-center gap-1">
                         <Calendar className="w-3 h-3" /> {post.date}
                       </span>
-                      <span className="text-muted-foreground text-xs flex items-center gap-1">
+                      <span className="text-white/70 text-xs flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {post.readTime}
                       </span>
                     </div>

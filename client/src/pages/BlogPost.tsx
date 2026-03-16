@@ -136,9 +136,9 @@ export default function BlogPost() {
       <div className="min-h-screen flex items-center justify-center pt-20">
         <div className="text-center">
           <h1 className="font-serif text-4xl font-bold text-foreground mb-4">Article Not Found</h1>
-          <p className="text-muted-foreground mb-6">The article you're looking for doesn't exist.</p>
+          <p className="text-white/70 mb-6">The article you're looking for doesn't exist.</p>
           <Link href="/blog">
-            <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm">
+            <Button className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm">
               Back to Blog
             </Button>
           </Link>
@@ -157,10 +157,10 @@ export default function BlogPost() {
         return <h3 key={i} className="font-condensed font-bold text-foreground uppercase tracking-wide text-lg mt-6 mb-3">{line.slice(4)}</h3>;
       }
       if (line.startsWith("- ")) {
-        return <li key={i} className="text-muted-foreground leading-relaxed ml-4 list-disc">{line.slice(2)}</li>;
+        return <li key={i} className="text-white/70 leading-relaxed ml-4 list-disc">{line.slice(2)}</li>;
       }
       if (line.match(/^\d+\./)) {
-        return <li key={i} className="text-muted-foreground leading-relaxed ml-4 list-decimal">{line.replace(/^\d+\.\s/, "")}</li>;
+        return <li key={i} className="text-white/70 leading-relaxed ml-4 list-decimal">{line.replace(/^\d+\.\s/, "")}</li>;
       }
       if (line.startsWith("**") && line.endsWith("**")) {
         return <strong key={i} className="text-foreground font-semibold">{line.slice(2, -2)}</strong>;
@@ -178,7 +178,7 @@ export default function BlogPost() {
           parts.push(line.slice(lastIndex, match.index));
         }
         parts.push(
-          <Link key={match.index} href={match[2]} className="text-gold hover:underline">
+          <Link key={match.index} href={match[2]} className="text-[#ff6b00] hover:underline">
             {match[1]}
           </Link>
         );
@@ -187,7 +187,7 @@ export default function BlogPost() {
       if (lastIndex < line.length) {
         parts.push(line.slice(lastIndex));
       }
-      return <p key={i} className="text-muted-foreground leading-relaxed">{parts.length > 0 ? parts : line}</p>;
+      return <p key={i} className="text-white/70 leading-relaxed">{parts.length > 0 ? parts : line}</p>;
     });
   };
 
@@ -206,19 +206,19 @@ export default function BlogPost() {
         className="relative pt-32 pb-16 overflow-hidden"
         style={{ backgroundImage: `url(${post.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
       >
-        <div className="absolute inset-0 bg-background/85" />
+        <div className="absolute inset-0 bg-[#0d0d0d]/85" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-6">
+          <Link href="/blog" className="inline-flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-6">
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>
           <div className="flex items-center gap-3 mb-4">
-            <span className="bg-gold text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
+            <span className="bg-[#ff6b00] text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
               {post.category}
             </span>
-            <span className="text-muted-foreground text-xs flex items-center gap-1">
+            <span className="text-white/70 text-xs flex items-center gap-1">
               <Clock className="w-3 h-3" /> {post.readTime}
             </span>
-            <span className="text-muted-foreground text-xs flex items-center gap-1">
+            <span className="text-white/70 text-xs flex items-center gap-1">
               <Calendar className="w-3 h-3" /> {post.date}
             </span>
           </div>
@@ -241,28 +241,28 @@ export default function BlogPost() {
 
             {/* Sidebar */}
             <aside className="space-y-6">
-              <div className="bg-card border border-border rounded-sm p-6">
+              <div className="bg-[#111111] border border-white/10 rounded-sm p-6">
                 <h3 className="font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4">
                   Ready to Manufacture?
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4">
+                <p className="text-white/70 text-sm mb-4">
                   Get a free quote from Pakistan's leading custom streetwear manufacturer.
                 </p>
                 <Link href="/rfq">
-                  <Button className="w-full bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm">
+                  <Button className="w-full bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm">
                     Request Quote <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
               </div>
 
-              <div className="bg-card border border-border rounded-sm p-6">
+              <div className="bg-[#111111] border border-white/10 rounded-sm p-6">
                 <h3 className="font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4">
                   Our Services
                 </h3>
                 <ul className="space-y-2">
                   {["Custom Manufacturing", "Private Label", "Low MOQ (50 pcs)", "Bulk Orders", "Design Consultation"].map((s) => (
                     <li key={s}>
-                      <Link href="/services" className="text-muted-foreground hover:text-gold text-sm transition-colors flex items-center gap-2">
+                      <Link href="/services" className="text-white/70 hover:text-[#ff6b00] text-sm transition-colors flex items-center gap-2">
                         <span className="w-3 h-px bg-border" />
                         {s}
                       </Link>

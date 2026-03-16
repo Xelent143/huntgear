@@ -197,6 +197,13 @@ async function updateBrandConstants(): Promise<void> {
  * Run 'pnpm apply-template' to regenerate after editing
  */
 
+// Core exports required by the application (preserve these)
+export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+
+export const getLoginUrl = () => {
+  return "/admin-saad/login";
+};
+
 export const SITE_NAME = "${BRAND_CONFIG.siteName}";
 export const SITE_TAGLINE = "${BRAND_CONFIG.tagline}";
 export const LEGAL_NAME = "${BRAND_CONFIG.legalName}";

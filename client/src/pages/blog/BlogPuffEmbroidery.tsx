@@ -32,7 +32,7 @@ export default function BlogPuffEmbroidery() {
     return (
         <PageWrapper>
             <SEOHead
-                title="Impact of 3D Puff Embroidery on Streetwear Export Orders"
+                title="Impact of 3D Puff Embroidery on Technical Apparel Export Orders"
                 description="Learn how 3D puff embroidery elevates brand perception and justifies premium pricing for streetwear export orders from Sialkot."
                 canonical="/blog/3d-puff-embroidery-streetwear-impact"
                 ogType="article"
@@ -61,7 +61,7 @@ export default function BlogPuffEmbroidery() {
                             </div>
 
                             <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8">
-                                The Power of <span className="text-gradient-gold italic">3D Puff</span> in Streetwear Export
+                                The Power of <span className="text-gradient-gold italic">3D Puff</span> in Technical Apparel Export
                             </h1>
 
                             <p className="text-muted-foreground text-lg leading-relaxed mb-10">
@@ -125,7 +125,7 @@ export default function BlogPuffEmbroidery() {
                         <div>
                             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6">Beyond Aesthetics: The B2B Math</h2>
                             <p className="text-muted-foreground leading-relaxed mb-8">
-                                For Sialkot exporters, 3D puff isn't just a design choice; it's a strategic move to secure higher-tier clients. While the production cost per unit increases slightly, the ability to anchor your brand in the "Luxury Streetwear" category far outweighs the initial investment.
+                                For Sialkot exporters, 3D puff isn't just a design choice; it's a strategic move to secure higher-tier clients. While the production cost per unit increases slightly, the ability to anchor your brand in the "Luxury Technical Apparel" category far outweighs the initial investment.
                             </p>
 
                             <div className="space-y-6">
@@ -184,7 +184,7 @@ export default function BlogPuffEmbroidery() {
             <section className="py-24 bg-card border-t border-border">
                 <div className="container text-center">
                     <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-8">
-                        Elevate Your Technical <span className="text-gold italic">Streetwear</span>
+                        Elevate Your <span className="text-gold italic">Technical Apparel</span>
                     </h2>
                     <p className="text-muted-foreground text-lg mb-12 max-w-2xl mx-auto">
                         Ready to add that luxury three-dimensional touch to your next production run? Our embroidery masters are ready to digitize your vision.

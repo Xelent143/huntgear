@@ -27,13 +27,13 @@ interface SEOHeadProps {
   };
 }
 
-const SITE_NAME = "Sialkot Sample Masters - Custom Apparel Manufacturer Pakistan";
+const SITE_NAME = "Xelent Huntgear | Custom Hunting Apparel Manufacturer Pakistan";
 const DEFAULT_DESCRIPTION =
-  "Sialkot Sample Masters is Pakistan's leading custom apparel manufacturer based in Sialkot. We specialize in Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear (BJJ Kimonos & Rashguards). Private label, low MOQ from 50 pcs, bulk export for global brands in USA, UAE & Europe.";
+  "Xelent Huntgear is Pakistan's premier custom hunting apparel manufacturer based in Sialkot. We specialize in OEM/ODM hunting jackets, camo pants, base layers & tactical gear with Realtree/Mossy Oak licensing. Low MOQ 50pcs. Export to USA, Canada, Europe & Australia. 7-day samples.";
 const DEFAULT_KEYWORDS =
-  "custom apparel manufacturer Pakistan, hunting wear manufacturer Sialkot, sports wear manufacturer Pakistan, ski wear manufacturer Pakistan, tech wear manufacturer Sialkot, streetwear manufacturer Pakistan, martial arts wear manufacturer Pakistan, bulk BJJ kimonos manufacturer, custom rashguards supplier, private label clothing Pakistan, B2B clothing manufacturer Sialkot, OEM apparel manufacturer Pakistan, wholesale hunting clothing supplier, custom ski jacket manufacturer Pakistan";
+  "custom hunting apparel manufacturer Pakistan, hunting jacket manufacturer, camo pants supplier, Realtree licensed manufacturer, Mossy Oak apparel manufacturer, hunting gear OEM, private label hunting clothing, hunting apparel factory Sialkot, scent control hunting clothes, waterproof hunting jacket manufacturer, hunting base layer supplier, upland vest manufacturer, custom hunting wear Pakistan, low MOQ hunting apparel, hunting clothing exporter USA Europe";
 const DEFAULT_OG_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/RfANkMVkQHIazGrh.jpg";
-const SITE_URL = "https://sialkotsamplemasters.com";
+const SITE_URL = "https://xelenthuntgear.com";
 
 export default function SEOHead({
   title,
@@ -48,7 +48,7 @@ export default function SEOHead({
   hreflangs,
   product,
 }: SEOHeadProps) {
-  const fullTitle = title ? `${title} | Sialkot Sample Masters Pakistan` : SITE_NAME;
+  const fullTitle = title ? `${title} | Xelent Huntgear Pakistan` : SITE_NAME;
   const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : SITE_URL;
 
   // JSON-LD Schema
@@ -56,7 +56,7 @@ export default function SEOHead({
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
       description: DEFAULT_DESCRIPTION,
@@ -82,7 +82,7 @@ export default function SEOHead({
     {
       "@type": "LocalBusiness",
       "@id": `${SITE_URL}/#localbusiness`,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       image: DEFAULT_OG_IMAGE,
       url: SITE_URL,
       telephone: "+92-302-292-2242",
@@ -116,7 +116,7 @@ export default function SEOHead({
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       publisher: { "@id": `${SITE_URL}/#organization` },
     },
     {
@@ -156,7 +156,7 @@ export default function SEOHead({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="Sialkot Sample Masters, Sialkot, Pakistan" />
+      <meta name="author" content="Xelent Huntgear, Sialkot, Pakistan" />
       <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1"} />
 
       {/* GEO Meta Tags */}
@@ -170,7 +170,7 @@ export default function SEOHead({
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content="Sialkot Sample Masters" />
+      <meta property="og:site_name" content="Xelent Huntgear" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:locale:alternate" content="en_GB" />
       <meta property="og:locale:alternate" content="en_AE" />
@@ -206,6 +206,81 @@ export default function SEOHead({
       {product && product.priceCurrency && <meta property="product:price:currency" content={product.priceCurrency} />}
       {product && product.retailerItemId && <meta property="product:retailer_item_id" content={product.retailerItemId} />}
       {product && product.itemGroupId && <meta property="product:item_group_id" content={product.itemGroupId} />}
+      {/* Verification & GEO Signals */}
+      <meta name="author" content="Xelent Huntgear Technical Team" />
+      <meta name="last-modified" content={new Date().toISOString().split('T')[0]} />
+
+      {/* Schema.org JSON-LD */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Xelent Huntgear",
+          "url": SITE_URL,
+          "logo": "https://xelenthuntgear.com/logo.png",
+          "description": DEFAULT_DESCRIPTION,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Sialkot",
+            "addressCountry": "PK"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "B2B Sales",
+            "areaServed": "Worldwide",
+            "availableLanguage": ["English"]
+          },
+          "knowsAbout": [
+            "Custom Hunting Apparel Manufacturing",
+            "Realtree & Mossy Oak Licensed Production",
+            "Scent-Control Technology Integration",
+            "Waterproof Hunting Outerwear (10K-20K)",
+            "Camouflage Pattern Design",
+            "OEM/ODM Hunting Gear Production"
+          ]
+        })}
+      </script>
+
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is the minimum order quantity for custom hunting jackets?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our MOQ is 50 pieces per style/color for custom hunting jackets, pants, and base layers. This applies to all camouflage patterns including licensed Realtree and Mossy Oak designs. We offer flexible sampling for startup hunting brands."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you offer Realtree and Mossy Oak licensed patterns?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, we are licensed to manufacture hunting apparel with Realtree EDGE, Realtree Timber, Mossy Oak Break-Up Country, and Mossy Oak Bottomland patterns. We also offer Kryptek and custom-designed camouflage options."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What waterproof rating do your hunting jackets have?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our hunting jackets range from 10,000mm to 20,000mm waterproof rating (hydrostatic head) with fully taped seams. Breathability ranges from 10,000g to 15,000g/m²/24hr MVTR, suitable for active hunting in wet conditions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you manufacture scent-control hunting apparel?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, we integrate scent-control technology including silver-ion antimicrobial treatments and carbon-based odor absorption into our base layers and hunting apparel. This helps hunters remain undetected in the field."
+              }
+            }
+          ]
+        })}
+      </script>
     </Helmet>
   );
 }

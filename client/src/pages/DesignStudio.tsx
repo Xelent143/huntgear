@@ -191,7 +191,7 @@ export default function DesignStudio() {
             />
 
             {/* ── HERO ─────────────────────────────────────────────────────────── */}
-            <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden bg-background">
+            <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden bg-[#0d0d0d]">
                 {/* Animated background grid */}
                 <div className="absolute inset-0 z-0 opacity-20"
                     style={{
@@ -200,39 +200,39 @@ export default function DesignStudio() {
                     }}
                 />
                 {/* Gold glow blob */}
-                <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full opacity-5 bg-gold blur-[120px] z-0" />
+                <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full opacity-5 bg-[#ff6b00] blur-[120px] z-0" />
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         {/* Left — copy */}
                         <FadeIn>
                             <div>
-                                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 text-gold text-xs font-bold uppercase tracking-widest mb-6">
+                                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ff6b00]/30 bg-[#ff6b00]/5 text-[#ff6b00] text-xs font-bold uppercase tracking-widest mb-6">
                                     <Wand2 className="w-3.5 h-3.5" /> Free Online Tool
                                 </span>
                                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold font-condensed tracking-tight text-foreground leading-none mb-6">
                                     Design Your<br />
-                                    <span className="text-gold">Uniform</span><br />
+                                    <span className="text-[#ff6b00]">Uniform</span><br />
                                     Online — Free
                                 </h1>
-                                <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl">
+                                <p className="text-lg text-white/70 leading-relaxed mb-8 max-w-xl">
                                     Sialkot Sample Masters' <strong className="text-foreground">2D Uniform Customizer</strong> lets B2B buyers, procurement teams, and distributors design custom security uniforms, tactical jackets, hoodies, and workwear directly in their browser — with zero software, zero cost, and zero friction.
                                 </p>
                                 <div className="flex flex-wrap gap-4 mb-10">
                                     {["No signup required", "Mobile-friendly", "Export in HD"].map(b => (
-                                        <span key={b} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                                            <CheckCircle className="w-4 h-4 text-gold flex-shrink-0" /> {b}
+                                        <span key={b} className="flex items-center gap-1.5 text-sm text-white/70">
+                                            <CheckCircle className="w-4 h-4 text-[#ff6b00] flex-shrink-0" /> {b}
                                         </span>
                                     ))}
                                 </div>
                                 <div className="flex flex-wrap gap-4">
                                     <Link href="/design">
-                                        <Button size="lg" className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-4 rounded-sm gap-2 shadow-lg shadow-gold/20">
+                                        <Button size="lg" className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-4 rounded-sm gap-2 shadow-lg shadow-gold/20">
                                             Launch 2D Designer <ArrowRight className="w-4 h-4" />
                                         </Button>
                                     </Link>
                                     <Link href="/rfq">
-                                        <Button size="lg" variant="outline" className="border-border font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-4 rounded-sm gap-2">
+                                        <Button size="lg" variant="outline" className="border-white/10 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-4 rounded-sm gap-2">
                                             Request Quote
                                         </Button>
                                     </Link>
@@ -243,12 +243,12 @@ export default function DesignStudio() {
                         {/* Right — mockup preview card */}
                         <FadeIn delay={0.2}>
                             <div className="relative">
-                                <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden shadow-2xl shadow-foreground/10">
-                                    <div className="bg-card border-b border-border px-4 py-3 flex items-center gap-2">
+                                <div className="rounded-2xl border border-white/10 bg-[#111111]/50 backdrop-blur-sm overflow-hidden shadow-2xl shadow-foreground/10">
+                                    <div className="bg-[#111111] border-b border-white/10 px-4 py-3 flex items-center gap-2">
                                         <div className="w-3 h-3 rounded-full bg-destructive/60" />
                                         <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
                                         <div className="w-3 h-3 rounded-full bg-green-500/60" />
-                                        <span className="ml-3 text-xs text-muted-foreground font-mono">sialkotsamplemasters.com/design</span>
+                                        <span className="ml-3 text-xs text-white/70 font-mono">sialkotsamplemasters.com/design</span>
                                     </div>
                                     <div className="p-8 bg-[#0d0d18] min-h-[320px] flex items-center justify-center relative"
                                         style={{
@@ -283,7 +283,7 @@ export default function DesignStudio() {
                                     </div>
                                 </div>
                                 {/* Floating badge */}
-                                <div className="absolute -top-4 -right-4 bg-gold text-background text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
+                                <div className="absolute -top-4 -right-4 bg-[#ff6b00] text-background text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
                                     100% Free
                                 </div>
                             </div>
@@ -293,7 +293,7 @@ export default function DesignStudio() {
             </section>
 
             {/* ── TRUST BAR ────────────────────────────────────────────────────── */}
-            <section className="border-y border-border bg-card/30">
+            <section className="border-y border-white/10 bg-[#111111]/30">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center">
                         {[
@@ -304,8 +304,8 @@ export default function DesignStudio() {
                             { value: "<1 min", label: "To First Design" },
                         ].map(s => (
                             <div key={s.label} className="flex flex-col items-center">
-                                <span className="text-2xl font-extrabold font-condensed text-gold tracking-wide">{s.value}</span>
-                                <span className="text-xs text-muted-foreground uppercase tracking-widest">{s.label}</span>
+                                <span className="text-2xl font-extrabold font-condensed text-[#ff6b00] tracking-wide">{s.value}</span>
+                                <span className="text-xs text-white/70 uppercase tracking-widest">{s.label}</span>
                             </div>
                         ))}
                     </div>
@@ -313,15 +313,15 @@ export default function DesignStudio() {
             </section>
 
             {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
-            <section className="py-24 bg-background">
+            <section className="py-24 bg-[#0d0d0d]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Simple 4-Step Process</p>
+                            <p className="text-[#ff6b00] text-xs font-bold uppercase tracking-[0.3em] mb-3">Simple 4-Step Process</p>
                             <h2 className="text-4xl sm:text-5xl font-extrabold font-condensed text-foreground tracking-tight">
                                 How the 2D Uniform Designer Works
                             </h2>
-                            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-base">
+                            <p className="text-white/70 mt-4 max-w-2xl mx-auto text-base">
                                 From blank canvas to production-ready design in under five minutes — no design background required.
                             </p>
                         </div>
@@ -337,14 +337,14 @@ export default function DesignStudio() {
                                 transition={{ delay: i * 0.12, duration: 0.5 }}
                                 className="relative"
                             >
-                                <div className="bg-card border border-border rounded-xl p-6 h-full hover:border-gold/30 transition-colors">
-                                    <div className="text-5xl font-black font-condensed text-gold/15 leading-none mb-4">{step.number}</div>
+                                <div className="bg-[#111111] border border-white/10 rounded-xl p-6 h-full hover:border-[#ff6b00]/30 transition-colors">
+                                    <div className="text-5xl font-black font-condensed text-[#ff6b00]/15 leading-none mb-4">{step.number}</div>
                                     <h3 className="text-lg font-bold text-foreground mb-3 font-condensed tracking-wide">{step.title}</h3>
-                                    <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                                    <p className="text-sm text-white/70 leading-relaxed">{step.description}</p>
                                 </div>
                                 {i < STEPS.length - 1 && (
                                     <div className="hidden lg:flex absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
-                                        <ArrowRight className="w-5 h-5 text-gold/30" />
+                                        <ArrowRight className="w-5 h-5 text-[#ff6b00]/30" />
                                     </div>
                                 )}
                             </motion.div>
@@ -353,7 +353,7 @@ export default function DesignStudio() {
 
                     <div className="text-center mt-12">
                         <Link href="/design">
-                            <Button size="lg" className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase px-10 gap-2">
+                            <Button size="lg" className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase px-10 gap-2">
                                 Start Designing Now <ArrowRight className="w-4 h-4" />
                             </Button>
                         </Link>
@@ -362,15 +362,15 @@ export default function DesignStudio() {
             </section>
 
             {/* ── FEATURES ─────────────────────────────────────────────────────── */}
-            <section className="py-24 bg-card/20 border-y border-border">
+            <section className="py-24 bg-[#111111]/20 border-y border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Tool Capabilities</p>
+                            <p className="text-[#ff6b00] text-xs font-bold uppercase tracking-[0.3em] mb-3">Tool Capabilities</p>
                             <h2 className="text-4xl sm:text-5xl font-extrabold font-condensed text-foreground tracking-tight">
                                 Everything You Need to Design<br />Professional Uniforms Online
                             </h2>
-                            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-base">
+                            <p className="text-white/70 mt-4 max-w-2xl mx-auto text-base">
                                 The Sialkot Sample Masters 2D Uniform Designer packs professional-grade customization tools into a simple, mobile-friendly interface designed for B2B buyers.
                             </p>
                         </div>
@@ -380,12 +380,12 @@ export default function DesignStudio() {
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {FEATURES.map((f) => (
                                 <AnimatedChild key={f.title}>
-                                    <div className="bg-card border border-border rounded-xl p-6 h-full hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all group">
-                                        <div className="w-12 h-12 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-4 group-hover:bg-gold/15 transition-colors">
+                                    <div className="bg-[#111111] border border-white/10 rounded-xl p-6 h-full hover:border-[#ff6b00]/30 hover:shadow-lg hover:shadow-gold/5 transition-all group">
+                                        <div className="w-12 h-12 rounded-lg bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center justify-center text-[#ff6b00] mb-4 group-hover:bg-[#ff6b00]/15 transition-colors">
                                             {f.icon}
                                         </div>
                                         <h3 className="text-base font-bold text-foreground mb-2 font-condensed tracking-wide">{f.title}</h3>
-                                        <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+                                        <p className="text-sm text-white/70 leading-relaxed">{f.description}</p>
                                     </div>
                                 </AnimatedChild>
                             ))}
@@ -395,15 +395,15 @@ export default function DesignStudio() {
             </section>
 
             {/* ── PRODUCTS ─────────────────────────────────────────────────────── */}
-            <section className="py-24 bg-background">
+            <section className="py-24 bg-[#0d0d0d]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Supported Garments</p>
+                            <p className="text-[#ff6b00] text-xs font-bold uppercase tracking-[0.3em] mb-3">Supported Garments</p>
                             <h2 className="text-4xl sm:text-5xl font-extrabold font-condensed text-foreground tracking-tight">
                                 Products You Can Customize Online
                             </h2>
-                            <p className="text-muted-foreground mt-4 max-w-xl mx-auto text-base">
+                            <p className="text-white/70 mt-4 max-w-xl mx-auto text-base">
                                 Design any of our core uniform categories directly in the 2D customizer. New templates are added regularly.
                             </p>
                         </div>
@@ -419,10 +419,10 @@ export default function DesignStudio() {
                                 transition={{ delay: i * 0.06 }}
                             >
                                 <Link href="/design">
-                                    <div className="bg-card border border-border rounded-xl p-5 text-center hover:border-gold/40 hover:bg-card/80 transition-all cursor-pointer group">
+                                    <div className="bg-[#111111] border border-white/10 rounded-xl p-5 text-center hover:border-[#ff6b00]/40 hover:bg-[#111111]/80 transition-all cursor-pointer group">
                                         <div className="text-4xl mb-3">{p.emoji}</div>
-                                        <h3 className="text-sm font-bold text-foreground font-condensed tracking-wide mb-1 group-hover:text-gold transition-colors">{p.name}</h3>
-                                        <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+                                        <h3 className="text-sm font-bold text-foreground font-condensed tracking-wide mb-1 group-hover:text-[#ff6b00] transition-colors">{p.name}</h3>
+                                        <p className="text-xs text-white/70 leading-relaxed">{p.desc}</p>
                                     </div>
                                 </Link>
                             </motion.div>
@@ -432,20 +432,20 @@ export default function DesignStudio() {
             </section>
 
             {/* ── BENEFITS ─────────────────────────────────────────────────────── */}
-            <section className="py-24 bg-card/20 border-y border-border">
+            <section className="py-24 bg-[#111111]/20 border-y border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <FadeIn>
                             <div>
-                                <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Why Use It</p>
+                                <p className="text-[#ff6b00] text-xs font-bold uppercase tracking-[0.3em] mb-3">Why Use It</p>
                                 <h2 className="text-4xl sm:text-5xl font-extrabold font-condensed text-foreground tracking-tight mb-6">
                                     Built for B2B Buyers,<br />Procurement Teams &amp;<br />Distributors
                                 </h2>
-                                <p className="text-muted-foreground text-base leading-relaxed mb-8">
+                                <p className="text-white/70 text-base leading-relaxed mb-8">
                                     Ordering bulk uniforms from overseas manufacturers has historically required multiple rounds of physical samples, lengthy email chains, and costly revision fees. Sialkot Sample Masters's 2D designer eliminates this entirely — giving your team a shared visual tool to align on design before a single stitch is made.
                                 </p>
                                 <Link href="/design">
-                                    <Button className="bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase gap-2">
+                                    <Button className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase gap-2">
                                         Open the Designer <ArrowRight className="w-4 h-4" />
                                     </Button>
                                 </Link>
@@ -455,12 +455,12 @@ export default function DesignStudio() {
                             <div className="grid sm:grid-cols-2 gap-4">
                                 {BENEFITS.map(b => (
                                     <AnimatedChild key={b.title}>
-                                        <div className="bg-card border border-border rounded-xl p-5 hover:border-gold/30 transition-colors">
+                                        <div className="bg-[#111111] border border-white/10 rounded-xl p-5 hover:border-[#ff6b00]/30 transition-colors">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <span className="text-gold">{b.icon}</span>
+                                                <span className="text-[#ff6b00]">{b.icon}</span>
                                                 <h3 className="text-sm font-bold text-foreground font-condensed tracking-wide">{b.title}</h3>
                                             </div>
-                                            <p className="text-xs text-muted-foreground leading-relaxed">{b.description}</p>
+                                            <p className="text-xs text-white/70 leading-relaxed">{b.description}</p>
                                         </div>
                                     </AnimatedChild>
                                 ))}
@@ -471,11 +471,11 @@ export default function DesignStudio() {
             </section>
 
             {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-            <section className="py-24 bg-background">
+            <section className="py-24 bg-[#0d0d0d]">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <FadeIn>
                         <div className="text-center mb-16">
-                            <p className="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Common Questions</p>
+                            <p className="text-[#ff6b00] text-xs font-bold uppercase tracking-[0.3em] mb-3">Common Questions</p>
                             <h2 className="text-4xl sm:text-5xl font-extrabold font-condensed text-foreground tracking-tight">
                                 Frequently Asked Questions
                             </h2>
@@ -490,14 +490,14 @@ export default function DesignStudio() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.06 }}
-                                className="group bg-card border border-border rounded-xl overflow-hidden"
+                                className="group bg-[#111111] border border-white/10 rounded-xl overflow-hidden"
                             >
                                 <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none select-none hover:bg-secondary/30 transition-colors">
                                     <span className="font-semibold text-foreground text-sm font-condensed tracking-wide pr-4">{faq.q}</span>
-                                    <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform group-open:rotate-180" />
+                                    <ChevronDown className="w-4 h-4 text-white/70 flex-shrink-0 transition-transform group-open:rotate-180" />
                                 </summary>
                                 <div className="px-6 pb-5">
-                                    <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                                    <p className="text-sm text-white/70 leading-relaxed">{faq.a}</p>
                                 </div>
                             </motion.details>
                         ))}
@@ -506,32 +506,32 @@ export default function DesignStudio() {
             </section>
 
             {/* ── FINAL CTA ────────────────────────────────────────────────────── */}
-            <section className="py-24 bg-card/20 border-t border-border">
+            <section className="py-24 bg-[#111111]/20 border-t border-white/10">
                 <div className="max-w-4xl mx-auto px-4 text-center">
                     <FadeIn>
                         <div className="inline-flex items-center gap-1.5 mb-4">
-                            {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-gold text-gold" />)}
-                            <span className="text-xs text-muted-foreground ml-2">Trusted by procurement teams in 40+ countries</span>
+                            {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-gold text-[#ff6b00]" />)}
+                            <span className="text-xs text-white/70 ml-2">Trusted by procurement teams in 40+ countries</span>
                         </div>
                         <h2 className="text-4xl sm:text-6xl font-extrabold font-condensed tracking-tight text-foreground mb-6">
-                            Ready to Design Your<br /><span className="text-gold">Custom Uniform?</span>
+                            Ready to Design Your<br /><span className="text-[#ff6b00]">Custom Uniform?</span>
                         </h2>
-                        <p className="text-muted-foreground text-lg mb-10 max-w-2xl mx-auto">
+                        <p className="text-white/70 text-lg mb-10 max-w-2xl mx-auto">
                             Launch the free 2D Uniform Designer now. No account, no download, no fee. Start from a template and have a production-ready visual in under 5 minutes.
                         </p>
                         <div className="flex flex-wrap gap-4 justify-center">
                             <Link href="/design">
-                                <Button size="lg" className="bg-gold text-background hover:bg-gold/90 font-condensed font-black tracking-widest uppercase text-base px-12 py-5 rounded-sm gap-2 shadow-xl shadow-gold/20">
+                                <Button size="lg" className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-black tracking-widest uppercase text-base px-12 py-5 rounded-sm gap-2 shadow-xl shadow-gold/20">
                                     Launch Free Designer <ArrowRight className="w-5 h-5" />
                                 </Button>
                             </Link>
                             <Link href="/rfq">
-                                <Button size="lg" variant="outline" className="border-border font-condensed font-semibold tracking-widest uppercase text-sm px-8 rounded-sm">
+                                <Button size="lg" variant="outline" className="border-white/10 font-condensed font-semibold tracking-widest uppercase text-sm px-8 rounded-sm">
                                     Request a Sample Quote
                                 </Button>
                             </Link>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-6">
+                        <p className="text-xs text-white/70 mt-6">
                             Based in Sialkot, Pakistan · ISO-aligned manufacturing · MOQ from 50 pieces · 24-hour RFQ response
                         </p>
                     </FadeIn>
