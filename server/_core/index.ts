@@ -159,16 +159,16 @@ async function startServer() {
         const noPasswordAdmin = allAdmins.find((a: any) => !a.password || !a.password.includes(":"));
         if (noPasswordAdmin) {
           console.log("[Auth] Updating admin password for:", noPasswordAdmin.email);
-          await seedDb.update(usersTable).set({ password: hashPwd("admin123"), email: "admin@sialkotsamplemasters.com" }).where(eqOp(usersTable.id, noPasswordAdmin.id));
+          await seedDb.update(usersTable).set({ password: hashPwd("Admin@123"), email: "admin@xelenthuntgear.com" }).where(eqOp(usersTable.id, noPasswordAdmin.id));
         } else {
-          console.log("[Auth] Creating default admin: admin@sialkotsamplemasters.com / admin123");
+          console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
           await seedDb.insert(usersTable).values({
-            openId: "local-admin-" + Date.now(),
+            openId: "admin@xelenthuntgear.com",
             name: "Super Admin",
-            email: "admin@sialkotsamplemasters.com",
+            email: "admin@xelenthuntgear.com",
             role: "admin",
             loginMethod: "local",
-            password: hashPwd("admin123"),
+            password: hashPwd("Admin@123"),
           });
         }
       } else {
