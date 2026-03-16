@@ -56,7 +56,7 @@ export default function AdminLogin() {
                     </div>
                     <h1 className="text-2xl font-bold font-heading text-foreground">Admin Portal</h1>
                     <p className="text-sm text-muted-foreground mt-1 text-center">
-                        Sign in to access the Sialkot Sample Masters dashboard.
+                        Sign in to access the Xelent Huntgear dashboard.
                     </p>
                 </div>
 
