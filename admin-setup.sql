@@ -4,8 +4,11 @@
 -- Delete any existing admin users with wrong emails
 DELETE FROM users WHERE email LIKE '%sialkotsamplemasters%' OR openId LIKE '%sialkotsamplemasters%';
 
+-- Delete all admin users to start fresh
+DELETE FROM users WHERE role = 'admin';
+
 -- Insert correct admin user with password: Admin@123
--- Password hash format: salt:scrypt_hash
+-- Password hash generated with: crypto.scryptSync('Admin@123', salt, 64)
 INSERT INTO users (
   openId, 
   name, 
@@ -22,16 +25,11 @@ INSERT INTO users (
   'admin@xelenthuntgear.com',
   'admin',
   'local',
-  'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456:7a8b9c0d1e2f3456789012345678901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+  'a1b2c3d4e5f678901234567890123456:b3ffe16f382e85b18e77f1d12c191430a027180c07a3067eb4310585943d8e3f53834be2957e77dae12a1e3076f43563d2a2af9d44937d3e66c2776e66c00eb9',
   NOW(),
   NOW(),
   NOW()
-)
-ON DUPLICATE KEY UPDATE 
-  email = 'admin@xelenthuntgear.com',
-  openId = 'admin@xelenthuntgear.com',
-  password = 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456:7a8b9c0d1e2f3456789012345678901234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-  role = 'admin';
+);
 
 -- Verify admin user exists
 SELECT id, openId, email, role, LEFT(password, 20) as pwd_start 
