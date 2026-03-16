@@ -3954,24 +3954,25 @@ async function startServer() {
       const { eq: eqOp } = await import("drizzle-orm");
       const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
       const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
-      if (!hasValidAdmin) {
-        const noPasswordAdmin = allAdmins.find((a) => !a.password || !a.password.includes(":"));
-        if (noPasswordAdmin) {
-          console.log("[Auth] Updating admin password for:", noPasswordAdmin.email);
-          await seedDb.update(usersTable).set({ password: hashPwd("Admin@123"), email: "admin@xelenthuntgear.com" }).where(eqOp(usersTable.id, noPasswordAdmin.id));
-        } else {
-          console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
-          await seedDb.insert(usersTable).values({
-            openId: "admin@xelenthuntgear.com",
-            name: "Super Admin",
-            email: "admin@xelenthuntgear.com",
-            role: "admin",
-            loginMethod: "local",
-            password: hashPwd("Admin@123")
-          });
-        }
+      const adminUser = allAdmins[0];
+      if (adminUser) {
+        console.log("[Auth] Resetting admin password for:", adminUser.email);
+        await seedDb.update(usersTable).set({
+          password: hashPwd("Admin@123"),
+          email: "admin@xelenthuntgear.com",
+          openId: "admin@xelenthuntgear.com"
+        }).where(eqOp(usersTable.id, adminUser.id));
+        console.log("[Auth] Admin password reset to: Admin@123");
       } else {
-        console.log("[Auth] Admin with valid password exists");
+        console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
+        await seedDb.insert(usersTable).values({
+          openId: "admin@xelenthuntgear.com",
+          name: "Super Admin",
+          email: "admin@xelenthuntgear.com",
+          role: "admin",
+          loginMethod: "local",
+          password: hashPwd("Admin@123")
+        });
       }
     }
   } catch (seedErr) {
