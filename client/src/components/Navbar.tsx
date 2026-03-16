@@ -266,7 +266,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center group shrink-0">
               <img
                 src={IMAGES.logoGold}
-                alt="Sialkot Sample Masters Logo"
+                alt="Xelent Huntgear Logo"
                 className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
