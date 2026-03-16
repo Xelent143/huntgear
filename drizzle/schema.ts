@@ -396,6 +396,7 @@ export const categories = mysqlTable("categories", {
   icon: varchar("icon", { length: 50 }).default(""),
   description: text("description"),
   imageUrl: varchar("image_url", { length: 1000 }),
+  parentId: int("parent_id"),
   sortOrder: int("sort_order").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   seoTitle: varchar("seo_title", { length: 255 }),
