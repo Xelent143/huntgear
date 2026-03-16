@@ -9248,7 +9248,7 @@ function AdminLogin() {
     /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:53", className: "flex flex-col items-center mb-8", children: [
       /* @__PURE__ */ jsx("div", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:54", className: "w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Shield, { "data-loc": "client\\src\\pages\\AdminLogin.tsx:55", className: "w-6 h-6 text-primary" }) }),
       /* @__PURE__ */ jsx("h1", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:57", className: "text-2xl font-bold font-heading text-foreground", children: "Admin Portal" }),
-      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:58", className: "text-sm text-muted-foreground mt-1 text-center", children: "Sign in to access the Sialkot Sample Masters dashboard." })
+      /* @__PURE__ */ jsx("p", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:58", className: "text-sm text-muted-foreground mt-1 text-center", children: "Sign in to access the Xelent Huntgear dashboard." })
     ] }),
     /* @__PURE__ */ jsxs("form", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:63", onSubmit: handleSubmit, className: "space-y-4", children: [
       /* @__PURE__ */ jsxs("div", { "data-loc": "client\\src\\pages\\AdminLogin.tsx:64", className: "space-y-2", children: [

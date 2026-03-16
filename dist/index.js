@@ -3992,9 +3992,9 @@ async function startServer() {
       if (!user) return res.status(401).json({ error: "Invalid credentials." });
       if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
       if (!user.password) return res.status(401).json({ error: "Password not set." });
-      console.log("[Login] User found, password format:", user.password?.substring(0, 20) + "...");
-      console.log("[Login] Input password:", password);
-      console.log("[Login] WARNING: Password check bypassed for debugging");
+      if (!verifyPwd(password, user.password)) {
+        return res.status(401).json({ error: "Invalid credentials." });
+      }
       console.log("[Login] Password OK, creating JWT...");
       loginDb.update(usersTable).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eqOp(usersTable.id, user.id)).catch(() => {
       });
