@@ -13622,6 +13622,30 @@ function AdminNewProduct() {
     unit: "inches",
     notes: ""
   });
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [isSubcategoryDialogOpen, setIsSubcategoryDialogOpen] = useState(false);
+  const [newCatForm, setNewCatForm] = useState({ name: "", slug: "", icon: "📁" });
+  const [newSubForm, setNewSubForm] = useState({ name: "", slug: "" });
+  const createCategoryMutation = trpc.category.create.useMutation({
+    onSuccess: (newCat) => {
+      utils.category.listWithSubs.invalidate();
+      setForm((f) => ({ ...f, categoryId: newCat.id, category: newCat.name, subcategoryId: null }));
+      setIsCategoryDialogOpen(false);
+      setNewCatForm({ name: "", slug: "", icon: "📁" });
+      toast.success(`Category "${newCat.name}" created and selected!`);
+    },
+    onError: (e) => toast.error("Failed to create category", { description: e.message })
+  });
+  const createSubcategoryMutation = trpc.category.createSubcategory.useMutation({
+    onSuccess: (newSub) => {
+      utils.category.listWithSubs.invalidate();
+      setForm((f) => ({ ...f, subcategoryId: newSub.id }));
+      setIsSubcategoryDialogOpen(false);
+      setNewSubForm({ name: "", slug: "" });
+      toast.success(`Subcategory "${newSub.name}" created and selected!`);
+    },
+    onError: (e) => toast.error("Failed to create subcategory", { description: e.message })
+  });
   useEffect(() => {
     if (isEdit && editProduct) {
       const data = {
@@ -14106,9 +14130,23 @@ function AdminNewProduct() {
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
                   /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsxs(Label, { className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
-                      "Category ",
-                      /* @__PURE__ */ jsx("span", { className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+                      /* @__PURE__ */ jsxs(Label, { className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground block", children: [
+                        "Category ",
+                        /* @__PURE__ */ jsx("span", { className: "text-red-500", children: "*" })
+                      ] }),
+                      /* @__PURE__ */ jsx(
+                        Button,
+                        {
+                          type: "button",
+                          variant: "ghost",
+                          size: "icon",
+                          className: "h-6 w-6 text-gold hover:text-gold-light",
+                          onClick: () => setIsCategoryDialogOpen(true),
+                          title: "Add New Category",
+                          children: /* @__PURE__ */ jsx(Plus, { className: "w-4 h-4" })
+                        }
+                      )
                     ] }),
                     /* @__PURE__ */ jsxs(
                       Select,
@@ -14136,9 +14174,24 @@ function AdminNewProduct() {
                     )
                   ] }),
                   /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsxs(Label, { className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block", children: [
-                      "Subcategory ",
-                      /* @__PURE__ */ jsx("span", { className: "text-red-500", children: "*" })
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+                      /* @__PURE__ */ jsxs(Label, { className: "text-sm font-semibold uppercase tracking-wider text-muted-foreground block", children: [
+                        "Subcategory ",
+                        /* @__PURE__ */ jsx("span", { className: "text-red-500", children: "*" })
+                      ] }),
+                      /* @__PURE__ */ jsx(
+                        Button,
+                        {
+                          type: "button",
+                          variant: "ghost",
+                          size: "icon",
+                          className: "h-6 w-6 text-gold hover:text-gold-light disabled:opacity-30",
+                          disabled: !form.categoryId,
+                          onClick: () => setIsSubcategoryDialogOpen(true),
+                          title: form.categoryId ? "Add New Subcategory" : "Select a category first",
+                          children: /* @__PURE__ */ jsx(Plus, { className: "w-4 h-4" })
+                        }
+                      )
                     ] }),
                     /* @__PURE__ */ jsxs(
                       Select,
@@ -14276,7 +14329,119 @@ function AdminNewProduct() {
           ] })
         ] })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsx(Dialog, { open: isCategoryDialogOpen, onOpenChange: setIsCategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-md bg-card border-border", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "font-serif", children: "Add New Category" }) }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { children: "Category Name *" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              value: newCatForm.name,
+              onChange: (e) => {
+                const val = e.target.value;
+                setNewCatForm((prev) => ({ ...prev, name: val, slug: autoSlug(val) }));
+              },
+              placeholder: "e.g. Winter Wear",
+              className: "bg-background"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { children: "Slug *" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              value: newCatForm.slug,
+              onChange: (e) => setNewCatForm((prev) => ({ ...prev, slug: e.target.value })),
+              className: "bg-background font-mono"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { children: "Icon (Emoji)" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              value: newCatForm.icon,
+              onChange: (e) => setNewCatForm((prev) => ({ ...prev, icon: e.target.value })),
+              placeholder: "📁",
+              className: "bg-background"
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs(DialogFooter, { children: [
+        /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setIsCategoryDialogOpen(false), children: "Cancel" }),
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            className: "bg-gold text-black hover:bg-gold-light",
+            onClick: () => createCategoryMutation.mutate(newCatForm),
+            disabled: createCategoryMutation.isPending || !newCatForm.name || !newCatForm.slug,
+            children: [
+              createCategoryMutation.isPending && /* @__PURE__ */ jsx(Loader2, { className: "w-4 h-4 animate-spin mr-2" }),
+              "Create Category"
+            ]
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx(Dialog, { open: isSubcategoryDialogOpen, onOpenChange: setIsSubcategoryDialogOpen, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-md bg-card border-border", children: [
+      /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "font-serif", children: "Add New Subcategory" }) }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-4 py-4", children: [
+        /* @__PURE__ */ jsxs("p", { className: "text-xs text-muted-foreground", children: [
+          "Adding to: ",
+          /* @__PURE__ */ jsx("span", { className: "text-gold font-bold", children: categories2?.find((c) => c.id === form.categoryId)?.name })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { children: "Subcategory Name *" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              value: newSubForm.name,
+              onChange: (e) => {
+                const val = e.target.value;
+                setNewSubForm((prev) => ({ ...prev, name: val, slug: autoSlug(val) }));
+              },
+              placeholder: "e.g. Heavy Jackets",
+              className: "bg-background"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx(Label, { children: "Slug *" }),
+          /* @__PURE__ */ jsx(
+            Input,
+            {
+              value: newSubForm.slug,
+              onChange: (e) => setNewSubForm((prev) => ({ ...prev, slug: e.target.value })),
+              className: "bg-background font-mono"
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs(DialogFooter, { children: [
+        /* @__PURE__ */ jsx(Button, { variant: "outline", onClick: () => setIsSubcategoryDialogOpen(false), children: "Cancel" }),
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            className: "bg-gold text-black hover:bg-gold-light",
+            onClick: () => {
+              if (form.categoryId) {
+                createSubcategoryMutation.mutate({ categoryId: form.categoryId, ...newSubForm });
+              }
+            },
+            disabled: createSubcategoryMutation.isPending || !newSubForm.name || !newSubForm.slug,
+            children: [
+              createSubcategoryMutation.isPending && /* @__PURE__ */ jsx(Loader2, { className: "w-4 h-4 animate-spin mr-2" }),
+              "Create Subcategory"
+            ]
+          }
+        )
+      ] })
+    ] }) })
   ] });
 }
 const Effects = () => {
