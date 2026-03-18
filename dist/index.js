@@ -371,6 +371,7 @@ var init_schema = __esm({
 });
 
 // server/_core/env.ts
+import path from "path";
 var ENV;
 var init_env = __esm({
   "server/_core/env.ts"() {
@@ -385,7 +386,7 @@ var init_env = __esm({
       forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
       forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
       geminiApiKey: process.env.GEMINI_API_KEY ?? "",
-      storagePath: process.env.STORAGE_PATH || ""
+      storagePath: process.env.STORAGE_PATH || (process.env.NODE_ENV === "production" ? path.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads") : path.join(process.cwd(), "uploads"))
     };
   }
 });
@@ -1599,7 +1600,7 @@ var init_gemini = __esm({
 // server/_core/index.ts
 import "dotenv/config";
 import express2 from "express";
-import path3 from "path";
+import path4 from "path";
 import fs3 from "fs";
 import { createServer } from "http";
 import net from "net";
@@ -2054,7 +2055,7 @@ init_gemini();
 // server/storage.ts
 init_env();
 import fs from "fs";
-import path from "path";
+import path2 from "path";
 function getStorageConfig() {
   const baseUrl = ENV.forgeApiUrl;
   const apiKey = ENV.forgeApiKey;
@@ -2091,7 +2092,7 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     try {
       const sharp = (await import("sharp")).default;
       processedData = await sharp(processedData).webp({ quality: 85 }).toBuffer();
-      const ext = path.extname(key);
+      const ext = path2.extname(key);
       key = key.replace(ext, ".webp");
       finalContentType = "image/webp";
       console.log(`[Storage] Auto-converted ${relKey} to WebP`);
@@ -2101,17 +2102,9 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   }
   const config = getStorageConfig();
   if (!config) {
-    let uploadDir;
-    if (ENV.storagePath) {
-      uploadDir = path.isAbsolute(ENV.storagePath) ? ENV.storagePath : path.resolve(process.cwd(), ENV.storagePath);
-    } else if (ENV.isProduction) {
-      const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "ssm_persistent_uploads");
-      uploadDir = persistentDir;
-    } else {
-      uploadDir = path.join(process.cwd(), "uploads");
-    }
-    const filePath = path.join(uploadDir, key);
-    const fileDir = path.dirname(filePath);
+    const uploadDir = ENV.storagePath;
+    const filePath = path2.join(uploadDir, key);
+    const fileDir = path2.dirname(filePath);
     try {
       if (!fs.existsSync(fileDir)) {
         console.log(`[Storage] Creating nested directory: ${fileDir}`);
@@ -3505,8 +3498,8 @@ var appRouter = router({
     getModelImage: adminProcedure3.query(async () => {
       try {
         const fs4 = await import("fs/promises");
-        const path4 = await import("path");
-        const filePath = path4.join(process.cwd(), "model_image.json");
+        const path5 = await import("path");
+        const filePath = path5.join(process.cwd(), "model_image.json");
         const data = await fs4.readFile(filePath, "utf-8");
         const parsed = JSON.parse(data);
         if (parsed && parsed.base64 && parsed.mimeType) {
@@ -3523,8 +3516,8 @@ var appRouter = router({
     })).mutation(async ({ input }) => {
       try {
         const fs4 = await import("fs/promises");
-        const path4 = await import("path");
-        const filePath = path4.join(process.cwd(), "model_image.json");
+        const path5 = await import("path");
+        const filePath = path5.join(process.cwd(), "model_image.json");
         await fs4.writeFile(filePath, JSON.stringify({
           base64: input.base64,
           mimeType: input.mimeType
@@ -3596,9 +3589,9 @@ async function createContext(opts) {
 // server/_core/vite.ts
 import express from "express";
 import fs2 from "fs";
-import path2 from "path";
+import path3 from "path";
 import { fileURLToPath } from "url";
-var __dirname2 = path2.dirname(fileURLToPath(import.meta.url));
+var __dirname2 = path3.dirname(fileURLToPath(import.meta.url));
 async function setupVite(app, server) {
   const { createServer: createViteServer } = await import("vite");
   const { default: viteConfig } = await import("../../vite.config");
@@ -3618,7 +3611,7 @@ async function setupVite(app, server) {
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
     try {
-      const clientTemplate = path2.resolve(
+      const clientTemplate = path3.resolve(
         __dirname2,
         "../..",
         "client",
@@ -3647,9 +3640,9 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  let distClientPath = path2.resolve(__dirname2, "client");
+  let distClientPath = path3.resolve(__dirname2, "client");
   if (!fs2.existsSync(distClientPath)) {
-    distClientPath = path2.resolve(__dirname2, "public");
+    distClientPath = path3.resolve(__dirname2, "public");
   }
   if (!fs2.existsSync(distClientPath)) {
     console.error(`[Static] Could not find any build directory at ${distClientPath}`);
@@ -3658,8 +3651,8 @@ function serveStatic(app) {
   console.log(`[Static] Serving client assets from: ${distClientPath}`);
   app.use(express.static(distClientPath, { index: false }));
   let ssrRender = null;
-  const distServerPath = path2.resolve(__dirname2, "server");
-  const serverEntryPath = path2.resolve(distServerPath, "entry-server.js");
+  const distServerPath = path3.resolve(__dirname2, "server");
+  const serverEntryPath = path3.resolve(distServerPath, "entry-server.js");
   if (fs2.existsSync(serverEntryPath)) {
     import(
       /* @vite-ignore */
@@ -3676,7 +3669,7 @@ function serveStatic(app) {
   app.use("*", async (_req, res) => {
     try {
       const url = _req.originalUrl;
-      const indexHtmlPath = path2.resolve(distClientPath, "index.html");
+      const indexHtmlPath = path3.resolve(distClientPath, "index.html");
       let html = await fs2.promises.readFile(indexHtmlPath, "utf-8");
       if (ssrRender) {
         try {
@@ -4027,8 +4020,8 @@ async function startServer() {
   });
   app.get("/api/admin/debug", async (_req, res) => {
     const isProd = process.env.NODE_ENV === "production";
-    const resolvedUploadsPath = isProd ? path3.resolve(process.cwd(), "uploads") : path3.resolve(process.cwd(), "uploads");
-    const productsUploadsPath = path3.join(resolvedUploadsPath, "products");
+    const resolvedUploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+    const productsUploadsPath = path4.join(resolvedUploadsPath, "products");
     const info = {
       nodeVersion: process.version,
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
@@ -4046,7 +4039,7 @@ async function startServer() {
           const results = [];
           const list = fs3.readdirSync(dir);
           list.forEach((file) => {
-            const filePath = path3.join(dir, file);
+            const filePath = path4.join(dir, file);
             const stat = fs3.statSync(filePath);
             if (stat && stat.isDirectory()) {
               results.push(...readdirRecursive(filePath));
@@ -4083,12 +4076,12 @@ async function startServer() {
   );
   let uploadsPath;
   if (ENV.storagePath) {
-    uploadsPath = path3.isAbsolute(ENV.storagePath) ? ENV.storagePath : path3.resolve(process.cwd(), ENV.storagePath);
+    uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
   } else if (ENV.isProduction) {
-    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path3.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads");
+    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path4.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads");
     uploadsPath = persistentDir;
   } else {
-    uploadsPath = path3.join(process.cwd(), "uploads");
+    uploadsPath = path4.join(process.cwd(), "uploads");
   }
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs3.existsSync(uploadsPath)) {
@@ -4099,7 +4092,8 @@ async function startServer() {
       console.error(`[Storage] CRITICAL ERROR: Could not create uploads directory!`, err);
     }
   }
-  app.use("/uploads", express2.static(uploadsPath));
+  const uploadsPathForStatic = ENV.storagePath;
+  app.use("/uploads", express2.static(uploadsPathForStatic));
   app.use("/uploads", (req, res) => {
     res.status(404).send("File not found");
   });

@@ -12200,7 +12200,8 @@ function VirtualTryOnAgent({
             {
               onClick: async () => {
                 try {
-                  const res = await fetch(savedModel.imageUrl);
+                  const url = savedModel.imageUrl.startsWith("http") || savedModel.imageUrl.startsWith("/") ? savedModel.imageUrl : `/${savedModel.imageUrl}`;
+                  const res = await fetch(url);
                   const blob = await res.blob();
                   const reader = new FileReader();
                   reader.readAsDataURL(blob);
@@ -12328,7 +12329,14 @@ function VirtualTryOnAgent({
         ] }),
         generatedImages && generatedImages.length > 0 ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 w-full h-full overflow-y-auto p-2", children: generatedImages.map((img, i) => /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 relative group w-full", children: [
           /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] w-full relative", children: [
-            /* @__PURE__ */ jsx("img", { src: img.url, alt: img.view, className: "w-full h-full object-cover rounded-lg shadow-md border border-border" }),
+            /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: img.url.startsWith("http") || img.url.startsWith("/") ? img.url : `/${img.url}`,
+                alt: img.view,
+                className: "w-full h-full object-cover rounded-lg shadow-md border border-border"
+              }
+            ),
             /* @__PURE__ */ jsx("div", { className: "absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg", children: /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-white text-center tracking-wider", children: img.view }) })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
