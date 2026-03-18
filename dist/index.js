@@ -49,18 +49,18 @@ var init_schema = __esm({
     "use strict";
     users = mysqlTable("users", {
       id: int("id").autoincrement().primaryKey(),
-      openId: varchar("open_id", { length: 64 }).notNull().unique(),
+      openId: varchar("openId", { length: 64 }).notNull().unique(),
       name: text("name"),
       email: varchar("email", { length: 320 }),
-      loginMethod: varchar("login_method", { length: 64 }),
+      loginMethod: varchar("loginMethod", { length: 64 }),
       password: varchar("password", { length: 255 }),
       // new: for local email/pass auth
-      geminiApiKey: varchar("gemini_api_key", { length: 255 }),
+      geminiApiKey: varchar("geminiApiKey", { length: 255 }),
       // per-client Gemini AI key
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-      createdAt: timestamp("created_at").defaultNow().notNull(),
-      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
-      lastSignedIn: timestamp("last_signed_in").defaultNow().notNull()
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
     });
     products = mysqlTable("products", {
       id: int("id").autoincrement().primaryKey(),
