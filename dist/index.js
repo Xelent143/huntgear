@@ -3704,6 +3704,7 @@ function serveStatic(app) {
 
 // server/_core/index.ts
 init_env();
+init_db();
 import Stripe2 from "stripe";
 
 // server/routes/fixDb.ts
@@ -3930,7 +3931,6 @@ async function startServer() {
   app.use("/", sitemap_default);
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
-  const { getDb: getDbLocal } = await Promise.resolve().then(() => (init_db(), db_exports));
   const JWT_SECRET_LOCAL = new TextEncoder().encode(
     process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
   );
@@ -3949,24 +3949,22 @@ async function startServer() {
     }
   }
   try {
-    const seedDb = await getDbLocal();
+    const seedDb = await getDb();
     if (seedDb) {
-      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eqOp } = await import("drizzle-orm");
-      const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
+      const allAdmins = await seedDb.select().from(users).where(eq3(users.role, "admin"));
       const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
       const adminUser = allAdmins[0];
       if (adminUser) {
         console.log("[Auth] Resetting admin password for:", adminUser.email);
-        await seedDb.update(usersTable).set({
+        await seedDb.update(users).set({
           password: hashPwd("Admin@123"),
           email: "admin@xelenthuntgear.com",
           openId: "admin@xelenthuntgear.com"
-        }).where(eqOp(usersTable.id, adminUser.id));
+        }).where(eq3(users.id, adminUser.id));
         console.log("[Auth] Admin password reset to: Admin@123");
       } else {
         console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
-        await seedDb.insert(usersTable).values({
+        await seedDb.insert(users).values({
           openId: "admin@xelenthuntgear.com",
           name: "Super Admin",
           email: "admin@xelenthuntgear.com",
@@ -3982,14 +3980,12 @@ async function startServer() {
   app.post("/api/admin/login", async (req, res) => {
     try {
       console.log("[Login] Attempt received");
-      const loginDb = await getDbLocal();
-      if (!loginDb) return res.status(500).json({ error: "Database not available" });
-      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eqOp } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) return res.status(500).json({ error: "Database not available" });
       const { email, password } = req.body || {};
       if (!email || !password) return res.status(400).json({ error: "Email and password required" });
       console.log("[Login] Looking up:", email);
-      const results = await loginDb.select().from(usersTable).where(eqOp(usersTable.email, email)).limit(1);
+      const results = await db.select().from(users).where(eq3(users.email, email)).limit(1);
       const user = results[0];
       if (!user) return res.status(401).json({ error: "Invalid credentials." });
       if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
@@ -3998,7 +3994,7 @@ async function startServer() {
         return res.status(401).json({ error: "Invalid credentials." });
       }
       console.log("[Login] Password OK, creating JWT...");
-      loginDb.update(usersTable).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eqOp(usersTable.id, user.id)).catch(() => {
+      db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq3(users.id, user.id)).catch(() => {
       });
       const token = await new SignJWTLocal({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET_LOCAL);
       res.cookie("admin_token", token, {
@@ -4079,7 +4075,7 @@ async function startServer() {
   if (ENV.storagePath) {
     uploadsPath = path3.isAbsolute(ENV.storagePath) ? ENV.storagePath : path3.resolve(process.cwd(), ENV.storagePath);
   } else if (ENV.isProduction) {
-    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path3.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "ssm_persistent_uploads");
+    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path3.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads");
     uploadsPath = persistentDir;
   } else {
     uploadsPath = path3.join(process.cwd(), "uploads");
