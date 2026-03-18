@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import VirtualTryOnAgent from "@/components/admin/VirtualTryOnAgent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -165,7 +166,7 @@ export default function AdminNewProduct() {
         { id: productId! },
         { enabled: isEdit && !!productId }
     );
-    
+
     // Debug logging
     useEffect(() => {
         if (isEdit) {
@@ -237,6 +238,34 @@ export default function AdminNewProduct() {
         ]),
         unit: "inches" as "inches" | "cm",
         notes: "",
+    });
+
+    // Inline Category/Subcategory Creation State
+    const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+    const [isSubcategoryDialogOpen, setIsSubcategoryDialogOpen] = useState(false);
+    const [newCatForm, setNewCatForm] = useState({ name: "", slug: "", icon: "📁" });
+    const [newSubForm, setNewSubForm] = useState({ name: "", slug: "" });
+
+    const createCategoryMutation = trpc.category.create.useMutation({
+        onSuccess: (newCat) => {
+            utils.category.listWithSubs.invalidate();
+            setForm(f => ({ ...f, categoryId: newCat.id, category: newCat.name, subcategoryId: null }));
+            setIsCategoryDialogOpen(false);
+            setNewCatForm({ name: "", slug: "", icon: "📁" });
+            toast.success(`Category "${newCat.name}" created and selected!`);
+        },
+        onError: (e) => toast.error("Failed to create category", { description: e.message }),
+    });
+
+    const createSubcategoryMutation = trpc.category.createSubcategory.useMutation({
+        onSuccess: (newSub) => {
+            utils.category.listWithSubs.invalidate();
+            setForm(f => ({ ...f, subcategoryId: newSub.id }));
+            setIsSubcategoryDialogOpen(false);
+            setNewSubForm({ name: "", slug: "" });
+            toast.success(`Subcategory "${newSub.name}" created and selected!`);
+        },
+        onError: (e) => toast.error("Failed to create subcategory", { description: e.message }),
     });
 
     // Populate form when edit data loads
@@ -606,398 +635,521 @@ export default function AdminNewProduct() {
                     <p className="text-sm text-muted-foreground mt-2">Please wait while we fetch the product details</p>
                 </div>
             )}
-            
+
             {/* Error State */}
             {isEdit && productError && (
                 <div className="flex flex-col items-center justify-center py-20">
                     <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
                     <p className="text-lg font-medium text-foreground">Failed to load product</p>
                     <p className="text-sm text-muted-foreground mt-2">{productError.message}</p>
-                    <Button 
-                        variant="outline" 
-                        className="mt-4" 
+                    <Button
+                        variant="outline"
+                        className="mt-4"
                         onClick={() => utils.product.byId.invalidate({ id: productId! })}
                     >
                         Try Again
                     </Button>
                 </div>
             )}
-            
+
             {/* Show form only when not loading and no error */}
             {(!isEdit || (!isLoadingProduct && !productError)) && (
-            <>
-            {/* Floating Save Bar (Shopify Style) */}
-            <div className={`fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}>
-                <div className="container max-w-7xl mx-auto h-16 flex items-center justify-between px-6">
-                    <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-                        <span className="text-sm font-bold text-background uppercase tracking-widest hidden sm:inline">Unsaved Changes</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <Button variant="ghost" className="text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs" onClick={() => { setForm(initialForm); setIsDirty(false); }}>
-                            Discard
-                        </Button>
-                        <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8">
-                            {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                            {isEdit ? "Save Changes" : "Publish Product"}
-                        </Button>
-                    </div>
-                </div>
-            </div>
-
-            <div className="space-y-8 pb-20">
-                {/* Header Actions */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <h1 className="font-serif text-2xl font-bold text-foreground">
-                            {isEdit ? "Edit Product" : "Add New Product"}
-                        </h1>
-                        <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
-                            {isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI"}
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        {form.slug && (
-                            <Button variant="secondary" onClick={() => window.open(`/shop/${form.slug}`, '_blank')} disabled={isPending} title="Save changes first before previewing if you made edits." className="hidden sm:inline-flex">
-                                <Eye className="w-4 h-4 mr-2" /> Preview
-                            </Button>
-                        )}
-                        <Button variant="outline" onClick={() => setLocation("/admin-saad/products")} disabled={isPending}>
-                            Discard
-                        </Button>
-                        <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light">
-                            {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                            {uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"}
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Step 1: AI Visual Uploader (Prominent!) */}
-                <section className="bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto">
-                    <div className="p-8">
-                        <div className="flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center">
-                            <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-                                <Sparkles className="w-8 h-8 text-gold" />
+                <>
+                    {/* Floating Save Bar (Shopify Style) */}
+                    <div className={`fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-md border-b border-border shadow-2xl transition-all duration-300 transform ${isDirty ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}>
+                        <div className="container max-w-7xl mx-auto h-16 flex items-center justify-between px-6">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                                <span className="text-sm font-bold text-background uppercase tracking-widest hidden sm:inline">Unsaved Changes</span>
                             </div>
-                            <h2 className="text-2xl font-serif font-bold text-foreground mb-2">Step 1: Product Photography Setup</h2>
-                            <p className="text-muted-foreground max-w-xl mx-auto">
-                                Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing.
-                            </p>
-                        </div>
-
-                        <Tabs defaultValue="upload" className="w-full">
-                            <div className="flex justify-center mb-8">
-                                <TabsList className="bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto">
-                                    <TabsTrigger value="upload" className="rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2">
-                                        <ImagePlus className="w-4 h-4" />
-                                        Manual Photo Upload
-                                    </TabsTrigger>
-                                    <TabsTrigger value="tryon" className="rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2">
-                                        <Camera className="w-4 h-4" />
-                                        Virtual Try-On Studio
-                                    </TabsTrigger>
-                                </TabsList>
-                            </div>
-
-                            <TabsContent value="upload" className="space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center">
-                                <div className="w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]" onClick={() => fileInputRef.current?.click()}>
-                                    <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
-                                    <div className="flex flex-col items-center">
-                                        <ImagePlus className="w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" />
-                                        <h3 className="text-lg font-bold text-foreground">Click to Upload Images</h3>
-                                        <p className="text-sm text-muted-foreground mt-2 max-w-md text-center">
-                                            Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {pendingImages.length > 0 && (
-                                    <div className="w-full mt-4">
-                                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
-                                            {pendingImages.map((img, i) => (
-                                                <div key={i} className="relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md">
-                                                    <img src={img.preview} alt={`Preview ${i}`} className="w-full h-full object-cover" />
-                                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                                        {pendingMainImageIndex !== i && (
-                                                            <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setPendingMainImageIndex(i); }}>
-                                                                Main
-                                                            </Button>
-                                                        )}
-                                                        <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); removePendingImage(i); }}>
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </Button>
-                                                    </div>
-                                                    {pendingMainImageIndex === i && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                <Button
-                                    size="lg"
-                                    onClick={handleAiFill}
-                                    disabled={isAiLoading || (pendingImages.length === 0 && !form.title.trim())}
-                                    className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90 font-bold overflow-hidden"
-                                >
-                                    {isAiLoading ? (
-                                        <span className="flex items-center"><Loader2 className="w-5 h-5 animate-spin mr-3" /> Auto-writing Listing...</span>
-                                    ) : (
-                                        <span className="flex items-center"><Sparkles className="w-5 h-5 mr-3" /> Auto-Fill Listing Details</span>
-                                    )}
+                            <div className="flex items-center gap-3">
+                                <Button variant="ghost" className="text-background hover:bg-background/10 hover:text-background font-condensed uppercase tracking-wider text-xs" onClick={() => { setForm(initialForm); setIsDirty(false); }}>
+                                    Discard
                                 </Button>
-                            </TabsContent>
-
-                            <TabsContent value="tryon" className="animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0">
-                                <VirtualTryOnAgent
-                                    onUseImage={async (url) => { handleTryOnImagesBatch([{ url, base64: "", mimeType: "" }]) }}
-                                    onUseImages={(images) => { handleTryOnImagesBatch(images) }}
-                                />
-                            </TabsContent>
-                        </Tabs>
-                    </div>
-                </section>
-
-                {/* Existing Images (if Edit) */}
-                {isEdit && (editProduct as any)?.images?.length > 0 && (
-                    <div className="space-y-2 mt-4 pt-4 border-t border-border">
-                        <Label className="text-xs text-muted-foreground uppercase tracking-wider">Current Images</Label>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            {(editProduct as any)?.images.map((img: any) => (
-                                <div key={img.id} className="relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all">
-                                    <img src={img.imageUrl} alt={img.altText || "Product Image"} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                        {form.mainImage !== img.imageUrl && (
-                                            <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setForm(f => ({ ...f, mainImage: img.imageUrl })); setPendingMainImageIndex(-1); }}>
-                                                Set Main
-                                            </Button>
-                                        )}
-                                        <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); if (confirm('Delete this image?')) deleteImageMutation.mutate({ id: img.id }); }}>
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
-                                    </div>
-                                    {form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
-                                </div>
-                            ))}
+                                <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-white font-condensed font-bold uppercase tracking-widest px-8">
+                                    {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                    {isEdit ? "Save Changes" : "Publish Product"}
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                )}
 
-                <hr className="border-border" />
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-                    {/* Left Column: Basic Details & Text */}
-                    <div className="lg:col-span-8 space-y-8">
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Basic Information</h3>
+                    <div className="space-y-8 pb-20">
+                        {/* Header Actions */}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div>
+                                <h1 className="font-serif text-2xl font-bold text-foreground">
+                                    {isEdit ? "Edit Product" : "Add New Product"}
+                                </h1>
+                                <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
+                                    {isEdit ? "Modify your existing listing" : "Create a new product listing from scratch or using AI"}
+                                </p>
                             </div>
-                            <div className="p-6 space-y-6">
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Product Title <span className="text-red-500">*</span></Label>
-                                    <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) }))} placeholder="e.g. Custom Waterproof Ski Jacket" className="bg-background h-12 text-lg font-serif" />
-                                </div>
+                            <div className="flex items-center gap-3">
+                                {form.slug && (
+                                    <Button variant="secondary" onClick={() => window.open(`/shop/${form.slug}`, '_blank')} disabled={isPending} title="Save changes first before previewing if you made edits." className="hidden sm:inline-flex">
+                                        <Eye className="w-4 h-4 mr-2" /> Preview
+                                    </Button>
+                                )}
+                                <Button variant="outline" onClick={() => setLocation("/admin-saad/products")} disabled={isPending}>
+                                    Discard
+                                </Button>
+                                <Button onClick={handleSubmit} disabled={isPending} className="bg-gold text-black hover:bg-gold-light">
+                                    {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                    {uploadingImages ? "Uploading..." : isEdit ? "Save Changes" : "Create Product"}
+                                </Button>
+                            </div>
+                        </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div>
-                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Category <span className="text-red-500">*</span></Label>
-                                        <Select 
-                                            value={form.categoryId?.toString() || ""} 
-                                            onValueChange={v => {
-                                                const catId = parseInt(v);
-                                                const cat = categories?.find(c => c.id === catId);
-                                                setForm(f => ({ 
-                                                    ...f, 
-                                                    categoryId: catId,
-                                                    category: cat?.name || f.category,
-                                                    subcategoryId: null 
-                                                }));
-                                            }}
-                                        >
-                                            <SelectTrigger className="bg-background h-12">
-                                                <SelectValue placeholder="Select category" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-card">
-                                                {categories?.map(c => (
-                                                    <SelectItem key={c.id} value={c.id.toString()}>
-                                                        {c.icon} {c.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                        {/* Step 1: AI Visual Uploader (Prominent!) */}
+                        <section className="bg-gradient-to-br from-card to-card/50 border border-gold/30 rounded-2xl overflow-hidden shadow-lg shadow-gold/5 max-w-[1400px] mx-auto">
+                            <div className="p-8">
+                                <div className="flex flex-col flex-wrap border-b border-border/50 pb-6 mb-8 items-center text-center">
+                                    <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                        <Sparkles className="w-8 h-8 text-gold" />
                                     </div>
-                                    <div>
-                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Subcategory <span className="text-red-500">*</span></Label>
-                                        <Select 
-                                            value={form.subcategoryId?.toString() || ""} 
-                                            onValueChange={v => setForm(f => ({ ...f, subcategoryId: v ? parseInt(v) : null }))}
-                                            disabled={!form.categoryId}
-                                        >
-                                            <SelectTrigger className="bg-background h-12">
-                                                <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-card">
-                                                {(() => {
-                                                    const selectedCategory = categories?.find(c => c.id === form.categoryId);
-                                                    const subs = selectedCategory?.subcategories || [];
-                                                    if (subs.length === 0 && form.categoryId) {
-                                                        return (
-                                                            <>
-                                                                <SelectItem value="_empty" disabled>No subcategories found</SelectItem>
-                                                                <SelectItem value="_create" disabled>Go to Admin → Categories to add subcategories</SelectItem>
-                                                            </>
-                                                        );
-                                                    }
-                                                    return subs.map(s => (
-                                                        <SelectItem key={s.id} value={s.id.toString()}>
-                                                            {s.name}
-                                                        </SelectItem>
-                                                    ));
-                                                })()}
-                                            </SelectContent>
-                                        </Select>
-                                        {!form.subcategoryId && form.categoryId && (
-                                            <p className="text-xs text-amber-500 mt-1">Please select a subcategory for proper product organization</p>
-                                        )}
+                                    <h2 className="text-2xl font-serif font-bold text-foreground mb-2">Step 1: Product Photography Setup</h2>
+                                    <p className="text-muted-foreground max-w-xl mx-auto">
+                                        Either upload your ready-to-sell product photos, or use the Virtual Try-On Studio to map flat lays/links onto high-res models before auto-writing the listing.
+                                    </p>
+                                </div>
+
+                                <Tabs defaultValue="upload" className="w-full">
+                                    <div className="flex justify-center mb-8">
+                                        <TabsList className="bg-secondary/40 h-12 p-1 border border-border rounded-xl mx-auto">
+                                            <TabsTrigger value="upload" className="rounded-lg px-8 font-medium data-[state=active]:bg-card data-[state=active]:shadow-sm data-[state=active]:text-foreground text-muted-foreground flex items-center gap-2">
+                                                <ImagePlus className="w-4 h-4" />
+                                                Manual Photo Upload
+                                            </TabsTrigger>
+                                            <TabsTrigger value="tryon" className="rounded-lg px-8 font-medium data-[state=active]:bg-gold data-[state=active]:text-black text-muted-foreground flex items-center gap-2">
+                                                <Camera className="w-4 h-4" />
+                                                Virtual Try-On Studio
+                                            </TabsTrigger>
+                                        </TabsList>
                                     </div>
-                                    <div>
-                                        <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">URL Slug <span className="text-red-500">*</span></Label>
-                                        <Input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} className="bg-background h-12 font-mono" />
-                                    </div>
-                                </div>
 
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Short Description</Label>
-                                    <Input value={form.shortDescription} onChange={e => setForm(f => ({ ...f, shortDescription: e.target.value }))} placeholder="Brief product summary for cards..." className="bg-background h-12" />
-                                </div>
-
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Full Description</Label>
-                                    <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={6} className="bg-background leading-relaxed" />
-                                </div>
-
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Story</Label>
-                                    <Textarea value={form.manufacturingStory} onChange={e => setForm(f => ({ ...f, manufacturingStory: e.target.value }))} rows={4} className="bg-background leading-relaxed" />
-                                </div>
-
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Infographic URL</Label>
-                                    <Input value={form.manufacturingInfographic} onChange={e => setForm(f => ({ ...f, manufacturingInfographic: e.target.value }))} placeholder="https://..." className="bg-background h-12" />
-                                    {form.manufacturingInfographic && (
-                                        <div className="mt-2">
-                                            <img src={form.manufacturingInfographic} alt="Infographic" className="max-h-32 rounded border border-border" />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Specs & Variations</h3>
-                            </div>
-                            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Material</Label>
-                                    <Input value={form.material} onChange={e => setForm(f => ({ ...f, material: e.target.value }))} placeholder="100% Cotton" className="bg-background" />
-                                </div>
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Weight (kg)</Label>
-                                    <Input value={form.weight} onChange={e => setForm(f => ({ ...f, weight: e.target.value }))} placeholder="0.5" type="number" step="0.01" className="bg-background" />
-                                </div>
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Colors (JSON Array)</Label>
-                                    <Input value={form.availableColors} onChange={e => setForm(f => ({ ...f, availableColors: e.target.value }))} className="bg-background font-mono text-sm" />
-                                </div>
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Sizes (JSON Array)</Label>
-                                    <Input value={form.availableSizes} onChange={e => setForm(f => ({ ...f, availableSizes: e.target.value }))} className="bg-background font-mono text-sm" />
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Size Chart</h3>
-                            </div>
-                            <div className="p-6">
-                                <SizeChartEditor value={sizeChart} onChange={setSizeChart} />
-                            </div>
-                        </section>
-
-                    </div>
-
-                    {/* Right Column: Pricing, SEO, State */}
-                    <div className="lg:col-span-4 space-y-8">
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Pricing & MOQ</h3>
-                            </div>
-                            <div className="p-6 space-y-6">
-                                <div>
-                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Sample Price (USD)</Label>
-                                    <div className="relative">
-                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">$</span>
-                                        <Input value={form.samplePrice} onChange={e => setForm(f => ({ ...f, samplePrice: e.target.value }))} placeholder="25.00" className="bg-background h-12 pl-8 text-lg font-semibold" />
-                                    </div>
-                                </div>
-                                <SlabEditor slabs={slabs} onChange={setSlabs} />
-                            </div>
-                        </section>
-
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Visibility</h3>
-                            </div>
-                            <div className="p-6 space-y-4">
-                                {[
-                                    { key: "isActive", label: "Active Status", desc: "Visible to customers", icon: Eye },
-                                    { key: "isFeatured", label: "Featured Product", desc: "Highlight on homepage", icon: Star },
-                                    { key: "freeShipping", label: "Free Shipping", desc: "Exempt from shipping costs", icon: Truck },
-                                ].map(({ key, label, desc, icon: Icon }) => (
-                                    <div key={key} className="flex items-start justify-between bg-background rounded-lg p-4 border border-border">
-                                        <div className="flex gap-3">
-                                            <div className="mt-1"><Icon className="w-5 h-5 text-gold" /></div>
-                                            <div>
-                                                <Label className="text-sm font-bold text-foreground">{label}</Label>
-                                                <p className="text-xs text-muted-foreground leading-tight mt-1">{desc}</p>
+                                    <TabsContent value="upload" className="space-y-8 animate-in fade-in duration-500 max-w-3xl mx-auto flex flex-col items-center">
+                                        <div className="w-full max-w-2xl bg-secondary/30 border-2 border-dashed border-border rounded-xl p-8 hover:border-gold/50 transition-colors cursor-pointer group flex flex-col items-center justify-center min-h-[250px]" onClick={() => fileInputRef.current?.click()}>
+                                            <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
+                                            <div className="flex flex-col items-center">
+                                                <ImagePlus className="w-12 h-12 text-muted-foreground group-hover:text-gold transition-colors mb-4" />
+                                                <h3 className="text-lg font-bold text-foreground">Click to Upload Images</h3>
+                                                <p className="text-sm text-muted-foreground mt-2 max-w-md text-center">
+                                                    Drag and drop your photos. First image is used as the cover. Valid formats: JPG, PNG, WEBP.
+                                                </p>
                                             </div>
                                         </div>
-                                        <Switch checked={form[key as keyof typeof form] as boolean} onCheckedChange={v => setForm(f => ({ ...f, [key]: v }))} className="mt-1" />
+
+                                        {pendingImages.length > 0 && (
+                                            <div className="w-full mt-4">
+                                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                                                    {pendingImages.map((img, i) => (
+                                                        <div key={i} className="relative group rounded-lg border border-border overflow-hidden bg-background aspect-[2/3] shadow-md">
+                                                            <img src={img.preview} alt={`Preview ${i}`} className="w-full h-full object-cover" />
+                                                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                                                {pendingMainImageIndex !== i && (
+                                                                    <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setPendingMainImageIndex(i); }}>
+                                                                        Main
+                                                                    </Button>
+                                                                )}
+                                                                <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); removePendingImage(i); }}>
+                                                                    <Trash2 className="w-4 h-4" />
+                                                                </Button>
+                                                            </div>
+                                                            {pendingMainImageIndex === i && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <Button
+                                            size="lg"
+                                            onClick={handleAiFill}
+                                            disabled={isAiLoading || (pendingImages.length === 0 && !form.title.trim())}
+                                            className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90 font-bold overflow-hidden"
+                                        >
+                                            {isAiLoading ? (
+                                                <span className="flex items-center"><Loader2 className="w-5 h-5 animate-spin mr-3" /> Auto-writing Listing...</span>
+                                            ) : (
+                                                <span className="flex items-center"><Sparkles className="w-5 h-5 mr-3" /> Auto-Fill Listing Details</span>
+                                            )}
+                                        </Button>
+                                    </TabsContent>
+
+                                    <TabsContent value="tryon" className="animate-in fade-in duration-500 rounded-xl overflow-hidden mt-0">
+                                        <VirtualTryOnAgent
+                                            onUseImage={async (url) => { handleTryOnImagesBatch([{ url, base64: "", mimeType: "" }]) }}
+                                            onUseImages={(images) => { handleTryOnImagesBatch(images) }}
+                                        />
+                                    </TabsContent>
+                                </Tabs>
+                            </div>
+                        </section>
+
+                        {/* Existing Images (if Edit) */}
+                        {isEdit && (editProduct as any)?.images?.length > 0 && (
+                            <div className="space-y-2 mt-4 pt-4 border-t border-border">
+                                <Label className="text-xs text-muted-foreground uppercase tracking-wider">Current Images</Label>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    {(editProduct as any)?.images.map((img: any) => (
+                                        <div key={img.id} className="relative group rounded border border-border overflow-hidden bg-background aspect-[2/3] shadow-sm hover:shadow-md transition-all">
+                                            <img src={img.imageUrl} alt={img.altText || "Product Image"} className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                                {form.mainImage !== img.imageUrl && (
+                                                    <Button type="button" size="sm" variant="secondary" className="h-8 text-xs font-condensed" onClick={(e) => { e.stopPropagation(); setForm(f => ({ ...f, mainImage: img.imageUrl })); setPendingMainImageIndex(-1); }}>
+                                                        Set Main
+                                                    </Button>
+                                                )}
+                                                <Button type="button" size="icon" variant="destructive" className="h-8 w-8 rounded-full" onClick={(e) => { e.stopPropagation(); if (confirm('Delete this image?')) deleteImageMutation.mutate({ id: img.id }); }}>
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            </div>
+                                            {form.mainImage === img.imageUrl && pendingMainImageIndex === -1 && <span className="absolute top-2 left-2 bg-gold text-black text-[10px] font-bold px-2 py-0.5 rounded shadow">MAIN</span>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <hr className="border-border" />
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                            {/* Left Column: Basic Details & Text */}
+                            <div className="lg:col-span-8 space-y-8">
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Basic Information</h3>
                                     </div>
-                                ))}
-                            </div>
-                        </section>
+                                    <div className="p-6 space-y-6">
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Product Title <span className="text-red-500">*</span></Label>
+                                            <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) }))} placeholder="e.g. Custom Waterproof Ski Jacket" className="bg-background h-12 text-lg font-serif" />
+                                        </div>
 
-                        <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                            <div className="bg-secondary/40 px-6 py-4 border-b border-border">
-                                <h3 className="font-serif text-lg font-bold text-foreground">Search Engine (SEO)</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                            <div>
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground block">Category <span className="text-red-500">*</span></Label>
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-6 w-6 text-gold hover:text-gold-light"
+                                                        onClick={() => setIsCategoryDialogOpen(true)}
+                                                        title="Add New Category"
+                                                    >
+                                                        <Plus className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                                <Select
+                                                    value={form.categoryId?.toString() || ""}
+                                                    onValueChange={v => {
+                                                        const catId = parseInt(v);
+                                                        const cat = categories?.find(c => c.id === catId);
+                                                        setForm(f => ({
+                                                            ...f,
+                                                            categoryId: catId,
+                                                            category: cat?.name || f.category,
+                                                            subcategoryId: null
+                                                        }));
+                                                    }}
+                                                >
+                                                    <SelectTrigger className="bg-background h-12">
+                                                        <SelectValue placeholder="Select category" />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="bg-card">
+                                                        {categories?.map(c => (
+                                                            <SelectItem key={c.id} value={c.id.toString()}>
+                                                                {c.icon} {c.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div>
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground block">Subcategory <span className="text-red-500">*</span></Label>
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-6 w-6 text-gold hover:text-gold-light disabled:opacity-30"
+                                                        disabled={!form.categoryId}
+                                                        onClick={() => setIsSubcategoryDialogOpen(true)}
+                                                        title={form.categoryId ? "Add New Subcategory" : "Select a category first"}
+                                                    >
+                                                        <Plus className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                                <Select
+                                                    value={form.subcategoryId?.toString() || ""}
+                                                    onValueChange={v => setForm(f => ({ ...f, subcategoryId: v ? parseInt(v) : null }))}
+                                                    disabled={!form.categoryId}
+                                                >
+                                                    <SelectTrigger className="bg-background h-12">
+                                                        <SelectValue placeholder={form.categoryId ? "Select subcategory" : "Select category first"} />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="bg-card">
+                                                        {(() => {
+                                                            const selectedCategory = categories?.find(c => c.id === form.categoryId);
+                                                            const subs = selectedCategory?.subcategories || [];
+                                                            if (subs.length === 0 && form.categoryId) {
+                                                                return (
+                                                                    <>
+                                                                        <SelectItem value="_empty" disabled>No subcategories found</SelectItem>
+                                                                        <SelectItem value="_create" disabled>Go to Admin → Categories to add subcategories</SelectItem>
+                                                                    </>
+                                                                );
+                                                            }
+                                                            return subs.map(s => (
+                                                                <SelectItem key={s.id} value={s.id.toString()}>
+                                                                    {s.name}
+                                                                </SelectItem>
+                                                            ));
+                                                        })()}
+                                                    </SelectContent>
+                                                </Select>
+                                                {!form.subcategoryId && form.categoryId && (
+                                                    <p className="text-xs text-amber-500 mt-1">Please select a subcategory for proper product organization</p>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">URL Slug <span className="text-red-500">*</span></Label>
+                                                <Input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} className="bg-background h-12 font-mono" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Short Description</Label>
+                                            <Input value={form.shortDescription} onChange={e => setForm(f => ({ ...f, shortDescription: e.target.value }))} placeholder="Brief product summary for cards..." className="bg-background h-12" />
+                                        </div>
+
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Full Description</Label>
+                                            <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={6} className="bg-background leading-relaxed" />
+                                        </div>
+
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Story</Label>
+                                            <Textarea value={form.manufacturingStory} onChange={e => setForm(f => ({ ...f, manufacturingStory: e.target.value }))} rows={4} className="bg-background leading-relaxed" />
+                                        </div>
+
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Manufacturing Infographic URL</Label>
+                                            <Input value={form.manufacturingInfographic} onChange={e => setForm(f => ({ ...f, manufacturingInfographic: e.target.value }))} placeholder="https://..." className="bg-background h-12" />
+                                            {form.manufacturingInfographic && (
+                                                <div className="mt-2">
+                                                    <img src={form.manufacturingInfographic} alt="Infographic" className="max-h-32 rounded border border-border" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Specs & Variations</h3>
+                                    </div>
+                                    <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Material</Label>
+                                            <Input value={form.material} onChange={e => setForm(f => ({ ...f, material: e.target.value }))} placeholder="100% Cotton" className="bg-background" />
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Weight (kg)</Label>
+                                            <Input value={form.weight} onChange={e => setForm(f => ({ ...f, weight: e.target.value }))} placeholder="0.5" type="number" step="0.01" className="bg-background" />
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Colors (JSON Array)</Label>
+                                            <Input value={form.availableColors} onChange={e => setForm(f => ({ ...f, availableColors: e.target.value }))} className="bg-background font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Sizes (JSON Array)</Label>
+                                            <Input value={form.availableSizes} onChange={e => setForm(f => ({ ...f, availableSizes: e.target.value }))} className="bg-background font-mono text-sm" />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Size Chart</h3>
+                                    </div>
+                                    <div className="p-6">
+                                        <SizeChartEditor value={sizeChart} onChange={setSizeChart} />
+                                    </div>
+                                </section>
+
                             </div>
-                            <div className="p-6 space-y-4">
-                                <div>
-                                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Title</Label>
-                                    <Input value={form.seoTitle} onChange={e => setForm(f => ({ ...f, seoTitle: e.target.value }))} className="bg-background" />
-                                    <p className={`text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`}>{form.seoTitle.length}/60 chars</p>
-                                </div>
-                                <div>
-                                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Keywords</Label>
-                                    <Input value={form.seoKeywords} onChange={e => setForm(f => ({ ...f, seoKeywords: e.target.value }))} className="bg-background" />
-                                </div>
-                                <div>
-                                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Description</Label>
-                                    <Textarea value={form.seoDescription} onChange={e => setForm(f => ({ ...f, seoDescription: e.target.value }))} rows={4} className="bg-background resize-none text-xs" />
-                                    <p className={`text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`}>{form.seoDescription.length}/160 chars</p>
-                                </div>
+
+                            {/* Right Column: Pricing, SEO, State */}
+                            <div className="lg:col-span-4 space-y-8">
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Pricing & MOQ</h3>
+                                    </div>
+                                    <div className="p-6 space-y-6">
+                                        <div>
+                                            <Label className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2 block">Sample Price (USD)</Label>
+                                            <div className="relative">
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">$</span>
+                                                <Input value={form.samplePrice} onChange={e => setForm(f => ({ ...f, samplePrice: e.target.value }))} placeholder="25.00" className="bg-background h-12 pl-8 text-lg font-semibold" />
+                                            </div>
+                                        </div>
+                                        <SlabEditor slabs={slabs} onChange={setSlabs} />
+                                    </div>
+                                </section>
+
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Visibility</h3>
+                                    </div>
+                                    <div className="p-6 space-y-4">
+                                        {[
+                                            { key: "isActive", label: "Active Status", desc: "Visible to customers", icon: Eye },
+                                            { key: "isFeatured", label: "Featured Product", desc: "Highlight on homepage", icon: Star },
+                                            { key: "freeShipping", label: "Free Shipping", desc: "Exempt from shipping costs", icon: Truck },
+                                        ].map(({ key, label, desc, icon: Icon }) => (
+                                            <div key={key} className="flex items-start justify-between bg-background rounded-lg p-4 border border-border">
+                                                <div className="flex gap-3">
+                                                    <div className="mt-1"><Icon className="w-5 h-5 text-gold" /></div>
+                                                    <div>
+                                                        <Label className="text-sm font-bold text-foreground">{label}</Label>
+                                                        <p className="text-xs text-muted-foreground leading-tight mt-1">{desc}</p>
+                                                    </div>
+                                                </div>
+                                                <Switch checked={form[key as keyof typeof form] as boolean} onCheckedChange={v => setForm(f => ({ ...f, [key]: v }))} className="mt-1" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                <section className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                                    <div className="bg-secondary/40 px-6 py-4 border-b border-border">
+                                        <h3 className="font-serif text-lg font-bold text-foreground">Search Engine (SEO)</h3>
+                                    </div>
+                                    <div className="p-6 space-y-4">
+                                        <div>
+                                            <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Title</Label>
+                                            <Input value={form.seoTitle} onChange={e => setForm(f => ({ ...f, seoTitle: e.target.value }))} className="bg-background" />
+                                            <p className={`text-[10px] mt-1 ${form.seoTitle.length > 60 ? "text-red-400" : "text-muted-foreground"}`}>{form.seoTitle.length}/60 chars</p>
+                                        </div>
+                                        <div>
+                                            <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Keywords</Label>
+                                            <Input value={form.seoKeywords} onChange={e => setForm(f => ({ ...f, seoKeywords: e.target.value }))} className="bg-background" />
+                                        </div>
+                                        <div>
+                                            <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Meta Description</Label>
+                                            <Textarea value={form.seoDescription} onChange={e => setForm(f => ({ ...f, seoDescription: e.target.value }))} rows={4} className="bg-background resize-none text-xs" />
+                                            <p className={`text-[10px] mt-1 ${form.seoDescription.length > 160 ? "text-red-400" : "text-muted-foreground"}`}>{form.seoDescription.length}/160 chars</p>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                        </section>
+                        </div>
+
                     </div>
-                </div>
-
-            </div>
-            </>
+                </>
             )}
+
+            {/* Inline Category Creation Dialog */}
+            <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
+                <DialogContent className="max-w-md bg-card border-border">
+                    <DialogHeader>
+                        <DialogTitle className="font-serif">Add New Category</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <Label>Category Name *</Label>
+                            <Input
+                                value={newCatForm.name}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setNewCatForm(prev => ({ ...prev, name: val, slug: autoSlug(val) }));
+                                }}
+                                placeholder="e.g. Winter Wear"
+                                className="bg-background"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Slug *</Label>
+                            <Input
+                                value={newCatForm.slug}
+                                onChange={e => setNewCatForm(prev => ({ ...prev, slug: e.target.value }))}
+                                className="bg-background font-mono"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Icon (Emoji)</Label>
+                            <Input
+                                value={newCatForm.icon}
+                                onChange={e => setNewCatForm(prev => ({ ...prev, icon: e.target.value }))}
+                                placeholder="📁"
+                                className="bg-background"
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setIsCategoryDialogOpen(false)}>Cancel</Button>
+                        <Button
+                            className="bg-gold text-black hover:bg-gold-light"
+                            onClick={() => createCategoryMutation.mutate(newCatForm)}
+                            disabled={createCategoryMutation.isPending || !newCatForm.name || !newCatForm.slug}
+                        >
+                            {createCategoryMutation.isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                            Create Category
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Inline Subcategory Creation Dialog */}
+            <Dialog open={isSubcategoryDialogOpen} onOpenChange={setIsSubcategoryDialogOpen}>
+                <DialogContent className="max-w-md bg-card border-border">
+                    <DialogHeader>
+                        <DialogTitle className="font-serif">Add New Subcategory</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <p className="text-xs text-muted-foreground">Adding to: <span className="text-gold font-bold">{categories?.find(c => c.id === form.categoryId)?.name}</span></p>
+                        <div className="space-y-2">
+                            <Label>Subcategory Name *</Label>
+                            <Input
+                                value={newSubForm.name}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setNewSubForm(prev => ({ ...prev, name: val, slug: autoSlug(val) }));
+                                }}
+                                placeholder="e.g. Heavy Jackets"
+                                className="bg-background"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Slug *</Label>
+                            <Input
+                                value={newSubForm.slug}
+                                onChange={e => setNewSubForm(prev => ({ ...prev, slug: e.target.value }))}
+                                className="bg-background font-mono"
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setIsSubcategoryDialogOpen(false)}>Cancel</Button>
+                        <Button
+                            className="bg-gold text-black hover:bg-gold-light"
+                            onClick={() => {
+                                if (form.categoryId) {
+                                    createSubcategoryMutation.mutate({ categoryId: form.categoryId, ...newSubForm });
+                                }
+                            }}
+                            disabled={createSubcategoryMutation.isPending || !newSubForm.name || !newSubForm.slug}
+                        >
+                            {createSubcategoryMutation.isPending && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+                            Create Subcategory
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </AdminLayout>
     );
 }

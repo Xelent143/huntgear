@@ -1,3 +1,5 @@
+import path from "path";
+
 export const ENV = {
   appId: process.env.VITE_APP_ID ?? "",
   cookieSecret: process.env.JWT_SECRET ?? "",
@@ -8,5 +10,7 @@ export const ENV = {
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
   geminiApiKey: process.env.GEMINI_API_KEY ?? "",
-  storagePath: process.env.STORAGE_PATH || "",
+  storagePath: process.env.STORAGE_PATH || (process.env.NODE_ENV === "production"
+    ? path.join(process.env.HOME || process.env.USERPROFILE || '/tmp', 'xh_persistent_uploads')
+    : path.join(process.cwd(), 'uploads')),
 };

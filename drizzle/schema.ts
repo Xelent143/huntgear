@@ -14,16 +14,16 @@ import {
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
-  openId: varchar("open_id", { length: 64 }).notNull().unique(),
+  openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
-  loginMethod: varchar("login_method", { length: 64 }),
+  loginMethod: varchar("loginMethod", { length: 64 }),
   password: varchar("password", { length: 255 }), // new: for local email/pass auth
-  geminiApiKey: varchar("gemini_api_key", { length: 255 }), // per-client Gemini AI key
+  geminiApiKey: varchar("geminiApiKey", { length: 255 }), // per-client Gemini AI key
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("last_signed_in").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
 export type User = typeof users.$inferSelect;
@@ -39,23 +39,23 @@ export const products = mysqlTable("products", {
   categoryId: int("category_id"),
   subcategoryId: int("subcategory_id"),
   description: text("description"),
-  shortDescription: varchar("short_description", { length: 500 }),
-  mainImage: varchar("main_image", { length: 1000 }),
-  samplePrice: decimal("sample_price", { precision: 10, scale: 2 }),
+  shortDescription: varchar("shortDescription", { length: 500 }),
+  mainImage: varchar("mainImage", { length: 1000 }),
+  samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
   weight: decimal("weight", { precision: 8, scale: 3 }), // kg per unit, for shipping calc
-  availableSizes: text("available_sizes"), // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
-  availableColors: text("available_colors"), // JSON array of color names
+  availableSizes: text("availableSizes"), // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
+  availableColors: text("availableColors"), // JSON array of color names
   material: varchar("material", { length: 255 }),
-  manufacturingStory: text("manufacturing_story"), // SEO/GEO driven manufacturing details
-  manufacturingInfographic: varchar("manufacturing_infographic", { length: 1000 }), // Infographic image URL
-  isFeatured: boolean("is_featured").default(false).notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
-  freeShipping: boolean("free_shipping").default(false).notNull(),
+  manufacturingStory: text("manufacturingStory"), // SEO/GEO driven manufacturing details
+  manufacturingInfographic: varchar("manufacturingInfographic", { length: 1000 }), // Infographic image URL
+  isFeatured: boolean("isFeatured").default(false).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  freeShipping: boolean("freeShipping").default(false).notNull(),
   // SEO fields
-  seoTitle: varchar("seo_title", { length: 255 }),
-  seoDescription: text("seo_description"),
-  seoKeywords: text("seo_keywords"),
-  sortOrder: int("sort_order").default(0).notNull(),
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  sortOrder: int("sortOrder").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
@@ -132,7 +132,7 @@ export type InsertShippingZone = typeof shippingZones.$inferInsert;
 export const cartItems = mysqlTable("cart_items", {
   id: int("id").autoincrement().primaryKey(),
   sessionId: varchar("sessionId", { length: 128 }).notNull(), // anonymous cart support
-  userId: int("user_id"), // null for guests
+  userId: int("userId"), // null for guests
   productId: int("productId").notNull(),
   quantity: int("quantity").notNull().default(1),
   selectedSize: varchar("selectedSize", { length: 50 }),
@@ -148,37 +148,37 @@ export type InsertCartItem = typeof cartItems.$inferInsert;
 
 export const orders = mysqlTable("orders", {
   id: int("id").autoincrement().primaryKey(),
-  orderNumber: varchar("order_number", { length: 64 }).notNull().unique(),
+  orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
   userId: int("userId"),
-  sessionId: varchar("session_id", { length: 128 }),
+  sessionId: varchar("sessionId", { length: 128 }),
   // Customer info
-  customerName: varchar("customer_name", { length: 255 }).notNull(),
-  customerEmail: varchar("customer_email", { length: 320 }).notNull(),
-  customerPhone: varchar("customer_phone", { length: 64 }),
-  companyName: varchar("company_name", { length: 255 }),
+  customerName: varchar("customerName", { length: 255 }).notNull(),
+  customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
+  customerPhone: varchar("customerPhone", { length: 64 }),
+  companyName: varchar("companyName", { length: 255 }),
   // Shipping address
-  addressLine1: varchar("address_line1", { length: 500 }).notNull(),
-  addressLine2: varchar("address_line2", { length: 500 }),
+  addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
+  addressLine2: varchar("addressLine2", { length: 500 }),
   city: varchar("city", { length: 100 }).notNull(),
   state: varchar("state", { length: 100 }),
-  postalCode: varchar("postal_code", { length: 20 }),
+  postalCode: varchar("postalCode", { length: 20 }),
   country: varchar("country", { length: 100 }).notNull(),
-  countryCode: varchar("country_code", { length: 10 }).notNull(),
+  countryCode: varchar("countryCode", { length: 10 }).notNull(),
   // Financials (in USD)
   subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
-  shippingCost: decimal("shipping_cost", { precision: 10, scale: 2 }).default("0.00").notNull(),
-  totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
+  shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
   // Items snapshot (JSON)
   items: text("items").notNull(), // JSON array of { productId, title, qty, size, color, unitPrice }
   // Payment
-  paymentMethod: mysqlEnum("payment_method", ["stripe", "invoice"]).default("invoice").notNull(),
+  paymentMethod: mysqlEnum("paymentMethod", ["stripe", "invoice"]).default("invoice").notNull(),
   // Stripe
-  stripePaymentIntentId: varchar("stripe_payment_intent_id", { length: 255 }),
-  stripeSessionId: varchar("stripe_session_id", { length: 255 }),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  stripeSessionId: varchar("stripeSessionId", { length: 255 }),
   status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
   notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Order = typeof orders.$inferSelect;
@@ -396,7 +396,6 @@ export const categories = mysqlTable("categories", {
   icon: varchar("icon", { length: 50 }).default(""),
   description: text("description"),
   imageUrl: varchar("image_url", { length: 1000 }),
-  parentId: int("parent_id"),
   sortOrder: int("sort_order").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   seoTitle: varchar("seo_title", { length: 255 }),

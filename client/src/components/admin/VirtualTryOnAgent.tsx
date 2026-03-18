@@ -184,7 +184,10 @@ export default function VirtualTryOnAgent({
                                             key={savedModel.id}
                                             onClick={async () => {
                                                 try {
-                                                    const res = await fetch(savedModel.imageUrl);
+                                                    const url = savedModel.imageUrl.startsWith("http") || savedModel.imageUrl.startsWith("/")
+                                                        ? savedModel.imageUrl
+                                                        : `/${savedModel.imageUrl}`;
+                                                    const res = await fetch(url);
                                                     const blob = await res.blob();
                                                     const reader = new FileReader();
                                                     reader.readAsDataURL(blob);
@@ -332,7 +335,11 @@ export default function VirtualTryOnAgent({
                             {generatedImages.map((img, i) => (
                                 <div key={i} className="flex flex-col gap-2 relative group w-full">
                                     <div className="aspect-[3/4] w-full relative">
-                                        <img src={img.url} alt={img.view} className="w-full h-full object-cover rounded-lg shadow-md border border-border" />
+                                        <img
+                                            src={img.url.startsWith("http") || img.url.startsWith("/") ? img.url : `/${img.url}`}
+                                            alt={img.view}
+                                            className="w-full h-full object-cover rounded-lg shadow-md border border-border"
+                                        />
                                         <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
                                             <p className="text-xs font-bold text-white text-center tracking-wider">{img.view}</p>
                                         </div>

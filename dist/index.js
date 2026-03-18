@@ -49,18 +49,18 @@ var init_schema = __esm({
     "use strict";
     users = mysqlTable("users", {
       id: int("id").autoincrement().primaryKey(),
-      openId: varchar("open_id", { length: 64 }).notNull().unique(),
+      openId: varchar("openId", { length: 64 }).notNull().unique(),
       name: text("name"),
       email: varchar("email", { length: 320 }),
-      loginMethod: varchar("login_method", { length: 64 }),
+      loginMethod: varchar("loginMethod", { length: 64 }),
       password: varchar("password", { length: 255 }),
       // new: for local email/pass auth
-      geminiApiKey: varchar("gemini_api_key", { length: 255 }),
+      geminiApiKey: varchar("geminiApiKey", { length: 255 }),
       // per-client Gemini AI key
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-      createdAt: timestamp("created_at").defaultNow().notNull(),
-      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
-      lastSignedIn: timestamp("last_signed_in").defaultNow().notNull()
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
     });
     products = mysqlTable("products", {
       id: int("id").autoincrement().primaryKey(),
@@ -71,28 +71,28 @@ var init_schema = __esm({
       categoryId: int("category_id"),
       subcategoryId: int("subcategory_id"),
       description: text("description"),
-      shortDescription: varchar("short_description", { length: 500 }),
-      mainImage: varchar("main_image", { length: 1e3 }),
-      samplePrice: decimal("sample_price", { precision: 10, scale: 2 }),
+      shortDescription: varchar("shortDescription", { length: 500 }),
+      mainImage: varchar("mainImage", { length: 1e3 }),
+      samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
       weight: decimal("weight", { precision: 8, scale: 3 }),
       // kg per unit, for shipping calc
-      availableSizes: text("available_sizes"),
+      availableSizes: text("availableSizes"),
       // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
-      availableColors: text("available_colors"),
+      availableColors: text("availableColors"),
       // JSON array of color names
       material: varchar("material", { length: 255 }),
-      manufacturingStory: text("manufacturing_story"),
+      manufacturingStory: text("manufacturingStory"),
       // SEO/GEO driven manufacturing details
-      manufacturingInfographic: varchar("manufacturing_infographic", { length: 1e3 }),
+      manufacturingInfographic: varchar("manufacturingInfographic", { length: 1e3 }),
       // Infographic image URL
-      isFeatured: boolean("is_featured").default(false).notNull(),
-      isActive: boolean("is_active").default(true).notNull(),
-      freeShipping: boolean("free_shipping").default(false).notNull(),
+      isFeatured: boolean("isFeatured").default(false).notNull(),
+      isActive: boolean("isActive").default(true).notNull(),
+      freeShipping: boolean("freeShipping").default(false).notNull(),
       // SEO fields
-      seoTitle: varchar("seo_title", { length: 255 }),
-      seoDescription: text("seo_description"),
-      seoKeywords: text("seo_keywords"),
-      sortOrder: int("sort_order").default(0).notNull(),
+      seoTitle: varchar("seoTitle", { length: 255 }),
+      seoDescription: text("seoDescription"),
+      seoKeywords: text("seoKeywords"),
+      sortOrder: int("sortOrder").default(0).notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
     });
@@ -147,7 +147,7 @@ var init_schema = __esm({
       id: int("id").autoincrement().primaryKey(),
       sessionId: varchar("sessionId", { length: 128 }).notNull(),
       // anonymous cart support
-      userId: int("user_id"),
+      userId: int("userId"),
       // null for guests
       productId: int("productId").notNull(),
       quantity: int("quantity").notNull().default(1),
@@ -158,38 +158,38 @@ var init_schema = __esm({
     });
     orders = mysqlTable("orders", {
       id: int("id").autoincrement().primaryKey(),
-      orderNumber: varchar("order_number", { length: 64 }).notNull().unique(),
+      orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
       userId: int("userId"),
-      sessionId: varchar("session_id", { length: 128 }),
+      sessionId: varchar("sessionId", { length: 128 }),
       // Customer info
-      customerName: varchar("customer_name", { length: 255 }).notNull(),
-      customerEmail: varchar("customer_email", { length: 320 }).notNull(),
-      customerPhone: varchar("customer_phone", { length: 64 }),
-      companyName: varchar("company_name", { length: 255 }),
+      customerName: varchar("customerName", { length: 255 }).notNull(),
+      customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
+      customerPhone: varchar("customerPhone", { length: 64 }),
+      companyName: varchar("companyName", { length: 255 }),
       // Shipping address
-      addressLine1: varchar("address_line1", { length: 500 }).notNull(),
-      addressLine2: varchar("address_line2", { length: 500 }),
+      addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
+      addressLine2: varchar("addressLine2", { length: 500 }),
       city: varchar("city", { length: 100 }).notNull(),
       state: varchar("state", { length: 100 }),
-      postalCode: varchar("postal_code", { length: 20 }),
+      postalCode: varchar("postalCode", { length: 20 }),
       country: varchar("country", { length: 100 }).notNull(),
-      countryCode: varchar("country_code", { length: 10 }).notNull(),
+      countryCode: varchar("countryCode", { length: 10 }).notNull(),
       // Financials (in USD)
       subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
-      shippingCost: decimal("shipping_cost", { precision: 10, scale: 2 }).default("0.00").notNull(),
-      totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
+      shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
+      totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
       // Items snapshot (JSON)
       items: text("items").notNull(),
       // JSON array of { productId, title, qty, size, color, unitPrice }
       // Payment
-      paymentMethod: mysqlEnum("payment_method", ["stripe", "invoice"]).default("invoice").notNull(),
+      paymentMethod: mysqlEnum("paymentMethod", ["stripe", "invoice"]).default("invoice").notNull(),
       // Stripe
-      stripePaymentIntentId: varchar("stripe_payment_intent_id", { length: 255 }),
-      stripeSessionId: varchar("stripe_session_id", { length: 255 }),
+      stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+      stripeSessionId: varchar("stripeSessionId", { length: 255 }),
       status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
       notes: text("notes"),
-      createdAt: timestamp("created_at").defaultNow().notNull(),
-      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
     });
     rfqSubmissions = mysqlTable("rfq_submissions", {
       id: int("id").autoincrement().primaryKey(),
@@ -346,7 +346,6 @@ var init_schema = __esm({
       icon: varchar("icon", { length: 50 }).default(""),
       description: text("description"),
       imageUrl: varchar("image_url", { length: 1e3 }),
-      parentId: int("parent_id"),
       sortOrder: int("sort_order").default(0).notNull(),
       isActive: boolean("is_active").default(true).notNull(),
       seoTitle: varchar("seo_title", { length: 255 }),
@@ -372,6 +371,7 @@ var init_schema = __esm({
 });
 
 // server/_core/env.ts
+import path from "path";
 var ENV;
 var init_env = __esm({
   "server/_core/env.ts"() {
@@ -386,7 +386,7 @@ var init_env = __esm({
       forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
       forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
       geminiApiKey: process.env.GEMINI_API_KEY ?? "",
-      storagePath: process.env.STORAGE_PATH || ""
+      storagePath: process.env.STORAGE_PATH || (process.env.NODE_ENV === "production" ? path.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads") : path.join(process.cwd(), "uploads"))
     };
   }
 });
@@ -477,9 +477,10 @@ __export(db_exports, {
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL || PROD_DB_URL;
+  if (!_db && dbUrl) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(dbUrl);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -1067,13 +1068,14 @@ async function getCategoriesWithSubcategories(opts) {
   }
   return result;
 }
-var _db;
+var _db, PROD_DB_URL;
 var init_db = __esm({
   "server/db.ts"() {
     "use strict";
     init_schema();
     init_env();
     _db = null;
+    PROD_DB_URL = "mysql://u441219509_huntgearadmin:Farya@2025@srv1314.hstgr.io:3306/u441219509_huntgear";
   }
 });
 
@@ -1598,7 +1600,7 @@ var init_gemini = __esm({
 // server/_core/index.ts
 import "dotenv/config";
 import express2 from "express";
-import path3 from "path";
+import path4 from "path";
 import fs3 from "fs";
 import { createServer } from "http";
 import net from "net";
@@ -2053,7 +2055,7 @@ init_gemini();
 // server/storage.ts
 init_env();
 import fs from "fs";
-import path from "path";
+import path2 from "path";
 function getStorageConfig() {
   const baseUrl = ENV.forgeApiUrl;
   const apiKey = ENV.forgeApiKey;
@@ -2090,7 +2092,7 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
     try {
       const sharp = (await import("sharp")).default;
       processedData = await sharp(processedData).webp({ quality: 85 }).toBuffer();
-      const ext = path.extname(key);
+      const ext = path2.extname(key);
       key = key.replace(ext, ".webp");
       finalContentType = "image/webp";
       console.log(`[Storage] Auto-converted ${relKey} to WebP`);
@@ -2100,17 +2102,9 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   }
   const config = getStorageConfig();
   if (!config) {
-    let uploadDir;
-    if (ENV.storagePath) {
-      uploadDir = path.isAbsolute(ENV.storagePath) ? ENV.storagePath : path.resolve(process.cwd(), ENV.storagePath);
-    } else if (ENV.isProduction) {
-      const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "ssm_persistent_uploads");
-      uploadDir = persistentDir;
-    } else {
-      uploadDir = path.join(process.cwd(), "uploads");
-    }
-    const filePath = path.join(uploadDir, key);
-    const fileDir = path.dirname(filePath);
+    const uploadDir = ENV.storagePath;
+    const filePath = path2.join(uploadDir, key);
+    const fileDir = path2.dirname(filePath);
     try {
       if (!fs.existsSync(fileDir)) {
         console.log(`[Storage] Creating nested directory: ${fileDir}`);
@@ -3504,8 +3498,8 @@ var appRouter = router({
     getModelImage: adminProcedure3.query(async () => {
       try {
         const fs4 = await import("fs/promises");
-        const path4 = await import("path");
-        const filePath = path4.join(process.cwd(), "model_image.json");
+        const path5 = await import("path");
+        const filePath = path5.join(process.cwd(), "model_image.json");
         const data = await fs4.readFile(filePath, "utf-8");
         const parsed = JSON.parse(data);
         if (parsed && parsed.base64 && parsed.mimeType) {
@@ -3522,8 +3516,8 @@ var appRouter = router({
     })).mutation(async ({ input }) => {
       try {
         const fs4 = await import("fs/promises");
-        const path4 = await import("path");
-        const filePath = path4.join(process.cwd(), "model_image.json");
+        const path5 = await import("path");
+        const filePath = path5.join(process.cwd(), "model_image.json");
         await fs4.writeFile(filePath, JSON.stringify({
           base64: input.base64,
           mimeType: input.mimeType
@@ -3595,9 +3589,9 @@ async function createContext(opts) {
 // server/_core/vite.ts
 import express from "express";
 import fs2 from "fs";
-import path2 from "path";
+import path3 from "path";
 import { fileURLToPath } from "url";
-var __dirname2 = path2.dirname(fileURLToPath(import.meta.url));
+var __dirname2 = path3.dirname(fileURLToPath(import.meta.url));
 async function setupVite(app, server) {
   const { createServer: createViteServer } = await import("vite");
   const { default: viteConfig } = await import("../../vite.config");
@@ -3617,7 +3611,7 @@ async function setupVite(app, server) {
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
     try {
-      const clientTemplate = path2.resolve(
+      const clientTemplate = path3.resolve(
         __dirname2,
         "../..",
         "client",
@@ -3646,9 +3640,9 @@ async function setupVite(app, server) {
   });
 }
 function serveStatic(app) {
-  let distClientPath = path2.resolve(__dirname2, "client");
+  let distClientPath = path3.resolve(__dirname2, "client");
   if (!fs2.existsSync(distClientPath)) {
-    distClientPath = path2.resolve(__dirname2, "public");
+    distClientPath = path3.resolve(__dirname2, "public");
   }
   if (!fs2.existsSync(distClientPath)) {
     console.error(`[Static] Could not find any build directory at ${distClientPath}`);
@@ -3657,8 +3651,8 @@ function serveStatic(app) {
   console.log(`[Static] Serving client assets from: ${distClientPath}`);
   app.use(express.static(distClientPath, { index: false }));
   let ssrRender = null;
-  const distServerPath = path2.resolve(__dirname2, "server");
-  const serverEntryPath = path2.resolve(distServerPath, "entry-server.js");
+  const distServerPath = path3.resolve(__dirname2, "server");
+  const serverEntryPath = path3.resolve(distServerPath, "entry-server.js");
   if (fs2.existsSync(serverEntryPath)) {
     import(
       /* @vite-ignore */
@@ -3675,7 +3669,7 @@ function serveStatic(app) {
   app.use("*", async (_req, res) => {
     try {
       const url = _req.originalUrl;
-      const indexHtmlPath = path2.resolve(distClientPath, "index.html");
+      const indexHtmlPath = path3.resolve(distClientPath, "index.html");
       let html = await fs2.promises.readFile(indexHtmlPath, "utf-8");
       if (ssrRender) {
         try {
@@ -3704,6 +3698,7 @@ function serveStatic(app) {
 
 // server/_core/index.ts
 init_env();
+init_db();
 import Stripe2 from "stripe";
 
 // server/routes/fixDb.ts
@@ -3930,9 +3925,8 @@ async function startServer() {
   app.use("/", sitemap_default);
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
-  const { getDb: getDbLocal } = await Promise.resolve().then(() => (init_db(), db_exports));
   const JWT_SECRET_LOCAL = new TextEncoder().encode(
-    process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+    process.env.JWT_SECRET || "super_secret_persistent_key_1234567890"
   );
   function hashPwd(password) {
     const salt = crypto.randomBytes(16).toString("hex");
@@ -3949,30 +3943,27 @@ async function startServer() {
     }
   }
   try {
-    const seedDb = await getDbLocal();
+    const seedDb = await getDb();
     if (seedDb) {
-      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eqOp } = await import("drizzle-orm");
-      const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
-      const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
-      const adminUser = allAdmins[0];
-      if (adminUser) {
-        console.log("[Auth] Resetting admin password for:", adminUser.email);
-        await seedDb.update(usersTable).set({
-          password: hashPwd("Admin@123"),
-          email: "admin@xelenthuntgear.com",
-          openId: "admin@xelenthuntgear.com"
-        }).where(eqOp(usersTable.id, adminUser.id));
-        console.log("[Auth] Admin password reset to: Admin@123");
+      console.log("[Auth] Checking admin account...");
+      const allAdmins = await seedDb.select().from(users).where(eq3(users.role, "admin"));
+      if (allAdmins.length > 0) {
+        for (const admin of allAdmins) {
+          console.log("[Auth] FORCED password reset for admin:", admin.email);
+          await seedDb.update(users).set({
+            password: hashPwd("admin123"),
+            email: "admin@xelenthuntgear.com"
+          }).where(eq3(users.id, admin.id));
+        }
       } else {
-        console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
-        await seedDb.insert(usersTable).values({
-          openId: "admin@xelenthuntgear.com",
+        console.log("[Auth] Creating fresh default admin: admin@xelenthuntgear.com / admin123");
+        await seedDb.insert(users).values({
+          openId: "admin-" + Date.now(),
           name: "Super Admin",
           email: "admin@xelenthuntgear.com",
           role: "admin",
           loginMethod: "local",
-          password: hashPwd("Admin@123")
+          password: hashPwd("admin123")
         });
       }
     }
@@ -3982,23 +3973,31 @@ async function startServer() {
   app.post("/api/admin/login", async (req, res) => {
     try {
       console.log("[Login] Attempt received");
-      const loginDb = await getDbLocal();
-      if (!loginDb) return res.status(500).json({ error: "Database not available" });
-      const { users: usersTable } = await Promise.resolve().then(() => (init_schema(), schema_exports));
-      const { eq: eqOp } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) return res.status(500).json({ error: "Database not available" });
       const { email, password } = req.body || {};
       if (!email || !password) return res.status(400).json({ error: "Email and password required" });
       console.log("[Login] Looking up:", email);
-      const results = await loginDb.select().from(usersTable).where(eqOp(usersTable.email, email)).limit(1);
+      const results = await db.select().from(users).where(eq3(users.email, email)).limit(1);
       const user = results[0];
-      if (!user) return res.status(401).json({ error: "Invalid credentials." });
-      if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
-      if (!user.password) return res.status(401).json({ error: "Password not set." });
+      if (!user) {
+        console.log("[Login] User NOT FOUND in database:", email);
+        return res.status(401).json({ error: "Invalid credentials." });
+      }
+      if (user.role !== "admin") {
+        console.log("[Login] User role is NOT admin:", user.role);
+        return res.status(401).json({ error: "Not an admin." });
+      }
+      if (!user.password) {
+        console.log("[Login] User has NO password field set in DB");
+        return res.status(401).json({ error: "Password not set." });
+      }
       if (!verifyPwd(password, user.password)) {
+        console.log("[Login] PASSWORD VERIFICATION FAILED for:", email);
         return res.status(401).json({ error: "Invalid credentials." });
       }
       console.log("[Login] Password OK, creating JWT...");
-      loginDb.update(usersTable).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eqOp(usersTable.id, user.id)).catch(() => {
+      db.update(users).set({ lastSignedIn: /* @__PURE__ */ new Date() }).where(eq3(users.id, user.id)).catch(() => {
       });
       const token = await new SignJWTLocal({ userId: user.id, role: user.role }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(JWT_SECRET_LOCAL);
       res.cookie("admin_token", token, {
@@ -4021,8 +4020,8 @@ async function startServer() {
   });
   app.get("/api/admin/debug", async (_req, res) => {
     const isProd = process.env.NODE_ENV === "production";
-    const resolvedUploadsPath = isProd ? path3.resolve(process.cwd(), "uploads") : path3.resolve(process.cwd(), "uploads");
-    const productsUploadsPath = path3.join(resolvedUploadsPath, "products");
+    const resolvedUploadsPath = isProd ? path4.resolve(process.cwd(), "uploads") : path4.resolve(process.cwd(), "uploads");
+    const productsUploadsPath = path4.join(resolvedUploadsPath, "products");
     const info = {
       nodeVersion: process.version,
       dbUrl: process.env.DATABASE_URL ? "SET" : "NOT SET",
@@ -4040,7 +4039,7 @@ async function startServer() {
           const results = [];
           const list = fs3.readdirSync(dir);
           list.forEach((file) => {
-            const filePath = path3.join(dir, file);
+            const filePath = path4.join(dir, file);
             const stat = fs3.statSync(filePath);
             if (stat && stat.isDirectory()) {
               results.push(...readdirRecursive(filePath));
@@ -4077,12 +4076,12 @@ async function startServer() {
   );
   let uploadsPath;
   if (ENV.storagePath) {
-    uploadsPath = path3.isAbsolute(ENV.storagePath) ? ENV.storagePath : path3.resolve(process.cwd(), ENV.storagePath);
+    uploadsPath = path4.isAbsolute(ENV.storagePath) ? ENV.storagePath : path4.resolve(process.cwd(), ENV.storagePath);
   } else if (ENV.isProduction) {
-    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path3.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "ssm_persistent_uploads");
+    const persistentDir = process.env.PERSISTENT_UPLOADS_DIR || path4.join(process.env.HOME || process.env.USERPROFILE || "/tmp", "xh_persistent_uploads");
     uploadsPath = persistentDir;
   } else {
-    uploadsPath = path3.join(process.cwd(), "uploads");
+    uploadsPath = path4.join(process.cwd(), "uploads");
   }
   console.log(`[Storage] Serving uploads from: ${uploadsPath}`);
   if (!fs3.existsSync(uploadsPath)) {
@@ -4093,7 +4092,8 @@ async function startServer() {
       console.error(`[Storage] CRITICAL ERROR: Could not create uploads directory!`, err);
     }
   }
-  app.use("/uploads", express2.static(uploadsPath));
+  const uploadsPathForStatic = ENV.storagePath;
+  app.use("/uploads", express2.static(uploadsPathForStatic));
   app.use("/uploads", (req, res) => {
     res.status(404).send("File not found");
   });

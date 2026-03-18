@@ -14,8 +14,8 @@ import Stripe from "stripe";
 import { getDb } from "../db";
 import fixDbRouter from "../routes/fixDb";
 import sitemapRouter from "../routes/sitemap";
-import { orders } from "../../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { orders, users } from "../../drizzle/schema";
+import { eq, and } from "drizzle-orm";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -128,10 +128,10 @@ async function startServer() {
   // ── INLINE Admin Auth Routes (esbuild was not bundling the external file) ──
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
-  const { getDb: getDbLocal } = await import("../db");
+  // const { getDb: getDbLocal } = await import("../db");
 
   const JWT_SECRET_LOCAL = new TextEncoder().encode(
-    process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+    process.env.JWT_SECRET || "super_secret_persistent_key_1234567890"
   );
 
   function hashPwd(password: string): string {
@@ -149,31 +149,29 @@ async function startServer() {
 
   // Seed default admin
   try {
-    const seedDb = await getDbLocal();
+    const seedDb = await getDb();
     if (seedDb) {
-      const { users: usersTable } = await import("../../drizzle/schema");
-      const { eq: eqOp } = await import("drizzle-orm");
-      const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
-      const hasValidAdmin = allAdmins.some((a: any) => a.password && a.password.includes(":"));
-      // Always ensure admin has correct password
-      const adminUser = allAdmins[0];
-      if (adminUser) {
-        console.log("[Auth] Resetting admin password for:", adminUser.email);
-        await seedDb.update(usersTable).set({ 
-          password: hashPwd("Admin@123"),
-          email: "admin@xelenthuntgear.com",
-          openId: "admin@xelenthuntgear.com"
-        }).where(eqOp(usersTable.id, adminUser.id));
-        console.log("[Auth] Admin password reset to: Admin@123");
+      console.log("[Auth] Checking admin account...");
+      const allAdmins = await seedDb.select().from(users).where(eq(users.role, "admin"));
+
+      // FORCED RESET for this deployment to ensure admin123 works
+      if (allAdmins.length > 0) {
+        for (const admin of allAdmins) {
+          console.log("[Auth] FORCED password reset for admin:", admin.email);
+          await seedDb.update(users).set({
+            password: hashPwd("admin123"),
+            email: "admin@xelenthuntgear.com"
+          }).where(eq(users.id, admin.id));
+        }
       } else {
-        console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
-        await seedDb.insert(usersTable).values({
-          openId: "admin@xelenthuntgear.com",
+        console.log("[Auth] Creating fresh default admin: admin@xelenthuntgear.com / admin123");
+        await seedDb.insert(users).values({
+          openId: "admin-" + Date.now(),
           name: "Super Admin",
           email: "admin@xelenthuntgear.com",
           role: "admin",
           loginMethod: "local",
-          password: hashPwd("Admin@123"),
+          password: hashPwd("admin123"),
         });
       }
     }
@@ -185,29 +183,36 @@ async function startServer() {
   app.post("/api/admin/login", async (req, res) => {
     try {
       console.log("[Login] Attempt received");
-      const loginDb = await getDbLocal();
-      if (!loginDb) return res.status(500).json({ error: "Database not available" });
-
-      const { users: usersTable } = await import("../../drizzle/schema");
-      const { eq: eqOp } = await import("drizzle-orm");
+      const db = await getDb();
+      if (!db) return res.status(500).json({ error: "Database not available" });
 
       const { email, password } = req.body || {};
       if (!email || !password) return res.status(400).json({ error: "Email and password required" });
 
       console.log("[Login] Looking up:", email);
-      const results = await loginDb.select().from(usersTable).where(eqOp(usersTable.email, email)).limit(1);
+      const results = await db.select().from(users).where(eq(users.email, email)).limit(1);
       const user = results[0];
 
-      if (!user) return res.status(401).json({ error: "Invalid credentials." });
-      if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
-      if (!user.password) return res.status(401).json({ error: "Password not set." });
+      if (!user) {
+        console.log("[Login] User NOT FOUND in database:", email);
+        return res.status(401).json({ error: "Invalid credentials." });
+      }
+      if (user.role !== "admin") {
+        console.log("[Login] User role is NOT admin:", user.role);
+        return res.status(401).json({ error: "Not an admin." });
+      }
+      if (!user.password) {
+        console.log("[Login] User has NO password field set in DB");
+        return res.status(401).json({ error: "Password not set." });
+      }
 
       if (!verifyPwd(password, user.password)) {
+        console.log("[Login] PASSWORD VERIFICATION FAILED for:", email);
         return res.status(401).json({ error: "Invalid credentials." });
       }
 
       console.log("[Login] Password OK, creating JWT...");
-      loginDb.update(usersTable).set({ lastSignedIn: new Date() }).where(eqOp(usersTable.id, user.id)).catch(() => { });
+      db.update(users).set({ lastSignedIn: new Date() }).where(eq(users.id, user.id)).catch(() => { });
 
       const token = await new SignJWTLocal({ userId: user.id, role: user.role })
         .setProtectedHeader({ alg: "HS256" })
@@ -309,7 +314,7 @@ async function startServer() {
   } else if (ENV.isProduction) {
     // Use a fixed absolute path so images survive git deployments on Hostinger
     const persistentDir = process.env.PERSISTENT_UPLOADS_DIR
-      || path.join(process.env.HOME || process.env.USERPROFILE || '/tmp', 'ssm_persistent_uploads');
+      || path.join(process.env.HOME || process.env.USERPROFILE || '/tmp', 'xh_persistent_uploads');
     uploadsPath = persistentDir;
   } else {
     uploadsPath = path.join(process.cwd(), 'uploads');
@@ -325,7 +330,9 @@ async function startServer() {
     }
   }
 
-  app.use("/uploads", express.static(uploadsPath));
+  // Serve user uploads from persistent storage
+  const uploadsPathForStatic = ENV.storagePath;
+  app.use("/uploads", express.static(uploadsPathForStatic));
   // Specific handler for missing uploads so they don't fall through to the SPA index.html (which causes 422 image errors)
   app.use("/uploads", (req, res) => {
     res.status(404).send("File not found");

@@ -27,10 +27,13 @@ import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
+const PROD_DB_URL = "mysql://u441219509_huntgearadmin:Farya@2025@srv1314.hstgr.io:3306/u441219509_huntgear";
+
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL || PROD_DB_URL;
+  if (!_db && dbUrl) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(dbUrl);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -82,10 +85,10 @@ export async function getActiveProducts(opts?: { category?: string; subcategory?
     console.error("[getActiveProducts] Database connection failed");
     return [];
   }
-  
+
   console.log("[getActiveProducts] Fetching products with opts:", opts);
   const conditions = [eq(products.isActive, true)];
-  
+
   // Filter by category slug - need to join with categories table or use category_id
   if (opts?.category && opts.category !== "all") {
     // Get category ID from slug
@@ -97,7 +100,7 @@ export async function getActiveProducts(opts?: { category?: string; subcategory?
       conditions.push(eq(products.category, opts.category));
     }
   }
-  
+
   // Filter by subcategory slug
   if (opts?.subcategory && opts.subcategory !== "all") {
     const subcategory = await db.select().from(subcategories).where(eq(subcategories.slug, opts.subcategory)).limit(1);
@@ -105,7 +108,7 @@ export async function getActiveProducts(opts?: { category?: string; subcategory?
       conditions.push(eq(products.subcategoryId, subcategory[0].id));
     }
   }
-  
+
   if (opts?.search) {
     conditions.push(
       or(
@@ -755,10 +758,10 @@ export async function deleteSubcategory(id: number) {
 export async function getCategoriesWithSubcategories(opts?: { includeInactive?: boolean }) {
   const db = await getDb();
   if (!db) return [];
-  
+
   const cats = await getAllCategories(opts);
   const result = [];
-  
+
   for (const cat of cats) {
     const subs = await getSubcategoriesByCategoryId(cat.id, opts);
     result.push({
@@ -766,7 +769,7 @@ export async function getCategoriesWithSubcategories(opts?: { includeInactive?: 
       subcategories: subs,
     });
   }
-  
+
   return result;
 }
 
