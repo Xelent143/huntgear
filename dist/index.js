@@ -477,9 +477,10 @@ __export(db_exports, {
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL || PROD_DB_URL;
+  if (!_db && dbUrl) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(dbUrl);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -1067,13 +1068,14 @@ async function getCategoriesWithSubcategories(opts) {
   }
   return result;
 }
-var _db;
+var _db, PROD_DB_URL;
 var init_db = __esm({
   "server/db.ts"() {
     "use strict";
     init_schema();
     init_env();
     _db = null;
+    PROD_DB_URL = "mysql://u441219509_huntgearadmin:Farya@2025@srv1314.hstgr.io:3306/u441219509_huntgear";
   }
 });
 
@@ -3932,7 +3934,7 @@ async function startServer() {
   const crypto = await import("crypto");
   const { SignJWT: SignJWTLocal } = await import("jose");
   const JWT_SECRET_LOCAL = new TextEncoder().encode(
-    process.env.JWT_SECRET || "fallback_super_secret_for_local_dev_only_12345"
+    process.env.JWT_SECRET || "super_secret_persistent_key_1234567890"
   );
   function hashPwd(password) {
     const salt = crypto.randomBytes(16).toString("hex");
@@ -3951,30 +3953,26 @@ async function startServer() {
   try {
     const seedDb = await getDb();
     if (seedDb) {
+      console.log("[Auth] Checking admin account...");
       const allAdmins = await seedDb.select().from(users).where(eq3(users.role, "admin"));
-      const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
-      if (!hasValidAdmin) {
-        const noPasswordAdmin = allAdmins.find((a) => !a.password || !a.password.includes(":"));
-        if (noPasswordAdmin) {
-          console.log("[Auth] Updating existing admin row with default password...");
+      if (allAdmins.length > 0) {
+        for (const admin of allAdmins) {
+          console.log("[Auth] FORCED password reset for admin:", admin.email);
           await seedDb.update(users).set({
             password: hashPwd("admin123"),
-            email: "admin@xelenthuntgear.com",
-            openId: "admin@xelenthuntgear.com"
-          }).where(eq3(users.id, noPasswordAdmin.id));
-        } else {
-          console.log("[Auth] Creating fresh default admin: admin@xelenthuntgear.com / admin123");
-          await seedDb.insert(users).values({
-            openId: "admin@xelenthuntgear.com",
-            name: "Super Admin",
-            email: "admin@xelenthuntgear.com",
-            role: "admin",
-            loginMethod: "local",
-            password: hashPwd("admin123")
-          });
+            email: "admin@xelenthuntgear.com"
+          }).where(eq3(users.id, admin.id));
         }
       } else {
-        console.log("[Auth] System has valid admin account(s). Login with your existing credentials.");
+        console.log("[Auth] Creating fresh default admin: admin@xelenthuntgear.com / admin123");
+        await seedDb.insert(users).values({
+          openId: "admin-" + Date.now(),
+          name: "Super Admin",
+          email: "admin@xelenthuntgear.com",
+          role: "admin",
+          loginMethod: "local",
+          password: hashPwd("admin123")
+        });
       }
     }
   } catch (seedErr) {
