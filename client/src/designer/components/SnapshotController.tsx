@@ -1,7 +1,8 @@
 import { useThree } from '@react-three/fiber';
 import { useEffect } from 'react';
 import * as THREE from 'three';
-import { saveAs } from 'file-saver';
+import pkg from 'file-saver';
+const { saveAs } = pkg;
 import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { useConfiguratorStore } from '../store/configuratorStore';
@@ -156,8 +157,8 @@ export const QuoteCaptureController = () => {
         const VIEWS = [
             { label: 'Front', azimuth: 0 },
             { label: 'Right', azimuth: Math.PI / 2 },
-            { label: 'Back',  azimuth: Math.PI },
-            { label: 'Left',  azimuth: -Math.PI / 2 },
+            { label: 'Back', azimuth: Math.PI },
+            { label: 'Left', azimuth: -Math.PI / 2 },
         ];
         const RADIUS = 4.5;
         const ELEVATION = 0.8;
