@@ -49,18 +49,18 @@ var init_schema = __esm({
     "use strict";
     users = mysqlTable("users", {
       id: int("id").autoincrement().primaryKey(),
-      openId: varchar("openId", { length: 64 }).notNull().unique(),
+      openId: varchar("open_id", { length: 64 }).notNull().unique(),
       name: text("name"),
       email: varchar("email", { length: 320 }),
-      loginMethod: varchar("loginMethod", { length: 64 }),
+      loginMethod: varchar("login_method", { length: 64 }),
       password: varchar("password", { length: 255 }),
       // new: for local email/pass auth
-      geminiApiKey: varchar("geminiApiKey", { length: 255 }),
+      geminiApiKey: varchar("gemini_api_key", { length: 255 }),
       // per-client Gemini AI key
       role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-      createdAt: timestamp("createdAt").defaultNow().notNull(),
-      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
+      createdAt: timestamp("created_at").defaultNow().notNull(),
+      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+      lastSignedIn: timestamp("last_signed_in").defaultNow().notNull()
     });
     products = mysqlTable("products", {
       id: int("id").autoincrement().primaryKey(),
@@ -71,28 +71,28 @@ var init_schema = __esm({
       categoryId: int("category_id"),
       subcategoryId: int("subcategory_id"),
       description: text("description"),
-      shortDescription: varchar("shortDescription", { length: 500 }),
-      mainImage: varchar("mainImage", { length: 1e3 }),
-      samplePrice: decimal("samplePrice", { precision: 10, scale: 2 }),
+      shortDescription: varchar("short_description", { length: 500 }),
+      mainImage: varchar("main_image", { length: 1e3 }),
+      samplePrice: decimal("sample_price", { precision: 10, scale: 2 }),
       weight: decimal("weight", { precision: 8, scale: 3 }),
       // kg per unit, for shipping calc
-      availableSizes: text("availableSizes"),
+      availableSizes: text("available_sizes"),
       // JSON array e.g. ["S","M","L","XL","XXL","3XL"]
-      availableColors: text("availableColors"),
+      availableColors: text("available_colors"),
       // JSON array of color names
       material: varchar("material", { length: 255 }),
-      manufacturingStory: text("manufacturingStory"),
+      manufacturingStory: text("manufacturing_story"),
       // SEO/GEO driven manufacturing details
-      manufacturingInfographic: varchar("manufacturingInfographic", { length: 1e3 }),
+      manufacturingInfographic: varchar("manufacturing_infographic", { length: 1e3 }),
       // Infographic image URL
-      isFeatured: boolean("isFeatured").default(false).notNull(),
-      isActive: boolean("isActive").default(true).notNull(),
-      freeShipping: boolean("freeShipping").default(false).notNull(),
+      isFeatured: boolean("is_featured").default(false).notNull(),
+      isActive: boolean("is_active").default(true).notNull(),
+      freeShipping: boolean("free_shipping").default(false).notNull(),
       // SEO fields
-      seoTitle: varchar("seoTitle", { length: 255 }),
-      seoDescription: text("seoDescription"),
-      seoKeywords: text("seoKeywords"),
-      sortOrder: int("sortOrder").default(0).notNull(),
+      seoTitle: varchar("seo_title", { length: 255 }),
+      seoDescription: text("seo_description"),
+      seoKeywords: text("seo_keywords"),
+      sortOrder: int("sort_order").default(0).notNull(),
       createdAt: timestamp("createdAt").defaultNow().notNull(),
       updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
     });
@@ -147,7 +147,7 @@ var init_schema = __esm({
       id: int("id").autoincrement().primaryKey(),
       sessionId: varchar("sessionId", { length: 128 }).notNull(),
       // anonymous cart support
-      userId: int("userId"),
+      userId: int("user_id"),
       // null for guests
       productId: int("productId").notNull(),
       quantity: int("quantity").notNull().default(1),
@@ -158,38 +158,38 @@ var init_schema = __esm({
     });
     orders = mysqlTable("orders", {
       id: int("id").autoincrement().primaryKey(),
-      orderNumber: varchar("orderNumber", { length: 64 }).notNull().unique(),
+      orderNumber: varchar("order_number", { length: 64 }).notNull().unique(),
       userId: int("userId"),
-      sessionId: varchar("sessionId", { length: 128 }),
+      sessionId: varchar("session_id", { length: 128 }),
       // Customer info
-      customerName: varchar("customerName", { length: 255 }).notNull(),
-      customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
-      customerPhone: varchar("customerPhone", { length: 64 }),
-      companyName: varchar("companyName", { length: 255 }),
+      customerName: varchar("customer_name", { length: 255 }).notNull(),
+      customerEmail: varchar("customer_email", { length: 320 }).notNull(),
+      customerPhone: varchar("customer_phone", { length: 64 }),
+      companyName: varchar("company_name", { length: 255 }),
       // Shipping address
-      addressLine1: varchar("addressLine1", { length: 500 }).notNull(),
-      addressLine2: varchar("addressLine2", { length: 500 }),
+      addressLine1: varchar("address_line1", { length: 500 }).notNull(),
+      addressLine2: varchar("address_line2", { length: 500 }),
       city: varchar("city", { length: 100 }).notNull(),
       state: varchar("state", { length: 100 }),
-      postalCode: varchar("postalCode", { length: 20 }),
+      postalCode: varchar("postal_code", { length: 20 }),
       country: varchar("country", { length: 100 }).notNull(),
-      countryCode: varchar("countryCode", { length: 10 }).notNull(),
+      countryCode: varchar("country_code", { length: 10 }).notNull(),
       // Financials (in USD)
       subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
-      shippingCost: decimal("shippingCost", { precision: 10, scale: 2 }).default("0.00").notNull(),
-      totalAmount: decimal("totalAmount", { precision: 10, scale: 2 }).notNull(),
+      shippingCost: decimal("shipping_cost", { precision: 10, scale: 2 }).default("0.00").notNull(),
+      totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
       // Items snapshot (JSON)
       items: text("items").notNull(),
       // JSON array of { productId, title, qty, size, color, unitPrice }
       // Payment
-      paymentMethod: mysqlEnum("paymentMethod", ["stripe", "invoice"]).default("invoice").notNull(),
+      paymentMethod: mysqlEnum("payment_method", ["stripe", "invoice"]).default("invoice").notNull(),
       // Stripe
-      stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
-      stripeSessionId: varchar("stripeSessionId", { length: 255 }),
+      stripePaymentIntentId: varchar("stripe_payment_intent_id", { length: 255 }),
+      stripeSessionId: varchar("stripe_session_id", { length: 255 }),
       status: mysqlEnum("status", ["pending", "paid", "processing", "shipped", "delivered", "cancelled", "refunded"]).default("pending").notNull(),
       notes: text("notes"),
-      createdAt: timestamp("createdAt").defaultNow().notNull(),
-      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      createdAt: timestamp("created_at").defaultNow().notNull(),
+      updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull()
     });
     rfqSubmissions = mysqlTable("rfq_submissions", {
       id: int("id").autoincrement().primaryKey(),
@@ -346,6 +346,7 @@ var init_schema = __esm({
       icon: varchar("icon", { length: 50 }).default(""),
       description: text("description"),
       imageUrl: varchar("image_url", { length: 1e3 }),
+      parentId: int("parent_id"),
       sortOrder: int("sort_order").default(0).notNull(),
       isActive: boolean("is_active").default(true).notNull(),
       seoTitle: varchar("seo_title", { length: 255 }),
@@ -3954,24 +3955,25 @@ async function startServer() {
       const { eq: eqOp } = await import("drizzle-orm");
       const allAdmins = await seedDb.select().from(usersTable).where(eqOp(usersTable.role, "admin"));
       const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
-      if (!hasValidAdmin) {
-        const noPasswordAdmin = allAdmins.find((a) => !a.password || !a.password.includes(":"));
-        if (noPasswordAdmin) {
-          console.log("[Auth] Updating admin password for:", noPasswordAdmin.email);
-          await seedDb.update(usersTable).set({ password: hashPwd("admin123"), email: "admin@sialkotsamplemasters.com" }).where(eqOp(usersTable.id, noPasswordAdmin.id));
-        } else {
-          console.log("[Auth] Creating default admin: admin@sialkotsamplemasters.com / admin123");
-          await seedDb.insert(usersTable).values({
-            openId: "local-admin-" + Date.now(),
-            name: "Super Admin",
-            email: "admin@sialkotsamplemasters.com",
-            role: "admin",
-            loginMethod: "local",
-            password: hashPwd("admin123")
-          });
-        }
+      const adminUser = allAdmins[0];
+      if (adminUser) {
+        console.log("[Auth] Resetting admin password for:", adminUser.email);
+        await seedDb.update(usersTable).set({
+          password: hashPwd("Admin@123"),
+          email: "admin@xelenthuntgear.com",
+          openId: "admin@xelenthuntgear.com"
+        }).where(eqOp(usersTable.id, adminUser.id));
+        console.log("[Auth] Admin password reset to: Admin@123");
       } else {
-        console.log("[Auth] Admin with valid password exists");
+        console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
+        await seedDb.insert(usersTable).values({
+          openId: "admin@xelenthuntgear.com",
+          name: "Super Admin",
+          email: "admin@xelenthuntgear.com",
+          role: "admin",
+          loginMethod: "local",
+          password: hashPwd("Admin@123")
+        });
       }
     }
   } catch (seedErr) {

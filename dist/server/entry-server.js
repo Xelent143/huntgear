@@ -7,7 +7,7 @@ import React__default, { Component, createContext, useState, useEffect, useRef, 
 import ReactDOMServer from "react-dom/server";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import superjson from "superjson";
-import { useLocation, Link, useParams, useSearch, useRoute, Switch as Switch$1, Route, Router as Router$1 } from "wouter";
+import { useLocation, Link as Link$1, useParams, useSearch, useRoute, Switch as Switch$1, Route, Router as Router$1 } from "wouter";
 import { useTheme } from "next-themes";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
@@ -15,23 +15,23 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Package, Zap, CheckCircle, Shield, Sun, Star, Users, Leaf, Heart, Scale, Clock, Scissors, Palette, Settings, Layers, Truck, Search, Filter, ZoomIn, ChevronLeft, Tag, Calendar, ArrowLeft, ChevronDownIcon, CheckIcon, ChevronUpIcon, MessageCircle, List, Grid3X3, Ruler, ShieldCheck, CheckCircle2, Check, Droplets, Info, Printer, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, Target, ShieldAlert, Box, Maximize, Calculator, TrendingDown, FileWarning, XCircle, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Store, LogOut, Bell, DollarSign, ExternalLink, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Send, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Camera, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Users, Shield, Target, Droplets, Thermometer, Layers, Wind, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Zap, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, Scale, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
 import { AnimatePresence, motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import * as SelectPrimitive from "@radix-ui/react-select";
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { useForm, FormProvider, Controller, useFormContext, useFormState, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { z as z$1 } from "zod";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { EffectComposer, Bloom, Vignette, Selection } from "@react-three/postprocessing";
 import { KernelSize, BlendFunction } from "postprocessing";
@@ -351,31 +351,43 @@ const useCartStore = create()(
 const IMAGES = {
   // Brand logos
   logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
-  heroCustomBg: "/hero-bg-new.jpg",
-  aboutBg: "/about-mfg.png",
-  servicesBg: "/pakistani_master_craftsman.png",
-  ctaBg: "/cta-logistics.png",
+  heroCustomBg: "/hero-hunting.png",
+  aboutBg: "/about-mfg-pro.png",
+  servicesBg: "/master-craftsmanship-pro.png",
+  portfolioBg: "/portfolio-branding.png",
+  ctaBg: "/cta-shipment-pro.png",
   shopBg: "/ssm_shop_banner.png",
+  productsHeroBg: "/products-hero-bg.png",
+  aboutHeroBg: "/about-hero-bg.png",
+  servicesHeroBg: "/services-hero-bg.png",
   servicePattern: "/svc-pattern-drafting.png",
   servicePrinting: "/svc-textile-printing.png",
   serviceStitching: "/svc-stitching-sewing.png",
-  serviceEmbroidery: "/svc-embroidery.png",
   serviceQC: "/svc-quality-control.png",
-  serviceLogistics: "/svc-global-logistics.png",
   // Product images (legacy — kept for backward compat)
   productHoodie: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/BNBGdrUkHTSKNDhi.jpg",
   // Category images
-  catTechwear: "/cat_techwear_1772542345179.png",
-  catSki: "/cat_skiwear_1772542362613.png",
-  catSports: "/cat_sportswear_1772542255131.png",
-  catSecurityUniforms: "/cat_security_1772542311636.png",
-  catStreetwear: "/cat_streetwear_1772542290412.png",
-  catHunting: "/cat_hunting_1772542272039.png",
-  catMartialArts: "https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&q=85",
+  catTechwear: "/cat-bottoms.png",
+  catSki: "/cat-tactical-gear.png",
+  catSports: "/cat-midlayer.png",
+  catSecurityUniforms: "/cat-security-pro.png",
+  catHuntingGear: "/cat-baselayer.png",
+  catHunting: "/cat-outerwear.png",
   // Manufacturing / Geo Landing
   mfgHero: "/manufacturing-hero.png",
   mfgProcess: "/manufacturing-process.png",
-  mfgDetail: "/manufacturing-detail.png"
+  mfgDetail: "/manufacturing-detail.png",
+  // Species Assets
+  specWhitetail: "/spec-whitetail.png",
+  specElk: "/spec-elk.png",
+  specWaterfowl: "/spec-waterfowl.png",
+  specTurkey: "/spec-turkey.png",
+  specMuleDeer: "/spec-mule-deer.png",
+  specPredator: "/spec-predator.png",
+  // Technical Capabilities
+  capWaterproof: "/svc-waterproof-tech.png",
+  capCamoDesign: "/svc-camo-design-tech.png",
+  capScentControl: "/svc-scent-control-tech.png"
 };
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
@@ -396,20 +408,20 @@ function AnnouncementBar() {
   return /* @__PURE__ */ jsx(
     motion.div,
     {
-      className: "announcement-bar relative overflow-hidden",
+      className: "relative overflow-hidden bg-[#0d0d0d] border-b border-white/10",
       initial: { height: 0, opacity: 0 },
       animate: { height: "auto", opacity: 1 },
       exit: { height: 0, opacity: 0 },
       transition: { duration: 0.35, ease: "easeOut" },
       children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-center gap-4 text-xs", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-center", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" }),
-          /* @__PURE__ */ jsxs("span", { className: "text-white/80", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-gold font-semibold", children: "Now Accepting Orders for SS2026" }),
+          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-[#ff6b00] animate-pulse shrink-0" }),
+          /* @__PURE__ */ jsxs("span", { className: "text-white/90", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-semibold", children: "New Fall/Winter Hunting Collection" }),
             " — ",
-            "Sample turnaround in 7 days. Worldwide shipping available."
+            "Field-tested gear with 7-day sample turnaround"
           ] }),
-          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs("span", { className: "hidden sm:inline-flex items-center gap-1 text-gold font-condensed font-bold uppercase tracking-wider hover:text-gold-light transition-colors cursor-pointer group", children: [
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs("span", { className: "hidden sm:inline-flex items-center gap-1 text-[#ff6b00] font-condensed font-bold uppercase tracking-wider hover:text-[#ff8533] transition-colors cursor-pointer group", children: [
             "Request a Sample Kit ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 group-hover:translate-x-0.5 transition-transform" })
           ] }) })
@@ -418,7 +430,7 @@ function AnnouncementBar() {
           "button",
           {
             onClick: dismiss,
-            className: "absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors p-1",
+            className: "absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1",
             "aria-label": "Dismiss announcement",
             children: /* @__PURE__ */ jsx(X$1, { className: "w-3.5 h-3.5" })
           }
@@ -430,17 +442,17 @@ function AnnouncementBar() {
 const productCategories = [
   { name: "Sportswear & Team Kits", image: IMAGES.catSports, href: "/products#sportswear", tag: "Athletic" },
   { name: "Hunting Wear", image: IMAGES.catHunting, href: "/products#hunting-wear", tag: "MIL-SPEC" },
-  { name: "Streetwear", image: IMAGES.catStreetwear, href: "/products#streetwear", tag: "Lifestyle" },
+  { name: "Technical Apparel", image: IMAGES.catHuntingGear, href: "/products#technical-gear", tag: "Lifestyle" },
   { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/products#security-uniforms", tag: "Guard" },
   { name: "Tech Wear", image: IMAGES.catTechwear, href: "/products#techwear", tag: "Utility" },
   { name: "Ski Wear", image: IMAGES.catSki, href: "/products#ski-wear", tag: "Alpine" }
 ];
 const companyLinks = [
-  { label: "About Us", href: "/about", icon: Award, desc: "Our story, certifications & values" },
-  { label: "Our Services", href: "/services", icon: Factory, desc: "Manufacturing, private label, design" },
-  { label: "Create Tech Pack", href: "/tech-pack", icon: Factory, desc: "Free online spec builder" },
-  { label: "Portfolio", href: "/portfolio", icon: Globe, desc: "Completed work for global brands" },
-  { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Industry news & manufacturing guides" }
+  { label: "About Us", href: "/about", icon: Award, desc: "Heritage, mission & values" },
+  { label: "Our Services", href: "/services", icon: Factory, desc: "Custom hunting gear solutions" },
+  { label: "Create Tech Pack", href: "/tech-pack", icon: Factory, desc: "Build your gear specs" },
+  { label: "Portfolio", href: "/portfolio", icon: Globe, desc: "Field-proven products" },
+  { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Hunting tips & gear guides" }
 ];
 const navLinks = [
   { label: "Home", href: "/" },
@@ -459,21 +471,22 @@ function ProductsMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-card border border-border shadow-2xl shadow-foreground/10 rounded-sm overflow-hidden",
+      className: "absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-secondary/60 px-6 py-3 border-b border-border flex items-center justify-between", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-[#161616] px-6 py-3 border-b border-white/10 flex items-center justify-between", children: [
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xs tracking-widest uppercase text-gold", children: "Product Catalog" }),
-            /* @__PURE__ */ jsx("p", { className: "text-foreground text-sm font-semibold", children: "Premium Custom Apparel Categories" })
+            /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xs tracking-widest uppercase text-[#ff6b00]", children: "Product Catalog" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white text-sm font-semibold", children: "Premium Hunting Gear Categories" })
           ] }),
-          /* @__PURE__ */ jsx(Link, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1", children: [
+          /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1", children: [
             "View All ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-0 p-4", children: productCategories.map((cat) => /* @__PURE__ */ jsx(Link, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden rounded-sm cursor-pointer m-1", children: [
-          /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-secondary", children: [
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-0 p-4", children: productCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden rounded-sm cursor-pointer m-1", children: [
+          /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-[#0d0d0d]", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
@@ -484,11 +497,11 @@ function ProductsMegamenu({ onClose }) {
             ),
             /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-2 left-2 bg-gold text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm", children: cat.tag }),
-          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 p-2", children: /* @__PURE__ */ jsx("p", { className: "text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-gold transition-colors", children: cat.name }) })
+          /* @__PURE__ */ jsx("div", { className: "absolute top-2 left-2 bg-[#ff6b00] text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm", children: cat.tag }),
+          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 p-2", children: /* @__PURE__ */ jsx("p", { className: "text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-[#ff6b00] transition-colors", children: cat.name }) })
         ] }) }, cat.href)) }),
-        /* @__PURE__ */ jsx("div", { className: "bg-secondary/40 border-t border-border px-6 py-2.5 flex items-center gap-6 text-xs text-muted-foreground", children: ["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-gold" }),
+        /* @__PURE__ */ jsx("div", { className: "bg-[#161616]/40 border-t border-white/10 px-6 py-2.5 flex items-center gap-6 text-xs text-white/70", children: ["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5", children: [
+          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-[#ff6b00]" }),
           item
         ] }, item)) })
       ]
@@ -503,20 +516,21 @@ function CompanyMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-72 bg-card border border-border shadow-2xl shadow-foreground/10 rounded-sm overflow-hidden",
+      className: "absolute top-full left-0 w-72 bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
         /* @__PURE__ */ jsx("div", { className: "p-1", children: companyLinks.map((link) => {
           const Icon = link.icon;
-          return /* @__PURE__ */ jsx(Link, { href: link.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-gold/5 transition-colors cursor-pointer", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-9 h-9 rounded-sm bg-secondary flex items-center justify-center shrink-0 group-hover:bg-gold/15 transition-colors", children: /* @__PURE__ */ jsx(Icon, { className: "w-4 h-4 text-gold" }) }),
+          return /* @__PURE__ */ jsx(Link$1, { href: link.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-[#ff6b00]/5 transition-colors cursor-pointer", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-9 h-9 rounded-sm bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/15 transition-colors", children: /* @__PURE__ */ jsx(Icon, { className: "w-4 h-4 text-[#ff6b00]" }) }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-sm text-foreground uppercase tracking-wide group-hover:text-gold transition-colors", children: link.label }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground leading-tight", children: link.desc })
+              /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-sm text-white uppercase tracking-wide group-hover:text-[#ff6b00] transition-colors", children: link.label }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-white/60 leading-tight", children: link.desc })
             ] })
           ] }) }, link.href);
         }) }),
-        /* @__PURE__ */ jsx("div", { className: "border-t border-border px-4 py-3", children: /* @__PURE__ */ jsx(Link, { href: "/rfq", onClick: onClose, children: /* @__PURE__ */ jsxs("button", { className: "w-full text-xs font-condensed font-bold uppercase tracking-widest text-gold hover:text-gold-light transition-colors flex items-center justify-center gap-1 py-1", children: [
+        /* @__PURE__ */ jsx("div", { className: "border-t border-white/10 px-4 py-3", children: /* @__PURE__ */ jsx(Link$1, { href: "/rfq", onClick: onClose, children: /* @__PURE__ */ jsxs("button", { className: "w-full text-xs font-condensed font-bold uppercase tracking-widest text-[#ff6b00] hover:text-[#ff6b00]-light transition-colors flex items-center justify-center gap-1 py-1", children: [
           "Get a Free Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
         ] }) }) })
@@ -531,11 +545,11 @@ function CartIconButton() {
     "button",
     {
       onClick: openCart,
-      className: "relative p-2 text-muted-foreground hover:text-foreground transition-colors",
+      className: "relative p-2 text-white/60 hover:text-white transition-colors",
       "aria-label": "Open cart",
       children: [
         /* @__PURE__ */ jsx(ShoppingCart, { className: "w-5 h-5" }),
-        totalQty > 0 && /* @__PURE__ */ jsx("span", { className: "absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold text-black text-[10px] font-bold rounded-full flex items-center justify-center", children: totalQty > 9 ? "9+" : totalQty })
+        totalQty > 0 && /* @__PURE__ */ jsx("span", { className: "absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#ff6b00] text-black text-[10px] font-bold rounded-full flex items-center justify-center", children: totalQty > 9 ? "9+" : totalQty })
       ]
     }
   );
@@ -561,7 +575,7 @@ function Navbar() {
     setActiveMegamenu(key);
   };
   const handleMouseLeave = () => {
-    closeTimer.current = setTimeout(() => setActiveMegamenu(null), 150);
+    closeTimer.current = setTimeout(() => setActiveMegamenu(null), 200);
   };
   const closeMegamenu = () => setActiveMegamenu(null);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -570,14 +584,14 @@ function Navbar() {
       "nav",
       {
         ref: menuRef,
-        className: `sticky top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/98 backdrop-blur-xl shadow-lg shadow-foreground/8 border-b border-border" : "bg-background/95 backdrop-blur-md border-b border-border"}`,
+        className: `sticky top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#0a0a0a]/98 backdrop-blur-xl border-b border-white/10" : "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/10"}`,
         children: [
           /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between h-20", children: [
-            /* @__PURE__ */ jsx(Link, { href: "/", className: "flex items-center group shrink-0", children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx(Link$1, { href: "/", className: "flex items-center group shrink-0", children: /* @__PURE__ */ jsx(
               "img",
               {
                 src: IMAGES.logoGold,
-                alt: "Sialkot Sample Masters Logo",
+                alt: "Xelent Huntgear Logo",
                 className: "h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               }
             ) }),
@@ -592,16 +606,16 @@ function Navbar() {
                     /* @__PURE__ */ jsxs(
                       "button",
                       {
-                        className: `flex items-center gap-1 px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors relative group ${activeMegamenu === link.megamenu ? "text-gold" : "text-muted-foreground hover:text-foreground"}`,
+                        className: `flex items-center gap-1 px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors relative group ${activeMegamenu === link.megamenu ? "text-[#ff6b00]" : "text-white/70 hover:text-white"}`,
                         children: [
                           link.label,
                           /* @__PURE__ */ jsx(
                             ChevronDown,
                             {
-                              className: `w-3 h-3 transition-transform duration-200 ${activeMegamenu === link.megamenu ? "rotate-180 text-gold" : ""}`
+                              className: `w-3 h-3 transition-transform duration-200 ${activeMegamenu === link.megamenu ? "rotate-180 text-[#ff6b00]" : ""}`
                             }
                           ),
-                          /* @__PURE__ */ jsx("span", { className: `absolute bottom-0 left-4 right-4 h-px bg-gold origin-left transition-transform duration-300 ${activeMegamenu === link.megamenu ? "scale-x-100" : "scale-x-0"}` })
+                          /* @__PURE__ */ jsx("span", { className: `absolute bottom-0 left-4 right-4 h-px bg-[#ff6b00] origin-left transition-transform duration-300 ${activeMegamenu === link.megamenu ? "scale-x-100" : "scale-x-0"}` })
                         ]
                       }
                     ),
@@ -617,13 +631,13 @@ function Navbar() {
                 },
                 link.label
               ) : /* @__PURE__ */ jsxs(
-                Link,
+                Link$1,
                 {
                   href: link.href,
-                  className: `relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors group ${location === link.href ? "text-gold" : "text-muted-foreground hover:text-foreground"}`,
+                  className: `relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors group ${location === link.href ? "text-[#ff6b00]" : "text-white/70 hover:text-white"}`,
                   children: [
                     link.label,
-                    /* @__PURE__ */ jsx("span", { className: `absolute bottom-0 left-4 right-4 h-px bg-gold origin-left transition-transform duration-300 ${location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}` })
+                    /* @__PURE__ */ jsx("span", { className: `absolute bottom-0 left-4 right-4 h-px bg-[#ff6b00] origin-left transition-transform duration-300 ${location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}` })
                   ]
                 },
                 link.href
@@ -631,14 +645,14 @@ function Navbar() {
             ) }),
             /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-3 shrink-0", children: [
               /* @__PURE__ */ jsx(CartIconButton, {}),
-              /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-gold/20 hover:shadow-gold/30 transition-all", children: "Get a Quote" }) })
+              /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-[#ff6b00]/20 hover:shadow-[#ff6b00]/30 transition-all", children: "Get a Quote" }) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "lg:hidden flex items-center gap-2", children: [
               /* @__PURE__ */ jsx(CartIconButton, {}),
               /* @__PURE__ */ jsx(
                 "button",
                 {
-                  className: "text-foreground p-2",
+                  className: "text-white p-2",
                   onClick: () => setIsOpen(!isOpen),
                   "aria-label": "Toggle menu",
                   children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", initial: false, children: isOpen ? /* @__PURE__ */ jsx(motion.span, { initial: { rotate: -90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: 90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(X$1, { className: "w-6 h-6" }) }, "x") : /* @__PURE__ */ jsx(motion.span, { initial: { rotate: 90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: -90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(Menu, { className: "w-6 h-6" }) }, "menu") })
@@ -653,23 +667,23 @@ function Navbar() {
               animate: { opacity: 1, y: 0 },
               exit: { opacity: 0, y: -20 },
               transition: { duration: 0.2, ease: "easeInOut" },
-              className: "lg:hidden absolute top-full left-0 w-full bg-background border-t border-border shadow-2xl h-[calc(100vh-80px)] overflow-y-auto",
+              className: "lg:hidden absolute top-full left-0 w-full bg-[#0a0a0a] border-t border-white/10 shadow-2xl shadow-black/50 h-[calc(100vh-80px)] overflow-y-auto",
               children: /* @__PURE__ */ jsxs("div", { className: "px-6 py-8 space-y-8 pb-32", children: [
                 /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3", children: "Company" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3", children: "Company" }),
                   /* @__PURE__ */ jsx("div", { className: "grid gap-2", children: companyLinks.map((link) => {
                     const Icon = link.icon;
-                    return /* @__PURE__ */ jsxs(Link, { href: link.href, onClick: () => setIsOpen(false), className: "flex items-center gap-4 p-3 rounded-xl hover:bg-secondary/50 text-foreground transition-all group active:scale-[0.98]", children: [
-                      /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full bg-secondary flex items-center justify-center shrink-0 group-hover:bg-gold/10 transition-colors shadow-inner", children: /* @__PURE__ */ jsx(Icon, { className: "w-5 h-5 text-gold" }) }),
+                    return /* @__PURE__ */ jsxs(Link$1, { href: link.href, onClick: () => setIsOpen(false), className: "flex items-center gap-4 p-3 hover:bg-[#161616] text-white transition-all group active:scale-[0.98]", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/20 transition-colors", children: /* @__PURE__ */ jsx(Icon, { className: "w-5 h-5 text-[#ff6b00]" }) }),
                       /* @__PURE__ */ jsxs("div", { children: [
-                        /* @__PURE__ */ jsx("span", { className: "block text-sm font-black uppercase tracking-widest group-hover:text-gold transition-colors", children: link.label }),
-                        /* @__PURE__ */ jsx("span", { className: "block text-xs text-muted-foreground mt-1 opacity-80", children: link.desc })
+                        /* @__PURE__ */ jsx("span", { className: "block text-sm font-black uppercase tracking-widest group-hover:text-[#ff6b00] transition-colors", children: link.label }),
+                        /* @__PURE__ */ jsx("span", { className: "block text-xs text-white/50 mt-1", children: link.desc })
                       ] })
                     ] }, link.href);
                   }) })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-4", children: [
-                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] border-b border-border pb-3", children: "Quick Links" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3", children: "Quick Links" }),
                   /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: [
                     { label: "Home", href: "/" },
                     { label: "Shop", href: "/shop" },
@@ -678,17 +692,17 @@ function Navbar() {
                     { label: "Brand Studio", href: "/branding-studio" },
                     { label: "Contact", href: "/contact" }
                   ].map((link) => /* @__PURE__ */ jsx(
-                    Link,
+                    Link$1,
                     {
                       href: link.href,
                       onClick: () => setIsOpen(false),
-                      className: `flex justify-center items-center text-center p-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-gold/10 text-gold border border-gold/20" : "bg-card border border-border/50 hover:border-gold/30 hover:bg-secondary text-foreground"}`,
+                      className: `flex justify-center items-center text-center p-4 text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"}`,
                       children: link.label
                     },
                     link.href
                   )) })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "pt-6", children: /* @__PURE__ */ jsx(Link, { href: "/rfq", onClick: () => setIsOpen(false), children: /* @__PURE__ */ jsx(Button, { className: "w-full h-14 bg-gold text-black hover:bg-gold/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]", children: "Get a Free Quote" }) }) })
+                /* @__PURE__ */ jsx("div", { className: "pt-6", children: /* @__PURE__ */ jsx(Link$1, { href: "/rfq", onClick: () => setIsOpen(false), children: /* @__PURE__ */ jsx(Button, { className: "w-full h-14 bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]", children: "Get a Free Quote" }) }) })
               ] })
             },
             "mobile-menu"
@@ -700,14 +714,14 @@ function Navbar() {
 }
 function Footer() {
   const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
-  return /* @__PURE__ */ jsxs("footer", { className: "bg-card border-t border-border text-left", children: [
+  return /* @__PURE__ */ jsxs("footer", { className: "bg-[#0d0d0d] border-t border-white/10 text-left", children: [
     /* @__PURE__ */ jsx("div", { className: "bg-foreground text-background", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row items-center md:items-start justify-between gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "text-center md:text-left", children: [
         /* @__PURE__ */ jsx("p", { className: "font-condensed font-extrabold text-2xl sm:text-3xl tracking-wide uppercase leading-tight", children: "Ready to manufacture your vision?" }),
         /* @__PURE__ */ jsx("p", { className: "text-background/70 text-sm mt-1.5", children: "Get a free quote in 24 hours. No commitment required." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 shrink-0", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs("button", { className: "flex items-center gap-2 bg-gold text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-gold/90 transition-colors shadow-lg shadow-gold/20 group", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs("button", { className: "flex items-center gap-2 bg-[#ff6b00] text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-[#ff6b00]/90 transition-colors shadow-lg shadow-[#ff6b00]/20 group", children: [
           "Request Free Quote",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
         ] }) }),
@@ -723,43 +737,43 @@ function Footer() {
         )
       ] })
     ] }) }) }),
-    /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] border-t border-border/50 pt-20 pb-10 text-left", children: [
+    /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] border-t border-white/5 pt-20 pb-10 text-left", children: [
       /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 items-start", children: [
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4", children: [
-          /* @__PURE__ */ jsxs(Link, { href: "/", className: "flex items-center gap-3 mb-6", children: [
+          /* @__PURE__ */ jsxs(Link$1, { href: "/", className: "flex items-center gap-3 mb-6", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
                 src: IMAGES.logoGold,
-                alt: "Sialkot Sample Masters Logo",
+                alt: "Xelent Huntgear Logo",
                 className: "h-12 w-auto object-contain"
               }
             ),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Sialkot Sample" }),
-              /* @__PURE__ */ jsx("span", { className: "text-gold font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Masters" })
+              /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Xelent" }),
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Masters" })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm leading-relaxed mb-8 max-w-sm", children: "Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, streetwear, tactical gear, and martial arts uniforms for global brands." }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/85 text-sm leading-relaxed mb-8 max-w-sm", children: "Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, technical apparel, tactical gear, and martial arts uniforms for global brands." }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 mb-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-gold text-xs", children: "🏅" }),
-              /* @__PURE__ */ jsx("span", { className: "text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase", children: "ISO 9001:2015" })
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs", children: "🏅" }),
+              /* @__PURE__ */ jsx("span", { className: "text-white text-[10px] font-condensed font-bold tracking-widest uppercase", children: "ISO 9001:2015" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm", children: [
               /* @__PURE__ */ jsx("span", { className: "text-green-500 text-xs", children: "🌱" }),
-              /* @__PURE__ */ jsx("span", { className: "text-white/80 text-[10px] font-condensed font-bold tracking-widest uppercase", children: "Eco-Friendly" })
+              /* @__PURE__ */ jsx("span", { className: "text-white text-[10px] font-condensed font-bold tracking-widest uppercase", children: "Eco-Friendly" })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Instagram, { className: "w-4 h-4" }) }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Linkedin, { className: "w-4 h-4" }) }),
-            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Facebook, { className: "w-4 h-4" }) })
+            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Instagram, { className: "w-4 h-4" }) }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Linkedin, { className: "w-4 h-4" }) }),
+            /* @__PURE__ */ jsx("a", { href: "#", className: "w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/85 hover:text-[#ff6b00] hover:border-[#ff6b00]/50 transition-all hover:-translate-y-1", children: /* @__PURE__ */ jsx(Facebook, { className: "w-4 h-4" }) })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2", children: [
           /* @__PURE__ */ jsxs("h3", { className: "text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-gold inline-block" }),
+            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] inline-block" }),
             " Capabilities"
           ] }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: [
@@ -769,11 +783,11 @@ function Footer() {
             "Embroidery & DTF",
             "Cut & Sew",
             "Tech Pack Design"
-          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { href: "/services", className: "text-white/60 hover:text-gold text-sm transition-colors block", children: item }) }, item)) })
+          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link$1, { href: "/services", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item }) }, item)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2", children: [
           /* @__PURE__ */ jsxs("h3", { className: "text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-gold inline-block" }),
+            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] inline-block" }),
             " Apparel Lines"
           ] }),
           /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: [
@@ -782,19 +796,19 @@ function Footer() {
             { label: "Hunting Wear", href: "/products#hunting" },
             { label: "Tech Wear", href: "/products#techwear" },
             { label: "Security Uniforms", href: "/products#security" }
-          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { href: item.href, className: "text-white/60 hover:text-gold text-sm transition-colors block", children: item.label }) }, item.label)) })
+          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link$1, { href: item.href, className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item.label }) }, item.label)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4", children: [
           /* @__PURE__ */ jsxs("h3", { className: "text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-gold inline-block" }),
+            /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] inline-block" }),
             " Global Headquarters"
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 p-6 rounded-sm space-y-5", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(MapPin, { className: "w-4 h-4 text-gold" }) }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(MapPin, { className: "w-4 h-4 text-[#ff6b00]" }) }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm mb-1", children: "Factory Location" }),
-                /* @__PURE__ */ jsxs("p", { className: "text-white/60 text-sm leading-relaxed", children: [
+                /* @__PURE__ */ jsxs("p", { className: "text-white/85 text-sm leading-relaxed", children: [
                   "Sialkot Industrial Estate,",
                   /* @__PURE__ */ jsx("br", {}),
                   "Sialkot 51310, Punjab, Pakistan"
@@ -803,33 +817,33 @@ function Footer() {
             ] }),
             /* @__PURE__ */ jsx("div", { className: "w-full h-px bg-white/10" }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Phone, { className: "w-4 h-4 text-gold" }) }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Phone, { className: "w-4 h-4 text-[#ff6b00]" }) }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm mb-1", children: "Direct Sales / WhatsApp" }),
-                /* @__PURE__ */ jsx("a", { href: "tel:+923022922242", className: "text-white/60 hover:text-gold text-sm transition-colors", children: "+92 302 292 2242" })
+                /* @__PURE__ */ jsx("a", { href: "tel:+923022922242", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "+92 302 292 2242" })
               ] })
             ] }),
             /* @__PURE__ */ jsx("div", { className: "w-full h-px bg-white/10" }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Mail, { className: "w-4 h-4 text-gold" }) }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Mail, { className: "w-4 h-4 text-[#ff6b00]" }) }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm mb-1", children: "Email inquiries" }),
-                /* @__PURE__ */ jsx("a", { href: "mailto:info@sialkotsamplemasters.com", className: "text-white/60 hover:text-gold text-sm transition-colors", children: "info@sialkotsamplemasters.com" })
+                /* @__PURE__ */ jsx("a", { href: "mailto:info@sialkotsamplemasters.com", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "info@sialkotsamplemasters.com" })
               ] })
             ] })
           ] })
         ] })
       ] }) }),
       /* @__PURE__ */ jsx("div", { className: "border-t border-white/10 pt-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4", children: [
-        /* @__PURE__ */ jsxs("p", { className: "text-white/40 text-xs font-medium tracking-wide", children: [
+        /* @__PURE__ */ jsxs("p", { className: "text-white/60 text-xs font-medium tracking-wide", children: [
           "© ",
           currentYear,
-          " Sialkot Sample Masters. A globally recognized apparel manufacturer. All rights reserved."
+          " Xelent Huntgear. Premium Hunting Apparel Manufacturer. All rights reserved."
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-          /* @__PURE__ */ jsx(Link, { href: "/privacy", className: "text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Privacy Policy" }),
-          /* @__PURE__ */ jsx(Link, { href: "/terms", className: "text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Terms of Manufacturing" }),
-          /* @__PURE__ */ jsx(Link, { href: "/shipping", className: "text-white/40 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Shipping & Returns" })
+          /* @__PURE__ */ jsx(Link$1, { href: "/privacy", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Privacy Policy" }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/terms", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Terms of Manufacturing" }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/shipping", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Shipping & Returns" })
         ] })
       ] }) })
     ] }),
@@ -848,11 +862,6 @@ function Footer() {
 }
 function Sheet({ ...props }) {
   return /* @__PURE__ */ jsx(SheetPrimitive.Root, { "data-slot": "sheet", ...props });
-}
-function SheetTrigger({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SheetPrimitive.Trigger, { "data-slot": "sheet-trigger", ...props });
 }
 function SheetPortal({
   ...props
@@ -932,22 +941,22 @@ function SheetTitle({
 }
 function CartDrawer() {
   const { items, isOpen, closeCart, updateQty, removeItem, subtotal } = useCartStore();
-  return /* @__PURE__ */ jsx(Sheet, { open: isOpen, onOpenChange: closeCart, children: /* @__PURE__ */ jsxs(SheetContent, { className: "w-full sm:max-w-md bg-card border-border flex flex-col", children: [
-    /* @__PURE__ */ jsx(SheetHeader, { className: "pb-4 border-b border-border", children: /* @__PURE__ */ jsxs(SheetTitle, { className: "font-serif text-xl text-foreground flex items-center gap-2", children: [
-      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-5 h-5 text-gold" }),
+  return /* @__PURE__ */ jsx(Sheet, { open: isOpen, onOpenChange: closeCart, children: /* @__PURE__ */ jsxs(SheetContent, { className: "w-full sm:max-w-md bg-[#111111] border-white/10 flex flex-col", children: [
+    /* @__PURE__ */ jsx(SheetHeader, { className: "pb-4 border-b border-white/10", children: /* @__PURE__ */ jsxs(SheetTitle, { className: "font-serif text-xl text-foreground flex items-center gap-2", children: [
+      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-5 h-5 text-[#ff6b00]" }),
       "Your Cart",
-      items.length > 0 && /* @__PURE__ */ jsxs("span", { className: "ml-auto bg-gold text-black text-xs font-condensed font-bold px-2 py-0.5 rounded-full", children: [
+      items.length > 0 && /* @__PURE__ */ jsxs("span", { className: "ml-auto bg-[#ff6b00] text-black text-xs font-condensed font-bold px-2 py-0.5 rounded-full", children: [
         items.reduce((s2, i) => s2 + i.quantity, 0),
         " pcs"
       ] })
     ] }) }),
     items.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-center justify-center text-center py-12", children: [
-      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-muted-foreground opacity-30 mb-4" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground font-serif text-lg mb-2", children: "Your cart is empty" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-6", children: "Browse our catalog to add products" }),
-      /* @__PURE__ */ jsx(Link, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
+      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-white/70 opacity-30 mb-4" }),
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 font-serif text-lg mb-2", children: "Your cart is empty" }),
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-6", children: "Browse our catalog to add products" }),
+      /* @__PURE__ */ jsx(Link$1, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
     ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-4 space-y-4", children: items.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex gap-3 p-3 bg-secondary/50 rounded-lg border border-border", children: [
+      /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-4 space-y-4", children: items.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex gap-3 p-3 bg-secondary/50 rounded-lg border border-white/10", children: [
         /* @__PURE__ */ jsx(
           "img",
           {
@@ -958,7 +967,7 @@ function CartDrawer() {
         ),
         /* @__PURE__ */ jsxs("div", { className: "flex-1 min-w-0", children: [
           /* @__PURE__ */ jsx("p", { className: "text-foreground text-sm font-semibold truncate", children: item.title }),
-          /* @__PURE__ */ jsxs("div", { className: "flex gap-2 text-xs text-muted-foreground mt-0.5", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex gap-2 text-xs text-white/70 mt-0.5", children: [
             item.selectedSize && /* @__PURE__ */ jsxs("span", { children: [
               "Size: ",
               item.selectedSize
@@ -968,7 +977,7 @@ function CartDrawer() {
               item.selectedColor
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("p", { className: "text-gold font-condensed font-bold text-sm mt-1", children: [
+          /* @__PURE__ */ jsxs("p", { className: "text-[#ff6b00] font-condensed font-bold text-sm mt-1", children: [
             "$",
             item.unitPrice.toFixed(2),
             "/pc"
@@ -978,7 +987,7 @@ function CartDrawer() {
               "button",
               {
                 onClick: () => updateQty(item.id, item.quantity - 1),
-                className: "w-6 h-6 rounded border border-border flex items-center justify-center hover:border-gold transition-colors",
+                className: "w-6 h-6 rounded border border-white/10 flex items-center justify-center hover:border-[#ff6b00] transition-colors",
                 children: /* @__PURE__ */ jsx(Minus, { className: "w-3 h-3" })
               }
             ),
@@ -987,11 +996,11 @@ function CartDrawer() {
               "button",
               {
                 onClick: () => updateQty(item.id, item.quantity + 1),
-                className: "w-6 h-6 rounded border border-border flex items-center justify-center hover:border-gold transition-colors",
+                className: "w-6 h-6 rounded border border-white/10 flex items-center justify-center hover:border-[#ff6b00] transition-colors",
                 children: /* @__PURE__ */ jsx(Plus, { className: "w-3 h-3" })
               }
             ),
-            /* @__PURE__ */ jsxs("span", { className: "text-xs text-muted-foreground ml-1", children: [
+            /* @__PURE__ */ jsxs("span", { className: "text-xs text-white/70 ml-1", children: [
               "= $",
               (item.unitPrice * item.quantity).toFixed(2)
             ] }),
@@ -999,27 +1008,27 @@ function CartDrawer() {
               "button",
               {
                 onClick: () => removeItem(item.id),
-                className: "ml-auto text-muted-foreground hover:text-destructive transition-colors",
+                className: "ml-auto text-white/70 hover:text-destructive transition-colors",
                 children: /* @__PURE__ */ jsx(Trash2, { className: "w-4 h-4" })
               }
             )
           ] })
         ] })
       ] }, item.id)) }),
-      /* @__PURE__ */ jsxs("div", { className: "border-t border-border pt-4 space-y-3", children: [
+      /* @__PURE__ */ jsxs("div", { className: "border-t border-white/10 pt-4 space-y-3", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-sm", children: "Subtotal" }),
+          /* @__PURE__ */ jsx("span", { className: "text-white/70 text-sm", children: "Subtotal" }),
           /* @__PURE__ */ jsxs("span", { className: "font-condensed font-bold text-foreground text-lg", children: [
             "$",
             subtotal().toFixed(2)
           ] })
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "Shipping calculated at checkout based on your country" }),
-        /* @__PURE__ */ jsx(Link, { href: "/checkout", onClick: closeCart, children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider py-5 text-base", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70", children: "Shipping calculated at checkout based on your country" }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/checkout", onClick: closeCart, children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider py-5 text-base", children: [
           "Proceed to Checkout ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
       ] })
     ] })
   ] }) });
@@ -1031,11 +1040,11 @@ function ScrollToTop() {
   }, [location]);
   return null;
 }
-const SITE_NAME = "Sialkot Sample Masters - Custom Apparel Manufacturer Pakistan";
-const DEFAULT_DESCRIPTION = "Sialkot Sample Masters is Pakistan's leading custom apparel manufacturer based in Sialkot. We specialize in Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear (BJJ Kimonos & Rashguards). Private label, low MOQ from 50 pcs, bulk export for global brands in USA, UAE & Europe.";
-const DEFAULT_KEYWORDS = "custom apparel manufacturer Pakistan, hunting wear manufacturer Sialkot, sports wear manufacturer Pakistan, ski wear manufacturer Pakistan, tech wear manufacturer Sialkot, streetwear manufacturer Pakistan, martial arts wear manufacturer Pakistan, bulk BJJ kimonos manufacturer, custom rashguards supplier, private label clothing Pakistan, B2B clothing manufacturer Sialkot, OEM apparel manufacturer Pakistan, wholesale hunting clothing supplier, custom ski jacket manufacturer Pakistan";
+const SITE_NAME = "Xelent Huntgear | Custom Hunting Apparel Manufacturer Pakistan";
+const DEFAULT_DESCRIPTION = "Xelent Huntgear is Pakistan's premier custom hunting apparel manufacturer based in Sialkot. We specialize in OEM/ODM hunting jackets, camo pants, base layers & tactical gear with Realtree/Mossy Oak licensing. Low MOQ 50pcs. Export to USA, Canada, Europe & Australia. 7-day samples.";
+const DEFAULT_KEYWORDS = "custom hunting apparel manufacturer Pakistan, hunting jacket manufacturer, camo pants supplier, Realtree licensed manufacturer, Mossy Oak apparel manufacturer, hunting gear OEM, private label hunting clothing, hunting apparel factory Sialkot, scent control hunting clothes, waterproof hunting jacket manufacturer, hunting base layer supplier, upland vest manufacturer, custom hunting wear Pakistan, low MOQ hunting apparel, hunting clothing exporter USA Europe";
 const DEFAULT_OG_IMAGE = "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/RfANkMVkQHIazGrh.jpg";
-const SITE_URL = "https://sialkotsamplemasters.com";
+const SITE_URL = "https://xelenthuntgear.com";
 function SEOHead({
   title,
   description = DEFAULT_DESCRIPTION,
@@ -1049,13 +1058,13 @@ function SEOHead({
   hreflangs,
   product
 }) {
-  const fullTitle = title ? `${title} | Sialkot Sample Masters Pakistan` : SITE_NAME;
+  const fullTitle = title ? `${title} | Xelent Huntgear Pakistan` : SITE_NAME;
   const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : SITE_URL;
   const defaultSchemaGraph = [
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
       description: DEFAULT_DESCRIPTION,
@@ -1081,7 +1090,7 @@ function SEOHead({
     {
       "@type": "LocalBusiness",
       "@id": `${SITE_URL}/#localbusiness`,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       image: DEFAULT_OG_IMAGE,
       url: SITE_URL,
       telephone: "+92-302-292-2242",
@@ -1115,7 +1124,7 @@ function SEOHead({
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Sialkot Sample Masters",
+      name: "Xelent Huntgear",
       publisher: { "@id": `${SITE_URL}/#organization` }
     },
     {
@@ -1149,7 +1158,7 @@ function SEOHead({
     /* @__PURE__ */ jsx("title", { children: fullTitle }),
     /* @__PURE__ */ jsx("meta", { name: "description", content: description }),
     /* @__PURE__ */ jsx("meta", { name: "keywords", content: keywords }),
-    /* @__PURE__ */ jsx("meta", { name: "author", content: "Sialkot Sample Masters, Sialkot, Pakistan" }),
+    /* @__PURE__ */ jsx("meta", { name: "author", content: "Xelent Huntgear, Sialkot, Pakistan" }),
     /* @__PURE__ */ jsx("meta", { name: "robots", content: noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1" }),
     /* @__PURE__ */ jsx("meta", { name: "geo.region", content: "PK-PB" }),
     /* @__PURE__ */ jsx("meta", { name: "geo.placename", content: "Sialkot, Punjab, Pakistan" }),
@@ -1159,7 +1168,7 @@ function SEOHead({
     /* @__PURE__ */ jsx("meta", { property: "og:description", content: description }),
     /* @__PURE__ */ jsx("meta", { property: "og:type", content: ogType }),
     /* @__PURE__ */ jsx("meta", { property: "og:image", content: ogImage }),
-    /* @__PURE__ */ jsx("meta", { property: "og:site_name", content: "Sialkot Sample Masters" }),
+    /* @__PURE__ */ jsx("meta", { property: "og:site_name", content: "Xelent Huntgear" }),
     /* @__PURE__ */ jsx("meta", { property: "og:locale", content: "en_US" }),
     /* @__PURE__ */ jsx("meta", { property: "og:locale:alternate", content: "en_GB" }),
     /* @__PURE__ */ jsx("meta", { property: "og:locale:alternate", content: "en_AE" }),
@@ -1180,7 +1189,74 @@ function SEOHead({
     product && product.priceAmount && /* @__PURE__ */ jsx("meta", { property: "product:price:amount", content: product.priceAmount }),
     product && product.priceCurrency && /* @__PURE__ */ jsx("meta", { property: "product:price:currency", content: product.priceCurrency }),
     product && product.retailerItemId && /* @__PURE__ */ jsx("meta", { property: "product:retailer_item_id", content: product.retailerItemId }),
-    product && product.itemGroupId && /* @__PURE__ */ jsx("meta", { property: "product:item_group_id", content: product.itemGroupId })
+    product && product.itemGroupId && /* @__PURE__ */ jsx("meta", { property: "product:item_group_id", content: product.itemGroupId }),
+    /* @__PURE__ */ jsx("meta", { name: "author", content: "Xelent Huntgear Technical Team" }),
+    /* @__PURE__ */ jsx("meta", { name: "last-modified", content: (/* @__PURE__ */ new Date()).toISOString().split("T")[0] }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Xelent Huntgear",
+      "url": SITE_URL,
+      "logo": "https://xelenthuntgear.com/logo.png",
+      "description": DEFAULT_DESCRIPTION,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sialkot",
+        "addressCountry": "PK"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "B2B Sales",
+        "areaServed": "Worldwide",
+        "availableLanguage": ["English"]
+      },
+      "knowsAbout": [
+        "Custom Hunting Apparel Manufacturing",
+        "Realtree & Mossy Oak Licensed Production",
+        "Scent-Control Technology Integration",
+        "Waterproof Hunting Outerwear (10K-20K)",
+        "Camouflage Pattern Design",
+        "OEM/ODM Hunting Gear Production"
+      ]
+    }) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the minimum order quantity for custom hunting jackets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our MOQ is 50 pieces per style/color for custom hunting jackets, pants, and base layers. This applies to all camouflage patterns including licensed Realtree and Mossy Oak designs. We offer flexible sampling for startup hunting brands."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer Realtree and Mossy Oak licensed patterns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we are licensed to manufacture hunting apparel with Realtree EDGE, Realtree Timber, Mossy Oak Break-Up Country, and Mossy Oak Bottomland patterns. We also offer Kryptek and custom-designed camouflage options."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What waterproof rating do your hunting jackets have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our hunting jackets range from 10,000mm to 20,000mm waterproof rating (hydrostatic head) with fully taped seams. Breathability ranges from 10,000g to 15,000g/m²/24hr MVTR, suitable for active hunting in wet conditions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you manufacture scent-control hunting apparel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we integrate scent-control technology including silver-ion antimicrobial treatments and carbon-based odor absorption into our base layers and hunting apparel. This helps hunters remain undetected in the field."
+          }
+        }
+      ]
+    }) })
   ] });
 }
 const EASE_OUT = "easeOut";
@@ -1189,14 +1265,6 @@ const t = (duration, delay = 0) => ({
   delay,
   ease: EASE_OUT
 });
-const fadeInUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: t(0.6) }
-};
-const fadeInDown = {
-  hidden: { opacity: 0, y: -24 },
-  visible: { opacity: 1, y: 0, transition: t(0.55) }
-};
 function FadeIn({
   children,
   className,
@@ -1307,17 +1375,6 @@ function CountUp({ to, suffix = "", prefix = "", duration = 2, className }) {
     suffix
   ] });
 }
-function HoverCard({ children, className }) {
-  return /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      className,
-      whileHover: { y: -6, transition: { duration: 0.25, ease: EASE_OUT } },
-      whileTap: { scale: 0.98 },
-      children
-    }
-  );
-}
 function PageWrapper({ children, className }) {
   return /* @__PURE__ */ jsx(
     motion.div,
@@ -1330,163 +1387,129 @@ function PageWrapper({ children, className }) {
     }
   );
 }
-function SectionHeading({
-  label,
-  title,
-  subtitle,
-  align = "center",
-  className
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const textAlign = align === "center" ? "text-center items-center" : "text-left items-start";
-  return /* @__PURE__ */ jsxs(
-    motion.div,
-    {
-      ref,
-      className: `flex flex-col ${textAlign} ${className ?? ""}`,
-      initial: "hidden",
-      animate: isInView ? "visible" : "hidden",
-      variants: { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } },
-      children: [
-        label && /* @__PURE__ */ jsx(
-          motion.span,
-          {
-            className: "font-condensed text-gold text-xs tracking-[0.3em] uppercase mb-3",
-            variants: fadeInDown,
-            children: label
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          motion.h2,
-          {
-            className: "font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight",
-            variants: fadeInUp,
-            children: title
-          }
-        ),
-        subtitle && /* @__PURE__ */ jsx(
-          motion.p,
-          {
-            className: "text-muted-foreground mt-4 max-w-2xl leading-relaxed",
-            variants: fadeInUp,
-            children: subtitle
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          motion.div,
-          {
-            className: "mt-5 h-px bg-gold w-16",
-            initial: { scaleX: 0 },
-            style: { originX: align === "center" ? 0.5 : 0 },
-            animate: isInView ? { scaleX: 1 } : { scaleX: 0 },
-            transition: { duration: 0.7, delay: 0.35, ease: EASE_OUT }
-          }
-        )
-      ]
-    }
-  );
-}
-const stats = [
-  { value: 15, suffix: "+", label: "Years of Excellence", icon: Award },
-  { value: 500, suffix: "+", label: "Global Brands Served", icon: Globe },
-  { value: 40, suffix: "+", label: "Countries Exported To", icon: Package },
-  { value: 50, suffix: "K+", label: "Units Produced Monthly", icon: Zap }
+const stats$1 = [
+  { value: 15, suffix: "+", label: "Years", sublabel: "Excellence" },
+  { value: 500, suffix: "+", label: "Brands", sublabel: "Served" },
+  { value: 40, suffix: "+", label: "Countries", sublabel: "Exported" },
+  { value: 50, suffix: "K+", label: "Units", sublabel: "Monthly" }
 ];
-const services$2 = [
+const categories$1 = [
   {
-    title: "Eco-Friendly Production",
-    description: "80% of our energy comes from renewable solar power. We incorporate eco-friendly fabrics and sustainable practices into every run.",
-    icon: "⚡"
+    name: "Outerwear",
+    items: "Shells • Insulated • Softshell",
+    image: IMAGES.catHunting,
+    tag: "20K Waterproof"
   },
   {
-    title: "Comprehensive Facilities",
-    description: "In-house pattern drafting, sublimation, screen printing, embroidery, DTF, DTG, and modern sewing lines with 50+ machines.",
-    icon: "🏭"
+    name: "Mid Layers",
+    items: "Fleece • Down • Synthetic",
+    image: IMAGES.catSports,
+    tag: "Thermal"
   },
   {
-    title: "ISO-Grade Assurance",
-    description: "Zero-defect delivery guarantee. Strict QC processes ensuring top quality across sportswear, streetwear, and tactical gear.",
-    icon: "✅"
+    name: "Base Layers",
+    items: "Merino • Synthetic • Blends",
+    image: IMAGES.catHuntingGear,
+    tag: "Moisture Wicking"
+  },
+  {
+    name: "Bottoms",
+    items: "Pants • Bibs • Shorts",
+    image: IMAGES.catTechwear,
+    tag: "Reinforced"
   }
 ];
-const products$1 = [
-  { name: "Sportswear", image: IMAGES.catSports, href: "/shop", category: "Sports Wear", tag: "Athletic" },
-  { name: "Hunting Wear", image: IMAGES.catHunting, href: "/shop", category: "Hunting Wear", tag: "MIL-SPEC" },
-  { name: "Streetwear", image: IMAGES.catStreetwear, href: "/shop", category: "Streetwear", tag: "Lifestyle" },
-  { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/shop", category: "Security Uniforms", tag: "Guard" },
-  { name: "Tech Wear", image: IMAGES.catTechwear, href: "/shop", category: "Tech Wear", tag: "Utility" },
-  { name: "Ski Wear", image: IMAGES.catSki, href: "/shop", category: "Ski Wear", tag: "Alpine" },
-  { name: "Martial Arts Wear", image: IMAGES.catMartialArts, href: "/shop", category: "Martial Arts", tag: "BJJ / MMA" }
+const capabilities$2 = [
+  {
+    title: "Waterproof Production",
+    desc: "20K/20K Seam-Sealed",
+    detail: "Advanced moisture protection using high-performance membranes and precision seam-sealing technology.",
+    image: IMAGES.capWaterproof
+  },
+  {
+    title: "Camo Pattern Design",
+    desc: "Custom Terrains",
+    detail: "Proprietary camouflage systems engineered for specific environments, from alpine peaks to deep timber.",
+    image: IMAGES.capCamoDesign
+  },
+  {
+    title: "Scent Control Tech",
+    desc: "Silver-Ion Integration",
+    detail: "Odor-absorbing fabric treatments that keep you undetected in the heat of the pursuit.",
+    image: IMAGES.capScentControl
+  }
+];
+const huntTypes = [
+  {
+    species: "Whitetail",
+    season: "Sep - Jan",
+    terrain: "Deep Woods",
+    color: "#2d5016",
+    description: "Silent, scent-controlled gear engineered for close-range timber pursuits.",
+    image: IMAGES.specWhitetail
+  },
+  {
+    species: "Elk",
+    season: "Sep - Nov",
+    terrain: "Alpine Peaks",
+    color: "#4a3728",
+    description: "Breathable, high-mobility layering systems for demanding mountain ascents.",
+    image: IMAGES.specElk
+  },
+  {
+    species: "Waterfowl",
+    season: "Oct - Feb",
+    terrain: "Frozen Wetlands",
+    color: "#1e3a5f",
+    description: "20K waterproof shells and insulated systems for harsh wet environments.",
+    image: IMAGES.specWaterfowl
+  },
+  {
+    species: "Turkey",
+    season: "Apr - May",
+    terrain: "Mixed Hardwoods",
+    color: "#5c4a2a",
+    description: "Full-coverage concealment systems with precision camo for wary spring gobblers.",
+    image: IMAGES.specTurkey
+  },
+  {
+    species: "Mule Deer",
+    season: "Sep - Nov",
+    terrain: "High Desert",
+    color: "#8b6914",
+    description: "Versatile, windproof systems designed for glassing and spot-and-stalk hunts.",
+    image: IMAGES.specMuleDeer
+  },
+  {
+    species: "Predator",
+    season: "Year-round",
+    terrain: "Open Country",
+    color: "#3d3d3d",
+    description: "Tactical-grade concealment gear for long-range surveillance and fast performance.",
+    image: IMAGES.specPredator
+  }
 ];
 const testimonials = [
   {
-    name: "Marcus Johnson",
-    title: "Founder, UrbanThread Co.",
-    country: "🇺🇸",
-    countryName: "USA",
-    rating: 5,
-    text: "Sialkot Sample Masters has been our manufacturing partner for 3 years. The quality is consistently exceptional, and their team is incredibly responsive. They've helped us scale from 500 to 10,000 units per month."
+    quote: "The waterproof technology and attention to detail rivals any brand in our lineup. Xelent understands what hunters need.",
+    author: "Marcus Johnson",
+    role: "Product Director",
+    company: "Backcountry Hunters",
+    location: "USA"
   },
   {
-    name: "Sophie Laurent",
-    title: "Creative Director, Rue Noire",
-    country: "🇫🇷",
-    countryName: "France",
-    rating: 5,
-    text: "We've worked with manufacturers across Asia, but Sialkot Sample Masters stands apart. Their attention to detail, premium fabric sourcing, and on-time delivery make them our exclusive manufacturing partner."
+    quote: "We've sourced from manufacturers across Asia. Xelent's quality control and camo pattern expertise are unmatched.",
+    author: "Sophie Laurent",
+    role: "Founder",
+    company: "Alpine Gear Co.",
+    location: "France"
   },
   {
-    name: "James Chen",
-    title: "CEO, Pacific Street",
-    country: "🇦🇺",
-    countryName: "Australia",
-    rating: 5,
-    text: "The private label service is world-class. From custom woven labels to branded packaging, every detail was perfect. Our customers can't believe the quality comes from a B2B manufacturer."
-  }
-];
-const bentoCards = [
-  { value: "50 pcs", label: "Min. Order Qty", icon: Package, accent: true },
-  { value: "7 Days", label: "Sample Turnaround", icon: Zap, accent: false },
-  { value: "40+", label: "Countries Served", icon: Globe, accent: false },
-  { value: "50K+", label: "Units / Month", icon: Award, accent: true },
-  { value: "99.8%", label: "QC Pass Rate", icon: CheckCircle, accent: false },
-  { value: "ISO 9001", label: "Certified Quality", icon: Shield, accent: false },
-  { value: "80% Solar", label: "Renewable Energy", icon: Sun, accent: true },
-  { value: "15+ Yrs", label: "Industry Expertise", icon: Star, accent: false }
-];
-const partnerBrands = [
-  { name: "UrbanThread Co.", region: "🇺🇸 USA" },
-  { name: "Rue Noire Paris", region: "🇫🇷 France" },
-  { name: "Pacific Street", region: "🇦🇺 Australia" },
-  { name: "Nordic Sport Labs", region: "🇸🇪 Sweden" },
-  { name: "Alpha Tactical", region: "🇬🇧 UK" },
-  { name: "Desert Hawk Gear", region: "🇦🇪 UAE" },
-  { name: "Summit Alpine Co.", region: "🇩🇪 Germany" },
-  { name: "Bushcraft Nation", region: "🇨🇦 Canada" },
-  { name: "Athleisure Pro", region: "🇳🇱 Netherlands" },
-  { name: "StrikeForce MMA", region: "🇺🇸 USA" },
-  { name: "Kimono Masters", region: "🇧🇷 Brazil" },
-  { name: "Glacier Outfitters", region: "🇳🇿 New Zealand" }
-];
-const esgPillars = [
-  {
-    icon: Leaf,
-    title: "Environmental",
-    stat: "80% Solar",
-    body: "80% renewable solar-powered production. GOTS & OEKO-TEX certified fabrics. Water recycling across all dyeing processes."
-  },
-  {
-    icon: Heart,
-    title: "Social",
-    stat: "250+ Workers",
-    body: "Living-wage workforce in Sialkot. Safe, air-conditioned factory floors with healthcare benefits and professional development."
-  },
-  {
-    icon: Scale,
-    title: "Governance",
-    stat: "WRAP Certified",
-    body: "ISO 9001 quality management. WRAP-certified ethical production. Full audit-ready transparency with third-party QC available."
+    quote: "From custom patterns to scent-control fabrics, every specification was executed perfectly. Our customers notice the difference.",
+    author: "James Chen",
+    role: "CEO",
+    company: "Outback Outfitters",
+    location: "Australia"
   }
 ];
 function Home() {
@@ -1494,659 +1517,630 @@ function Home() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Custom Streetwear & BJJ Kimonos Manufacturer | Sialkot Pakistan",
-        description: "Sialkot Sample Masters is Pakistan's premier custom clothing manufacturer. Private label, low MOQ (50pcs), bulk orders for global brands in USA and UAE. T-shirts, hoodies, streetwear, and BJJ Kimonos. Get a free quote today.",
-        keywords: "custom streetwear manufacturer Pakistan, private label clothing USA, bulk streetwear supplier Sialkot, B2B apparel manufacturer Dubai UAE, custom hoodie manufacturer, wholesale BJJ Kimonos manufacturer, custom rashguards supplier Pakistan",
+        title: "Premium Hunting Apparel Manufacturer | Xelent Huntgear",
+        description: "Custom hunting gear manufacturer. Waterproof shells, insulated parkas, camo systems. B2B wholesale. Low MOQ 50pcs. Export to USA, Europe, Australia.",
         canonical: "/"
       }
     ),
-    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[100dvh] w-full overflow-hidden bg-[#0a0a0a]", children: [
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          className: "absolute inset-0 z-0",
-          initial: { scale: 1.06 },
-          animate: { scale: 1 },
-          transition: { duration: 2.5, ease: [0.25, 0.46, 0.45, 0.94] },
-          children: [
-            /* @__PURE__ */ jsx(
-              "div",
-              {
-                className: "absolute inset-0 w-full h-full",
-                style: {
-                  backgroundImage: `url(${IMAGES.heroCustomBg})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "60% center"
-                }
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/75 lg:via-[#0a0a0a]/50 to-transparent" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-transparent to-transparent" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" })
-          ]
-        }
-      ),
-      /* @__PURE__ */ jsxs("div", { className: "relative z-10 flex flex-col min-h-[100dvh] max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-16 xl:px-20", children: [
-        /* @__PURE__ */ jsx("div", { className: "pt-28 sm:pt-36 lg:pt-40" }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start max-w-2xl xl:max-w-3xl mt-auto", children: [
-          /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx(
+          "img",
+          {
+            src: IMAGES.heroCustomBg,
+            alt: "Professional Hunter in Xelent technical gear - Durable, waterproof performance apparel",
+            className: "w-full h-full object-cover opacity-60"
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+          /* @__PURE__ */ jsxs(
             motion.div,
             {
-              initial: { opacity: 0, y: 16 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.7, delay: 0.2 },
-              className: "flex flex-wrap gap-2 mb-8",
-              children: ["Hunting Wear", "Sportswear", "Streetwear", "BJJ Kimonos"].map((cat) => /* @__PURE__ */ jsx(
-                "span",
-                {
-                  className: "text-[10px] sm:text-[11px] font-condensed font-semibold tracking-[0.2em] uppercase text-white/60 border border-white/15 px-3 py-1.5 backdrop-blur-sm",
-                  children: cat
-                },
-                cat
-              ))
+              initial: { opacity: 0, x: -20 },
+              animate: { opacity: 1, x: 0 },
+              transition: { duration: 0.6 },
+              className: "inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 mb-8",
+              children: [
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] animate-pulse" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white text-xs font-condensed uppercase tracking-[0.2em]", children: "Now Accepting SS2026 Orders" })
+              ]
             }
           ),
           /* @__PURE__ */ jsxs(
             motion.h1,
             {
-              className: "font-serif text-[3.2rem] sm:text-[4.8rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[7rem] leading-[0.95] tracking-[-0.02em] text-white mb-7",
-              initial: { opacity: 0, y: 35 },
+              initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] },
+              transition: { duration: 0.8, delay: 0.2 },
+              className: "text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.9] mb-6",
               children: [
-                "Custom Apparel",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "italic font-light text-[#c9a96e]", children: "Manufacturer" })
+                "Built for",
+                /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "the Hunt." })
               ]
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            motion.div,
-            {
-              className: "w-16 h-[1.5px] bg-[#c9a96e] mb-6",
-              initial: { scaleX: 0, originX: 0 },
-              animate: { scaleX: 1 },
-              transition: { duration: 0.8, delay: 0.55 }
             }
           ),
           /* @__PURE__ */ jsx(
             motion.p,
             {
-              className: "text-white/65 text-sm sm:text-base lg:text-[17px] leading-[1.75] max-w-lg mb-10 font-light",
               initial: { opacity: 0, y: 20 },
               animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.8, delay: 0.65 },
-              children: "B2B bulk manufacturing for global sportswear, streetwear, and martial arts brands. ISO 9001 certified. Low MOQ. Exporting daily to the USA, UAE & Europe."
+              transition: { duration: 0.6, delay: 0.4 },
+              className: "text-xl sm:text-2xl text-white font-light mb-4",
+              children: "Premium Hunting Apparel Manufacturer"
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            motion.p,
+            {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.5 },
+              className: "text-white/80 text-base sm:text-lg max-w-xl mb-6 leading-relaxed",
+              children: [
+                "B2B manufacturing for hunting brands worldwide. Specialist in ",
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ISO 811 certified 20,000mm waterproofing" }),
+                " and ",
+                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ASTM E96 breathable" }),
+                " membranes. REACH & OEKO-TEX compliant production. Low MOQ 50pcs."
+              ]
             }
           ),
           /* @__PURE__ */ jsxs(
             motion.div,
             {
-              className: "flex flex-col sm:flex-row items-start gap-4 mb-14 sm:mb-16",
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.8, delay: 0.78 },
+              initial: { opacity: 0, scale: 0.95 },
+              animate: { opacity: 1, scale: 1 },
+              transition: { duration: 0.5, delay: 0.55 },
+              className: "bg-white/5 backdrop-blur-sm border-l-4 border-[#ff6b00] p-6 mb-10 max-w-xl",
               children: [
-                /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "group relative overflow-hidden bg-[#c9a96e] text-[#0a0a0a] font-condensed font-bold tracking-[0.18em] uppercase text-[11px] sm:text-xs px-9 py-4 h-auto transition-all duration-500 hover:bg-[#b8945a]", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2.5", children: [
-                  "Get a Free Quote",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" })
-                ] }) }) }),
-                /* @__PURE__ */ jsx(Link, { href: "/portfolio", children: /* @__PURE__ */ jsxs("button", { className: "group flex items-center gap-2.5 font-condensed font-semibold tracking-[0.15em] uppercase text-[11px] sm:text-xs text-white/70 hover:text-white border border-white/20 hover:border-white/50 px-9 py-4 transition-all duration-300 backdrop-blur-sm", children: [
-                  "View Portfolio",
-                  /* @__PURE__ */ jsx(ChevronRight, { className: "w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" })
-                ] }) })
+                /* @__PURE__ */ jsx("h3", { className: "text-[#ff6b00] font-condensed font-bold uppercase tracking-widest text-xs mb-3", children: "Key Manufacturing Takeaways" }),
+                /* @__PURE__ */ jsxs("ul", { className: "text-white/70 text-sm space-y-2 font-light", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Specialization" }),
+                    ": Technical Hunting Apparel & Tactical Security Uniforms"
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Benchmarks" }),
+                    ": 20K Waterproofing / 15K Breathability (ISO/ASTM)"
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Compliance" }),
+                    ": OEKO-TEX Standard 100 & REACH (EU) Certified"
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Capability" }),
+                    ": 3D Pattern Development, Laser Cutting, Ultrasonic Sealing"
+                  ] })
+                ] })
               ]
             }
           ),
-          /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsxs(
             motion.div,
             {
-              className: "flex flex-wrap items-center gap-x-6 gap-y-3 pb-10 sm:pb-14",
-              initial: { opacity: 0 },
-              animate: { opacity: 1 },
-              transition: { duration: 1, delay: 1 },
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.6 },
+              className: "flex flex-wrap gap-4",
               children: [
-                { value: "15+", label: "Years" },
-                { value: "500+", label: "Brands" },
-                { value: "40+", label: "Countries" },
-                { value: "50K+", label: "Units / Month" }
-              ].map((s2, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1.5", children: [
-                /* @__PURE__ */ jsx("span", { className: "font-condensed font-bold text-white text-xl sm:text-2xl", children: s2.value }),
-                /* @__PURE__ */ jsx("span", { className: "font-condensed text-white/35 text-xs uppercase tracking-widest", children: s2.label }),
-                i < 3 && /* @__PURE__ */ jsx("span", { className: "ml-4 text-white/15 text-sm font-light", children: "|" })
-              ] }, i))
+                /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "group bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 shadow-[0_0_30px_rgba(255,107,0,0.4)] hover:shadow-[0_0_50px_rgba(255,107,0,0.6)]", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-3", children: [
+                  "Get Free Quote",
+                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
+                ] }) }) }),
+                /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx("button", { className: "border border-white/40 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 backdrop-blur-sm bg-black/30", children: "View Portfolio" }) })
+              ]
             }
           )
-        ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.8 },
+            className: "flex flex-wrap gap-x-12 gap-y-6 mt-16 pb-12",
+            children: stats$1.map((stat, i) => /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("div", { className: "text-3xl sm:text-4xl font-condensed font-bold text-white", children: /* @__PURE__ */ jsx(CountUp, { to: stat.value, suffix: stat.suffix }) }),
+              /* @__PURE__ */ jsx("div", { className: "text-white/60 text-xs uppercase tracking-wider", children: stat.label }),
+              /* @__PURE__ */ jsx("div", { className: "text-white/40 text-xs", children: stat.sublabel })
+            ] }, i))
+          }
+        )
       ] }),
-      /* @__PURE__ */ jsxs(
+      /* @__PURE__ */ jsx(
         motion.div,
         {
-          className: "absolute bottom-8 right-8 lg:right-14 flex items-center gap-3 text-white/30",
           initial: { opacity: 0 },
           animate: { opacity: 1 },
-          transition: { duration: 1, delay: 1.4 },
-          children: [
-            /* @__PURE__ */ jsx("span", { className: "font-condensed text-[9px] tracking-[0.3em] uppercase", children: "Scroll" }),
-            /* @__PURE__ */ jsx(
-              motion.div,
-              {
-                className: "w-8 h-px bg-white/25",
-                animate: { scaleX: [1, 0.35, 1], originX: 0 },
-                transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-              }
-            )
-          ]
+          transition: { delay: 1 },
+          className: "absolute bottom-8 right-8 text-white/40 text-xs uppercase tracking-[0.3em] hidden lg:block",
+          children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-2", children: [
+            /* @__PURE__ */ jsx("span", { children: "Scroll" }),
+            /* @__PURE__ */ jsx("div", { className: "w-px h-8 bg-gradient-to-b from-[#ff6b00] to-transparent" })
+          ] })
         }
       )
     ] }),
-    /* @__PURE__ */ jsx("section", { className: "bg-card border-y border-border py-12", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 lg:grid-cols-4 gap-8", stagger: 0.12, children: stats.map((stat) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-      /* @__PURE__ */ jsx(stat.icon, { className: "w-6 h-6 text-gold mx-auto mb-3" }),
-      /* @__PURE__ */ jsx("div", { className: "text-3xl sm:text-4xl font-condensed font-bold text-foreground mb-1 stat-glow", children: /* @__PURE__ */ jsx(CountUp, { to: stat.value, suffix: stat.suffix }) }),
-      /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-sm", children: stat.label })
-    ] }) }, stat.label)) }) }) }),
-    /* @__PURE__ */ jsxs("section", { className: "py-10 border-b border-border overflow-hidden bg-background", children: [
-      /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsx("p", { className: "text-center text-muted-foreground text-xs font-condensed font-semibold tracking-[0.25em] uppercase", children: "Trusted by 500+ Independent Brands Worldwide" }) }) }),
-      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" }),
-        /* @__PURE__ */ jsx("div", { className: "flex animate-marquee-slow", "aria-hidden": "false", children: [...partnerBrands, ...partnerBrands].map((brand, i) => /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "partner-logo flex-shrink-0 mx-8 flex flex-col items-center gap-1 cursor-default",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm px-5 py-3 min-w-[160px] text-center hover:border-gold/30 transition-colors", children: [
-              /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-sm text-foreground tracking-wide", children: brand.name }),
-              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs mt-0.5", children: brand.region })
-            ] })
-          },
-          i
-        )) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "What We Offer",
-          title: "Complete B2B Manufacturing Solutions",
-          subtitle: "From private label startups to established global brands, we provide end-to-end streetwear manufacturing services tailored to your business needs.",
-          className: "mb-16"
-        }
-      ),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", stagger: 0.09, children: services$2.map((service) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsx(HoverCard, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-colors duration-300 group h-full", children: [
-        /* @__PURE__ */ jsx("div", { className: "text-3xl mb-4", children: service.icon }),
-        /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-lg text-foreground tracking-wide uppercase mb-2 group-hover:text-gold transition-colors", children: service.title }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed", children: service.description })
-      ] }) }) }, service.title)) }),
-      /* @__PURE__ */ jsx(FadeIn, { className: "text-center mt-10", delay: 0.1, children: /* @__PURE__ */ jsx(Link, { href: "/services", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: [
-        "Explore All Services ",
-        /* @__PURE__ */ jsx(ChevronRight, { className: "ml-1 w-4 h-4" })
-      ] }) }) })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding bg-card border-y border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "Product Catalog",
-          title: "Premium Streetwear Categories",
-          className: "mb-16"
-        }
-      ),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", stagger: 0.1, children: products$1.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsx(Link, { href: `${product.href}?category=${encodeURIComponent(product.category)}`, children: /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Pursuit-Driven Manufacturing" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-3xl sm:text-4xl font-bold text-white mt-3", children: "Gear for Every Species" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: huntTypes.map((hunt, i) => /* @__PURE__ */ jsxs(
         motion.div,
         {
-          className: "group relative overflow-hidden rounded-sm aspect-[4/5] cursor-pointer",
-          whileHover: { scale: 1.02, transition: { duration: 0.4 } },
+          initial: { opacity: 0, scale: 0.95 },
+          whileInView: { opacity: 1, scale: 1 },
+          viewport: { once: true },
+          transition: { delay: i * 0.05 },
+          className: "group relative h-[300px] overflow-hidden bg-[#111111]",
           children: [
             /* @__PURE__ */ jsx(
               "img",
               {
-                src: product.image,
-                alt: `${product.name} - Custom ${product.category} Manufacturer Pakistan`,
-                className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
-                loading: "lazy",
-                decoding: "async",
-                width: "800",
-                height: "1000",
-                itemProp: "image"
+                src: hunt.image,
+                alt: `${hunt.species} hunting gear - ${hunt.description} Custom ${hunt.species} apparel manufactured by Xelent Huntgear`,
+                className: "absolute inset-0 w-full h-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-70"
               }
             ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" }),
-            product.tag && /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 bg-gold text-white text-[10px] font-condensed font-bold tracking-widest uppercase px-2.5 py-1 rounded-sm shadow-md", children: product.tag }),
-            /* @__PURE__ */ jsx("div", { className: "absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%]", children: /* @__PURE__ */ jsx("div", { className: "border border-white/40 group-hover:border-gold group-hover:bg-gold/10 transition-colors duration-300 py-3 text-center backdrop-blur-sm", children: /* @__PURE__ */ jsx("p", { className: "text-white font-condensed font-bold text-lg uppercase tracking-wider group-hover:text-gold transition-colors", children: product.name }) }) })
-          ]
-        }
-      ) }) }, product.name)) }),
-      /* @__PURE__ */ jsx(FadeIn, { className: "text-center mt-10", delay: 0.1, children: /* @__PURE__ */ jsx(Link, { href: "/products", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm", children: [
-        "View Full Catalog ",
-        /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
-      ] }) }) })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
-      /* @__PURE__ */ jsx(FadeIn, { direction: "left", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            className: "relative overflow-hidden rounded-sm aspect-[4/3]",
-            whileHover: { scale: 1.02, transition: { duration: 0.4 } },
-            children: [
-              /* @__PURE__ */ jsx(
-                "img",
-                {
-                  src: IMAGES.aboutBg,
-                  alt: "Sialkot Sample Masters manufacturing facility Sialkot Pakistan",
-                  className: "w-full h-full object-cover",
-                  loading: "lazy",
-                  decoding: "async",
-                  width: "1200",
-                  height: "900",
-                  itemProp: "image"
-                }
-              ),
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-tr from-black/50 to-transparent" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            className: "absolute -bottom-6 -right-6 bg-gold text-background p-6 rounded-sm shadow-xl",
-            initial: { opacity: 0, scale: 0.7 },
-            whileInView: { opacity: 1, scale: 1 },
-            viewport: { once: true },
-            transition: { duration: 0.5, delay: 0.3, ease: "easeOut" },
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "text-4xl font-condensed font-bold", children: "15+" }),
-              /* @__PURE__ */ jsxs("div", { className: "text-xs font-semibold uppercase tracking-widest mt-1", children: [
-                "Years of",
-                /* @__PURE__ */ jsx("br", {}),
-                "Excellence"
-              ] })
-            ]
-          }
-        )
-      ] }) }),
-      /* @__PURE__ */ jsx(FadeIn, { direction: "right", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Why We're Different" }),
-        /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 leading-tight", children: [
-          "Pakistan's Most Trusted",
-          /* @__PURE__ */ jsx("br", {}),
-          /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Streetwear Manufacturer" })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-8 mt-4", children: "Founded in Sialkot — Pakistan's garment manufacturing capital — we've been crafting premium custom streetwear for global brands since 2010. Our vertically integrated facility combines traditional craftsmanship with precision manufacturing technology." }),
-        /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8", stagger: 0.05, children: bentoCards.map((card) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsxs("div", { className: `bento-card relative p-3 text-center border rounded-sm cursor-default ${card.accent ? "bg-gold/8 border-gold/25 hover:border-gold/50" : "bg-card border-border hover:border-gold/20"}`, children: [
-          /* @__PURE__ */ jsx(card.icon, { className: `w-4 h-4 mx-auto mb-1.5 ${card.accent ? "text-gold" : "text-muted-foreground"}` }),
-          /* @__PURE__ */ jsx("div", { className: `font-condensed font-bold text-base leading-none mb-1 ${card.accent ? "text-gold" : "text-foreground"}`, children: card.value }),
-          /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-[10px] uppercase tracking-wide leading-tight", children: card.label })
-        ] }) }, card.label)) }),
-        /* @__PURE__ */ jsx(Link, { href: "/about", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: [
-          "Our Full Story ",
-          /* @__PURE__ */ jsx(ChevronRight, { className: "ml-1 w-4 h-4" })
-        ] }) })
-      ] }) })
-    ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding bg-card border-y border-border", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
-      /* @__PURE__ */ jsx(FadeIn, { direction: "left", children: /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Masters of the Craft" }),
-        /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 leading-tight", children: [
-          "Built by People Who",
-          /* @__PURE__ */ jsx("br", {}),
-          /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Live for Precision" })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-        /* @__PURE__ */ jsxs("div", { className: "relative mt-6 mb-8 pl-6 border-l-2 border-gold/30", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-gold/20 font-serif text-7xl absolute -top-4 -left-3 leading-none select-none", children: '"' }),
-          /* @__PURE__ */ jsx("blockquote", { className: "text-muted-foreground text-base leading-relaxed italic relative z-10", children: "We started as a sample house with one mission: to make world-class garments from Sialkot. Today, our 250-strong team ships to 40+ countries — and every stitch still carries that same obsession with craft." }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsx("span", { className: "text-gold font-condensed font-bold text-sm", children: "SM" }) }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("p", { className: "text-foreground font-semibold text-sm", children: "The Founders" }),
-              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs", children: "Est. 2010 — Sialkot, Pakistan 🇵🇰" })
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 gap-3", stagger: 0.07, children: [
-          { emoji: "✂️", title: "Pattern Engineering", desc: "CAD/CAM precision drafting" },
-          { emoji: "🎨", title: "Textile Printing", desc: "Sublimation, DTF, Screen" },
-          { emoji: "🧵", title: "Industrial Stitching", desc: "50+ specialized machines" },
-          { emoji: "🔍", title: "Quality Control", desc: "ISO-grade inspection team" }
-        ].map((spec) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3 p-3 bg-background border border-border rounded-sm hover:border-gold/25 transition-colors group", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-xl flex-shrink-0 mt-0.5", children: spec.emoji }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-sm text-foreground uppercase tracking-wide group-hover:text-gold transition-colors", children: spec.title }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs", children: spec.desc })
-          ] })
-        ] }) }, spec.title)) })
-      ] }) }),
-      /* @__PURE__ */ jsx(FadeIn, { direction: "right", delay: 0.15, children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            className: "relative overflow-hidden rounded-sm aspect-[4/5]",
-            whileHover: { scale: 1.02, transition: { duration: 0.4 } },
-            children: [
-              /* @__PURE__ */ jsx(
-                "img",
-                {
-                  src: IMAGES.servicesBg,
-                  alt: "Sialkot Sample Masters skilled workforce and manufacturing precision",
-                  className: "w-full h-full object-cover",
-                  loading: "lazy",
-                  decoding: "async",
-                  width: "1200",
-                  height: "1500",
-                  itemProp: "image"
-                }
-              ),
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" }),
-              /* @__PURE__ */ jsx("div", { className: "absolute bottom-6 left-6 right-6", children: /* @__PURE__ */ jsxs("div", { className: "border border-gold/30 bg-black/60 backdrop-blur-sm rounded-sm px-4 py-3", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-bold text-xs tracking-widest uppercase mb-1", children: "Est. 2010 — Sialkot, Pakistan" }),
-                /* @__PURE__ */ jsx("p", { className: "text-white/80 text-xs leading-relaxed", children: "250+ skilled craftspeople. 50+ industrial machines. One standard: excellence." })
-              ] }) })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            className: "absolute -top-5 -right-5 bg-gold text-background p-4 rounded-sm shadow-xl text-center",
-            initial: { opacity: 0, scale: 0.7 },
-            whileInView: { opacity: 1, scale: 1 },
-            viewport: { once: true },
-            transition: { duration: 0.5, delay: 0.3 },
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold", children: "250+" }),
-              /* @__PURE__ */ jsxs("div", { className: "text-[10px] font-semibold uppercase tracking-widest mt-0.5", children: [
-                "Skilled",
-                /* @__PURE__ */ jsx("br", {}),
-                "Craftspeople"
-              ] })
-            ]
-          }
-        )
-      ] }) })
-    ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "Client Testimonials",
-          title: "Trusted by Global Brand Owners",
-          className: "mb-16"
-        }
-      ),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 md:grid-cols-3 gap-6", stagger: 0.13, children: testimonials.map((testimonial) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(HoverCard, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "relative bg-card border border-border rounded-sm p-6 hover:border-gold/30 transition-colors duration-300 h-full flex flex-col overflow-hidden", children: [
-        /* @__PURE__ */ jsx("span", { className: "quote-mark", children: '"' }),
-        /* @__PURE__ */ jsx("div", { className: "flex items-center gap-1 mb-4 relative z-10", children: Array.from({ length: testimonial.rating }).map((_, i) => /* @__PURE__ */ jsx(Star, { className: "w-4 h-4 fill-gold text-gold" }, i)) }),
-        /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground text-sm leading-relaxed mb-6 italic flex-1 relative z-10", children: [
-          '"',
-          testimonial.text,
-          '"'
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 pt-4 border-t border-border relative z-10", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsx(Users, { className: "w-5 h-5 text-gold" }) }),
-          /* @__PURE__ */ jsxs("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-foreground font-semibold text-sm", children: testimonial.name }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs", children: testimonial.title })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-end gap-1", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-lg", title: testimonial.countryName, children: testimonial.country }),
-            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-1 bg-gold/10 text-gold text-[9px] font-condensed font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-sm border border-gold/20", children: [
-              /* @__PURE__ */ jsx(CheckCircle, { className: "w-2.5 h-2.5" }),
-              " Verified"
-            ] })
-          ] })
-        ] })
-      ] }) }) }, testimonial.name)) })
-    ] }) }),
-    /* @__PURE__ */ jsxs(
-      "section",
-      {
-        className: "relative py-20 overflow-hidden border-y border-border",
-        style: { background: "linear-gradient(135deg, #0a0a0f 0%, #0f1015 50%, #0a0a0f 100%)" },
-        children: [
-          /* @__PURE__ */ jsx(
-            "div",
-            {
-              className: "absolute inset-0 opacity-5",
-              style: { backgroundImage: "radial-gradient(circle at 25% 50%, oklch(0.68 0.13 72) 0%, transparent 60%), radial-gradient(circle at 75% 50%, oklch(0.68 0.13 72) 0%, transparent 60%)" }
-            }
-          ),
-          /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-            /* @__PURE__ */ jsxs(FadeIn, { className: "text-center mb-12", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Our Commitment to the Future" }),
-              /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl font-bold text-white mb-4", children: [
-                "Sustainability at",
-                " ",
-                /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Industrial Scale" })
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "absolute bottom-0 left-0 right-0 h-1 z-20 transition-all duration-300 group-hover:h-2",
+                style: { backgroundColor: hunt.color }
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 p-8 flex flex-col justify-end z-20", children: /* @__PURE__ */ jsxs("div", { className: "transform transition-transform duration-500 ease-out group-hover:-translate-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-[10px] font-bold uppercase tracking-widest", children: hunt.season }),
+                /* @__PURE__ */ jsx("span", { className: "w-1 h-1 rounded-full bg-white/20" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] font-bold uppercase tracking-widest", children: hunt.terrain })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" })
-            ] }),
-            /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 md:grid-cols-3 gap-0 relative", stagger: 0.12, children: esgPillars.map((pillar, i) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: `relative p-8 text-center ${i < esgPillars.length - 1 ? "md:border-r border-gold/10" : ""}`, children: [
-              /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-full border-2 border-gold/30 bg-gold/5 flex items-center justify-center mx-auto mb-5 group-hover:border-gold/60 transition-colors", children: /* @__PURE__ */ jsx(pillar.icon, { className: "w-7 h-7 text-gold" }) }),
-              /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-bold text-2xl mb-1", children: pillar.stat }),
-              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-lg uppercase tracking-widest mb-3", children: pillar.title }),
-              /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm leading-relaxed max-w-xs mx-auto", children: pillar.body })
-            ] }) }, pillar.title)) }),
-            /* @__PURE__ */ jsx(FadeIn, { className: "text-center mt-10", delay: 0.2, children: /* @__PURE__ */ jsx(Link, { href: "/about#certifications", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: [
-              "View Our Certifications ",
-              /* @__PURE__ */ jsx(ChevronRight, { className: "ml-1 w-4 h-4" })
-            ] }) }) })
-          ] })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsxs(
-      "section",
-      {
-        className: "relative py-28 overflow-hidden",
-        style: {
-          backgroundImage: `url(${IMAGES.ctaBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        },
-        children: [
-          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/85" }),
-          /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-            /* @__PURE__ */ jsx(FadeIn, { direction: "down", children: /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-4", children: "Ready to Start?" }) }),
-            /* @__PURE__ */ jsx(FadeIn, { delay: 0.1, children: /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6", children: [
-              "Let's Build Your",
-              /* @__PURE__ */ jsx("br", {}),
-              /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Streetwear Brand Together" })
-            ] }) }),
-            /* @__PURE__ */ jsx(FadeIn, { delay: 0.2, children: /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-10 max-w-xl mx-auto", children: "Get a free, no-obligation quote within 24 hours. Our B2B specialists are ready to discuss your manufacturing needs." }) }),
-            /* @__PURE__ */ jsx(FadeIn, { delay: 0.3, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center justify-center gap-4", children: [
-              /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm group", children: [
-                "Request Free Quote",
-                /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" })
-              ] }) }),
-              /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-foreground/30 text-foreground hover:border-gold hover:text-gold font-condensed font-semibold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm bg-transparent", children: "Contact Our Team" }) })
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-3xl uppercase mb-2 group-hover:text-[#ff6b00] transition-colors", children: hunt.species }),
+              /* @__PURE__ */ jsx("div", { className: "h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden", children: /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm leading-relaxed max-w-[280px]", children: hunt.description }) })
             ] }) })
+          ]
+        },
+        hunt.species
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#111111]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end md:justify-between mb-12", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Product Lines" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3", children: "Complete Systems" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/60 max-w-md mt-4 md:mt-0", children: "From base layers to outer shells, manufacture complete layering systems for any hunt." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", children: categories$1.map((cat, i) => /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { delay: i * 0.1 },
+          className: "group relative aspect-[3/4] overflow-hidden cursor-pointer",
+          children: [
+            /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: cat.image,
+                alt: `${cat.name} - ${cat.items} - Custom hunting ${cat.name.toLowerCase()} manufacturer Pakistan - ${cat.tag}`,
+                className: "absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1", children: cat.tag }) }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 right-0 p-6", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-2xl uppercase mb-1 group-hover:text-[#ff6b00] transition-colors", children: cat.name }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm", children: cat.items }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center gap-2 text-[#ff6b00] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs font-bold uppercase tracking-wider", children: "Explore" }),
+                /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" })
+              ] })
+            ] })
+          ]
+        },
+        cat.name
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Manufacturing Excellence" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3", children: "Technical Capabilities" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: capabilities$2.map((cap, i) => /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { delay: i * 0.1 },
+          className: "group relative h-[450px] overflow-hidden",
+          children: [
+            /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: cap.image,
+                alt: `${cap.title} - ${cap.desc} Manufacturing Capability at Xelent Huntgear`,
+                className: "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/20 group-hover:bg-[#ff6b00]/10 transition-colors duration-500" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 p-8 flex flex-col justify-end overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-out", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed font-bold uppercase tracking-[0.2em] mb-2 block", children: cap.desc }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-3xl uppercase mb-3", children: cap.title }),
+              /* @__PURE__ */ jsx(
+                motion.p,
+                {
+                  className: "text-white/70 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100",
+                  children: cap.detail
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "mt-6 w-12 h-1 bg-[#ff6b00] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" })
+            ] }) })
+          ]
+        },
+        cap.title
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#111111]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
+      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+        /* @__PURE__ */ jsx("div", { className: "aspect-[4/3] overflow-hidden", children: /* @__PURE__ */ jsx(
+          "img",
+          {
+            src: IMAGES.aboutBg,
+            alt: "Modern Hunting Apparel Manufacturing Site in Sialkot - ISO 9001 Certified Production",
+            className: "w-full h-full object-cover"
+          }
+        ) }),
+        /* @__PURE__ */ jsxs("div", { className: "absolute -bottom-6 -right-6 bg-[#ff6b00] text-black p-6", children: [
+          /* @__PURE__ */ jsx("div", { className: "text-4xl font-condensed font-bold", children: "15+" }),
+          /* @__PURE__ */ jsx("div", { className: "text-xs font-bold uppercase tracking-wider", children: "Years" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "About Xelent" }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3 mb-6", children: [
+          "Pakistan's Premier",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Hunting Manufacturer" })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "w-16 h-1 bg-[#ff6b00] mb-6" }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-8", children: "Founded in Sialkot, we've been crafting premium hunting apparel since 2009. Our vertically integrated facility specializes in waterproof gear, custom camo patterns, and tactical equipment for brands worldwide." }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-6 mb-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold text-white", children: "50 pcs" }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: "Minimum Order" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold text-white", children: "7 Days" }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: "Sample Turnaround" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold text-white", children: "ISO 9001" }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: "Certified Quality" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold text-white", children: "24h" }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: "Quote Response" })
           ] })
-        ]
-      }
-    )
+        ] }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/about", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00] hover:text-black font-condensed font-bold uppercase tracking-wider px-8 py-3", children: "Our Story" }) })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Testimonials" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-3xl sm:text-4xl font-bold text-white mt-3", children: "Trusted by Brands" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: testimonials.map((t2, i) => /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { delay: i * 0.1 },
+          className: "bg-[#111111] border border-white/10 p-8 hover:border-[#ff6b00]/30 transition-colors",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "flex gap-1 mb-6", children: [...Array(5)].map((_, j) => /* @__PURE__ */ jsx("div", { className: "w-2 h-2 bg-[#ff6b00]" }, j)) }),
+            /* @__PURE__ */ jsxs("p", { className: "text-white/80 text-base leading-relaxed mb-8", children: [
+              '"',
+              t2.quote,
+              '"'
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 pt-6 border-t border-white/10", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00]/20 flex items-center justify-center text-[#ff6b00] font-bold", children: t2.author[0] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("div", { className: "text-white font-semibold", children: t2.author }),
+                /* @__PURE__ */ jsxs("div", { className: "text-white/50 text-sm", children: [
+                  t2.role,
+                  ", ",
+                  t2.company
+                ] })
+              ] })
+            ] })
+          ]
+        },
+        i
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsxs("section", { className: "py-24 bg-[#0d0d0d] relative overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-5", children: /* @__PURE__ */ jsx("div", { className: "absolute inset-0", style: {
+        backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+        backgroundSize: "48px 48px"
+      } }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6", children: [
+          "Ready to Build Your",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Hunting Brand?" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Get a free quote for custom manufacturing. Low MOQ 50pcs. Fast sample turnaround. Premium quality guaranteed." }),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: "Request Free Quote" }) }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx("button", { className: "border border-white/30 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all bg-black/30 backdrop-blur", children: "Contact Sales" }) })
+        ] })
+      ] })
+    ] })
   ] });
 }
+function Breadcrumb({ items, className = "" }) {
+  if (!items || items.length <= 1) return null;
+  const schemaJson = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.href ? `https://xelenthuntgear.com${item.href}` : void 0
+    }))
+  });
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: schemaJson }),
+    /* @__PURE__ */ jsx("nav", { "aria-label": "Breadcrumb", className: `py-4 ${className}`, children: /* @__PURE__ */ jsx("ol", { className: "flex flex-wrap items-center gap-2 text-sm", children: items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      const isFirst = index === 0;
+      return /* @__PURE__ */ jsxs("li", { className: "flex items-center", children: [
+        index > 0 && /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4 text-white/30 mx-2", "aria-hidden": "true" }),
+        isLast ? /* @__PURE__ */ jsxs(
+          "span",
+          {
+            className: "text-white/60 font-medium",
+            "aria-current": "page",
+            children: [
+              isFirst && /* @__PURE__ */ jsx(Home$1, { className: "w-4 h-4 inline mr-1" }),
+              item.name
+            ]
+          }
+        ) : /* @__PURE__ */ jsxs(
+          Link$1,
+          {
+            href: item.href || "/",
+            className: "text-white/50 hover:text-[#ff6b00] transition-colors font-medium flex items-center",
+            children: [
+              isFirst && /* @__PURE__ */ jsx(Home$1, { className: "w-4 h-4 mr-1" }),
+              item.name
+            ]
+          }
+        )
+      ] }, index);
+    }) }) })
+  ] });
+}
+const predefinedBreadcrumbs = {
+  products: [
+    { name: "Home", href: "/" },
+    { name: "Products" }
+  ],
+  about: [
+    { name: "Home", href: "/" },
+    { name: "About Us" }
+  ],
+  services: [
+    { name: "Home", href: "/" },
+    { name: "Services" }
+  ],
+  shop: [
+    { name: "Home", href: "/" },
+    { name: "Shop" }
+  ],
+  contact: [
+    { name: "Home", href: "/" },
+    { name: "Contact Us" }
+  ]
+};
 const milestones = [
-  { year: "2010", title: "Industrial Foundation", desc: "Established Sialkot Sample Masters as a specialist prototype and sample house for global garment exporters." },
-  { year: "2013", title: "OEM Expansion", desc: "Successfully transitioned into full-scale OEM manufacturing, securing major B2B contracts in the European market." },
-  { year: "2016", title: "Quality Benchmarking", desc: "Achieved ISO 9001:2015 certification, setting the standard for precision-engineered custom apparel in Pakistan." },
-  { year: "2019", title: "Facility Modernization", desc: "Upgraded our production floor with 50+ specialized machines for technical techwear and pro-grade ski wear." },
-  { year: "2022", title: "The Solar Revolution", desc: "Pioneered sustainable manufacturing in Sialkot by converting 80% of our operations to renewable solar energy." },
-  { year: "2024", title: "Market Leadership", desc: "Now the preferred strategic partner for 500+ brands across streetwear, sportswear, and hunting categories." }
+  { year: "2009", title: "Founded", desc: "Started as a specialist sample house for hunting apparel manufacturers in Sialkot." },
+  { year: "2012", title: "OEM Expansion", desc: "Transitioned into full-scale OEM manufacturing for US and European hunting brands." },
+  { year: "2016", title: "ISO Certification", desc: "Achieved ISO 9001:2015 certification for quality management systems." },
+  { year: "2019", title: "Tech Upgrade", desc: "Installed 50+ specialized machines for waterproof hunting gear production." },
+  { year: "2022", title: "Solar Power", desc: "Converted 80% of operations to renewable solar energy." },
+  { year: "2024", title: "Market Leader", desc: "Preferred partner for 500+ hunting apparel brands worldwide." }
 ];
-const certifications = [
-  { name: "ISO 9001:2015", desc: "Quality Management System", icon: Award, detail: "Certified since 2016" },
-  { name: "GOTS Certified", desc: "Global Organic Textile Standard", icon: Leaf, detail: "Organic fabric sourcing" },
-  { name: "OEKO-TEX 100", desc: "Harmful Substance Testing", icon: Shield, detail: "Zero harmful chemicals" },
-  { name: "WRAP Certified", desc: "Worldwide Responsible Accredited Production", icon: Globe, detail: "Ethical production" }
+const stats = [
+  { value: "15+", label: "Years", sublabel: "Experience" },
+  { value: "500+", label: "Brands", sublabel: "Partners" },
+  { value: "50K+", label: "Units", sublabel: "Monthly" },
+  { value: "40+", label: "Countries", sublabel: "Exported" }
 ];
-const machines = [
-  { brand: "Juki", type: "High-Speed Lockstitch", flag: "🇯🇵" },
-  { brand: "Yamato", type: "Flatlock Coverstitch", flag: "🇯🇵" },
-  { brand: "PFAFF", type: "Industrial Overlock", flag: "🇩🇪" },
-  { brand: "Brother", type: "Multi-Needle Embroidery", flag: "🇯🇵" },
-  { brand: "Tajima", type: "15-Head Embroidery", flag: "🇯🇵" },
-  { brand: "Mimaki", type: "Industrial DTF / Sublimation", flag: "🇯🇵" },
-  { brand: "Epson", type: "DTG Garment Printer", flag: "🇯🇵" },
-  { brand: "Lectra", type: "CAM Auto Cutter", flag: "🇫🇷" },
-  { brand: "Eastman", type: "Round Knife Cutter", flag: "🇺🇸" },
-  { brand: "Gerber", type: "CAD Pattern System", flag: "🇺🇸" }
-];
-const capabilities = [
-  { label: "Monthly Production", value: "50,000+ Units" },
-  { label: "Minimum Order Quantity", value: "50 Pieces/Style" },
-  { label: "Sample Lead Time", value: "7–10 Days" },
-  { label: "Bulk Lead Time", value: "25–35 Days" },
-  { label: "Quality Pass Rate", value: "99.8%" },
-  { label: "On-Time Delivery", value: "98.5%" },
-  { label: "Countries Served", value: "40+" },
-  { label: "Active Brand Partners", value: "500+" }
-];
-const values = [
-  {
-    icon: Award,
-    title: "Technical Precision",
-    desc: "From 4-way stretch sportswear to DWR-coated techwear, our precision manufacturing ensures every garment meets rigorous B2B performance standards."
-  },
-  {
-    icon: Clock,
-    title: "Scalable OEM/ODM",
-    desc: "We specialize in rapid scaling. Whether it's a 50-piece sample run or 100,000 unit bulk contract, our logistics and production stay on schedule."
-  },
-  {
-    icon: Users,
-    title: "Global Supply Chain",
-    desc: "Serving 40+ countries with seamless export logistics. We act as a silent partner for the world's most demanding streetwear and athletic brands."
-  },
-  {
-    icon: Leaf,
-    title: "ESG-Led Manufacturing",
-    desc: "We prioritize Environmental, Social, and Governance (ESG) standards with 80% solar-powered operations and sustainable material innovation."
-  }
+const capabilities$1 = [
+  { label: "Waterproof Rating", value: "20K/20K" },
+  { label: "Min Order", value: "50 PCS" },
+  { label: "Sample Time", value: "7 Days" },
+  { label: "Bulk Time", value: "25-35 Days" },
+  { label: "QC Pass Rate", value: "99.8%" },
+  { label: "On-Time Delivery", value: "98.5%" }
 ];
 function About() {
   return /* @__PURE__ */ jsxs(PageWrapper, { children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "About Sialkot Sample Masters | Custom Streetwear & BJJ Kimonos Pakistan",
-        description: "Learn about Sialkot Sample Masters, Pakistan's leading custom streetwear and BJJ Kimonos manufacturer based in Sialkot. 15+ years of experience, ISO certified, serving 500+ global brands in the USA, UAE, and 40+ countries. Excellence in technical apparel since 2010.",
-        keywords: "about Sialkot Sample Masters, streetwear manufacturer Sialkot Pakistan, BJJ Kimonos manufacturer USA, custom clothing manufacturer UAE, clothing manufacturer Pakistan history, ISO certified garment factory Pakistan, B2B apparel manufacturer Pakistan, wholesale rashguards supplier",
+        title: "About Xelent Huntgear | Premium Hunting Apparel Manufacturer",
+        description: "Pakistan's premier hunting apparel manufacturer. 15+ years experience, ISO 9001 certified, serving 500+ global brands. Waterproof gear, custom camo, tactical equipment.",
         canonical: "/about",
         breadcrumbs: [
           { name: "Home", item: "/" },
-          { name: "About", item: "/about" }
+          { name: "About Us", item: "/about" }
         ]
       }
     ),
-    /* @__PURE__ */ jsxs(
-      "section",
-      {
-        className: "relative pt-16 pb-20 overflow-hidden",
-        style: { backgroundImage: `url(${IMAGES.aboutBg})`, backgroundSize: "cover", backgroundPosition: "center" },
-        children: [
-          /* @__PURE__ */ jsx(
-            motion.div,
-            {
-              className: "absolute inset-0 bg-black/70",
-              initial: { opacity: 0 },
-              animate: { opacity: 1 },
-              transition: { duration: 1 }
-            }
-          ),
-          /* @__PURE__ */ jsx("div", { className: "relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
-            /* @__PURE__ */ jsx(FadeIn, { direction: "down", delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "The Sialkot Sample Masters Advantage" }) }),
-            /* @__PURE__ */ jsxs(FadeIn, { delay: 0.2, children: [
-              /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight", children: [
-                "Your Strategic Partner in",
-                /* @__PURE__ */ jsx("br", {}),
-                /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Global Apparel Manufacturing" })
-              ] }),
-              /* @__PURE__ */ jsx("p", { className: "speakable-description hidden", children: "Sialkot Sample Masters is a trusted OEM/ODM partner for 500+ global brands, specializing in high-performance and luxury apparel manufacturing in Pakistan." })
-            ] }),
-            /* @__PURE__ */ jsxs(FadeIn, { delay: 0.3, children: [
-              /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-              /* @__PURE__ */ jsx("p", { className: "text-slate-200 text-lg leading-relaxed mt-6 max-w-2xl", children: "For over 15 years, Sialkot Sample Masters has been the trusted OEM/ODM partner for 500+ global brands. We bridge the gap between creative concept and retail-ready production with specialized expertise in high-performance and luxury apparel." })
-            ] })
-          ] }) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsx("section", { className: "bg-card border-b border-border py-8", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4 text-center", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-bold text-2xl", children: "15+ Years" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs uppercase tracking-widest", children: "Industry Expertise" })
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5 relative z-20", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.about }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[65vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.aboutHeroBg, alt: "Xelent Huntgear Technical Manufacturing Facility in Sialkot - ISO 9001 Certified Factory", className: "w-full h-full object-cover opacity-60" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" })
       ] }),
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-bold text-2xl", children: "500+ Brands" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs uppercase tracking-widest", children: "Global Partnerships" })
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[70vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "About Xelent Huntgear"
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.h1,
+          {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            children: [
+              "Pakistan's Premier",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Hunting Gear" }),
+              "Manufacturer"
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "For over 15 years, we've been the trusted OEM partner for 500+ global hunting brands. From waterproof shells to custom camo patterns, we manufacture gear that performs in the field."
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "bg-black py-4 border-b border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-[#ff6b00]/20 flex items-center justify-center border border-[#ff6b00]/30", children: /* @__PURE__ */ jsx(Users, { className: "w-4 h-4 text-[#ff6b00]" }) }),
+        /* @__PURE__ */ jsxs("p", { className: "text-white/40 text-xs tracking-widest uppercase", children: [
+          "Verified by ",
+          /* @__PURE__ */ jsx("span", { className: "text-white/80 font-bold", children: "Xelent Huntgear Technical Team" })
+        ] })
       ] }),
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-bold text-2xl", children: "ISO 9001" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs uppercase tracking-widest", children: "Certified Quality" })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-bold text-2xl", children: "80% Solar" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs uppercase tracking-widest", children: "Renewable Energy" })
+      /* @__PURE__ */ jsxs("p", { className: "text-white/30 text-[10px] tracking-[0.2em] uppercase", children: [
+        "Last Fact-Checked: ",
+        (/* @__PURE__ */ new Date()).toLocaleDateString("en-US", { month: "long", year: "numeric" })
       ] })
-    ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
-      /* @__PURE__ */ jsx(FadeIn, { direction: "left", children: /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Expertise & Heritage" }),
-        /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: [
-          "Sialkot’s Premier Specialist in",
-          /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " High-Frequency Apparel" })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-4 mt-6 text-muted-foreground leading-relaxed", children: [
-          /* @__PURE__ */ jsx("p", { children: "Headquartered in Sialkot, Pakistan — the global epicenter of textile excellence — Sialkot Sample Masters specializes in the complex manufacturing requirements of modern apparel brands. We are not just a factory; we are an engineering-led production house equipped with over 50+ in-house specialized sewing machines and advanced pattern-drafting technology." }),
-          /* @__PURE__ */ jsx("p", { children: "Our facility is a vertically integrated hub for Sublimation, Screen Printing, DTF, and DTG, allowing us to maintain absolute quality control. We specialize in seven critical categories: high-performance Sportswear, tactical Hunting Wear, premium Streetwear, professional Security Uniforms, functional Techwear, technical Ski Wear, and heavy-duty Martial Arts Wear (BJJ Kimonos & Rashguards)." }),
-          /* @__PURE__ */ jsx("p", { children: "Sustainability as a Standard: We lead the industry in eco-conscious manufacturing. With 80% of our production powered by renewable solar energy, we help brands reduce their carbon footprint without compromising on the durability or performance of the final garment." })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "bg-[#111111] border-y border-white/10 py-10", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-8", children: stats.map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+      /* @__PURE__ */ jsx("div", { className: "text-3xl sm:text-4xl font-condensed font-bold text-white", children: stat.value }),
+      /* @__PURE__ */ jsx("div", { className: "text-white/60 text-xs uppercase tracking-wider", children: stat.label }),
+      /* @__PURE__ */ jsx("div", { className: "text-white/40 text-xs", children: stat.sublabel })
+    ] }, i)) }) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#0a0a0a]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center", children: [
+      /* @__PURE__ */ jsx(FadeIn, { direction: "left", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+        /* @__PURE__ */ jsx("div", { className: "aspect-[4/3] overflow-hidden", children: /* @__PURE__ */ jsx("img", { src: IMAGES.servicesBg, alt: "Advanced Hunting Apparel Production Line - Technical Stitching and Ultrasonic Sealing", className: "w-full h-full object-cover" }) }),
+        /* @__PURE__ */ jsxs("div", { className: "absolute -bottom-6 -right-6 bg-[#ff6b00] text-black p-6", children: [
+          /* @__PURE__ */ jsx("div", { className: "text-4xl font-condensed font-bold", children: "15+" }),
+          /* @__PURE__ */ jsxs("div", { className: "text-xs font-bold uppercase tracking-wider", children: [
+            "Years of",
+            /* @__PURE__ */ jsx("br", {}),
+            "Excellence"
+          ] })
         ] })
       ] }) }),
-      /* @__PURE__ */ jsx(FadeIn, { direction: "right", delay: 0.1, children: /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 gap-4", stagger: 0.07, children: capabilities.map((cap) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsx(HoverCard, { children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-4 hover:border-gold/30 transition-colors", children: [
-        /* @__PURE__ */ jsx("div", { className: "text-2xl font-condensed font-bold text-gold mb-1", children: cap.value }),
-        /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-xs uppercase tracking-wide", children: cap.label })
-      ] }) }) }, cap.label)) }) })
+      /* @__PURE__ */ jsx(FadeIn, { direction: "right", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-bold tracking-[0.2em] uppercase text-sm mb-4", children: "Our Story" }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight", children: [
+          "Built by Hunters,",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "For Hunters" })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "w-16 h-1 bg-[#ff6b00] mb-6" }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Founded in Sialkot — Pakistan's manufacturing hub — Xelent Huntgear began as a specialist sample house for hunting apparel brands. Today, we're a vertically integrated manufacturer serving 500+ global brands." }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/60 leading-relaxed mb-8", children: "Our facility features 50+ specialized machines for waterproof construction, seam sealing, and camo pattern printing. We understand what hunters need because we work with brands that live the hunting lifestyle." }),
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 mb-8", children: capabilities$1.map((cap) => /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
+          /* @__PURE__ */ jsx("div", { className: "text-xl font-condensed font-bold text-white", children: cap.value }),
+          /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: cap.label })
+        ] }, cap.label)) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
+          "Work With Us ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
+        ] }) })
+      ] }) })
     ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding bg-card border-y border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "Our Journey",
-          title: "15 Years of Growth",
-          className: "mb-16"
-        }
-      ),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-black border-y border-white/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-xl mb-1", children: "REACH" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] uppercase tracking-tighter", children: "EU Compliance" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-xl mb-1", children: "OEKO-TEX®" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] uppercase tracking-tighter", children: "Standard 100" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-xl mb-1", children: "ISO 9001" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] uppercase tracking-tighter", children: "Quality MGMT" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-xl mb-1", children: "ISO 811" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] uppercase tracking-tighter", children: "Hydrostatic Lab" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-xl mb-1", children: "ISO 14001" }),
+        /* @__PURE__ */ jsx("span", { className: "text-white/40 text-[10px] uppercase tracking-tighter", children: "Environmental" })
+      ] })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#111111]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-3", children: "Our Journey" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-white", children: "15 Years of Growth" })
+      ] }),
       /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" }),
-        /* @__PURE__ */ jsx("div", { className: "space-y-8", children: milestones.map((m, i) => /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ jsx("div", { className: "absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-white/10 md:-translate-x-1/2" }),
+        /* @__PURE__ */ jsx("div", { className: "space-y-12", children: milestones.map((m, i) => /* @__PURE__ */ jsxs(
           motion.div,
           {
             className: `relative flex flex-col md:flex-row gap-6 md:gap-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`,
-            initial: { opacity: 0, x: i % 2 === 0 ? -40 : 40 },
-            whileInView: { opacity: 1, x: 0 },
-            viewport: { once: true, margin: "-60px 0px" },
-            transition: { duration: 0.55, delay: 0.05, ease: "easeOut" },
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { delay: i * 0.1 },
             children: [
-              /* @__PURE__ */ jsx("div", { className: "md:w-1/2 md:px-10 pl-10 md:pl-0", children: /* @__PURE__ */ jsx(HoverCard, { children: /* @__PURE__ */ jsxs("div", { className: `bg-background border border-border rounded-sm p-5 hover:border-gold/30 transition-colors ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`, children: [
-                /* @__PURE__ */ jsx("span", { className: "text-gold font-condensed font-bold text-xl", children: m.year }),
-                /* @__PURE__ */ jsx("h3", { className: "text-foreground font-semibold mt-1 mb-2", children: m.title }),
-                /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed", children: m.desc })
-              ] }) }) }),
-              /* @__PURE__ */ jsx(
-                motion.div,
-                {
-                  className: "absolute left-4 md:left-1/2 top-5 w-3 h-3 rounded-full bg-gold border-2 border-background md:-translate-x-1/2",
-                  initial: { scale: 0 },
-                  whileInView: { scale: 1 },
-                  viewport: { once: true },
-                  transition: { duration: 0.3, delay: 0.2 }
-                }
-              ),
+              /* @__PURE__ */ jsx("div", { className: "md:w-1/2 md:px-12 pl-10 md:pl-0", children: /* @__PURE__ */ jsxs("div", { className: `bg-[#0d0d0d] border border-white/10 p-6 hover:border-[#ff6b00]/30 transition-colors ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`, children: [
+                /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-2xl", children: m.year }),
+                /* @__PURE__ */ jsx("h3", { className: "text-white font-semibold text-lg mt-2 mb-2", children: m.title }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: m.desc })
+              ] }) }),
+              /* @__PURE__ */ jsx("div", { className: "absolute left-4 md:left-1/2 top-6 w-3 h-3 bg-[#ff6b00] border-2 border-[#0d0d0d] md:-translate-x-1/2" }),
               /* @__PURE__ */ jsx("div", { className: "hidden md:block md:w-1/2" })
             ]
           },
@@ -2154,665 +2148,362 @@ function About() {
         )) })
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "Our Values",
-          title: "What Drives Everything We Do",
-          className: "mb-16"
-        }
-      ),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", stagger: 0.1, children: values.map((v) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(HoverCard, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6 hover:border-gold/30 transition-colors text-center h-full", children: [
-        /* @__PURE__ */ jsx(
-          motion.div,
-          {
-            className: "w-12 h-12 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-4",
-            whileHover: { rotate: 5, scale: 1.1, transition: { duration: 0.2 } },
-            children: /* @__PURE__ */ jsx(v.icon, { className: "w-6 h-6 text-gold" })
-          }
-        ),
-        /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-wide mb-2", children: v.title }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed", children: v.desc })
-      ] }) }) }, v.title)) })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { id: "certifications", className: "section-padding bg-black/5 border-y border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx(
-        SectionHeading,
-        {
-          label: "Compliance & Standards",
-          title: "Internationally Certified Facility",
-          className: "mb-12"
-        }
-      ),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 lg:grid-cols-4 gap-8", stagger: 0.1, children: certifications.map((cert) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          className: "flex flex-col items-center text-center group cursor-default",
-          whileHover: { y: -4 },
-          transition: { duration: 0.3 },
-          children: [
-            /* @__PURE__ */ jsxs("div", { className: "cert-seal w-28 h-28 flex flex-col items-center justify-center mb-4 bg-card", children: [
-              /* @__PURE__ */ jsx(motion.div, { whileHover: { rotate: -8, scale: 1.1, transition: { duration: 0.25 } }, children: /* @__PURE__ */ jsx(cert.icon, { className: "w-8 h-8 text-gold mb-1" }) }),
-              /* @__PURE__ */ jsx("span", { className: "text-[9px] font-condensed font-bold text-gold/70 uppercase tracking-widest leading-tight px-2 text-center", children: cert.name })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "font-condensed font-bold text-foreground text-sm uppercase tracking-wide mb-1 group-hover:text-gold transition-colors", children: cert.desc }),
-            /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-xs", children: cert.detail })
-          ]
-        }
-      ) }, cert.name)) })
-    ] }) }),
-    /* @__PURE__ */ jsxs("section", { className: "py-10 border-b border-border overflow-hidden", children: [
-      /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsx("p", { className: "text-center text-muted-foreground text-xs font-condensed font-semibold tracking-[0.25em] uppercase", children: "Our Industrial Machine Fleet — 50+ Specialized Units" }) }) }),
-      /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" }),
-        /* @__PURE__ */ jsx("div", { className: "flex animate-marquee", "aria-hidden": "false", children: [...machines, ...machines].map((machine, i) => /* @__PURE__ */ jsx("div", { className: "flex-shrink-0 mx-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm px-4 py-2.5 min-w-[180px] hover:border-gold/25 transition-colors", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-0.5", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-sm", children: machine.flag }),
-            /* @__PURE__ */ jsx("span", { className: "font-condensed font-bold text-sm text-foreground tracking-wide", children: machine.brand })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs", children: machine.type })
-        ] }) }, i)) })
+    /* @__PURE__ */ jsxs("section", { className: "py-24 bg-[#0d0d0d] relative overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-5", children: /* @__PURE__ */ jsx("div", { className: "absolute inset-0", style: {
+        backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+        backgroundSize: "40px 40px"
+      } }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6", children: [
+          "Ready to Partner With",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Xelent Huntgear?" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Let's discuss your hunting apparel manufacturing needs. Get a free quote with 7-day sample turnaround." }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: [
+          "Request Free Quote ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
+        ] }) })
       ] })
-    ] }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
-      /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: [
-        "Ready to Partner",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " With Us?" })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "Join 500+ global brands who trust Sialkot Sample Masters for their custom streetwear manufacturing needs." }),
-      /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-10 py-4 h-auto rounded-sm", children: [
-        "Request a Quote ",
-        /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
-      ] }) })
-    ] }) }) })
+    ] })
   ] });
 }
-const services$1 = [
+const mainServices = [
   {
-    id: "pattern-drafting",
-    icon: Scissors,
-    badge: "01",
-    title: "Digital Pattern Drafting & Grading",
-    subtitle: "Precision Engineering — Sialkot, Pakistan",
-    description: "Our Sialkot-based pattern engineering team uses advanced Lectra and Gerber CAD/CAM systems to transform your creative sketches into production-ready digital patterns. Whether you're launching a new streetwear line or scaling a performance sportswear collection, we ensure pixel-perfect fit accuracy across all size ranges — from XS to 5XL+ — with optimized fabric consumption that reduces waste by up to 15%.",
-    features: [
-      "Precision digital grading (XS to 5XL+) with Lectra AccuMark",
-      "Full tech-pack development from design brief to production spec",
-      "3D virtual prototyping & fit sample validation",
-      "Fabric consumption optimization — reduce waste by 15%",
-      "NDA-protected design confidentiality for all clients"
-    ],
-    image: IMAGES.servicePattern,
-    ctaText: "Request Pattern Quote",
-    stat: { value: "48hr", label: "Pattern turnaround" }
-  },
-  {
-    id: "printing-hub",
-    icon: Palette,
-    badge: "02",
-    title: "Advanced Textile Printing Hub",
-    subtitle: "Vibrant, Industrial Scale — Made in Pakistan",
-    description: "Our Sialkot textile printing facility houses high-performance sublimation presses, 8-color automatic screen printing carousels, and state-of-the-art DTF and DTG systems. We deliver high-contrast, wash-resistant graphics for sportswear, activewear jerseys, and streetwear collections — printing over 5,000 units per day with OEKO-TEX certified, eco-friendly inks that meet EU REACH compliance standards.",
-    features: [
-      "Full-body sublimation printing — zero fade, unlimited colors",
-      "8-color automatic screen printing with soft-hand water-based inks",
-      "High-definition DTF & DTG transfers for small-batch runs",
-      "Silicone, puff, reflective & metallic specialty printing",
-      "OEKO-TEX & EU REACH certified eco-friendly ink systems"
-    ],
-    image: IMAGES.servicePrinting,
-    ctaText: "Get Printing Quote",
-    stat: { value: "5000+", label: "Units printed daily" }
-  },
-  {
-    id: "stitching-sewing",
-    icon: Settings,
-    badge: "03",
-    title: "Industrial Stitching & Assembly",
-    subtitle: "50+ In-House Sewing Units — Sialkot Manufacturing",
-    description: "Our factory floor operates 50+ specialized industrial sewing machines optimized for speed, precision, and durability. From flatlock seams in compression sportswear to double-needle reinforced stitching in tactical hunting gear, our 100+ skilled artisans handle everything — T-shirts, hoodies, joggers, bomber jackets, ski suits, and security uniforms — with consistent quality across MOQs as low as 50 pieces.",
-    features: [
-      "Flatlock, overlock, coverstitch & twin-needle capabilities",
-      "Reinforced bartack stitching for tactical & outdoor gear",
-      "50+ unit capacity — T-shirts, hoodies, joggers, jackets",
-      "Compression & performance-cut sportswear specialization",
-      "Automated pocket setting, zipper insertion & tape sealing"
-    ],
-    image: IMAGES.serviceStitching,
-    ctaText: "Get Production Quote",
-    stat: { value: "50+", label: "Sewing machines" }
-  },
-  {
-    id: "embroidery",
-    icon: Layers,
-    badge: "04",
-    title: "Luxury Embroidery & Custom Branding",
-    subtitle: "Premium Brand Identity — Pakistani Craftsmanship",
-    description: "Transform your private label apparel into luxury-grade branded products with our 12-head computerized embroidery systems. We specialize in complex 3D puff embroidery, custom chenille patches, metallic thread applications, and precision logo placement — delivering the kind of branding quality that commands premium retail pricing for brands in the USA, UK, Europe, and Middle East markets.",
-    features: [
-      "12-head Tajima computerized embroidery machines",
-      "High-density 3D puff embroidery & raised lettering",
-      "Custom woven patches, chenille, & appliqué work",
-      "Metallic thread, reflective, & glow-in-the-dark embroidery",
-      "Custom woven labels, printed labels & premium hang tags"
-    ],
-    image: IMAGES.serviceEmbroidery,
-    ctaText: "Get Branding Quote",
-    stat: { value: "12", label: "Head embroidery system" }
-  },
-  {
-    id: "quality-assurance",
     icon: Shield,
-    badge: "05",
-    title: "ISO-Certified Quality Assurance",
-    subtitle: "99.8% Pass Rate — International Standards",
-    description: "Every garment produced in our Sialkot facility undergoes a rigorous 7-point quality inspection process. We maintain a 99.8% global quality pass rate across all export markets — USA, Canada, UK, Germany, Australia, UAE — ensuring your brand's reputation remains flawless. Our QC team follows ANSI/ASQ Z1.4 AQL sampling standards and provides detailed inspection reports with every shipment.",
-    features: [
-      "4-point fabric inspection system before cutting",
-      "7-stage in-line & final AQL inspection protocol",
-      "ANSI/ASQ Z1.4 Level II sampling — AQL 2.5 standard",
-      "Dimensional measurement verification on every size",
-      "Needle detection, metal scan & barcode verification"
-    ],
-    image: IMAGES.serviceQC,
-    ctaText: "See QC Standards",
-    stat: { value: "99.8%", label: "QC pass rate" }
+    title: "Waterproof Manufacturing",
+    desc: "20K/20K waterproof ratings with seam-sealed construction. DWR treatments and waterproof membranes.",
+    features: ["Seam Sealing", "DWR Treatment", "Membrane Bonding", "Hydrostatic Testing"]
   },
   {
-    id: "global-logistics",
-    icon: Truck,
-    badge: "06",
-    title: "Global B2B Export & Logistics",
-    subtitle: "Seamless Factory-to-Door — 40+ Countries",
-    description: "We handle all international shipping documentation, customs clearance, and logistics for seamless factory-to-door delivery across 40+ countries. Whether you need DDP delivery to your US warehouse, FOB Karachi for European brands, or CIF terms for Australian buyers — our experienced export team ensures on-time, damage-free delivery with full shipment tracking and real-time production status updates.",
-    features: [
-      "DDP, FOB, CIF & EXW international shipping terms",
-      "US/EU/UK customs documentation & compliance",
-      "Consolidated bulk container shipping — competitive rates",
-      "Real-time shipment tracking & production status dashboard",
-      "Export-grade palletized packaging with shock protection"
-    ],
-    image: IMAGES.serviceLogistics,
-    ctaText: "Get Shipping Quote",
-    stat: { value: "40+", label: "Countries served" }
+    icon: Target,
+    title: "Camo Pattern Design",
+    desc: "Custom camouflage patterns designed for specific terrains and hunting environments.",
+    features: ["Digital Patterns", "Woodland Camo", "Terrain-Specific", "Color Matching"]
+  },
+  {
+    icon: Droplets,
+    title: "Scent Control Technology",
+    desc: "Silver-ion and carbon-integrated fabrics for odor absorption in the field.",
+    features: ["Silver-Ion Treatment", "Carbon Integration", "Anti-Microbial", "Odor Blocking"]
+  },
+  {
+    icon: Thermometer,
+    title: "Insulation Systems",
+    desc: "PrimaLoft, down, and synthetic insulation for varying temperature conditions.",
+    features: ["PrimaLoft Gold", "Goose Down", "Synthetic Fill", "Layer Optimization"]
+  },
+  {
+    icon: Layers,
+    title: "Layering Systems",
+    desc: "Complete base-to-outer layer systems designed to work together in the field.",
+    features: ["Base Layers", "Mid Layers", "Outer Shells", "System Integration"]
+  },
+  {
+    icon: Wind,
+    title: "Windproof Technology",
+    desc: "Wind-blocking fabrics and membranes for harsh weather protection.",
+    features: ["Windstopper", "Laminated Fabrics", "Draft Protection", "Breathability"]
   }
 ];
 const processSteps = [
-  {
-    step: "01",
-    title: "Inquiry & Consultation",
-    desc: "Submit your RFQ or WhatsApp us directly. Our B2B specialist in Sialkot reviews your requirements — tech packs, design briefs, target pricing — and responds within 24 hours with a detailed production assessment.",
-    icon: Phone
-  },
-  {
-    step: "02",
-    title: "Quotation & NDA",
-    desc: "We provide a transparent, itemized quote with per-unit pricing, lead times, fabric options, and MOQ details. Upon approval, we sign a mutual NDA and production agreement to protect your brand's designs.",
-    icon: Package
-  },
-  {
-    step: "03",
-    title: "Sample Development",
-    desc: "Our pattern engineering team develops physical samples based on your tech pack. You receive high-resolution photos, measurement charts, and up to 3 rounds of revisions — until you're 100% satisfied.",
-    icon: Scissors
-  },
-  {
-    step: "04",
-    title: "Bulk Production",
-    desc: "Upon sample approval and advance deposit, bulk production begins on our factory floor. You receive daily progress photos, production milestones, and a dedicated account manager for your order.",
-    icon: Settings
-  },
-  {
-    step: "05",
-    title: "Quality Inspection",
-    desc: "Every unit goes through our 7-stage QC protocol. Third-party inspection (SGS, Bureau Veritas) is available upon request. Full inspection reports are shared before shipment approval.",
-    icon: CheckCircle
-  },
-  {
-    step: "06",
-    title: "Shipping & Delivery",
-    desc: "We handle all export documentation, customs clearance, and freight logistics. Your order ships in export-grade packaging with real-time tracking — delivered on time, every time.",
-    icon: Truck
-  }
+  { step: "01", title: "Design & Pattern", desc: "CAD pattern drafting and technical specifications" },
+  { step: "02", title: "Sampling", desc: "Prototype development with 7-day turnaround" },
+  { step: "03", title: "Material Sourcing", desc: "Premium fabrics from certified suppliers worldwide" },
+  { step: "04", title: "Production", desc: "Manufacturing with strict QC at every stage" },
+  { step: "05", title: "Finishing", desc: "Final QC, packaging, and export documentation" }
 ];
-const trustBadges = [
-  { value: 15, suffix: "+", label: "Years in Manufacturing", icon: Award },
-  { value: 500, suffix: "+", label: "Global Brands Served", icon: Globe },
-  { value: 50, suffix: "K+", label: "Units Produced Monthly", icon: Zap },
-  { value: 40, suffix: "+", label: "Countries Exported To", icon: MapPin }
-];
-const industries = [
-  { name: "Streetwear", emoji: "🧥", desc: "Hoodies, tees, joggers, bombers" },
-  { name: "Sportswear", emoji: "⚽", desc: "Jerseys, shorts, tracksuits, compression" },
-  { name: "Hunting Wear", emoji: "🎯", desc: "Camo jackets, tactical pants, vests" },
-  { name: "Ski Wear", emoji: "⛷️", desc: "Ski suits, snow pants, insulated jackets" },
-  { name: "Security Uniforms", emoji: "🛡️", desc: "Guard uniforms, tactical shirts" },
-  { name: "Tech Wear", emoji: "⚙️", desc: "Utility vests, cargo pants, shells" }
+const capabilities = [
+  { icon: Scissors, title: "Pattern Making", desc: "Lectra CAD systems, digital grading, marker making" },
+  { icon: Printer, title: "Printing & Embroidery", desc: "DTF, sublimation, DTG, multi-head embroidery" },
+  { icon: Box, title: "Private Label", desc: "Custom labels, hang tags, packaging design" },
+  { icon: Globe, title: "Global Export", desc: "DHL, FedEx, air & sea freight with full documentation" }
 ];
 function Services() {
   return /* @__PURE__ */ jsxs(PageWrapper, { children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Custom Clothing Manufacturing Services in Sialkot Pakistan | OEM/ODM Apparel Manufacturer",
-        description: "Sialkot Sample Masters offers end-to-end custom clothing manufacturing services in Pakistan — digital pattern drafting, sublimation printing, industrial stitching, embroidery, ISO-certified quality control, and global B2B exports to USA, UK, Europe, Australia & Middle East. Low MOQ from 50 pcs.",
-        keywords: "clothing manufacturing services Sialkot Pakistan, custom apparel manufacturer Pakistan, OEM clothing manufacturer Sialkot, private label sportswear Pakistan, sublimation printing factory Pakistan, embroidery services Sialkot, B2B garment export Pakistan, streetwear manufacturer Sialkot, hunting wear manufacturer Pakistan, ski wear manufacturer Pakistan",
+        title: "Manufacturing Services | Xelent Huntgear Pakistan",
+        description: "Full-service hunting apparel manufacturing. Waterproof technology, camo design, scent control, insulation systems. OEM/ODM services with low MOQ 50pcs.",
         canonical: "/services",
         breadcrumbs: [
           { name: "Home", item: "/" },
           { name: "Services", item: "/services" }
-        ],
-        breadcrumbs: [
-          { name: "Home", item: "/" },
-          { name: "Manufacturing Services", item: "/services" }
         ]
       }
     ),
-    /* @__PURE__ */ jsxs("main", { className: "bg-background text-foreground min-h-screen", children: [
-      /* @__PURE__ */ jsxs(
-        "section",
-        {
-          className: "relative min-h-[85vh] flex items-end overflow-hidden",
-          style: {
-            backgroundImage: `url(${IMAGES.servicesBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center 30%"
-          },
-          children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-transparent" }),
-            /* @__PURE__ */ jsx("div", { className: "relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 pt-40 w-full", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
-              /* @__PURE__ */ jsx(FadeIn, { direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-[1.5px] bg-[#c9a96e]" }),
-                /* @__PURE__ */ jsx("p", { className: "text-[#c9a96e] font-condensed font-semibold tracking-[0.25em] uppercase text-xs", children: "End-to-End Manufacturing" })
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.2, children: /* @__PURE__ */ jsxs("h1", { className: "font-serif text-[2.8rem] sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[0.95] tracking-tight", children: [
-                "Custom Clothing",
-                " ",
-                /* @__PURE__ */ jsx("br", { className: "hidden sm:block" }),
-                /* @__PURE__ */ jsx("span", { className: "italic font-light text-[#c9a96e]", children: "Manufacturing" }),
-                " ",
-                /* @__PURE__ */ jsx("br", { className: "hidden sm:block" }),
-                "Services"
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.3, children: /* @__PURE__ */ jsx("p", { className: "text-white/60 text-base sm:text-lg leading-relaxed max-w-xl mb-10 font-light", children: "From pattern engineering to global export — we provide vertically integrated apparel manufacturing from our Sialkot, Pakistan facility. Serving 500+ brands across 40+ countries with MOQs as low as 50 pieces." }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.4, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-start gap-4", children: [
-                /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "group bg-[#c9a96e] text-[#0a0a0a] font-condensed font-bold tracking-[0.18em] uppercase text-[11px] sm:text-xs px-9 py-4 transition-all duration-300 hover:bg-[#b8945a]", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2.5", children: [
-                  "Get a Free Quote",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" })
-                ] }) }) }),
-                /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx("button", { className: "group font-condensed font-semibold tracking-[0.15em] uppercase text-[11px] sm:text-xs text-white/70 hover:text-white border border-white/20 hover:border-white/50 px-9 py-4 transition-all duration-300 backdrop-blur-sm", children: "WhatsApp Consultation" }) })
-              ] }) })
-            ] }) }),
-            /* @__PURE__ */ jsx("div", { className: "absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 z-20", children: [
-              { val: "15+", sub: "Years" },
-              { val: "500+", sub: "Brands" },
-              { val: "50K+", sub: "Units/mo" }
-            ].map((s2, i) => /* @__PURE__ */ jsxs(
-              motion.div,
-              {
-                className: "bg-[#0a0a0a]/70 backdrop-blur-md border border-white/10 px-5 py-4 text-center min-w-[100px]",
-                initial: { opacity: 0, x: 40 },
-                animate: { opacity: 1, x: 0 },
-                transition: { duration: 0.6, delay: 0.6 + i * 0.15 },
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "text-[#c9a96e] font-condensed font-bold text-xl", children: s2.val }),
-                  /* @__PURE__ */ jsx("div", { className: "text-white/40 text-[9px] font-condensed tracking-widest uppercase mt-0.5", children: s2.sub })
-                ]
-              },
-              s2.val
-            )) })
-          ]
-        }
-      ),
-      /* @__PURE__ */ jsx("section", { className: "bg-card border-y border-border py-12", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 lg:grid-cols-4 gap-8", stagger: 0.1, children: trustBadges.map((stat) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-        /* @__PURE__ */ jsx(stat.icon, { className: "w-5 h-5 text-gold mx-auto mb-2.5 opacity-80" }),
-        /* @__PURE__ */ jsx("div", { className: "text-3xl sm:text-4xl font-condensed font-bold text-foreground mb-1", children: /* @__PURE__ */ jsx(CountUp, { to: stat.value, suffix: stat.suffix }) }),
-        /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-sm", children: stat.label })
-      ] }) }, stat.label)) }) }) }),
-      /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5 relative z-20", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.services }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[65vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.servicesHeroBg, alt: "Xelent Huntgear Manufacturing Services - Waterproof hunting apparel production facility with seam sealing and DWR treatment capabilities", className: "w-full h-full object-cover opacity-60" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[70vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
         /* @__PURE__ */ jsx(
-          SectionHeading,
+          motion.p,
           {
-            label: "Industries We Manufacture For",
-            title: "Specialized Across 6 Apparel Categories",
-            subtitle: "Every service we offer is fine-tuned for your industry's specific requirements — from fabric selection and construction to finishing and compliance standards.",
-            className: "mb-16"
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "Manufacturing Capabilities"
           }
         ),
-        /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4", stagger: 0.06, children: industries.map((ind) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "scale", children: /* @__PURE__ */ jsx(HoverCard, { children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-5 text-center hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all duration-300 group h-full", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-3xl block mb-3", children: ind.emoji }),
-          /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm text-foreground uppercase tracking-wide mb-1 group-hover:text-gold transition-colors", children: ind.name }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-[11px] leading-snug", children: ind.desc })
-        ] }) }) }, ind.name)) })
-      ] }) }),
-      /* @__PURE__ */ jsxs("section", { className: "relative", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" }),
-        /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-0 relative z-10", children: services$1.map((service, i) => /* @__PURE__ */ jsx(FadeIn, { direction: i % 2 === 0 ? "left" : "right", children: /* @__PURE__ */ jsxs(
-          "div",
+        /* @__PURE__ */ jsxs(
+          motion.h1,
           {
-            id: service.id,
-            className: `grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-20 sm:py-28 ${i < services$1.length - 1 ? "border-b border-border" : ""}`,
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
             children: [
-              /* @__PURE__ */ jsxs("div", { className: i % 2 !== 0 ? "lg:order-2" : "", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-[#c9a96e] font-condensed font-bold text-4xl opacity-20", children: service.badge }),
-                  /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 mb-1", children: /* @__PURE__ */ jsx("div", { className: "w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center", children: /* @__PURE__ */ jsx(service.icon, { className: "w-4.5 h-4.5 text-gold" }) }) }) })
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-xs mb-2", children: service.subtitle }),
-                /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3 leading-tight", children: service.title }),
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-[1.5px] bg-[#c9a96e] mb-5" }),
-                /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6 text-[15px]", children: service.description }),
-                /* @__PURE__ */ jsx("ul", { className: "space-y-2.5 mb-8", children: service.features.map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2.5", children: [
-                  /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-gold shrink-0 mt-0.5" }),
-                  /* @__PURE__ */ jsx("span", { className: "text-foreground text-sm leading-snug", children: f })
-                ] }, f)) }),
-                /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-start sm:items-center gap-4", children: [
-                  /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-xs px-7 py-3 h-auto rounded-sm group", children: [
-                    service.ctaText,
-                    " ",
-                    /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" })
-                  ] }) }),
-                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-card border border-border rounded-sm px-4 py-2.5", children: [
-                    /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-gold" }),
-                    /* @__PURE__ */ jsxs("div", { children: [
-                      /* @__PURE__ */ jsx("span", { className: "text-foreground font-condensed font-bold text-sm", children: service.stat.value }),
-                      /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-xs ml-1.5", children: service.stat.label })
-                    ] })
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: `relative overflow-hidden rounded-sm ${i % 2 !== 0 ? "lg:order-1" : ""}`, children: [
-                /* @__PURE__ */ jsxs(
-                  motion.div,
-                  {
-                    className: "aspect-[4/3] overflow-hidden rounded-sm",
-                    whileHover: { scale: 1.02, transition: { duration: 0.4 } },
-                    children: [
-                      /* @__PURE__ */ jsx(
-                        "img",
-                        {
-                          src: service.image,
-                          alt: `${service.title} - Sialkot Sample Masters Pakistan Factory`,
-                          className: "w-full h-full object-cover hover:scale-105 transition-transform duration-700",
-                          loading: "lazy",
-                          width: 800,
-                          height: 600
-                        }
-                      ),
-                      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-tr from-black/50 via-black/10 to-transparent pointer-events-none" })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ jsx("div", { className: "absolute bottom-4 left-4 bg-[#0a0a0a]/80 backdrop-blur-md border border-white/10 px-4 py-2.5 rounded-sm", children: /* @__PURE__ */ jsx("p", { className: "text-[#c9a96e] font-condensed font-bold text-[10px] tracking-widest uppercase", children: "SIALKOT FACTORY · IN-HOUSE" }) })
-              ] })
+              "End-to-End",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Production" })
             ]
           }
-        ) }, service.id)) })
-      ] }),
-      /* @__PURE__ */ jsxs(
-        "section",
-        {
-          className: "section-padding relative overflow-hidden",
-          style: { background: "linear-gradient(135deg, #0a0a0f 0%, #0f1015 50%, #0a0a0f 100%)" },
-          children: [
-            /* @__PURE__ */ jsx(
-              "div",
-              {
-                className: "absolute inset-0 opacity-5",
-                style: { backgroundImage: "radial-gradient(circle at 25% 50%, oklch(0.68 0.13 72) 0%, transparent 60%), radial-gradient(circle at 75% 50%, oklch(0.68 0.13 72) 0%, transparent 60%)" }
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10", children: [
-              /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
-                /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 mb-4", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-8 h-[1px] bg-[#c9a96e]" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-[0.25em] uppercase text-xs", children: "Our B2B Manufacturing Process" }),
-                  /* @__PURE__ */ jsx("div", { className: "w-8 h-[1px] bg-[#c9a96e]" })
-                ] }) }),
-                /* @__PURE__ */ jsx(FadeIn, { delay: 0.1, children: /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight", children: [
-                  "From Concept to",
-                  " ",
-                  /* @__PURE__ */ jsx("span", { className: "italic font-light text-[#c9a96e]", children: "Delivery" })
-                ] }) }),
-                /* @__PURE__ */ jsx(FadeIn, { delay: 0.15, children: /* @__PURE__ */ jsx("p", { className: "text-white/50 max-w-2xl mx-auto leading-relaxed", children: "Our streamlined 6-step production workflow ensures complete transparency, predictable lead times, and zero-defect delivery for every order." }) })
-              ] }),
-              /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5", stagger: 0.08, children: processSteps.map((p) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(HoverCard, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "relative bg-white/[0.03] backdrop-blur-sm border border-white/8 rounded-sm p-6 hover:border-gold/30 transition-all duration-300 h-full group", children: [
-                /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between mb-4", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 transition-colors", children: /* @__PURE__ */ jsx(p.icon, { className: "w-5 h-5 text-gold" }) }),
-                  /* @__PURE__ */ jsx("span", { className: "text-5xl font-condensed font-bold text-white/5 group-hover:text-gold/10 transition-colors leading-none", children: p.step })
-                ] }),
-                /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-white uppercase tracking-wide mb-2 group-hover:text-gold transition-colors", children: p.title }),
-                /* @__PURE__ */ jsx("p", { className: "text-white/45 text-sm leading-relaxed", children: p.desc })
-              ] }) }) }, p.step)) }),
-              /* @__PURE__ */ jsx(FadeIn, { className: "mt-12 text-center", delay: 0.2, children: /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-3 bg-gold/5 border border-gold/20 rounded-sm px-6 py-3", children: [
-                /* @__PURE__ */ jsx(Clock, { className: "w-5 h-5 text-gold" }),
-                /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-sm", children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white font-condensed", children: "Average Lead Time:" }),
-                  " ",
-                  "7 days for samples · 21–30 days for bulk production"
-                ] })
-              ] }) })
-            ] })
-          ]
-        }
-      ),
-      /* @__PURE__ */ jsx("section", { className: "section-padding bg-card border-y border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+        ),
         /* @__PURE__ */ jsx(
-          SectionHeading,
+          motion.div,
           {
-            label: "Why Choose Sialkot Sample Masters",
-            title: "Pakistan's Most Trusted OEM/ODM Partner",
-            subtitle: "We're not just a factory — we're your dedicated manufacturing partner. Here's why 500+ global brands trust us with their apparel production.",
-            className: "mb-16"
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
           }
         ),
-        /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5", stagger: 0.08, children: [
+        /* @__PURE__ */ jsx(
+          motion.p,
           {
-            icon: Shield,
-            title: "ISO 9001 Certified",
-            desc: "International quality management standards with WRAP ethical certification and OEKO-TEX material compliance."
-          },
-          {
-            icon: Globe,
-            title: "40+ Countries",
-            desc: "Trusted export partner for brands in the USA, UK, Germany, France, Australia, Canada, UAE, and beyond."
-          },
-          {
-            icon: Package,
-            title: "Low MOQ — 50 Pieces",
-            desc: "Start with as few as 50 units per style. Perfect for private label startups and test runs before scaling."
-          },
-          {
-            icon: Star,
-            title: "Full Customization",
-            desc: "Custom fabrics, custom fits, custom branding — every garment is made exactly to your specifications, no compromises."
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "From concept to delivery, we provide complete hunting apparel manufacturing services. Waterproof technology, custom camo, scent control, and full layering systems."
           }
-        ].map((card) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(HoverCard, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "bg-background border border-border rounded-sm p-6 hover:border-gold/25 hover:shadow-lg hover:shadow-gold/5 transition-all duration-300 h-full group", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-sm bg-gold/8 border border-gold/15 flex items-center justify-center mb-4 group-hover:bg-gold/15 transition-colors", children: /* @__PURE__ */ jsx(card.icon, { className: "w-6 h-6 text-gold" }) }),
-          /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-wide text-sm mb-2 group-hover:text-gold transition-colors", children: card.title }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed", children: card.desc })
-        ] }) }) }, card.title)) })
-      ] }) }),
-      /* @__PURE__ */ jsxs(
-        "section",
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-3", children: "What We Offer" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-white", children: "Manufacturing Services" })
+      ] }),
+      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", stagger: 0.08, children: mainServices.map((service) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#161616] border border-white/10 p-8 h-full hover:border-[#ff6b00]/50 transition-all duration-300", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex items-start justify-between mb-6", children: /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center justify-center group-hover:bg-[#ff6b00]/20 transition-colors", children: /* @__PURE__ */ jsx(service.icon, { className: "w-7 h-7 text-[#ff6b00]" }) }) }),
+        /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-xl text-white uppercase mb-3 group-hover:text-[#ff6b00] transition-colors", children: service.title }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm leading-relaxed mb-6", children: service.desc }),
+        /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: service.features.map((feature) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-white/50 text-sm", children: [
+          /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-[#ff6b00]" }),
+          feature
+        ] }, feature)) })
+      ] }) }, service.title)) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0d0d0d]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-3", children: "How It Works" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-white", children: "Our Process" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-6", children: processSteps.map((step, i) => /* @__PURE__ */ jsxs(
+        motion.div,
         {
-          className: "relative py-28 overflow-hidden",
-          style: {
-            backgroundImage: `url(${IMAGES.ctaBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center"
-          },
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { delay: i * 0.1 },
+          className: "relative",
           children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/85" }),
-            /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-              /* @__PURE__ */ jsx(FadeIn, { direction: "down", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 mb-5", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-8 h-[1px] bg-[#c9a96e]" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-[0.25em] uppercase text-xs", children: "Start Your Production Today" }),
-                /* @__PURE__ */ jsx("div", { className: "w-8 h-[1px] bg-[#c9a96e]" })
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.1, children: /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight", children: [
-                "Ready to Manufacture",
-                " ",
-                /* @__PURE__ */ jsx("br", { className: "hidden sm:block" }),
-                /* @__PURE__ */ jsx("span", { className: "italic font-light text-[#c9a96e]", children: "Your Next Collection?" })
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.2, children: /* @__PURE__ */ jsx("p", { className: "text-white/55 text-lg mb-10 max-w-xl mx-auto leading-relaxed", children: "Get a free, no-obligation quote within 24 hours. Our Sialkot-based B2B team is ready to discuss your manufacturing requirements — from 50 pieces to 50,000+." }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.3, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center justify-center gap-4", children: [
-                /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "h-14 px-10 bg-gold text-black hover:bg-[#b8945a] font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl shadow-gold/10 group", children: [
-                  "Request Instant Quote ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" })
-                ] }) }),
-                /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "h-14 px-10 font-condensed font-bold uppercase tracking-widest text-sm border-white/30 hover:border-gold hover:text-gold bg-transparent text-white", children: "Contact Manufacturing Specialist" }) })
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.4, children: /* @__PURE__ */ jsx("p", { className: "text-white/25 text-xs font-condensed tracking-widest uppercase mt-10", children: "📍 Factory: Chak No. 99GB, Sialkot — 51310, Punjab, Pakistan · Est. 2010" }) })
-            ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 p-6 h-full hover:border-[#ff6b00]/30 transition-colors", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-3xl", children: step.step }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold uppercase mt-4 mb-2", children: step.title }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: step.desc })
+            ] }),
+            i < processSteps.length - 1 && /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-[#ff6b00]/30" })
           ]
-        }
-      )
+        },
+        step.step
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#111111]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-3", children: "Full Service" }),
+        /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-white", children: "Additional Capabilities" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: capabilities.map((cap, i) => /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { delay: i * 0.1 },
+          className: "text-center p-8 border border-white/10 hover:border-[#ff6b00]/50 transition-colors group",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#ff6b00]/20 transition-colors", children: /* @__PURE__ */ jsx(cap.icon, { className: "w-8 h-8 text-[#ff6b00]" }) }),
+            /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-lg text-white uppercase mb-2", children: cap.title }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: cap.desc })
+          ]
+        },
+        cap.title
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsxs("section", { className: "py-24 bg-[#0d0d0d] relative overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-5", children: /* @__PURE__ */ jsx("div", { className: "absolute inset-0", style: {
+        backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+        backgroundSize: "40px 40px"
+      } }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6", children: [
+          "Start Your",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Manufacturing Project" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Get a free quote for your hunting apparel line. Low MOQ 50pcs, 7-day samples, and premium quality guaranteed." }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
+          "Request Free Quote ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
+        ] }) })
+      ] })
     ] })
   ] });
 }
 const products = [
   {
-    id: "sportswear",
-    name: "Custom Sportswear",
-    tag: "Athletic Performance",
-    image: IMAGES.catSports,
-    description: "High-performance athletic apparel built for serious athletes and sports brands. From customized basketball and soccer uniforms to ice hockey, baseball, and American football jerseys. Engineered with advanced moisture-wicking and four-way stretch fabrics.",
-    specs: [
-      { label: "Fabric Options", value: "Polyester Interlock, Spandex Blend, Mesh, Heavyweight Knit" },
-      { label: "Sub-Categories", value: "Basketball, Soccer, Baseball, American Football, Ice Hockey" },
-      { label: "Weight Range", value: "140 GSM – 260 GSM" },
-      { label: "Customization", value: "Sublimation, Tackle Twill, Screen Print, Embroidery" },
-      { label: "Minimum Order", value: "50 Pieces/Style" },
-      { label: "Lead Time", value: "25–35 Days (Bulk)" }
-    ],
-    features: [
-      "Full 360° sublimation printing available",
-      "Reinforced flatlock seam construction",
-      "Player numbering and naming customization",
-      "Breathable, moisture-wicking technology",
-      "Anti-pilling fabric treatment",
-      "Pantone color matching for team colors"
-    ]
-  },
-  {
-    id: "hunting-wear",
-    name: "Custom Hunting Wear",
-    tag: "Tactical Grade",
+    id: "hunting-jackets",
+    name: "Hunting Jackets & Outerwear",
+    tag: "Field Tested",
     image: IMAGES.catHunting,
-    description: "Engineered for the field. Our custom hunting wear combines military-grade durability with advanced concealment technology. From multicam jackets to ripstop cargo pants, every piece is built to perform in demanding outdoor environments.",
+    description: "Premium hunting jackets engineered for every season and terrain. From insulated late-season parkas to lightweight early-season shells, our outerwear delivers unmatched weather protection, silent movement, and strategic camo patterns designed by hunters for hunters.",
     specs: [
-      { label: "Fabric Options", value: "Ripstop Nylon, Cotton-Poly Blend, Softshell, Fleece Lining" },
-      { label: "Camo Patterns", value: "Multicam, Woodland, Digital, Custom Print Available" },
-      { label: "Weight Range", value: "180 GSM – 320 GSM" },
-      { label: "Customization", value: "Embroidery, Screen Print, Sublimation, Laser Cut Patches" },
+      { label: "Shell Fabrics", value: "Quiet brushed polyester, Softshell, 3-Layer waterproof laminate" },
+      { label: "Insulation", value: "Primaloft Gold, Thinsulate, Premium down blend" },
+      { label: "Camo Options", value: "Realtree EDGE, Mossy Oak Break-Up, Kryptek, Custom prints" },
+      { label: "Waterproofing", value: "10,000mm – 20,000mm (ISO 811 Certified)" },
+      { label: "Breathability", value: "8,000 – 15,000 g/m²/24h (ASTM E96)" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "30–40 Days (Bulk)" }
     ],
     features: [
-      "YKK zippers with silent pull tabs",
-      "Velcro patch panels for morale patches",
-      "Articulated knee and elbow panels",
-      "Scent-control fabric treatment available",
-      "Reinforced stress-point stitching",
-      "Custom woven labels and hang tags"
+      "Silent brushed fabric eliminates noise in the field",
+      "Scent-control technology with antimicrobial treatment",
+      "Strategic ventilation zippers for temperature regulation",
+      "Magnetic closures on pockets for silent access",
+      "Kill-switch D-ring and license holder",
+      "Customizable internal embroidered labels"
     ]
   },
   {
-    id: "streetwear",
-    name: "Custom Streetwear",
-    tag: "Lifestyle & Urban",
-    image: IMAGES.catStreetwear,
-    description: "Premium custom streetwear manufactured for brands that demand quality. From heavyweight oversized hoodies and bomber jackets to cargo joggers and graphic tees, our streetwear line is built on 400-GSM French terry, premium nylon, and ring-spun cotton.",
+    id: "hunting-pants",
+    name: "Hunting Pants & Bibs",
+    tag: "Tactical Grade",
+    image: IMAGES.catSports,
+    description: "Rugged hunting pants and bibs built to withstand brush, briars, and miles of backcountry hiking. Articulated knees, gusseted crotches, and reinforced high-wear zones ensure durability season after season. Available in multiple camo patterns and solid earth tones.",
     specs: [
-      { label: "Fabric Options", value: "400 GSM French Terry, Ring-Spun Cotton, Nylon Ripstop, Fleece" },
-      { label: "Weight Range", value: "280 GSM – 450 GSM" },
-      { label: "Fits Available", value: "Oversized, Boxy, Regular, Slim" },
-      { label: "Customization", value: "DTG, DTF, Embroidery, Puff Print, Woven Labels" },
+      { label: "Fabric Options", value: "6.5oz canvas, Stretch woven, Waterproof/breathable laminate" },
+      { label: "Reinforcement", value: "Cordura knee panels, Double-layer seat" },
+      { label: "Camo Patterns", value: "Realtree, Mossy Oak, Kryptek, Solids" },
+      { label: "Breathability", value: "High-permeability ASTM E96 compliant" },
+      { label: "Features", value: "Articulated knees, Gusseted crotch, Boot zipper" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "25–35 Days (Bulk)" }
     ],
     features: [
-      "Custom pre-shrunk garment washes",
-      "Vintage fades, acid wash, and tie-dye",
-      "Gold/silver premium hardware options",
-      "Eco-friendly fabric options available",
-      "Private label packaging",
-      "Expert pattern drafting in-house"
+      "Reinforced knees and seat for durability",
+      "Silent snap closures won't spook game",
+      "Multiple cargo pockets with secure closures",
+      "Side zippers for easy on/off over boots",
+      "Suspender-compatible design",
+      "Scent-blocking fabric treatment"
+    ]
+  },
+  {
+    id: "base-layers",
+    name: "Base Layers & Mid Layers",
+    tag: "Performance",
+    image: IMAGES.catTechwear,
+    description: "Technical base and mid layers that regulate body temperature across all hunting conditions. Moisture-wicking merino wool blends, grid fleece mid layers, and thermal compression gear keep hunters comfortable from dawn sit to dusk stalk.",
+    specs: [
+      { label: "Base Materials", value: "Merino wool blend, Synthetic grid fleece, Compression knit" },
+      { label: "Mid Layer", value: "Grid fleece, Thermal waffle, Softshell hybrid" },
+      { label: "Weight Range", value: "Lightweight (150gsm) to Expedition (400gsm)" },
+      { label: "Technology", value: "Moisture-wicking, Odor control, Thermal regulation" },
+      { label: "Minimum Order", value: "50 Pieces/Style" },
+      { label: "Lead Time", value: "25–35 Days (Bulk)" }
+    ],
+    features: [
+      "Merino wool naturally resists odor",
+      "Flatlock seams prevent chafing under packs",
+      "UPF 30+ sun protection for early season",
+      "Thumb loops keep sleeves in place",
+      "Drop-tail hem for coverage while sitting",
+      "Custom colorways and branding available"
     ]
   },
   {
     id: "security-uniforms",
-    name: "Custom Security Uniforms",
-    tag: "Professional Guard",
+    name: "Security & Tactical Uniforms",
+    tag: "Pro Duty",
     image: IMAGES.catSecurityUniforms,
-    description: "Authoritative, durable, and comfortable security uniforms designed for 12-hour shifts. We supply global security firms with tactical polos, high-visibility vest systems, reinforced trousers, and weather-resistant outerwear.",
+    description: "High-performance security and tactical uniforms designed for professional guards, law enforcement, and private security firms. Our garments combine professional appearance with tactical functionality, featuring durable ripstop fabrics, reinforced stitching, and integrated duty belt compatibility.",
     specs: [
-      { label: "Fabric Options", value: "Poly-Cotton Twill, Ripstop, Moisture-Wicking Pique" },
-      { label: "Weight Range", value: "180 GSM – 260 GSM" },
-      { label: "Visibility", value: "3M Reflective Taping Available" },
-      { label: "Customization", value: "Direct Embroidery, Epaulets, Heat Transfer Badges" },
+      { label: "Fabric Options", value: "Poly-cotton ripstop, Tactical stretch woven, Teflon™ coated" },
+      { label: "Durability", value: "Reinforced elbows/knees, Bar-tack stitching at stress points" },
+      { label: "Features", value: "Badge tabs, Epaulettes, Hidden document pockets" },
+      { label: "Safety", value: "High-visibility options, Slash-resistant lining available" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "25–35 Days (Bulk)" }
     ],
     features: [
-      "Teflon® stain-resistant coating options",
-      "Mic loops and badge tabs",
-      "Reinforced knees and gusseted crotches",
-      "Permanent press finishes",
-      "Hidden tactical pockets",
-      "Custom brass or silver button details"
+      "Moisture-wicking mesh interior for all-day comfort",
+      "Gusseted construction for full range of motion",
+      "Hidden tactical pockets for gear storage",
+      "Permanent military creases for sharp professional look",
+      "Stain and liquid repellent fabric treatment",
+      "Custom department embroidery and patch options"
     ]
   },
   {
-    id: "techwear",
-    name: "Custom Techwear",
-    tag: "Utility & Futurism",
-    image: IMAGES.catTechwear,
-    description: "Where function meets futurism. Our custom techwear line is engineered for the modern environment — modular utility vests, articulated cargo pants, and multi-pocket shell jackets. Built from DWR-coated technical fabrics with precision construction.",
-    specs: [
-      { label: "Fabric Options", value: "Nylon Ripstop, Cordura, DWR-Coated Shell, Stretch Woven" },
-      { label: "Hardware", value: "ITW Nexus Buckles, YKK Aquaguard Zippers, D-Rings" },
-      { label: "Weight Range", value: "160 GSM – 300 GSM" },
-      { label: "Customization", value: "Laser Etching, Embroidery, Woven Patches, Custom Hardware" },
-      { label: "Minimum Order", value: "50 Pieces/Style" },
-      { label: "Lead Time", value: "30–40 Days (Bulk)" }
-    ],
-    features: [
-      "Modular attachment points (MOLLE/PALS)",
-      "Waterproof zipped pockets",
-      "Articulated patterning for unrestricted movement",
-      "Custom internal organization systems",
-      "Laser-cut ventilation panels",
-      "Matte and tonal colorway options"
-    ]
-  },
-  {
-    id: "ski-wear",
-    name: "Custom Ski Wear",
-    tag: "Alpine Technical",
+    id: "cold-weather",
+    name: "Cold Weather & Late Season",
+    tag: "Extreme",
     image: IMAGES.catSki,
-    description: "Technical ski and snowboard apparel manufactured to the highest alpine standards. Our custom ski wear features waterproof-breathable shells, sealed seams, and insulated linings designed for extreme cold-weather performance.",
+    description: "Heavy-duty late season gear for sub-zero hunts. Insulated bibs, parkas with wind-blocking technology, and hand-warmer muffs designed for all-day sits in frigid conditions. When the rut is on and temperatures drop, this gear keeps hunters in the field longer.",
     specs: [
-      { label: "Fabric Options", value: "Gore-Tex Compatible, 3-Layer Shell, Softshell, Primaloft Insulation" },
-      { label: "Waterproofing", value: "10,000mm – 20,000mm HH Rating, Taped Seams" },
-      { label: "Breathability", value: "10,000g – 20,000g/m²/24hr MVTR" },
-      { label: "Customization", value: "Embroidery, Screen Print, Woven Labels, Custom Lining Print" },
+      { label: "Insulation", value: "200g-400g Thinsulate, Down-fill, Synthetic loft" },
+      { label: "Outer Shell", value: "Waterproof/breathable, Wind-blocking membrane" },
+      { label: "Temperature Rating", value: "0°F to -20°F comfort range" },
+      { label: "Extras", value: "Hand warmer pockets, Fleece-lined collar" },
       { label: "Minimum Order", value: "50 Pieces/Style" },
       { label: "Lead Time", value: "35–45 Days (Bulk)" }
     ],
     features: [
-      "Fully taped critical seams",
-      "Powder skirt and snow gaiters",
-      "Helmet-compatible hood design",
-      "Articulated patterning for full mobility",
-      "Lift pass pocket and goggle wipe",
-      "Custom color blocking and branding"
+      "Heat-retaining interior lining reflects body heat",
+      "Two-way front zipper for sitting comfort",
+      "Insulated detachable hood",
+      "Snow skirt keeps powder out",
+      "Oversized hand warmer pockets",
+      "Quiet fabric technology eliminates swishing"
+    ]
+  },
+  {
+    id: "technical-gear",
+    name: "Technical Field Gear",
+    tag: "Pro-Series",
+    image: IMAGES.catHuntingGear,
+    description: "Full private label manufacturing for hunting brands, outfitters, and retailers. From concept sketches to finished garments, we handle pattern development, fabric sourcing, prototyping, and production. Create your own hunting gear line with professional-grade quality.",
+    specs: [
+      { label: "Services", value: "Design, Pattern making, Sampling, Full production" },
+      { label: "Labeling", value: "Woven labels, Hang tags, Poly bags, Cartons" },
+      { label: "Decoration", value: "Embroidery, Screen print, Heat transfer, Woven patches" },
+      { label: "Customization", value: "Colors, Patterns, Fits, Features per spec" },
+      { label: "Minimum Order", value: "50 Pieces/Style" },
+      { label: "Lead Time", value: "7 Days (Sample) | 30–45 Days (Bulk)" }
+    ],
+    features: [
+      "Tech pack development from sketches or ideas",
+      "3D prototyping for fit verification",
+      "Full compliance with hunting safety standards",
+      "Blaze orange requirements for all states",
+      "Small batch production for boutique brands",
+      "Dropshipping and fulfillment support"
     ]
   }
 ];
@@ -2821,9 +2512,9 @@ function Products() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Custom Hunting, Sports, Ski, Tech, Streetwear & Martial Arts Manufacturer Pakistan",
-        description: "Sialkot Sample Masters manufactures premium custom apparel across 6 categories: Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear, and Martial Arts Wear. Low MOQ from 50 pcs. Private label available. Pakistan manufacturer serving 40+ countries.",
-        keywords: "custom hunting wear manufacturer Pakistan, custom sports wear manufacturer, ski wear manufacturer Pakistan, techwear manufacturer, custom streetwear manufacturer Sialkot, martial arts wear manufacturer Pakistan, BJJ gi manufacturer, custom apparel manufacturer Pakistan",
+        title: "Custom Hunting Apparel Manufacturer | Xelent Huntgear Pakistan",
+        description: "Xelent Huntgear manufactures premium custom hunting apparel: jackets, pants, base layers, vests, and cold weather gear. Private label hunting clothing manufacturer in Pakistan. Low MOQ from 50 pieces. Realtree & Mossy Oak camo patterns.",
+        keywords: "custom hunting apparel manufacturer, hunting clothing manufacturer Pakistan, private label hunting gear, Realtree camo manufacturer, hunting jacket supplier, hunting pants manufacturer, custom hunting vest, blaze orange gear manufacturer",
         canonical: "/products",
         breadcrumbs: [
           { name: "Home", item: "/" },
@@ -2831,31 +2522,49 @@ function Products() {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-20 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx(FadeIn, { direction: "down", delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Product Catalog" }) }),
-      /* @__PURE__ */ jsxs(FadeIn, { delay: 0.2, children: [
-        /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6 speakable-title", children: [
-          "6 Specialist Categories,",
-          /* @__PURE__ */ jsx("br", {}),
-          /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "One Trusted Manufacturer" })
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.products }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "relative pt-20 pb-32 overflow-hidden bg-[#111111]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-0", children: [
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: "absolute inset-0 w-full h-full",
+            style: {
+              backgroundImage: `url(${IMAGES.productsHeroBg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center"
+            }
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/80" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#0d0d0d]" })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
+        /* @__PURE__ */ jsx(FadeIn, { direction: "down", delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Product Catalog" }) }),
+        /* @__PURE__ */ jsxs(FadeIn, { delay: 0.2, children: [
+          /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-white mb-6 speakable-title", children: [
+            "6 Specialist Categories,",
+            /* @__PURE__ */ jsx("br", {}),
+            /* @__PURE__ */ jsx("span", { className: "text-gradient-orange italic", children: "One Trusted Manufacturer" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "speakable-description hidden", children: "Xelent Huntgear specializes in manufacturing custom hunting apparel including jackets, pants, base layers, and accessories for hunting brands worldwide." })
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "speakable-description hidden", children: "Sialkot Sample Masters specializes in manufacturing custom hunting wear, sports wear, ski wear, tech wear, streetwear, and security uniforms in Pakistan." })
-      ] }),
-      /* @__PURE__ */ jsxs(FadeIn, { delay: 0.3, children: [
-        /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg max-w-2xl mx-auto mt-6", children: "From alpine ski shells to competition-grade gis — Sialkot Sample Masters manufactures across six high-demand performance and lifestyle categories, all from our facility in Sialkot, Pakistan." })
-      ] }),
-      /* @__PURE__ */ jsx(FadeIn, { delay: 0.4, children: /* @__PURE__ */ jsx("div", { className: "flex flex-wrap justify-center gap-2 mt-8", children: products.map((p) => /* @__PURE__ */ jsx(
-        "a",
-        {
-          href: `#${p.id}`,
-          className: "text-xs font-condensed font-semibold tracking-widest uppercase px-4 py-2 border border-gold/30 text-gold hover:bg-gold/10 rounded-sm transition-colors",
-          children: p.name.replace("Custom ", "")
-        },
-        p.id
-      )) }) })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28", children: products.map((product, i) => /* @__PURE__ */ jsx(FadeIn, { direction: i % 2 === 0 ? "left" : "right", children: /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ jsxs(FadeIn, { delay: 0.3, children: [
+          /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-2xl mx-auto mt-6", children: "From early season base layers to late season insulated parkas — Xelent Huntgear manufactures premium hunting apparel built for the field. Realtree & Mossy Oak licensed camo. Low MOQ from 50 pieces." })
+        ] }),
+        /* @__PURE__ */ jsx(FadeIn, { delay: 0.4, children: /* @__PURE__ */ jsx("div", { className: "flex flex-wrap justify-center gap-2 mt-8", children: products.map((p) => /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: `#${p.id}`,
+            className: "text-xs font-condensed font-semibold tracking-widest uppercase px-4 py-2 border border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/10 rounded-sm transition-colors",
+            children: p.name.replace("Hunting ", "").replace("Custom ", "").replace(" & Accessories", "").replace(" & Late Season", "").replace(" & Bibs", "").replace(" & Mid Layers", "").replace(" & Outerwear", "")
+          },
+          p.id
+        )) }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "section-padding bg-[#0d0d0d]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28", children: products.map((product, i) => /* @__PURE__ */ jsx(FadeIn, { direction: i % 2 === 0 ? "left" : "right", children: /* @__PURE__ */ jsxs(
       "div",
       {
         id: product.id,
@@ -2871,730 +2580,230 @@ function Products() {
                 loading: "lazy"
               }
             ),
-            product.tag && /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 bg-gold text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: product.tag }),
+            product.tag && /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 bg-[#ff6b00] text-black text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: product.tag }),
             /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent pointer-events-none" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: `${i % 2 !== 0 ? "lg:order-1" : ""} text-left`, children: [
-            /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl sm:text-4xl font-bold text-foreground mb-3", children: product.name }),
+            /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl sm:text-4xl font-bold text-white mb-3", children: product.name }),
             /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mt-4 mb-6", children: product.description }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm overflow-hidden mb-6 text-left", children: [
-              /* @__PURE__ */ jsx("div", { className: "px-4 py-2.5 border-b border-border bg-background/50", children: /* @__PURE__ */ jsx("h3", { className: "font-condensed font-semibold text-foreground uppercase tracking-widest text-xs", children: "Technical Specifications" }) }),
-              /* @__PURE__ */ jsx("div", { className: "divide-y divide-border", children: product.specs.map((spec) => /* @__PURE__ */ jsxs("div", { className: "flex px-4 py-2.5", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-sm w-40 shrink-0 font-medium", children: spec.label }),
-                /* @__PURE__ */ jsx("span", { className: "text-foreground text-sm", children: spec.value })
+            /* @__PURE__ */ jsx("p", { className: "text-white/70 leading-relaxed mt-4 mb-6", children: product.description }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-sm overflow-hidden mb-6 text-left", children: [
+              /* @__PURE__ */ jsx("div", { className: "px-4 py-2.5 border-b border-white/10 bg-[#0d0d0d]/50", children: /* @__PURE__ */ jsx("h3", { className: "font-condensed font-semibold text-white uppercase tracking-widest text-xs", children: "Technical Specifications" }) }),
+              /* @__PURE__ */ jsx("div", { className: "divide-y divide-white/10", children: product.specs.map((spec) => /* @__PURE__ */ jsxs("div", { className: "flex px-4 py-2.5", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-white/70 text-sm w-40 shrink-0 font-medium", children: spec.label }),
+                /* @__PURE__ */ jsx("span", { className: "text-white text-sm", children: spec.value })
               ] }, spec.label)) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "mb-8 text-left", children: [
-              /* @__PURE__ */ jsx("h3", { className: "font-condensed font-semibold text-foreground uppercase tracking-widest text-xs mb-3", children: "Key Features" }),
+              /* @__PURE__ */ jsx("h3", { className: "font-condensed font-semibold text-white uppercase tracking-widest text-xs mb-3", children: "Key Features" }),
               /* @__PURE__ */ jsx("ul", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3", children: product.features.map((f) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2.5", children: [
-                /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-gold shrink-0 mt-0.5" }),
-                /* @__PURE__ */ jsx("span", { className: "text-foreground text-sm", children: f })
+                /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-[#ff6b00] shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white text-sm", children: f })
               ] }, f)) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 justify-start", children: [
-              /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: [
+              /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: [
                 "Get a Quote ",
                 /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
               ] }) }),
-              /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent", children: "View in Shop" }) })
+              /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent", children: "View in Shop" }) })
             ] })
           ] })
         ]
       }
     ) }, product.id)) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding bg-card border-t border-border", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
-      /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: "Need a Custom Category?" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "We manufacture beyond these six categories. If you have a specific product in mind, our design and production team will work with you from concept to delivery." }),
+    /* @__PURE__ */ jsx("section", { className: "section-padding bg-[#111111] border-t border-white/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+      /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl font-bold text-white mb-4", children: "Build Your Hunting Brand" }),
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-8", children: "From concept to field-ready gear — we help hunting brands bring their vision to life. Tech pack development, prototyping, licensed camo patterns, and full-scale production. Your brand, built for the hunt." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm", children: "Request Custom Quote" }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: "Contact Us" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm", children: "Start Your Line" }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: "Talk to Our Team" }) })
       ] })
     ] }) }) })
   ] });
 }
-const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+const portfolioItems = [
   {
-    variants: {
-      variant: {
-        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary: "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive: "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground"
-      }
-    },
-    defaultVariants: {
-      variant: "default"
-    }
-  }
-);
-function Badge({
-  className,
-  variant,
-  asChild = false,
-  ...props
-}) {
-  const Comp = asChild ? Slot : "span";
-  return /* @__PURE__ */ jsx(
-    Comp,
-    {
-      "data-slot": "badge",
-      className: cn(badgeVariants({ variant }), className),
-      ...props
-    }
-  );
-}
-const DialogCompositionContext = React.createContext({
-  isComposing: () => false,
-  setComposing: () => {
+    id: 1,
+    title: "Whitetail Pro Line",
+    client: "Backcountry Hunters USA",
+    category: "Hunting Jackets",
+    image: IMAGES.catHunting,
+    tags: ["20K Waterproof", "Insulated", "Custom Camo"]
   },
-  justEndedComposing: () => false,
-  markCompositionEnd: () => {
+  {
+    id: 2,
+    title: "Elk Hunter Series",
+    client: "Alpine Gear Co.",
+    category: "Layering System",
+    image: IMAGES.catSports,
+    tags: ["Merino Base", "Mid Layer", "Shell"]
+  },
+  {
+    id: 3,
+    title: "Waterfowl Collection",
+    client: "Marsh Masters",
+    category: "Waterfowl Gear",
+    image: IMAGES.catStreetwear,
+    tags: ["Waders", "Jackets", "Blind Camo"]
+  },
+  {
+    id: 4,
+    title: "Tactical Hunt Line",
+    client: "Tactical Outdoors",
+    category: "Tactical Wear",
+    image: IMAGES.catTechwear,
+    tags: ["MOLLE", "Ripstop", "Olive Drab"]
+  },
+  {
+    id: 5,
+    title: "Turkey Hunt Pro",
+    client: "Spring Thunder",
+    category: "Spring Gear",
+    image: IMAGES.catSecurityUniforms,
+    tags: ["Vests", "Masks", "Vest Camo"]
+  },
+  {
+    id: 6,
+    title: "Western Big Game",
+    client: "Mountain Pursuit",
+    category: "Western Hunting",
+    image: IMAGES.catHunting,
+    tags: ["Lightweight", "Packable", "Vias Camo"]
   }
-});
-const useDialogComposition = () => React.useContext(DialogCompositionContext);
-function Dialog({
-  ...props
-}) {
-  const composingRef = React.useRef(false);
-  const justEndedRef = React.useRef(false);
-  const endTimerRef = React.useRef(null);
-  const contextValue = React.useMemo(
-    () => ({
-      isComposing: () => composingRef.current,
-      setComposing: (composing) => {
-        composingRef.current = composing;
-      },
-      justEndedComposing: () => justEndedRef.current,
-      markCompositionEnd: () => {
-        justEndedRef.current = true;
-        if (endTimerRef.current) {
-          clearTimeout(endTimerRef.current);
-        }
-        endTimerRef.current = setTimeout(() => {
-          justEndedRef.current = false;
-        }, 150);
-      }
-    }),
-    []
-  );
-  return /* @__PURE__ */ jsx(DialogCompositionContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsx(SheetPrimitive.Root, { "data-slot": "dialog", ...props }) });
-}
-function DialogPortal({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SheetPrimitive.Portal, { "data-slot": "dialog-portal", ...props });
-}
-function DialogOverlay({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SheetPrimitive.Overlay,
-    {
-      "data-slot": "dialog-overlay",
-      className: cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      ),
-      ...props
-    }
-  );
-}
-DialogOverlay.displayName = "DialogOverlay";
-function DialogContent({
-  className,
-  children,
-  showCloseButton = true,
-  onEscapeKeyDown,
-  ...props
-}) {
-  const { isComposing } = useDialogComposition();
-  const handleEscapeKeyDown = React.useCallback(
-    (e) => {
-      const isCurrentlyComposing = e.isComposing || isComposing();
-      if (isCurrentlyComposing) {
-        e.preventDefault();
-        return;
-      }
-      onEscapeKeyDown?.(e);
-    },
-    [isComposing, onEscapeKeyDown]
-  );
-  return /* @__PURE__ */ jsxs(DialogPortal, { "data-slot": "dialog-portal", children: [
-    /* @__PURE__ */ jsx(DialogOverlay, {}),
-    /* @__PURE__ */ jsxs(
-      SheetPrimitive.Content,
-      {
-        "data-slot": "dialog-content",
-        className: cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-          className
-        ),
-        onEscapeKeyDown: handleEscapeKeyDown,
-        ...props,
-        children: [
-          children,
-          showCloseButton && /* @__PURE__ */ jsxs(
-            SheetPrimitive.Close,
-            {
-              "data-slot": "dialog-close",
-              className: "ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-              children: [
-                /* @__PURE__ */ jsx(XIcon, {}),
-                /* @__PURE__ */ jsx("span", { className: "sr-only", children: "Close" })
-              ]
-            }
-          )
-        ]
-      }
-    )
-  ] });
-}
-function DialogHeader({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "dialog-header",
-      className: cn("flex flex-col gap-2 text-center sm:text-left", className),
-      ...props
-    }
-  );
-}
-function DialogFooter({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "dialog-footer",
-      className: cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function DialogTitle({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SheetPrimitive.Title,
-    {
-      "data-slot": "dialog-title",
-      className: cn("text-lg leading-none font-semibold", className),
-      ...props
-    }
-  );
-}
-function usePersistFn(fn) {
-  const fnRef = useRef(fn);
-  fnRef.current = fn;
-  const persistFn = useRef(null);
-  if (!persistFn.current) {
-    persistFn.current = function(...args) {
-      return fnRef.current.apply(this, args);
-    };
-  }
-  return persistFn.current;
-}
-function useComposition(options = {}) {
-  const {
-    onKeyDown: originalOnKeyDown,
-    onCompositionStart: originalOnCompositionStart,
-    onCompositionEnd: originalOnCompositionEnd
-  } = options;
-  const c = useRef(false);
-  const timer = useRef(null);
-  const timer2 = useRef(null);
-  const onCompositionStart = usePersistFn((e) => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = null;
-    }
-    if (timer2.current) {
-      clearTimeout(timer2.current);
-      timer2.current = null;
-    }
-    c.current = true;
-    originalOnCompositionStart?.(e);
-  });
-  const onCompositionEnd = usePersistFn((e) => {
-    timer.current = setTimeout(() => {
-      timer2.current = setTimeout(() => {
-        c.current = false;
-      });
-    });
-    originalOnCompositionEnd?.(e);
-  });
-  const onKeyDown = usePersistFn((e) => {
-    if (c.current && (e.key === "Escape" || e.key === "Enter" && !e.shiftKey)) {
-      e.stopPropagation();
-      return;
-    }
-    originalOnKeyDown?.(e);
-  });
-  const isComposing = usePersistFn(() => {
-    return c.current;
-  });
-  return {
-    onCompositionStart,
-    onCompositionEnd,
-    onKeyDown,
-    isComposing
-  };
-}
-function Input({
-  className,
-  type,
-  onKeyDown,
-  onCompositionStart,
-  onCompositionEnd,
-  ...props
-}) {
-  const dialogComposition = useDialogComposition();
-  const {
-    onCompositionStart: handleCompositionStart,
-    onCompositionEnd: handleCompositionEnd,
-    onKeyDown: handleKeyDown
-  } = useComposition({
-    onKeyDown: (e) => {
-      const isComposing = e.nativeEvent.isComposing || dialogComposition.justEndedComposing();
-      if (e.key === "Enter" && isComposing) {
-        return;
-      }
-      onKeyDown?.(e);
-    },
-    onCompositionStart: (e) => {
-      dialogComposition.setComposing(true);
-      onCompositionStart?.(e);
-    },
-    onCompositionEnd: (e) => {
-      dialogComposition.markCompositionEnd();
-      setTimeout(() => {
-        dialogComposition.setComposing(false);
-      }, 100);
-      onCompositionEnd?.(e);
-    }
-  });
-  return /* @__PURE__ */ jsx(
-    "input",
-    {
-      type,
-      "data-slot": "input",
-      className: cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className
-      ),
-      onCompositionStart: handleCompositionStart,
-      onCompositionEnd: handleCompositionEnd,
-      onKeyDown: handleKeyDown,
-      ...props
-    }
-  );
-}
-function PortfolioCard({
-  item,
-  onOpenLightbox
-}) {
-  const [currentImg, setCurrentImg] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const intervalRef = useRef(null);
-  const images = item.images.length > 0 ? item.images : item.coverImage ? [{ id: 0, imageUrl: item.coverImage, altText: item.title, caption: null, sortOrder: 0 }] : [];
-  const hasMultiple = images.length > 1;
-  useEffect(() => {
-    if (isHovered && hasMultiple) {
-      intervalRef.current = setInterval(() => {
-        setCurrentImg((prev2) => (prev2 + 1) % images.length);
-      }, 1200);
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (!isHovered) setCurrentImg(0);
-    }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isHovered, hasMultiple, images.length]);
-  const prev = (e) => {
-    e.stopPropagation();
-    setCurrentImg((i) => (i - 1 + images.length) % images.length);
-  };
-  const next = (e) => {
-    e.stopPropagation();
-    setCurrentImg((i) => (i + 1) % images.length);
-  };
-  const tags = (() => {
-    try {
-      return item.tags ? JSON.parse(item.tags) : [];
-    } catch {
-      return [];
-    }
-  })();
-  if (images.length === 0) {
-    return /* @__PURE__ */ jsx("div", { className: "rounded-xl overflow-hidden bg-secondary border border-border aspect-square flex items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-sm", children: "No images" }) });
-  }
-  return /* @__PURE__ */ jsxs(
-    motion.div,
-    {
-      className: "group relative rounded-xl overflow-hidden bg-card border border-border cursor-pointer",
-      whileHover: { y: -4, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" },
-      transition: { duration: 0.25 },
-      onMouseEnter: () => setIsHovered(true),
-      onMouseLeave: () => setIsHovered(false),
-      onClick: () => onOpenLightbox(item, currentImg),
-      children: [
-        /* @__PURE__ */ jsxs("div", { className: "relative aspect-square overflow-hidden bg-secondary", children: [
-          /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
-            motion.img,
-            {
-              src: images[currentImg].imageUrl,
-              alt: images[currentImg].altText || item.title,
-              className: "w-full h-full object-cover",
-              initial: { opacity: 0, scale: 1.04 },
-              animate: { opacity: 1, scale: 1 },
-              exit: { opacity: 0 },
-              transition: { duration: 0.35 }
-            },
-            currentImg
-          ) }),
-          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-3 right-3 bg-black/50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200", children: /* @__PURE__ */ jsx(ZoomIn, { className: "w-4 h-4 text-white" }) }),
-          item.isFeatured && /* @__PURE__ */ jsx("div", { className: "absolute top-3 left-3 bg-[#C9A84C] text-black text-xs font-bold px-2 py-1 rounded-full", children: "Featured" }),
-          hasMultiple && /* @__PURE__ */ jsxs("div", { className: "absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full", children: [
-            currentImg + 1,
-            "/",
-            images.length
-          ] }),
-          hasMultiple && isHovered && /* @__PURE__ */ jsxs(Fragment, { children: [
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                onClick: prev,
-                className: "absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full p-1.5 transition-all",
-                children: /* @__PURE__ */ jsx(ChevronLeft, { className: "w-4 h-4 text-white" })
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              "button",
-              {
-                onClick: next,
-                className: "absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full p-1.5 transition-all",
-                children: /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4 text-white" })
-              }
-            )
-          ] }),
-          hasMultiple && /* @__PURE__ */ jsx("div", { className: "absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1", children: images.map((_, i) => /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: (e) => {
-                e.stopPropagation();
-                setCurrentImg(i);
-              },
-              className: `h-1.5 rounded-full transition-all ${i === currentImg ? "bg-[#C9A84C] w-3" : "bg-white/50 w-1.5"}`
-            },
-            i
-          )) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "p-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-2 mb-2", children: [
-            /* @__PURE__ */ jsx("h3", { className: "text-foreground font-semibold text-sm leading-tight line-clamp-2", children: item.title }),
-            /* @__PURE__ */ jsx(Badge, { variant: "outline", className: "text-[#C9A84C] border-[#C9A84C]/40 text-xs shrink-0", children: item.category })
-          ] }),
-          item.description && /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs line-clamp-2 mb-2", children: item.description }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-0.5", children: [
-              /* @__PURE__ */ jsx(Tag, { className: "w-2.5 h-2.5" }),
-              tag
-            ] }, tag)) }),
-            item.geoTarget && /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-0.5", children: [
-              /* @__PURE__ */ jsx(MapPin, { className: "w-2.5 h-2.5" }),
-              item.geoTarget.split(",")[0]
-            ] })
-          ] })
-        ] })
-      ]
-    }
-  );
-}
-function Lightbox({
-  item,
-  initialIndex,
-  onClose
-}) {
-  const [current, setCurrent] = useState(initialIndex);
-  const images = item.images.length > 0 ? item.images : item.coverImage ? [{ id: 0, imageUrl: item.coverImage, altText: item.title, caption: null, sortOrder: 0 }] : [];
-  const prev = useCallback(() => setCurrent((i) => (i - 1 + images.length) % images.length), [images.length]);
-  const next = useCallback(() => setCurrent((i) => (i + 1) % images.length), [images.length]);
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, prev, next]);
-  const tags = (() => {
-    try {
-      return item.tags ? JSON.parse(item.tags) : [];
-    } catch {
-      return [];
-    }
-  })();
-  return /* @__PURE__ */ jsxs(
-    motion.div,
-    {
-      className: "fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4",
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
-      exit: { opacity: 0 },
-      onClick: onClose,
-      children: [
-        /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: "relative w-full max-w-6xl flex flex-col lg:flex-row gap-4 items-center",
-            onClick: (e) => e.stopPropagation(),
-            children: [
-              /* @__PURE__ */ jsxs("div", { className: "relative flex-1 min-h-0", children: [
-                /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
-                  motion.img,
-                  {
-                    src: images[current]?.imageUrl,
-                    alt: images[current]?.altText || item.title,
-                    className: "w-full max-h-[75vh] object-contain rounded-xl",
-                    initial: { opacity: 0, scale: 0.97 },
-                    animate: { opacity: 1, scale: 1 },
-                    exit: { opacity: 0, scale: 0.97 },
-                    transition: { duration: 0.25 }
-                  },
-                  current
-                ) }),
-                images.length > 1 && /* @__PURE__ */ jsxs(Fragment, { children: [
-                  /* @__PURE__ */ jsx("button", { onClick: prev, className: "absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#C9A84C] hover:text-black text-white rounded-full p-3 transition-all", children: /* @__PURE__ */ jsx(ChevronLeft, { className: "w-5 h-5" }) }),
-                  /* @__PURE__ */ jsx("button", { onClick: next, className: "absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#C9A84C] hover:text-black text-white rounded-full p-3 transition-all", children: /* @__PURE__ */ jsx(ChevronRight, { className: "w-5 h-5" }) }),
-                  /* @__PURE__ */ jsxs("div", { className: "absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-sm px-3 py-1 rounded-full", children: [
-                    current + 1,
-                    " / ",
-                    images.length
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "lg:w-72 bg-card/95 backdrop-blur-sm rounded-xl p-5 border border-border", children: [
-                /* @__PURE__ */ jsx(Badge, { className: "bg-[#C9A84C]/20 text-[#C9A84C] border-[#C9A84C]/30 mb-3", children: item.category }),
-                /* @__PURE__ */ jsx("h2", { className: "text-foreground font-bold text-lg mb-2", children: item.title }),
-                item.description && /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-3", children: item.description }),
-                images[current]?.caption && /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs italic mb-3 border-l-2 border-gold/40 pl-2", children: images[current].caption }),
-                tags.length > 0 && /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5 mb-3", children: tags.map((tag) => /* @__PURE__ */ jsx("span", { className: "bg-secondary text-secondary-foreground text-xs px-2 py-0.5 rounded-full", children: tag }, tag)) }),
-                item.geoTarget && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 text-muted-foreground text-xs", children: [
-                  /* @__PURE__ */ jsx(MapPin, { className: "w-3 h-3" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    "Ships to: ",
-                    item.geoTarget
-                  ] })
-                ] }),
-                images.length > 1 && /* @__PURE__ */ jsx("div", { className: "mt-4 flex flex-wrap gap-1.5", children: images.map((img, i) => /* @__PURE__ */ jsx(
-                  "button",
-                  {
-                    onClick: () => setCurrent(i),
-                    className: `w-12 h-12 rounded-md overflow-hidden border-2 transition-all ${i === current ? "border-[#C9A84C]" : "border-transparent opacity-60 hover:opacity-100"}`,
-                    children: /* @__PURE__ */ jsx("img", { src: img.imageUrl, alt: "", className: "w-full h-full object-cover" })
-                  },
-                  img.id
-                )) })
-              ] })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: onClose,
-            className: "absolute top-4 right-4 bg-card/90 hover:bg-secondary text-foreground rounded-full p-2 transition-all border border-border",
-            children: /* @__PURE__ */ jsx(X$1, { className: "w-5 h-5" })
-          }
-        )
-      ]
-    }
-  );
-}
-const STATIC_CATEGORIES = [
-  "All",
-  "Hunting Wear",
-  "Sports Wear",
-  "Ski Wear",
-  "Tech Wear",
-  "Streetwear",
-  "Martial Arts Wear"
 ];
-function CategoryFilterBar({
-  active,
-  onChange,
-  counts
-}) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      className: "flex gap-2 overflow-x-auto pb-2",
-      style: { scrollbarWidth: "none", msOverflowStyle: "none" },
-      children: STATIC_CATEGORIES.map((cat) => {
-        const count = cat === "All" ? Object.values(counts).reduce((a, b) => a + b, 0) : counts[cat] ?? 0;
-        const isActive = active === cat;
-        return /* @__PURE__ */ jsxs(
-          motion.button,
-          {
-            onClick: () => onChange(cat),
-            whileTap: { scale: 0.95 },
-            className: `relative shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${isActive ? "bg-gold text-white shadow-lg shadow-gold/20" : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 border border-border"}`,
-            children: [
-              cat,
-              count > 0 && /* @__PURE__ */ jsxs("span", { className: `ml-1.5 text-xs ${isActive ? "text-white/70" : "text-muted-foreground"}`, children: [
-                "(",
-                count,
-                ")"
-              ] })
-            ]
-          },
-          cat
-        );
-      })
-    }
-  );
-}
-function EmptyState$1({ category }) {
-  return /* @__PURE__ */ jsxs("div", { className: "col-span-full flex flex-col items-center justify-center py-24 text-center", children: [
-    /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Filter, { className: "w-7 h-7 text-muted-foreground" }) }),
-    /* @__PURE__ */ jsx("h3", { className: "text-foreground font-semibold text-lg mb-2", children: category === "All" ? "No portfolio items yet" : `No ${category} items yet` }),
-    /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm max-w-xs", children: "Portfolio items will appear here once they are added via the admin panel." })
-  ] });
-}
 function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [search, setSearch] = useState("");
-  const [lightboxItem, setLightboxItem] = useState(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const { data: items = [], isLoading } = trpc.portfolio.list.useQuery(
-    { category: activeCategory === "All" ? void 0 : activeCategory },
-    { staleTime: 3e4 }
-  );
-  const { data: allItems = [] } = trpc.portfolio.list.useQuery(void 0, { staleTime: 6e4 });
-  const counts = allItems.reduce((acc, item) => {
-    acc[item.category] = (acc[item.category] ?? 0) + 1;
-    return acc;
-  }, {});
-  const filtered = search.trim() ? items.filter(
-    (item) => item.title.toLowerCase().includes(search.toLowerCase()) || item.description?.toLowerCase().includes(search.toLowerCase()) || item.tags?.toLowerCase().includes(search.toLowerCase())
-  ) : items;
-  const openLightbox = useCallback((item, index) => {
-    setLightboxItem(item);
-    setLightboxIndex(index);
-  }, []);
-  const closeLightbox = useCallback(() => setLightboxItem(null), []);
   return /* @__PURE__ */ jsxs(PageWrapper, { children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Portfolio | Custom Apparel Manufacturing | Sialkot Sample Masters",
-        description: "Browse our portfolio of custom hunting wear, sportswear, ski wear, techwear, streetwear, and martial arts apparel manufactured in Sialkot, Pakistan for global brands.",
-        keywords: "custom apparel portfolio, streetwear manufacturer portfolio, hunting wear manufacturer, ski wear manufacturer Pakistan, techwear manufacturer Sialkot, martial arts wear manufacturer",
-        canonical: "/portfolio",
-        breadcrumbs: [
-          { name: "Home", item: "/" },
-          { name: "Portfolio", item: "/portfolio" }
-        ]
+        title: "Portfolio | Xelent Huntgear Manufacturing Work",
+        description: "View our portfolio of custom hunting apparel manufacturing. Waterproof jackets, camo systems, tactical gear produced for global brands. B2B case studies.",
+        canonical: "/portfolio"
       }
     ),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
-      /* @__PURE__ */ jsx(Navbar, {}),
-      /* @__PURE__ */ jsxs("section", { className: "relative pt-16 pb-16 overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,168,76,0.08),transparent_60%)]" }),
-        /* @__PURE__ */ jsxs("div", { className: "container max-w-7xl mx-auto px-4 relative", children: [
-          /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
-            /* @__PURE__ */ jsx("span", { className: "inline-block text-[#C9A84C] text-xs font-bold tracking-[0.25em] uppercase mb-4 border border-[#C9A84C]/30 px-4 py-1.5 rounded-full", children: "Our Work" }),
-            /* @__PURE__ */ jsx(
-              "h1",
-              {
-                className: "text-4xl md:text-6xl font-bold text-foreground mb-4",
-                style: { fontFamily: "'Playfair Display', serif" },
-                children: "Product Portfolio"
-              }
-            ),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg max-w-2xl mx-auto", children: "Explore our manufacturing capabilities across 6 apparel categories. Every piece crafted in Sialkot, Pakistan for global brands." })
-          ] }) }),
-          /* @__PURE__ */ jsx(FadeIn, { delay: 0.1, children: /* @__PURE__ */ jsxs("div", { className: "relative max-w-md mx-auto mb-8", children: [
-            /* @__PURE__ */ jsx(Search, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
-            /* @__PURE__ */ jsx(
-              Input,
-              {
-                value: search,
-                onChange: (e) => setSearch(e.target.value),
-                placeholder: "Search portfolio...",
-                className: "pl-10 bg-secondary border-border text-foreground placeholder:text-muted-foreground focus:border-gold rounded-full"
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsx(FadeIn, { delay: 0.15, children: /* @__PURE__ */ jsx(
-            CategoryFilterBar,
-            {
-              active: activeCategory,
-              onChange: (cat) => {
-                setActiveCategory(cat);
-                setSearch("");
-              },
-              counts
-            }
-          ) })
-        ] })
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[60vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.portfolioBg, alt: "Portfolio", className: "w-full h-full object-cover opacity-40" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" })
       ] }),
-      /* @__PURE__ */ jsx("section", { className: "pb-24", children: /* @__PURE__ */ jsxs("div", { className: "container max-w-7xl mx-auto px-4", children: [
-        isLoading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx("div", { className: "aspect-square rounded-xl bg-secondary animate-pulse" }, i)) }) : filtered.length === 0 ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1", children: /* @__PURE__ */ jsx(EmptyState$1, { category: activeCategory }) }) : /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4", children: filtered.map((item) => /* @__PURE__ */ jsx(AnimatedChild, { children: /* @__PURE__ */ jsx(PortfolioCard, { item, onOpenLightbox: openLightbox }) }, item.id)) }),
-        !isLoading && filtered.length > 0 && /* @__PURE__ */ jsxs("p", { className: "text-center text-muted-foreground text-sm mt-8", children: [
-          "Showing ",
-          filtered.length,
-          " item",
-          filtered.length !== 1 ? "s" : "",
-          activeCategory !== "All" ? ` in ${activeCategory}` : ""
-        ] })
-      ] }) }),
-      /* @__PURE__ */ jsx("section", { className: "py-20 border-t border-border", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "container max-w-3xl mx-auto px-4 text-center", children: [
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[60vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
         /* @__PURE__ */ jsx(
-          "h2",
+          motion.p,
           {
-            className: "text-3xl font-bold text-foreground mb-4",
-            style: { fontFamily: "'Playfair Display', serif" },
-            children: "Ready to Create Your Collection?"
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "Our Work"
           }
         ),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "Get a custom sample or bulk quote for any of our 6 apparel categories. Low MOQ, fast turnaround, worldwide shipping." }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              onClick: () => window.location.href = "/rfq",
-              className: "bg-gold hover:bg-gold-dark text-white font-semibold px-8",
-              children: "Request a Quote"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              variant: "outline",
-              onClick: () => window.location.href = "/contact",
-              className: "border-border text-foreground hover:bg-secondary px-8",
-              children: "Contact Us"
-            }
-          )
-        ] })
-      ] }) }) }),
-      /* @__PURE__ */ jsx(Footer, {})
+        /* @__PURE__ */ jsxs(
+          motion.h1,
+          {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            children: [
+              "Manufacturing",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Portfolio" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "Selected projects showcasing our expertise in hunting apparel manufacturing. From waterproof shells to custom camo systems, see what we've built for brands worldwide."
+          }
+        )
+      ] }) })
     ] }),
-    /* @__PURE__ */ jsx(AnimatePresence, { children: lightboxItem && /* @__PURE__ */ jsx(Lightbox, { item: lightboxItem, initialIndex: lightboxIndex, onClose: closeLightbox }) })
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#0a0a0a]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", stagger: 0.1, children: portfolioItems.map((item) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300", children: [
+      /* @__PURE__ */ jsxs("div", { className: "relative aspect-[4/3] overflow-hidden", children: [
+        /* @__PURE__ */ jsx(
+          "img",
+          {
+            src: item.image,
+            alt: item.title,
+            className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1", children: item.category }) }),
+        /* @__PURE__ */ jsx("div", { className: "absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity", children: /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00] flex items-center justify-center", children: /* @__PURE__ */ jsx(ExternalLink, { className: "w-5 h-5 text-black" }) }) })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-white/40 text-xs uppercase tracking-wider mb-2", children: item.client }),
+        /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-xl uppercase mb-4 group-hover:text-[#ff6b00] transition-colors", children: item.title }),
+        /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: item.tags.map((tag) => /* @__PURE__ */ jsx("span", { className: "text-white/50 text-xs border border-white/10 px-2 py-1", children: tag }, tag)) })
+      ] })
+    ] }) }, item.id)) }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "py-24 bg-[#0d0d0d] relative overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-5", children: /* @__PURE__ */ jsx("div", { className: "absolute inset-0", style: {
+        backgroundImage: `radial-gradient(circle at 2px 2px, #ff6b00 1px, transparent 0)`,
+        backgroundSize: "40px 40px"
+      } }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6", children: [
+          "Ready to Create Your",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Next Collection?" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Let's discuss your hunting apparel manufacturing needs. Get a free quote with 7-day sample turnaround." }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
+          "Start Your Project ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
+        ] }) })
+      ] })
+    ] })
   ] });
 }
 const posts = [
+  // Hunting Apparel Focus - New Posts
+  {
+    slug: "realtree-vs-mossy-oak-guide",
+    title: "Realtree vs Mossy Oak: Complete Guide for Hunting Apparel Brands",
+    excerpt: "Choosing between America's two biggest camouflage brands for your hunting apparel line. We break down licensing costs, terrain effectiveness, and ROI to help you make the right decision.",
+    category: "Camo Guide",
+    readTime: "15 min read",
+    date: "March 16, 2026",
+    image: IMAGES.catHunting,
+    featured: true
+  },
+  {
+    slug: "scent-control-technology",
+    title: "Scent-Control Technology in Hunting Apparel: Silver-Ion vs Carbon",
+    excerpt: "Compare scent-control technologies for hunting clothing. Silver-ion antimicrobial vs activated carbon vs zeolite. Learn which technology works best for your hunting apparel line.",
+    category: "Technology Guide",
+    readTime: "12 min read",
+    date: "March 16, 2026",
+    image: IMAGES.catTechwear,
+    featured: false
+  },
+  {
+    slug: "waterproof-ratings-guide",
+    title: "Waterproof Ratings Explained: 10K vs 20K for Hunting Jackets",
+    excerpt: "Understand waterproof ratings for hunting apparel. Learn what 10,000mm vs 20,000mm means, hydrostatic head testing, and which rating is right for different hunting conditions.",
+    category: "Technical Guide",
+    readTime: "10 min read",
+    date: "March 16, 2026",
+    image: IMAGES.capWaterproof,
+    featured: false
+  },
   {
     slug: "how-to-find-streetwear-manufacturer-pakistan",
     title: "How to Find a Reliable Custom Streetwear Manufacturer in Pakistan",
@@ -3772,27 +2981,27 @@ function Blog() {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
+    /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-16 bg-[#111111] border-b border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
       /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
         "The Sialkot Sample Masters",
         /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Manufacturing Blog" })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
     ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "border-b border-border bg-card", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx("section", { className: "border-b border-white/10 bg-[#111111]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
       {
-        className: `shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All" ? "bg-gold text-background" : "border border-border text-muted-foreground hover:border-gold/30 hover:text-foreground"}`,
+        className: `shrink-0 px-4 py-1.5 rounded-sm text-xs font-condensed font-semibold tracking-widest uppercase transition-colors ${cat === "All" ? "bg-[#ff6b00] text-background" : "border border-white/10 text-white/70 hover:border-[#ff6b00]/30 hover:text-foreground"}`,
         children: cat
       },
       cat
     )) }) }) }),
     /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
       featured && /* @__PURE__ */ jsxs("div", { className: "mb-16", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
-        /* @__PURE__ */ jsx(Link, { href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
+        /* @__PURE__ */ jsx(Link$1, { href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer", children: [
           /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
             /* @__PURE__ */ jsx(
               "img",
@@ -3803,27 +3012,27 @@ function Blog() {
               }
             ),
             /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-transparent to-black/40" }),
-            /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 bg-gold text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
+            /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 bg-[#ff6b00] text-background text-[10px] font-condensed font-bold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: "Featured" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-gold text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed font-semibold tracking-widest uppercase", children: featured.category }),
               /* @__PURE__ */ jsx("span", { className: "text-border", children: "·" }),
-              /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
                 /* @__PURE__ */ jsx(Clock, { className: "w-3 h-3" }),
                 " ",
                 featured.readTime
               ] })
             ] }),
-            /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors leading-tight", children: featured.title }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed mb-6", children: featured.excerpt }),
+            /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4 group-hover:text-[#ff6b00] transition-colors leading-tight", children: featured.title }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm leading-relaxed mb-6", children: featured.excerpt }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
                 /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
                 " ",
                 featured.date
               ] }),
-              /* @__PURE__ */ jsxs("span", { className: "text-gold font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-[#ff6b00] font-condensed font-semibold text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all", children: [
                 "Read Article ",
                 /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
               ] })
@@ -3831,7 +3040,7 @@ function Blog() {
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { className: "group bg-card border border-border rounded-sm overflow-hidden hover:border-gold/30 transition-all cursor-pointer h-full flex flex-col", children: [
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link$1, { href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { className: "group bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer h-full flex flex-col", children: [
         /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden aspect-[16/9]", children: [
           /* @__PURE__ */ jsx(
             "img",
@@ -3843,18 +3052,18 @@ function Blog() {
             }
           ),
           /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { className: "bg-background/80 backdrop-blur-sm text-gold text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
+          /* @__PURE__ */ jsx("div", { className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { className: "bg-[#0d0d0d]/80 backdrop-blur-sm text-[#ff6b00] text-[10px] font-condensed font-semibold tracking-widest uppercase px-2 py-0.5 rounded-sm", children: post.category }) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "p-5 flex flex-col flex-1", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors leading-tight flex-1", children: post.title }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between pt-3 border-t border-border mt-auto", children: [
-            /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+          /* @__PURE__ */ jsx("h3", { className: "font-serif text-lg font-bold text-foreground mb-3 group-hover:text-[#ff6b00] transition-colors leading-tight flex-1", children: post.title }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm leading-relaxed mb-4 line-clamp-2", children: post.excerpt }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between pt-3 border-t border-white/10 mt-auto", children: [
+            /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
               /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
               " ",
               post.date
             ] }),
-            /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
               /* @__PURE__ */ jsx(Clock, { className: "w-3 h-3" }),
               " ",
               post.readTime
@@ -3985,8 +3194,8 @@ function BlogPost() {
   if (!post) {
     return /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center pt-20", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
       /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: "Article Not Found" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6", children: "The article you're looking for doesn't exist." }),
-      /* @__PURE__ */ jsx(Link, { href: "/blog", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: "Back to Blog" }) })
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "The article you're looking for doesn't exist." }),
+      /* @__PURE__ */ jsx(Link$1, { href: "/blog", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: "Back to Blog" }) })
     ] }) });
   }
   const renderContent = (content) => {
@@ -3998,10 +3207,10 @@ function BlogPost() {
         return /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-wide text-lg mt-6 mb-3", children: line.slice(4) }, i);
       }
       if (line.startsWith("- ")) {
-        return /* @__PURE__ */ jsx("li", { className: "text-muted-foreground leading-relaxed ml-4 list-disc", children: line.slice(2) }, i);
+        return /* @__PURE__ */ jsx("li", { className: "text-white/70 leading-relaxed ml-4 list-disc", children: line.slice(2) }, i);
       }
       if (line.match(/^\d+\./)) {
-        return /* @__PURE__ */ jsx("li", { className: "text-muted-foreground leading-relaxed ml-4 list-decimal", children: line.replace(/^\d+\.\s/, "") }, i);
+        return /* @__PURE__ */ jsx("li", { className: "text-white/70 leading-relaxed ml-4 list-decimal", children: line.replace(/^\d+\.\s/, "") }, i);
       }
       if (line.startsWith("**") && line.endsWith("**")) {
         return /* @__PURE__ */ jsx("strong", { className: "text-foreground font-semibold", children: line.slice(2, -2) }, i);
@@ -4018,14 +3227,14 @@ function BlogPost() {
           parts.push(line.slice(lastIndex, match.index));
         }
         parts.push(
-          /* @__PURE__ */ jsx(Link, { href: match[2], className: "text-gold hover:underline", children: match[1] }, match.index)
+          /* @__PURE__ */ jsx(Link$1, { href: match[2], className: "text-[#ff6b00] hover:underline", children: match[1] }, match.index)
         );
         lastIndex = match.index + match[0].length;
       }
       if (lastIndex < line.length) {
         parts.push(line.slice(lastIndex));
       }
-      return /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: parts.length > 0 ? parts : line }, i);
+      return /* @__PURE__ */ jsx("p", { className: "text-white/70 leading-relaxed", children: parts.length > 0 ? parts : line }, i);
     });
   };
   return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -4045,20 +3254,20 @@ function BlogPost() {
         className: "relative pt-32 pb-16 overflow-hidden",
         style: { backgroundImage: `url(${post.image})`, backgroundSize: "cover", backgroundPosition: "center" },
         children: [
-          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-background/85" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#0d0d0d]/85" }),
           /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-            /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-6", children: [
+            /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-6", children: [
               /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
               " Back to Blog"
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
-              /* @__PURE__ */ jsx("span", { className: "bg-gold text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: post.category }),
-              /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-background text-xs font-condensed font-bold tracking-widest uppercase px-3 py-1 rounded-sm", children: post.category }),
+              /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
                 /* @__PURE__ */ jsx(Clock, { className: "w-3 h-3" }),
                 " ",
                 post.readTime
               ] }),
-              /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground text-xs flex items-center gap-1", children: [
+              /* @__PURE__ */ jsxs("span", { className: "text-white/70 text-xs flex items-center gap-1", children: [
                 /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
                 " ",
                 post.date
@@ -4072,17 +3281,17 @@ function BlogPost() {
     /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-4xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-12", children: [
       /* @__PURE__ */ jsx("article", { className: "lg:col-span-2 prose-custom", children: /* @__PURE__ */ jsx("div", { className: "space-y-2", children: renderContent(post.content) }) }),
       /* @__PURE__ */ jsxs("aside", { className: "space-y-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-sm p-6", children: [
           /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Ready to Manufacture?" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-4", children: "Get a free quote from Pakistan's leading custom streetwear manufacturer." }),
-          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Get a free quote from Pakistan's leading custom streetwear manufacturer." }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm", children: [
             "Request Quote ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-sm p-6", children: [
           /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Our Services" }),
-          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Custom Manufacturing", "Private Label", "Low MOQ (50 pcs)", "Bulk Orders", "Design Consultation"].map((s2) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(Link, { href: "/services", className: "text-muted-foreground hover:text-gold text-sm transition-colors flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Custom Manufacturing", "Private Label", "Low MOQ (50 pcs)", "Bulk Orders", "Design Consultation"].map((s2) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(Link$1, { href: "/services", className: "text-white/70 hover:text-[#ff6b00] text-sm transition-colors flex items-center gap-2", children: [
             /* @__PURE__ */ jsx("span", { className: "w-3 h-px bg-border" }),
             s2
           ] }) }, s2)) })
@@ -4091,758 +3300,382 @@ function BlogPost() {
     ] }) }) })
   ] });
 }
-function Label({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    LabelPrimitive.Root,
-    {
-      "data-slot": "label",
-      className: cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function Textarea({
-  className,
-  onKeyDown,
-  onCompositionStart,
-  onCompositionEnd,
-  ...props
-}) {
-  const dialogComposition = useDialogComposition();
-  const {
-    onCompositionStart: handleCompositionStart,
-    onCompositionEnd: handleCompositionEnd,
-    onKeyDown: handleKeyDown
-  } = useComposition({
-    onKeyDown: (e) => {
-      const isComposing = e.nativeEvent.isComposing || dialogComposition.justEndedComposing();
-      if (e.key === "Enter" && !e.shiftKey && isComposing) {
-        return;
-      }
-      onKeyDown?.(e);
-    },
-    onCompositionStart: (e) => {
-      dialogComposition.setComposing(true);
-      onCompositionStart?.(e);
-    },
-    onCompositionEnd: (e) => {
-      dialogComposition.markCompositionEnd();
-      setTimeout(() => {
-        dialogComposition.setComposing(false);
-      }, 100);
-      onCompositionEnd?.(e);
-    }
-  });
-  return /* @__PURE__ */ jsx(
-    "textarea",
-    {
-      "data-slot": "textarea",
-      className: cn(
-        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className
-      ),
-      onCompositionStart: handleCompositionStart,
-      onCompositionEnd: handleCompositionEnd,
-      onKeyDown: handleKeyDown,
-      ...props
-    }
-  );
-}
-function Select({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Root, { "data-slot": "select", ...props });
-}
-function SelectValue({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Value, { "data-slot": "select-value", ...props });
-}
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs(
-    SelectPrimitive.Trigger,
-    {
-      "data-slot": "select-trigger",
-      "data-size": size,
-      className: cn(
-        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      ),
-      ...props,
-      children: [
-        children,
-        /* @__PURE__ */ jsx(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4 opacity-50" }) })
-      ]
-    }
-  );
-}
-function SelectContent({
-  className,
-  children,
-  position = "popper",
-  align = "center",
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Portal, { children: /* @__PURE__ */ jsxs(
-    SelectPrimitive.Content,
-    {
-      "data-slot": "select-content",
-      className: cn(
-        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
-        position === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      ),
-      position,
-      align,
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx(SelectScrollUpButton, {}),
-        /* @__PURE__ */ jsx(
-          SelectPrimitive.Viewport,
-          {
-            className: cn(
-              "p-1",
-              position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
-            ),
-            children
-          }
-        ),
-        /* @__PURE__ */ jsx(SelectScrollDownButton, {})
-      ]
-    }
-  ) });
-}
-function SelectItem({
-  className,
-  children,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs(
-    SelectPrimitive.Item,
-    {
-      "data-slot": "select-item",
-      className: cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
-        className
-      ),
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx("span", { className: "absolute right-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ jsx(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ jsx(CheckIcon, { className: "size-4" }) }) }),
-        /* @__PURE__ */ jsx(SelectPrimitive.ItemText, { children })
-      ]
-    }
-  );
-}
-function SelectScrollUpButton({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SelectPrimitive.ScrollUpButton,
-    {
-      "data-slot": "select-scroll-up-button",
-      className: cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsx(ChevronUpIcon, { className: "size-4" })
-    }
-  );
-}
-function SelectScrollDownButton({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SelectPrimitive.ScrollDownButton,
-    {
-      "data-slot": "select-scroll-down-button",
-      className: cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4" })
-    }
-  );
-}
 const productTypes = [
-  "Hunting Wear",
-  "Sports Wear",
-  "Ski Wear",
-  "Tech Wear",
-  "Streetwear",
-  "Martial Arts Wear",
-  "Mixed / Multiple Categories",
-  "Other (specify in notes)"
+  "Hunting Jackets",
+  "Hunting Pants",
+  "Camo Gear",
+  "Base Layers",
+  "Tactical Wear",
+  "Outdoor Accessories"
 ];
-const quantities = [
-  "50–100 pieces",
-  "100–300 pieces",
-  "300–500 pieces",
-  "500–1,000 pieces",
-  "1,000–5,000 pieces",
-  "5,000–10,000 pieces",
-  "10,000+ pieces"
-];
-const timelines = [
-  "ASAP (Rush Order)",
-  "2–4 weeks",
-  "4–6 weeks",
-  "6–8 weeks",
-  "8–12 weeks",
-  "Flexible / No Rush"
-];
-const services = [
-  "Custom Manufacturing",
-  "Private Label",
-  "Design Consultation",
-  "Sample Development",
-  "Bulk Production"
-];
-const benefits = [
-  { icon: Clock, text: "Response within 24 hours" },
-  { icon: Package, text: "Free sample assessment" },
-  { icon: Shield, text: "NDA protected — your designs are safe" },
-  { icon: CheckCircle, text: "No obligation quote" }
+const orderQuantities = [
+  "50-100 pieces",
+  "100-500 pieces",
+  "500-1000 pieces",
+  "1000+ pieces"
 ];
 function RFQ() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    companyName: "",
-    contactName: "",
-    email: "",
-    phone: "",
-    country: "",
-    website: "",
-    productType: "",
-    quantity: "",
-    timeline: "",
-    serviceType: "",
-    fabricPreference: "",
-    customizationType: "",
-    budgetRange: "",
-    description: "",
-    howHeard: ""
-  });
-  const submitRFQ = trpc.rfq.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-      toast.success("Your quote request has been submitted! We'll respond within 24 hours.");
-    },
-    onError: (err) => {
-      toast.error("Failed to submit. Please try again or contact us directly.");
-    }
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.companyName || !form.email || !form.productType || !form.quantity) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-    submitRFQ.mutate(form);
-  };
-  const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
-  if (submitted) {
-    return /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(SEOHead, { title: "Quote Request Submitted | Sialkot Sample Masters", canonical: "/rfq" }),
-      /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center pt-20 px-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-lg text-center", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-20 h-20 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsx(CheckCircle, { className: "w-10 h-10 text-gold" }) }),
-        /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: "Quote Request Received!" }),
-        /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground mb-4", children: [
-          "Thank you for reaching out to Sialkot Sample Masters. Our B2B specialist will review your requirements and respond within ",
-          /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "24 business hours" }),
-          "."
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-8", children: "Check your email for a confirmation. In the meantime, feel free to explore our portfolio and services." }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-          /* @__PURE__ */ jsx("a", { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold/30 text-gold hover:bg-gold/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent", children: "View Portfolio" }) }),
-          /* @__PURE__ */ jsx("a", { href: "https://wa.me/923022922242", target: "_blank", rel: "noopener noreferrer", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: "WhatsApp Us Now" }) })
-        ] })
-      ] }) })
-    ] });
-  }
-  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
-    /* @__PURE__ */ jsx(
-      SEOHead,
-      {
-        title: "Request a Free Quote | Custom Apparel Manufacturing Pakistan",
-        description: "Request a free, no-obligation quote from Sialkot Sample Masters — Pakistan's leading custom apparel manufacturer. Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. Detailed proposal within 24 hours.",
-        keywords: "custom apparel quote Pakistan, hunting wear manufacturer quote, ski wear manufacturer Pakistan, sports wear quote Sialkot, B2B apparel quote Pakistan, martial arts wear manufacturer quote",
-        canonical: "/rfq"
-      }
-    ),
-    /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Get Started" }),
-      /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
-        "Request a",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Free Quote" })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Fill out the form below and receive a detailed manufacturing proposal within 24 hours. No obligation, completely free." })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-12", children: [
-      /* @__PURE__ */ jsx("div", { className: "lg:col-span-2", children: /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-sm mb-5 pb-3 border-b border-border", children: "Company Information" }),
-          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Company Name ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.companyName,
-                  onChange: (e) => update("companyName", e.target.value),
-                  placeholder: "Your brand or company name",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold",
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Contact Name ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.contactName,
-                  onChange: (e) => update("contactName", e.target.value),
-                  placeholder: "Your full name",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold",
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Email Address ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  type: "email",
-                  value: form.email,
-                  onChange: (e) => update("email", e.target.value),
-                  placeholder: "your@email.com",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold",
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Phone / WhatsApp" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.phone,
-                  onChange: (e) => update("phone", e.target.value),
-                  placeholder: "+1 234 567 8900",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Country" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.country,
-                  onChange: (e) => update("country", e.target.value),
-                  placeholder: "United States",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Website / Instagram" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.website,
-                  onChange: (e) => update("website", e.target.value),
-                  placeholder: "https://yourbrand.com",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-sm mb-5 pb-3 border-b border-border", children: "Order Details" }),
-          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Product Type ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
-              /* @__PURE__ */ jsxs(Select, { onValueChange: (v) => update("productType", v), children: [
-                /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-background border-border text-foreground focus:border-gold", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select product type" }) }),
-                /* @__PURE__ */ jsx(SelectContent, { className: "bg-card border-border", children: productTypes.map((p) => /* @__PURE__ */ jsx(SelectItem, { value: p, className: "text-foreground hover:bg-secondary", children: p }, p)) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Order Quantity ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
-              /* @__PURE__ */ jsxs(Select, { onValueChange: (v) => update("quantity", v), children: [
-                /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-background border-border text-foreground focus:border-gold", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select quantity range" }) }),
-                /* @__PURE__ */ jsx(SelectContent, { className: "bg-card border-border", children: quantities.map((q) => /* @__PURE__ */ jsx(SelectItem, { value: q, className: "text-foreground hover:bg-secondary", children: q }, q)) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Required Timeline" }),
-              /* @__PURE__ */ jsxs(Select, { onValueChange: (v) => update("timeline", v), children: [
-                /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-background border-border text-foreground focus:border-gold", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select timeline" }) }),
-                /* @__PURE__ */ jsx(SelectContent, { className: "bg-card border-border", children: timelines.map((t2) => /* @__PURE__ */ jsx(SelectItem, { value: t2, className: "text-foreground hover:bg-secondary", children: t2 }, t2)) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Service Required" }),
-              /* @__PURE__ */ jsxs(Select, { onValueChange: (v) => update("serviceType", v), children: [
-                /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-background border-border text-foreground focus:border-gold", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select service" }) }),
-                /* @__PURE__ */ jsx(SelectContent, { className: "bg-card border-border", children: services.map((s2) => /* @__PURE__ */ jsx(SelectItem, { value: s2, className: "text-foreground hover:bg-secondary", children: s2 }, s2)) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Fabric Preference" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.fabricPreference,
-                  onChange: (e) => update("fabricPreference", e.target.value),
-                  placeholder: "e.g., 400 GSM French Terry, 100% Cotton",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Customization Type" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.customizationType,
-                  onChange: (e) => update("customizationType", e.target.value),
-                  placeholder: "e.g., Embroidery, Screen Print, DTG",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-sm mb-5 pb-3 border-b border-border", children: "Additional Information" }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Project Description" }),
-              /* @__PURE__ */ jsx(
-                Textarea,
-                {
-                  value: form.description,
-                  onChange: (e) => update("description", e.target.value),
-                  placeholder: "Describe your project, design requirements, special features, or any other relevant details...",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold min-h-[120px]"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Budget Range (USD)" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.budgetRange,
-                  onChange: (e) => update("budgetRange", e.target.value),
-                  placeholder: "e.g., $5,000 – $10,000",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "How did you hear about us?" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.howHeard,
-                  onChange: (e) => update("howHeard", e.target.value),
-                  placeholder: "Google, Instagram, referral, etc.",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs(
-          Button,
-          {
-            type: "submit",
-            disabled: submitRFQ.isPending,
-            className: "w-full bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm py-4 h-auto rounded-sm",
-            children: [
-              submitRFQ.isPending ? "Submitting..." : "Submit Quote Request",
-              !submitRFQ.isPending && /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
-            ]
-          }
-        )
-      ] }) }),
-      /* @__PURE__ */ jsxs("aside", { className: "space-y-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "What Happens Next?" }),
-          /* @__PURE__ */ jsx("div", { className: "space-y-4", children: benefits.map((b) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx(b.icon, { className: "w-4 h-4 text-gold shrink-0 mt-0.5" }),
-            /* @__PURE__ */ jsx("span", { className: "text-foreground text-sm", children: b.text })
-          ] }, b.text)) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Prefer to Chat?" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-4", children: "Reach us directly on WhatsApp for faster responses." }),
-          /* @__PURE__ */ jsxs(
-            "a",
-            {
-              href: "https://wa.me/923022922242?text=Hello%20Sialkot%20Sample%20Masters!%20I%20need%20a%20quote%20for%20custom%20streetwear.",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              className: "flex items-center gap-2 bg-[#25D366] text-white font-condensed font-bold tracking-widest uppercase text-xs px-4 py-3 rounded-sm hover:bg-[#1ea855] transition-colors",
-              children: [
-                /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "w-4 h-4 fill-white shrink-0", children: /* @__PURE__ */ jsx("path", { d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" }) }),
-                "Chat on WhatsApp"
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-6", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Our Capabilities" }),
-          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: [
-            "MOQ from 50 pieces",
-            "Sample in 7–10 days",
-            "Bulk delivery in 25–35 days",
-            "50,000+ units/month capacity",
-            "ISO 9001 certified",
-            "Worldwide shipping"
-          ].map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-gold shrink-0" }),
-            /* @__PURE__ */ jsx("span", { className: "text-foreground text-sm", children: item })
-          ] }, item)) })
-        ] })
-      ] })
-    ] }) }) })
-  ] });
-}
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Factory Location",
-    lines: ["Sialkot Industrial Zone", "Punjab, Pakistan 51310"],
-    link: "https://share.google/q0X4Posm06xeNvJ3k",
-    linkText: "Get Directions"
-  },
-  {
-    icon: Phone,
-    title: "Phone & WhatsApp",
-    lines: ["+92 302 292 2242"],
-    link: "https://wa.me/923022922242",
-    linkText: "WhatsApp Us"
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    lines: ["info@sialkotsamplemasters.com"],
-    link: "mailto:info@sialkotsamplemasters.com",
-    linkText: "Send Email"
-  },
-  {
-    icon: Clock,
-    title: "Business Hours",
-    lines: ["Monday – Saturday", "9:00 AM – 6:00 PM PKT"],
-    link: null,
-    linkText: null
-  }
-];
-function Contact() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
-    phone: "",
-    subject: "",
-    message: ""
-  });
-  const submitContact = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-      toast.success("Message sent! We'll get back to you within 24 hours.");
-    },
-    onError: () => {
-      toast.error("Failed to send message. Please try again or contact us directly.");
-    }
+    productType: "",
+    quantity: "",
+    description: "",
+    files: null
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-    submitContact.mutate(form);
+    console.log(formData);
+    setStep(3);
   };
-  const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
   return /* @__PURE__ */ jsxs(PageWrapper, { children: [
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Contact Sialkot Sample Masters | Custom Streetwear Manufacturer Pakistan",
-        description: "Contact Sialkot Sample Masters, Pakistan's leading custom streetwear manufacturer in Sialkot. Reach us via email, phone, WhatsApp, or our contact form. Response within 24 hours.",
-        keywords: "contact streetwear manufacturer Pakistan, Sialkot Sample Masters contact, clothing manufacturer Sialkot contact, B2B apparel manufacturer Pakistan contact",
-        canonical: "/contact",
-        breadcrumbs: [
-          { name: "Home", item: "/" },
-          { name: "Contact", item: "/contact" }
-        ]
+        title: "Request Free Quote | Xelent Huntgear Manufacturing",
+        description: "Get a free quote for custom hunting apparel manufacturing. Low MOQ 50pcs. 7-day sample turnaround. Waterproof gear, camo patterns, tactical wear.",
+        canonical: "/rfq"
       }
     ),
-    /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-16 bg-card border-b border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
-      /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Get in Touch" }),
-      /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
-        "Let's Start a",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Conversation" })
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[50vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.ctaBg, alt: "RFQ", className: "w-full h-full object-cover opacity-40" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg max-w-xl mx-auto mt-6", children: "Have a question or ready to start your project? Our team responds to all inquiries within 24 business hours." })
-    ] }) }),
-    /* @__PURE__ */ jsx("section", { className: "py-16 border-b border-border", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4", children: contactInfo.map((info) => /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-sm p-5 hover:border-gold/30 transition-all", children: [
-      /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(info.icon, { className: "w-5 h-5 text-gold" }) }),
-      /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-wide text-sm mb-2", children: info.title }),
-      info.lines.map((line) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm", children: line }, line)),
-      info.link && /* @__PURE__ */ jsxs(
-        "a",
-        {
-          href: info.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "inline-flex items-center gap-1 text-gold hover:text-gold/80 text-xs font-condensed font-semibold tracking-widest uppercase mt-3 transition-colors",
-          children: [
-            info.linkText,
-            " ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
-          ]
-        }
-      )
-    ] }, info.title)) }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-12", children: [
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold text-foreground mb-2", children: "Send Us a Message" }),
-        /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-        /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground text-sm mt-4 mb-6", children: [
-          "For detailed manufacturing inquiries, we recommend using our ",
-          /* @__PURE__ */ jsx("a", { href: "/rfq", className: "text-gold hover:underline", children: "RFQ form" }),
-          " for a faster, more detailed response."
-        ] }),
-        submitted ? /* @__PURE__ */ jsxs("div", { className: "bg-card border border-gold/30 rounded-sm p-8 text-center", children: [
-          /* @__PURE__ */ jsx(CheckCircle, { className: "w-12 h-12 text-gold mx-auto mb-4" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-serif text-2xl font-bold text-foreground mb-2", children: "Message Sent!" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: "We'll get back to you within 24 business hours." })
-        ] }) : /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[50vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "Get Started"
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.h1,
+          {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            children: [
+              "Request a",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Free Quote" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "Tell us about your hunting apparel project. We'll respond within 24 hours with a detailed quote and production timeline."
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#0a0a0a]", children: /* @__PURE__ */ jsx("div", { className: "max-w-4xl mx-auto px-6 lg:px-8", children: step === 3 ? /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "text-center py-20", children: [
+      /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-[#ff6b00]/20 border border-[#ff6b00]/30 flex items-center justify-center mx-auto mb-8", children: /* @__PURE__ */ jsx(CheckCircle, { className: "w-10 h-10 text-[#ff6b00]" }) }),
+      /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Quote Request Received!" }),
+      /* @__PURE__ */ jsx("p", { className: "text-white/60 text-lg max-w-lg mx-auto mb-8", children: "Thank you for your inquiry. Our team will review your requirements and respond within 24 hours with a detailed quote." }),
+      /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
+        "Return Home ",
+        /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
+      ] }) })
+    ] }) }) : /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 p-8 lg:p-12", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-10", children: [
+        /* @__PURE__ */ jsx("div", { className: `w-10 h-10 flex items-center justify-center font-bold ${step >= 1 ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/40"}`, children: "1" }),
+        /* @__PURE__ */ jsx("div", { className: `flex-1 h-px ${step >= 2 ? "bg-[#ff6b00]" : "bg-white/10"}` }),
+        /* @__PURE__ */ jsx("div", { className: `w-10 h-10 flex items-center justify-center font-bold ${step >= 2 ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/40"}`, children: "2" })
+      ] }),
+      /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, children: [
+        step === 1 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-6", children: "Step 1: Your Information" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Full Name ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
+              /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Full Name *" }),
               /* @__PURE__ */ jsx(
-                Input,
+                "input",
                 {
-                  value: form.name,
-                  onChange: (e) => update("name", e.target.value),
-                  placeholder: "John Smith",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold",
-                  required: true
+                  type: "text",
+                  required: true,
+                  className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                  value: formData.name,
+                  onChange: (e) => setFormData({ ...formData, name: e.target.value })
                 }
               )
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-                "Email ",
-                /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-              ] }),
+              /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Email Address *" }),
               /* @__PURE__ */ jsx(
-                Input,
+                "input",
                 {
                   type: "email",
-                  value: form.email,
-                  onChange: (e) => update("email", e.target.value),
-                  placeholder: "john@brand.com",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold",
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Company" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.company,
-                  onChange: (e) => update("company", e.target.value),
-                  placeholder: "Your Brand Name",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Phone / WhatsApp" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  value: form.phone,
-                  onChange: (e) => update("phone", e.target.value),
-                  placeholder: "+1 234 567 8900",
-                  className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
+                  required: true,
+                  className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                  value: formData.email,
+                  onChange: (e) => setFormData({ ...formData, email: e.target.value })
                 }
               )
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx(Label, { className: "text-foreground text-sm mb-1.5 block", children: "Subject" }),
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Company Name" }),
             /* @__PURE__ */ jsx(
-              Input,
+              "input",
               {
-                value: form.subject,
-                onChange: (e) => update("subject", e.target.value),
-                placeholder: "e.g., Custom hoodie manufacturing inquiry",
-                className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold"
+                type: "text",
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                value: formData.company,
+                onChange: (e) => setFormData({ ...formData, company: e.target.value })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "pt-6", children: /* @__PURE__ */ jsxs(
+            Button,
+            {
+              type: "button",
+              onClick: () => setStep(2),
+              className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3",
+              children: [
+                "Continue ",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
+              ]
+            }
+          ) })
+        ] }),
+        step === 2 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-6", children: "Step 2: Project Details" }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-3", children: "Product Type *" }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 gap-3", children: productTypes.map((type) => /* @__PURE__ */ jsx(
+              "button",
+              {
+                type: "button",
+                onClick: () => setFormData({ ...formData, productType: type }),
+                className: `p-3 text-sm border transition-all ${formData.productType === type ? "border-[#ff6b00] bg-[#ff6b00]/10 text-white" : "border-white/10 text-white/60 hover:border-white/30"}`,
+                children: type
+              },
+              type
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-3", children: "Order Quantity *" }),
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-3", children: orderQuantities.map((qty) => /* @__PURE__ */ jsx(
+              "button",
+              {
+                type: "button",
+                onClick: () => setFormData({ ...formData, quantity: qty }),
+                className: `px-4 py-2 text-sm border transition-all ${formData.quantity === qty ? "border-[#ff6b00] bg-[#ff6b00]/10 text-white" : "border-white/10 text-white/60 hover:border-white/30"}`,
+                children: qty
+              },
+              qty
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Project Description" }),
+            /* @__PURE__ */ jsx(
+              "textarea",
+              {
+                rows: 4,
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors resize-none",
+                placeholder: "Describe your project requirements...",
+                value: formData.description,
+                onChange: (e) => setFormData({ ...formData, description: e.target.value })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex gap-4 pt-6", children: [
+            /* @__PURE__ */ jsx(
+              Button,
+              {
+                type: "button",
+                variant: "outline",
+                onClick: () => setStep(1),
+                className: "border-white/30 text-white hover:border-[#ff6b00] hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-8 py-3",
+                children: "Back"
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              Button,
+              {
+                type: "submit",
+                className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3",
+                children: [
+                  "Submit Request ",
+                  /* @__PURE__ */ jsx(Send, { className: "ml-2 w-4 h-4" })
+                ]
+              }
+            )
+          ] })
+        ] })
+      ] })
+    ] }) }) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-16 bg-[#111111] border-y border-white/10", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-8 text-center", children: [
+      { value: "24h", label: "Response Time" },
+      { value: "7 Days", label: "Sample Turnaround" },
+      { value: "50 pcs", label: "Minimum Order" },
+      { value: "Free", label: "Quote" }
+    ].map((stat, i) => /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("div", { className: "text-3xl font-condensed font-bold text-[#ff6b00]", children: stat.value }),
+      /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm uppercase tracking-wider", children: stat.label })
+    ] }, i)) }) }) })
+  ] });
+}
+const contactInfo = [
+  { icon: MapPin, title: "Factory Address", lines: ["Sialkot Industrial Estate", "Sialkot 51310, Punjab, Pakistan"] },
+  { icon: Phone, title: "Phone", lines: ["+92-302-2922242", "Mon-Fri 9AM-6PM PST"] },
+  { icon: Mail, title: "Email", lines: ["info@xelenthuntgear.com", "sales@xelenthuntgear.com"] },
+  { icon: Clock, title: "Working Hours", lines: ["Monday - Friday: 9AM - 6PM", "Saturday: 9AM - 2PM"] }
+];
+function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: ""
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        title: "Contact Us | Xelent Huntgear Pakistan",
+        description: "Get in touch with Xelent Huntgear. Request a free quote for custom hunting apparel manufacturing. Email info@xelenthuntgear.com or call +92-302-2922242.",
+        canonical: "/contact",
+        breadcrumbs: [
+          { name: "Home", item: "/" },
+          { name: "Contact Us", item: "/contact" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5 relative z-20", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.contact }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[55vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.aboutBg, alt: "Contact Xelent Huntgear - Global B2B Manufacturing and Export Support", className: "w-full h-full object-cover opacity-40" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[60vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "Get In Touch"
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.h1,
+          {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            children: [
+              "Let's Start Your",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Project" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "Ready to manufacture your hunting apparel line? Contact us for a free quote. We typically respond within 24 hours."
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 lg:py-28 bg-[#0a0a0a]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-16", children: [
+      /* @__PURE__ */ jsx(FadeIn, { direction: "left", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 p-8 lg:p-10", children: [
+        /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-6", children: "Send Us a Message" }),
+        /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-6", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Your Name *" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                type: "text",
+                required: true,
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                placeholder: "John Smith",
+                value: formData.name,
+                onChange: (e) => setFormData({ ...formData, name: e.target.value })
               }
             )
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsxs(Label, { className: "text-foreground text-sm mb-1.5 block", children: [
-              "Message ",
-              /* @__PURE__ */ jsx("span", { className: "text-gold", children: "*" })
-            ] }),
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Email Address *" }),
             /* @__PURE__ */ jsx(
-              Textarea,
+              "input",
               {
-                value: form.message,
-                onChange: (e) => update("message", e.target.value),
-                placeholder: "Tell us about your project or ask any questions...",
-                className: "bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-gold min-h-[140px]",
-                required: true
+                type: "email",
+                required: true,
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                placeholder: "john@company.com",
+                value: formData.email,
+                onChange: (e) => setFormData({ ...formData, email: e.target.value })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Company Name" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                type: "text",
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors",
+                placeholder: "Your Brand",
+                value: formData.company,
+                onChange: (e) => setFormData({ ...formData, company: e.target.value })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("label", { className: "block text-white/60 text-sm mb-2", children: "Message *" }),
+            /* @__PURE__ */ jsx(
+              "textarea",
+              {
+                required: true,
+                rows: 5,
+                className: "w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors resize-none",
+                placeholder: "Tell us about your project...",
+                value: formData.message,
+                onChange: (e) => setFormData({ ...formData, message: e.target.value })
               }
             )
           ] }),
@@ -4850,137 +3683,678 @@ function Contact() {
             Button,
             {
               type: "submit",
-              disabled: submitContact.isPending,
-              className: "w-full bg-gold text-background hover:bg-gold/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm",
+              className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider py-4 h-auto",
               children: [
-                submitContact.isPending ? "Sending..." : "Send Message",
-                !submitContact.isPending && /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
+                "Send Message ",
+                /* @__PURE__ */ jsx(Send, { className: "ml-2 w-4 h-4" })
               ]
             }
           )
         ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold text-foreground mb-2", children: "Find Us" }),
-          /* @__PURE__ */ jsx("div", { className: "gold-divider" }),
-          /* @__PURE__ */ jsx("div", { className: "mt-5 rounded-sm overflow-hidden border border-border aspect-[4/3]", children: /* @__PURE__ */ jsx(
-            "iframe",
-            {
-              title: "Sialkot Sample Masters Factory Location - Sialkot, Pakistan",
-              src: "https://maps.google.com/maps?q=Sialkot+Sample+Masters,+Sialkot,+Pakistan&t=&z=14&ie=UTF8&iwloc=&output=embed",
-              width: "100%",
-              height: "100%",
-              style: { border: 0 },
-              allowFullScreen: true,
-              loading: "lazy",
-              referrerPolicy: "no-referrer-when-downgrade"
-            }
-          ) })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "bg-card border border-border rounded-sm p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
-          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(MessageCircle, { className: "w-6 h-6 text-white" }) }),
+      ] }) }),
+      /* @__PURE__ */ jsx(FadeIn, { direction: "right", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-8", children: "Contact Information" }),
+        /* @__PURE__ */ jsx("div", { className: "space-y-6", children: contactInfo.map((info) => /* @__PURE__ */ jsxs("div", { className: "flex gap-4 p-6 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-colors", children: [
+          /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(info.icon, { className: "w-5 h-5 text-[#ff6b00]" }) }),
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-wide text-sm mb-1", children: "Fastest Response via WhatsApp" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-3", children: "For urgent inquiries or quick questions, WhatsApp is the fastest way to reach our team." }),
-            /* @__PURE__ */ jsxs(
-              "a",
-              {
-                href: "https://wa.me/923022922242?text=Hello%20Sialkot%20Sample%20Masters!%20I%20have%20an%20inquiry%20about%20custom%20apparel%20manufacturing.",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                className: "inline-flex items-center gap-2 bg-[#25D366] text-white font-condensed font-bold tracking-widest uppercase text-xs px-5 py-2.5 rounded-sm hover:bg-[#1ea855] transition-colors",
-                children: [
-                  /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "w-4 h-4 fill-white", children: /* @__PURE__ */ jsx("path", { d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" }) }),
-                  "Start WhatsApp Chat"
-                ]
-              }
-            )
+            /* @__PURE__ */ jsx("h3", { className: "text-white font-semibold mb-1", children: info.title }),
+            info.lines.map((line, i) => /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm", children: line }, i))
           ] })
-        ] }) })
-      ] })
-    ] }) }) })
+        ] }, info.title)) }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-8 p-6 bg-[#ff6b00]/10 border border-[#ff6b00]/30", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-white font-bold mb-2", children: "Prefer WhatsApp?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm mb-4", children: "Chat with us directly for quick inquiries" }),
+          /* @__PURE__ */ jsxs(
+            "a",
+            {
+              href: "https://wa.me/923022922242",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              className: "inline-flex items-center gap-2 text-[#ff6b00] font-semibold hover:underline",
+              children: [
+                "Message on WhatsApp ",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+              ]
+            }
+          )
+        ] })
+      ] }) })
+    ] }) }) }),
+    /* @__PURE__ */ jsx("section", { className: "h-96 bg-[#0d0d0d]", children: /* @__PURE__ */ jsx(
+      "iframe",
+      {
+        src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107567.123456789!2d74.5123456!3d32.5123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDMwJzQ0LjQiTiA3NMKwMzAnNDQuNCJF!5e0!3m2!1sen!2s!4v1234567890",
+        width: "100%",
+        height: "100%",
+        style: { border: 0, filter: "grayscale(100%) invert(92%)" },
+        allowFullScreen: true,
+        loading: "lazy",
+        referrerPolicy: "no-referrer-when-downgrade",
+        title: "Xelent Huntgear Location"
+      }
+    ) })
   ] });
 }
-function Skeleton({ className, ...props }) {
+const SHOP_CATEGORIES = [
+  {
+    "id": "hunting-jackets",
+    "name": "Hunting Jackets",
+    "slug": "hunting-jackets",
+    "description": "Waterproof, insulated, and camouflage hunting jackets for all weather conditions",
+    "icon": "🧥",
+    "showInNav": true,
+    "sortOrder": 1,
+    "seo": {
+      "title": "Custom Hunting Jackets Manufacturer | Camo & Waterproof | Xelent Huntgear Pakistan",
+      "description": "Premium custom hunting jackets manufacturing. Waterproof camo jackets, insulated parkas, softshell jackets. Low MOQ 50pcs. B2B export to USA, Europe, Australia.",
+      "keywords": "custom hunting jacket manufacturer, camo jacket supplier, waterproof hunting jacket Pakistan, insulated parka manufacturer, hunting apparel wholesale"
+    },
+    "subCategories": [
+      {
+        "id": "camo-jackets",
+        "name": "Camo Jackets",
+        "slug": "camo-jackets",
+        "description": "Camouflage pattern hunting jackets"
+      },
+      {
+        "id": "waterproof-jackets",
+        "name": "Waterproof Jackets",
+        "slug": "waterproof-jackets",
+        "description": "Rainproof hunting outerwear"
+      },
+      {
+        "id": "insulated-parkas",
+        "name": "Insulated Parkas",
+        "slug": "insulated-parkas",
+        "description": "Heavy winter hunting coats"
+      },
+      {
+        "id": "softshell-jackets",
+        "name": "Softshell Jackets",
+        "slug": "softshell-jackets",
+        "description": "Lightweight flexible jackets"
+      },
+      {
+        "id": "blaze-orange",
+        "name": "Blaze Orange",
+        "slug": "blaze-orange",
+        "description": "High-visibility safety jackets"
+      },
+      {
+        "id": "vests",
+        "name": "Hunting Vests",
+        "slug": "vests",
+        "description": "Game and tactical vests"
+      }
+    ]
+  },
+  {
+    "id": "hunting-pants",
+    "name": "Hunting Pants",
+    "slug": "hunting-pants",
+    "description": "Durable cargo pants, bibs, and trousers for hunting and outdoor activities",
+    "icon": "👖",
+    "showInNav": true,
+    "sortOrder": 2,
+    "seo": {
+      "title": "Custom Hunting Pants Manufacturer | Cargo & Bibs | Xelent Huntgear Pakistan",
+      "description": "High-quality custom hunting pants manufacturing. Waterproof cargo pants, insulated bibs, tactical trousers. Durable fabrics. MOQ from 50 pieces.",
+      "keywords": "custom hunting pants manufacturer, cargo pants supplier, hunting bib manufacturer Pakistan, tactical trousers, outdoor apparel wholesale"
+    },
+    "subCategories": [
+      {
+        "id": "cargo-pants",
+        "name": "Cargo Pants",
+        "slug": "cargo-pants",
+        "description": "Multi-pocket hunting trousers"
+      },
+      {
+        "id": "bib-overalls",
+        "name": "Bib Overalls",
+        "slug": "bib-overalls",
+        "description": "Insulated hunting bibs"
+      },
+      {
+        "id": "waterproof-pants",
+        "name": "Waterproof Pants",
+        "slug": "waterproof-pants",
+        "description": "Rain gear bottoms"
+      },
+      {
+        "id": "softshell-pants",
+        "name": "Softshell Pants",
+        "slug": "softshell-pants",
+        "description": "Flexible movement pants"
+      },
+      {
+        "id": "convertible-pants",
+        "name": "Convertible Pants",
+        "slug": "convertible-pants",
+        "description": "Zip-off shorts/pants"
+      },
+      {
+        "id": "base-layer-bottoms",
+        "name": "Base Layer Bottoms",
+        "slug": "base-layer-bottoms",
+        "description": "Thermal underwear pants"
+      }
+    ]
+  },
+  {
+    "id": "camo-gear",
+    "name": "Camo Gear",
+    "slug": "camo-gear",
+    "description": "Full camouflage clothing and accessories for concealment",
+    "icon": "🌿",
+    "showInNav": true,
+    "sortOrder": 3,
+    "seo": {
+      "title": "Custom Camo Gear Manufacturer | Camouflage Clothing | Xelent Huntgear Pakistan",
+      "description": "Custom camouflage apparel manufacturing. Digital camo, woodland, desert patterns. Ghillie suits, camo accessories. Low MOQ. Export quality.",
+      "keywords": "custom camo manufacturer, camouflage clothing supplier, digital camo Pakistan, ghillie suit manufacturer, camo gear wholesale"
+    },
+    "subCategories": [
+      {
+        "id": "woodland-camo",
+        "name": "Woodland Camo",
+        "slug": "woodland-camo",
+        "description": "Traditional forest patterns"
+      },
+      {
+        "id": "digital-camo",
+        "name": "Digital Camo",
+        "slug": "digital-camo",
+        "description": "Modern pixelated patterns"
+      },
+      {
+        "id": "desert-camo",
+        "name": "Desert Camo",
+        "slug": "desert-camo",
+        "description": "Arid environment patterns"
+      },
+      {
+        "id": "snow-camo",
+        "name": "Snow Camo",
+        "slug": "snow-camo",
+        "description": "Winter white patterns"
+      },
+      {
+        "id": "ghillie-suits",
+        "name": "Ghillie Suits",
+        "slug": "ghillie-suits",
+        "description": "Full concealment suits"
+      },
+      {
+        "id": "camo-accessories",
+        "name": "Camo Accessories",
+        "slug": "camo-accessories",
+        "description": "Hats, gloves, face paint"
+      }
+    ]
+  },
+  {
+    "id": "hunting-shirts",
+    "name": "Hunting Shirts",
+    "slug": "hunting-shirts",
+    "description": "Performance hunting shirts, flannels, and base layers",
+    "icon": "👕",
+    "showInNav": true,
+    "sortOrder": 4,
+    "seo": {
+      "title": "Custom Hunting Shirts Manufacturer | Flannel & Performance | Xelent Huntgear",
+      "description": "Custom hunting shirts manufacturing. Performance flannels, moisture-wicking shirts, thermal base layers. Scent control technology. B2B export.",
+      "keywords": "custom hunting shirt manufacturer, flannel shirt supplier, performance hunting shirt Pakistan, base layer manufacturer, outdoor apparel"
+    },
+    "subCategories": [
+      {
+        "id": "flannel-shirts",
+        "name": "Flannel Shirts",
+        "slug": "flannel-shirts",
+        "description": "Heavy cotton flannels"
+      },
+      {
+        "id": "performance-shirts",
+        "name": "Performance Shirts",
+        "slug": "performance-shirts",
+        "description": "Moisture-wicking tops"
+      },
+      {
+        "id": "long-sleeve",
+        "name": "Long Sleeve",
+        "slug": "long-sleeve",
+        "description": "Sun protection shirts"
+      },
+      {
+        "id": "base-layer-tops",
+        "name": "Base Layer Tops",
+        "slug": "base-layer-tops",
+        "description": "Thermal underwear tops"
+      },
+      {
+        "id": "hunting-polo",
+        "name": "Hunting Polo",
+        "slug": "hunting-polo",
+        "description": "Quick-dry polo shirts"
+      },
+      {
+        "id": "quarter-zip",
+        "name": "Quarter Zip",
+        "slug": "quarter-zip",
+        "description": "Mid-layer pullovers"
+      }
+    ]
+  },
+  {
+    "id": "outdoor-accessories",
+    "name": "Outdoor Accessories",
+    "slug": "outdoor-accessories",
+    "description": "Hunting hats, gloves, gaiters, and essential gear",
+    "icon": "🎒",
+    "showInNav": true,
+    "sortOrder": 5,
+    "seo": {
+      "title": "Hunting Accessories Manufacturer | Hats, Gloves & Gear | Xelent Huntgear",
+      "description": "Custom hunting accessories manufacturing. Camo hats, insulated gloves, neck gaiters, boot gaiters. OEM & private label. Low MOQ.",
+      "keywords": "hunting accessories manufacturer, camo hat supplier, hunting glove manufacturer Pakistan, neck gaiter, outdoor gear wholesale"
+    },
+    "subCategories": [
+      {
+        "id": "hunting-hats",
+        "name": "Hunting Hats",
+        "slug": "hunting-hats",
+        "description": "Caps, beanies, boonie hats"
+      },
+      {
+        "id": "gloves",
+        "name": "Gloves",
+        "slug": "gloves",
+        "description": "Insulated and shooting gloves"
+      },
+      {
+        "id": "neck-gaiters",
+        "name": "Neck Gaiters",
+        "slug": "neck-gaiters",
+        "description": "Face and neck protection"
+      },
+      {
+        "id": "boot-gaiters",
+        "name": "Boot Gaiters",
+        "slug": "boot-gaiters",
+        "description": "Snake and debris protection"
+      },
+      {
+        "id": "belts",
+        "name": "Hunting Belts",
+        "slug": "belts",
+        "description": "Shell belts and tactical belts"
+      },
+      {
+        "id": "socks",
+        "name": "Hunting Socks",
+        "slug": "socks",
+        "description": "Merino wool and cushioned socks"
+      }
+    ]
+  },
+  {
+    "id": "tactical-gear",
+    "name": "Tactical Gear",
+    "slug": "tactical-gear",
+    "description": "Tactical vests, packs, and survival equipment",
+    "icon": "🎯",
+    "showInNav": true,
+    "sortOrder": 6,
+    "seo": {
+      "title": "Tactical Gear Manufacturer | Vests, Packs & Equipment | Xelent Huntgear",
+      "description": "Custom tactical gear manufacturing. Hunting vests, tactical backpacks, survival equipment. MOLLE compatible. Durable construction.",
+      "keywords": "tactical gear manufacturer, hunting vest supplier, tactical backpack Pakistan, survival equipment, MOLLE gear wholesale"
+    },
+    "subCategories": [
+      {
+        "id": "hunting-vests",
+        "name": "Hunting Vests",
+        "slug": "hunting-vests",
+        "description": "Game and utility vests"
+      },
+      {
+        "id": "tactical-backpacks",
+        "name": "Tactical Backpacks",
+        "slug": "tactical-backpacks",
+        "description": "Hunting daypacks and packs"
+      },
+      {
+        "id": "shell-bags",
+        "name": "Shell Bags",
+        "slug": "shell-bags",
+        "description": "Ammo and shot shell holders"
+      },
+      {
+        "id": "range-bags",
+        "name": "Range Bags",
+        "slug": "range-bags",
+        "description": "Shooting equipment bags"
+      },
+      {
+        "id": "slings",
+        "name": "Rifle Slings",
+        "slug": "slings",
+        "description": "Gun carrying straps"
+      },
+      {
+        "id": "survival-gear",
+        "name": "Survival Gear",
+        "slug": "survival-gear",
+        "description": "Emergency equipment"
+      }
+    ]
+  }
+];
+const sampleProducts = [
+  { id: 1, name: "Pro Hunter Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "20K Waterproof" },
+  { id: 2, name: "Tactical Cargo Pants", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Reinforced" },
+  { id: 3, name: "Digital Camo Shell", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Custom Pattern" },
+  { id: 4, name: "Merino Base Layer", category: "Base Layers", price: "Contact", image: IMAGES.catSecurityUniforms, badge: "Odor Control" },
+  { id: 5, name: "Insulated Parka", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "800 Fill" },
+  { id: 6, name: "Softshell Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catTechwear, badge: "Windproof" },
+  { id: 7, name: "Bib Overalls", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Insulated" },
+  { id: 8, name: "Woodland Camo Set", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Pattern Design" }
+];
+function Shop() {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredProducts = sampleProducts.filter((product) => {
+    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        title: "Shop Hunting Gear Catalog | Xelent Huntgear Pakistan",
+        description: "Browse our hunting apparel catalog. Waterproof jackets, camo gear, tactical pants, base layers. B2B wholesale manufacturer. Custom orders available.",
+        canonical: "/shop",
+        breadcrumbs: [
+          { name: "Home", item: "/" },
+          { name: "Shop", item: "/shop" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5 relative z-20", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.shop }) }) }),
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[45vh] bg-black overflow-hidden", children: [
+      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
+        /* @__PURE__ */ jsx("img", { src: IMAGES.shopBg, alt: "Xelent Huntgear Shop - B2B Hunting Apparel Catalog with Waterproof Jackets Camo Gear and Tactical Pants", className: "w-full h-full object-cover opacity-40" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[50vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
+            children: "Product Catalog"
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.h1,
+          {
+            initial: { opacity: 0, y: 30 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.8, delay: 0.1 },
+            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            children: [
+              "Hunting Gear",
+              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Collection" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.div,
+          {
+            initial: { scaleX: 0 },
+            animate: { scaleX: 1 },
+            transition: { duration: 0.8, delay: 0.3 },
+            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          motion.p,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6, delay: 0.4 },
+            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
+            children: "Browse our hunting apparel catalog. All products available for custom manufacturing with your branding. Low MOQ 50pcs per style."
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-6 mb-12", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-2", children: [
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setSelectedCategory("all"),
+              className: `px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === "all" ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"}`,
+              children: "All Products"
+            }
+          ),
+          SHOP_CATEGORIES.map((cat) => /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setSelectedCategory(cat.name),
+              className: `px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === cat.name ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"}`,
+              children: cat.name
+            },
+            cat.id
+          ))
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "relative md:ml-auto", children: [
+          /* @__PURE__ */ jsx(Search, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" }),
+          /* @__PURE__ */ jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Search products...",
+              value: searchQuery,
+              onChange: (e) => setSearchQuery(e.target.value),
+              className: "w-full md:w-64 bg-[#161616] border border-white/10 pl-10 pr-4 py-2 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", stagger: 0.08, children: filteredProducts.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(Link$1, { href: `/product/${product.id}`, children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300 cursor-pointer", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative aspect-square overflow-hidden", children: [
+          /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: product.image,
+              alt: product.name,
+              className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+            }
+          ),
+          /* @__PURE__ */ jsx("div", { className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1", children: product.badge }) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "p-5", children: [
+          /* @__PURE__ */ jsx("p", { className: "text-white/40 text-xs uppercase tracking-wider mb-1", children: product.category }),
+          /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-lg uppercase group-hover:text-[#ff6b00] transition-colors", children: product.name }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center justify-between", children: [
+            /* @__PURE__ */ jsx("span", { className: "text-white/60 text-sm", children: product.price }),
+            /* @__PURE__ */ jsxs("span", { className: "text-[#ff6b00] text-xs font-bold uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
+              "Details ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
+            ] })
+          ] })
+        ] })
+      ] }) }) }, product.id)) }),
+      filteredProducts.length === 0 && /* @__PURE__ */ jsxs("div", { className: "text-center py-20", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-white/50 text-lg", children: "No products found matching your criteria." }),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: () => {
+              setSelectedCategory("all");
+              setSearchQuery("");
+            },
+            className: "mt-4 text-[#ff6b00] hover:underline",
+            children: "Clear filters"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-16 text-center p-12 bg-[#111111] border border-white/10", children: [
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Need Custom Manufacturing?" }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/60 mb-6 max-w-2xl mx-auto", children: "All products shown can be manufactured with your branding, custom patterns, and specific technical requirements. Low MOQ 50pcs per style." }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
+          "Request Custom Quote ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
+        ] }) })
+      ] })
+    ] }) })
+  ] });
+}
+const DialogCompositionContext = React.createContext({
+  isComposing: () => false,
+  setComposing: () => {
+  },
+  justEndedComposing: () => false,
+  markCompositionEnd: () => {
+  }
+});
+const useDialogComposition = () => React.useContext(DialogCompositionContext);
+function Dialog({
+  ...props
+}) {
+  const composingRef = React.useRef(false);
+  const justEndedRef = React.useRef(false);
+  const endTimerRef = React.useRef(null);
+  const contextValue = React.useMemo(
+    () => ({
+      isComposing: () => composingRef.current,
+      setComposing: (composing) => {
+        composingRef.current = composing;
+      },
+      justEndedComposing: () => justEndedRef.current,
+      markCompositionEnd: () => {
+        justEndedRef.current = true;
+        if (endTimerRef.current) {
+          clearTimeout(endTimerRef.current);
+        }
+        endTimerRef.current = setTimeout(() => {
+          justEndedRef.current = false;
+        }, 150);
+      }
+    }),
+    []
+  );
+  return /* @__PURE__ */ jsx(DialogCompositionContext.Provider, { value: contextValue, children: /* @__PURE__ */ jsx(SheetPrimitive.Root, { "data-slot": "dialog", ...props }) });
+}
+function DialogPortal({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(SheetPrimitive.Portal, { "data-slot": "dialog-portal", ...props });
+}
+function DialogOverlay({
+  className,
+  ...props
+}) {
   return /* @__PURE__ */ jsx(
-    "div",
+    SheetPrimitive.Overlay,
     {
-      "data-slot": "skeleton",
-      className: cn("bg-accent animate-pulse rounded-md", className),
+      "data-slot": "dialog-overlay",
+      className: cn(
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        className
+      ),
       ...props
     }
   );
 }
-function ScrollArea({
+DialogOverlay.displayName = "DialogOverlay";
+function DialogContent({
   className,
   children,
+  showCloseButton = true,
+  onEscapeKeyDown,
   ...props
 }) {
-  return /* @__PURE__ */ jsxs(
-    ScrollAreaPrimitive.Root,
-    {
-      "data-slot": "scroll-area",
-      className: cn("relative", className),
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx(
-          ScrollAreaPrimitive.Viewport,
-          {
-            "data-slot": "scroll-area-viewport",
-            className: "focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1",
-            children
-          }
+  const { isComposing } = useDialogComposition();
+  const handleEscapeKeyDown = React.useCallback(
+    (e) => {
+      const isCurrentlyComposing = e.isComposing || isComposing();
+      if (isCurrentlyComposing) {
+        e.preventDefault();
+        return;
+      }
+      onEscapeKeyDown?.(e);
+    },
+    [isComposing, onEscapeKeyDown]
+  );
+  return /* @__PURE__ */ jsxs(DialogPortal, { "data-slot": "dialog-portal", children: [
+    /* @__PURE__ */ jsx(DialogOverlay, {}),
+    /* @__PURE__ */ jsxs(
+      SheetPrimitive.Content,
+      {
+        "data-slot": "dialog-content",
+        className: cn(
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
+          className
         ),
-        /* @__PURE__ */ jsx(ScrollBar, {}),
-        /* @__PURE__ */ jsx(ScrollAreaPrimitive.Corner, {})
-      ]
+        onEscapeKeyDown: handleEscapeKeyDown,
+        ...props,
+        children: [
+          children,
+          showCloseButton && /* @__PURE__ */ jsxs(
+            SheetPrimitive.Close,
+            {
+              "data-slot": "dialog-close",
+              className: "ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+              children: [
+                /* @__PURE__ */ jsx(XIcon, {}),
+                /* @__PURE__ */ jsx("span", { className: "sr-only", children: "Close" })
+              ]
+            }
+          )
+        ]
+      }
+    )
+  ] });
+}
+function DialogHeader({ className, ...props }) {
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      "data-slot": "dialog-header",
+      className: cn("flex flex-col gap-2 text-center sm:text-left", className),
+      ...props
     }
   );
 }
-function ScrollBar({
-  className,
-  orientation = "vertical",
-  ...props
-}) {
+function DialogFooter({ className, ...props }) {
   return /* @__PURE__ */ jsx(
-    ScrollAreaPrimitive.ScrollAreaScrollbar,
+    "div",
     {
-      "data-slot": "scroll-area-scrollbar",
-      orientation,
+      "data-slot": "dialog-footer",
       className: cn(
-        "flex touch-none p-px transition-colors select-none",
-        orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
-        orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent",
+        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
         className
       ),
-      ...props,
-      children: /* @__PURE__ */ jsx(
-        ScrollAreaPrimitive.ScrollAreaThumb,
-        {
-          "data-slot": "scroll-area-thumb",
-          className: "bg-border relative flex-1 rounded-full"
-        }
-      )
+      ...props
     }
   );
 }
-function Separator({
+function DialogTitle({
   className,
-  orientation = "horizontal",
-  decorative = true,
   ...props
 }) {
   return /* @__PURE__ */ jsx(
-    SeparatorPrimitive.Root,
+    SheetPrimitive.Title,
     {
-      "data-slot": "separator",
-      decorative,
-      orientation,
-      className: cn(
-        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
-        className
-      ),
+      "data-slot": "dialog-title",
+      className: cn("text-lg leading-none font-semibold", className),
       ...props
     }
   );
@@ -5132,7 +4506,7 @@ const DEMO_PRODUCTS = [
     id: 7,
     slug: "heavyweight-oversized-hoodie",
     title: "450GSM Heavyweight Oversized Hoodie",
-    category: "Streetwear",
+    category: "Technical Gear",
     subCategory: "Hoodies",
     shortDescription: "Premium drop-shoulder boxy fit hoodie.",
     description: "Premium blank and custom heavyweight hoodies for streetwear brands. 450GSM French terry cotton.",
@@ -5472,724 +4846,6 @@ const DEMO_PRODUCTS = [
     ]
   }
 ];
-const SHOP_CATEGORIES = [
-  {
-    id: "ski-wear",
-    name: "Ski Wear",
-    slug: "ski-wear",
-    description: "Technical alpine apparel for skiing and snowboarding",
-    icon: "⛷️",
-    subCategories: [
-      { id: "ski-jackets", name: "Ski Jackets", slug: "ski-jackets", description: "Waterproof insulated jackets" },
-      { id: "ski-pants", name: "Ski Pants", slug: "ski-pants", description: "Snow pants and bibs" },
-      { id: "base-layers", name: "Base Layers", slug: "base-layers", description: "Thermal underlayers" },
-      { id: "mid-layers", name: "Mid Layers", slug: "mid-layers", description: "Fleeces and insulated mid-layers" },
-      { id: "ski-suits", name: "Ski Suits", slug: "ski-suits", description: "One-piece snowsuits" },
-      { id: "ski-accessories", name: "Accessories", slug: "ski-accessories", description: "Gloves, beanies, neck warmers" }
-    ]
-  },
-  {
-    id: "sports-wear",
-    name: "Sports Wear",
-    slug: "sports-wear",
-    description: "High-performance athletic apparel",
-    icon: "⚽",
-    subCategories: [
-      { id: "jerseys", name: "Jerseys", slug: "jerseys", description: "Team and custom jerseys" },
-      { id: "shorts", name: "Shorts", slug: "shorts", description: "Athletic shorts" },
-      { id: "compression", name: "Compression Wear", slug: "compression", description: "Base layers and compression gear" },
-      { id: "training-tops", name: "Training Tops", slug: "training-tops", description: "T-shirts and tanks" },
-      { id: "tracksuits", name: "Tracksuits", slug: "tracksuits", description: "Warm-up suits" },
-      { id: "team-kits", name: "Team Kits", slug: "team-kits", description: "Complete team uniforms" }
-    ]
-  },
-  {
-    id: "hunting-wear",
-    name: "Hunting Wear",
-    slug: "hunting-wear",
-    description: "Tactical and camouflage outdoor gear",
-    icon: "🦌",
-    subCategories: [
-      { id: "hunting-jackets", name: "Hunting Jackets", slug: "hunting-jackets", description: "Waterproof camo jackets" },
-      { id: "hunting-pants", name: "Hunting Pants", slug: "hunting-pants", description: "Cargo and field pants" },
-      { id: "hunting-vests", name: "Vests", slug: "hunting-vests", description: "Tactical and game vests" },
-      { id: "camo-gear", name: "Camo Gear", slug: "camo-gear", description: "Camouflage apparel" },
-      { id: "hunting-base", name: "Base Layers", slug: "hunting-base", description: "Scent-control underlayers" },
-      { id: "blaze-orange", name: "Blaze Orange", slug: "blaze-orange", description: "High-vis safety gear" }
-    ]
-  },
-  {
-    id: "streetwear",
-    name: "Streetwear",
-    slug: "streetwear",
-    description: "Urban fashion and lifestyle apparel",
-    icon: "👕",
-    subCategories: [
-      { id: "hoodies", name: "Hoodies", slug: "hoodies", description: "Pullover and zip hoodies" },
-      { id: "t-shirts", name: "T-Shirts", slug: "t-shirts", description: "Graphic and plain tees" },
-      { id: "sweatshirts", name: "Sweatshirts", slug: "sweatshirts", description: "Crew neck sweatshirts" },
-      { id: "joggers", name: "Joggers", slug: "joggers", description: "Sweatpants and joggers" },
-      { id: "cargo-pants", name: "Cargo Pants", slug: "cargo-pants", description: "Utility cargo pants" },
-      { id: "bomber-jackets", name: "Bomber Jackets", slug: "bomber-jackets", description: "MA-1 and varsity jackets" }
-    ]
-  },
-  {
-    id: "tech-wear",
-    name: "Tech Wear",
-    slug: "tech-wear",
-    description: "Functional urban technical apparel",
-    icon: "🔧",
-    subCategories: [
-      { id: "tech-jackets", name: "Tech Jackets", slug: "tech-jackets", description: "Waterproof shells" },
-      { id: "tech-pants", name: "Tech Pants", slug: "tech-pants", description: "Articulated cargo pants" },
-      { id: "tech-vests", name: "Tech Vests", slug: "tech-vests", description: "Chest rigs and tactical vests" },
-      { id: "tech-bags", name: "Bags", slug: "tech-bags", description: "Sling bags and backpacks" },
-      { id: "tech-shorts", name: "Tech Shorts", slug: "tech-shorts", description: "Utility shorts" },
-      { id: "modular", name: "Modular Pieces", slug: "modular", description: "Detachable and convertible" }
-    ]
-  },
-  {
-    id: "martial-arts",
-    name: "Martial Arts Wear",
-    slug: "martial-arts",
-    description: "BJJ, MMA, and combat sports gear",
-    icon: "🥋",
-    subCategories: [
-      { id: "bjj-gis", name: "BJJ Gis", slug: "bjj-gis", description: "Brazilian Jiu-Jitsu kimonos" },
-      { id: "rashguards", name: "Rashguards", slug: "rashguards", description: "Compression rashguards" },
-      { id: "mma-shorts", name: "MMA Shorts", slug: "mma-shorts", description: "Fight shorts" },
-      { id: "spats", name: "Spats", slug: "spats", description: "Compression leggings" },
-      { id: "martial-arts-uniforms", name: "Uniforms", slug: "martial-arts-uniforms", description: "Karate, judo uniforms" },
-      { id: "fight-wear", name: "Fight Wear", slug: "fight-wear", description: "Training and competition gear" }
-    ]
-  },
-  {
-    id: "security-uniforms",
-    name: "Security Uniforms",
-    slug: "security-uniforms",
-    description: "Professional security and tactical uniforms",
-    icon: "👮",
-    subCategories: [
-      { id: "security-shirts", name: "Security Shirts", slug: "security-shirts", description: "Polo and tactical shirts" },
-      { id: "security-pants", name: "Security Pants", slug: "security-pants", description: "Duty trousers" },
-      { id: "security-jackets", name: "Security Jackets", slug: "security-jackets", description: "Patrol and hi-vis jackets" },
-      { id: "tactical-gear", name: "Tactical Gear", slug: "tactical-gear", description: "Vests and duty belts" },
-      { id: "hi-vis", name: "Hi-Vis Wear", slug: "hi-vis", description: "High visibility clothing" },
-      { id: "uniform-sets", name: "Uniform Sets", slug: "uniform-sets", description: "Complete uniform packages" }
-    ]
-  }
-];
-const CATEGORY_SEO_CONTENT = {
-  "ski-wear": {
-    title: "Custom Ski Wear Manufacturer | Jackets, Pants & Base Layers | Sialkot Pakistan",
-    description: "Premium custom ski wear manufacturing. Waterproof ski jackets, insulated pants, base layers. Low MOQ 50pcs. B2B export to USA, Europe. 20K/20K waterproof ratings.",
-    keywords: "custom ski wear manufacturer, ski jacket manufacturer Pakistan, snow pants supplier, base layer manufacturer, alpine apparel manufacturer, ski wear wholesale"
-  },
-  "sports-wear": {
-    title: "Custom Sportswear Manufacturer | Team Jerseys & Athletic Wear | Sialkot",
-    description: "High-performance custom sportswear manufacturing. Soccer kits, basketball jerseys, compression wear. Sublimation printing. MOQ from 50 pieces. Export quality.",
-    keywords: "custom sportswear manufacturer, team jersey supplier, soccer kit manufacturer, basketball jersey Pakistan, compression wear manufacturer, athletic apparel supplier"
-  },
-  "hunting-wear": {
-    title: "Custom Hunting Wear Manufacturer | Camo Apparel & Tactical Gear | Sialkot",
-    description: "Tactical hunting wear manufacturing. Custom camo patterns, waterproof jackets, cargo pants. Silent fabric technology. B2B wholesale. Low MOQ options.",
-    keywords: "hunting wear manufacturer, camo apparel supplier, tactical gear manufacturer Pakistan, hunting jacket supplier, waterproof hunting gear, custom camo clothing"
-  },
-  "streetwear": {
-    title: "Custom Streetwear Manufacturer | Hoodies, Tees & Joggers | Sialkot Pakistan",
-    description: "Premium streetwear manufacturing. 450GSM hoodies, vintage wash tees, cargo pants. OEM & private label. Low MOQ 50pcs. Fast turnaround for brands.",
-    keywords: "custom streetwear manufacturer, hoodie manufacturer Pakistan, t-shirt supplier, cargo pants manufacturer, vintage wash clothing, streetwear wholesale"
-  },
-  "tech-wear": {
-    title: "Custom Tech Wear Manufacturer | Technical Urban Apparel | Sialkot",
-    description: "Advanced tech wear manufacturing. Waterproof shells, articulated pants, chest rigs. GORE-TEX compatible. Functional urban apparel for innovative brands.",
-    keywords: "tech wear manufacturer, technical apparel supplier, waterproof jacket manufacturer, urban tech clothing Pakistan, cargo pants manufacturer, tactical vest supplier"
-  },
-  "martial-arts": {
-    title: "Custom Martial Arts Wear | BJJ Gis, Rashguards & MMA Gear | Sialkot",
-    description: "Premium martial arts wear manufacturing. BJJ kimonos, rashguards, MMA shorts. IBJJF compliant. Pearl weave gis. Custom designs for academies. Low MOQ.",
-    keywords: "BJJ gi manufacturer, rashguard supplier, MMA shorts manufacturer Pakistan, martial arts wear supplier, custom kimono manufacturer, fight wear supplier"
-  },
-  "security-uniforms": {
-    title: "Security Uniform Manufacturer | Tactical Uniforms & Hi-Vis | Sialkot",
-    description: "Professional security uniform manufacturing. Tactical shirts, duty pants, hi-vis jackets. Custom embroidery. Durable fabrics. B2B wholesale for security companies.",
-    keywords: "security uniform manufacturer, tactical shirt supplier, duty pants manufacturer Pakistan, hi-vis jacket supplier, security apparel wholesale, uniform supplier"
-  }
-};
-function transformApiCategories(apiCategories) {
-  if (!apiCategories || apiCategories.length === 0) return null;
-  return apiCategories.map((cat) => ({
-    id: String(cat.id),
-    name: cat.name,
-    slug: cat.slug,
-    description: cat.description || "",
-    icon: cat.icon || "📁",
-    subCategories: (cat.subcategories || []).map((sub) => ({
-      id: String(sub.id),
-      name: sub.name,
-      slug: sub.slug,
-      description: sub.description || ""
-    }))
-  }));
-}
-function ProductCard({ product }) {
-  const [hovered, setHovered] = useState(false);
-  return /* @__PURE__ */ jsx("div", { className: "relative group/card", children: /* @__PURE__ */ jsx(Link, { href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs(
-    "article",
-    {
-      className: "group relative bg-card border border-border rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-foreground/10 hover:border-gold/40",
-      onMouseEnter: () => setHovered(true),
-      onMouseLeave: () => setHovered(false),
-      children: [
-        /* @__PURE__ */ jsxs("div", { className: "relative aspect-[2/3] overflow-hidden bg-secondary", children: [
-          /* @__PURE__ */ jsx(
-            "img",
-            {
-              src: product.mainImage || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
-              alt: product.title,
-              className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-110",
-              loading: "lazy",
-              decoding: "async"
-            }
-          ),
-          /* @__PURE__ */ jsx("div", { className: `absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`, children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2 text-white font-condensed font-semibold tracking-wider text-sm uppercase border border-white/60 px-4 py-2 rounded", children: [
-            "View Product ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-          ] }) }),
-          /* @__PURE__ */ jsxs("div", { className: "absolute top-3 left-3 flex flex-col gap-1", children: [
-            product.isFeatured && /* @__PURE__ */ jsx("span", { className: "bg-gold text-black text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded", children: "Featured" }),
-            product.freeShipping && /* @__PURE__ */ jsxs("span", { className: "bg-green-600 text-white text-[10px] font-condensed font-bold uppercase tracking-wider px-2 py-0.5 rounded flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx(Truck, { className: "w-2.5 h-2.5" }),
-              " Free Ship"
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "p-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-1", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-xs text-gold font-condensed font-semibold uppercase tracking-widest", children: product.category }),
-            product.subCategory && /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx(ChevronRight, { className: "w-3 h-3 text-muted-foreground" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: product.subCategory })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsx("h3", { className: "text-foreground font-serif font-semibold text-base leading-snug mb-2 group-hover:text-gold transition-colors", children: product.title }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs leading-relaxed mb-3 line-clamp-2", children: product.shortDescription }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between border-t border-border pt-4 mt-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Starting from" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gold font-condensed font-bold text-lg leading-none", children: product.startingPrice ?? "Request Quote" })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center justify-center translate-y-1", children: /* @__PURE__ */ jsx(
-              Link,
-              {
-                href: "/customize",
-                onClick: (e) => e.stopPropagation(),
-                className: "group/btn",
-                children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5 text-[10px] font-condensed font-bold uppercase tracking-wider bg-[#b07d3b] text-white px-4 py-2 rounded shadow-md hover:bg-[#c99551] transition-all transform group-hover/btn:scale-105", children: [
-                  /* @__PURE__ */ jsx(Palette, { className: "w-3.5 h-3.5" }),
-                  "Customize"
-                ] })
-              }
-            ) }),
-            /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
-              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-muted-foreground uppercase tracking-wider mb-1", children: "Min. Order" }),
-              /* @__PURE__ */ jsx("p", { className: "text-foreground font-condensed font-semibold text-lg leading-none", children: product.moq ?? "50 pcs" })
-            ] })
-          ] })
-        ] })
-      ]
-    }
-  ) }) });
-}
-function ProductCardSkeleton() {
-  return /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-lg overflow-hidden", children: [
-    /* @__PURE__ */ jsx(Skeleton, { className: "aspect-[2/3] w-full" }),
-    /* @__PURE__ */ jsxs("div", { className: "p-4 space-y-2", children: [
-      /* @__PURE__ */ jsx(Skeleton, { className: "h-3 w-16" }),
-      /* @__PURE__ */ jsx(Skeleton, { className: "h-5 w-3/4" }),
-      /* @__PURE__ */ jsx(Skeleton, { className: "h-3 w-full" }),
-      /* @__PURE__ */ jsx(Skeleton, { className: "h-3 w-2/3" }),
-      /* @__PURE__ */ jsxs("div", { className: "flex justify-between pt-1", children: [
-        /* @__PURE__ */ jsx(Skeleton, { className: "h-6 w-16" }),
-        /* @__PURE__ */ jsx(Skeleton, { className: "h-6 w-16" })
-      ] })
-    ] })
-  ] });
-}
-function CategorySidebar({ activeCategory, activeSubCategory, onCategoryChange, productCounts, categories: categories2 }) {
-  const [expandedCategories, setExpandedCategories] = useState(
-    activeCategory ? [activeCategory] : []
-  );
-  useEffect(() => {
-    if (activeCategory && !expandedCategories.includes(activeCategory)) {
-      setExpandedCategories((prev) => [...prev, activeCategory]);
-    }
-  }, [activeCategory]);
-  const toggleCategory = (slug) => {
-    setExpandedCategories(
-      (prev) => prev.includes(slug) ? prev.filter((s2) => s2 !== slug) : [...prev, slug]
-    );
-  };
-  const getTotalCount = (categoryId) => {
-    return productCounts[categoryId] || 0;
-  };
-  return /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-    /* @__PURE__ */ jsxs(
-      "button",
-      {
-        onClick: () => onCategoryChange(null, null),
-        className: cn(
-          "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-          !activeCategory ? "bg-gold text-black" : "text-foreground hover:bg-secondary"
-        ),
-        children: [
-          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx(Grid3X3, { className: "w-4 h-4" }),
-            "All Products"
-          ] }),
-          /* @__PURE__ */ jsx(Badge, { variant: !activeCategory ? "secondary" : "outline", className: "text-xs", children: Object.values(productCounts).reduce((a, b) => a + b, 0) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsx(Separator, { className: "my-3" }),
-    /* @__PURE__ */ jsx("div", { className: "space-y-1", children: categories2.map((category) => {
-      const isExpanded = expandedCategories.includes(category.slug);
-      const isActive = activeCategory === category.slug;
-      const hasSubCategories = category.subCategories.length > 0;
-      return /* @__PURE__ */ jsxs("div", { className: "space-y-1", children: [
-        /* @__PURE__ */ jsxs(
-          "button",
-          {
-            onClick: () => {
-              if (hasSubCategories) {
-                toggleCategory(category.slug);
-              }
-              onCategoryChange(category.slug, null);
-            },
-            className: cn(
-              "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-              isActive && !activeSubCategory ? "bg-gold/10 text-gold border border-gold/20" : "text-foreground hover:bg-secondary"
-            ),
-            children: [
-              /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-base", children: category.icon }),
-                category.name
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Badge, { variant: "outline", className: "text-xs text-muted-foreground", children: getTotalCount(category.slug) }),
-                hasSubCategories && /* @__PURE__ */ jsx(
-                  ChevronDown,
-                  {
-                    className: cn(
-                      "w-4 h-4 text-muted-foreground transition-transform duration-200",
-                      isExpanded && "rotate-180"
-                    )
-                  }
-                )
-              ] })
-            ]
-          }
-        ),
-        hasSubCategories && isExpanded && /* @__PURE__ */ jsx("div", { className: "ml-4 pl-4 border-l border-border space-y-1 animate-in slide-in-from-top-1 duration-200", children: category.subCategories.map((sub) => {
-          const isSubActive = activeSubCategory === sub.slug && isActive;
-          return /* @__PURE__ */ jsxs(
-            "button",
-            {
-              onClick: () => onCategoryChange(category.slug, sub.slug),
-              className: cn(
-                "w-full flex items-center justify-between px-3 py-2 rounded-md text-sm transition-all duration-200",
-                isSubActive ? "bg-gold text-black font-medium" : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              ),
-              children: [
-                /* @__PURE__ */ jsx("span", { children: sub.name }),
-                /* @__PURE__ */ jsx("span", { className: "text-xs opacity-60", children: productCounts[`${category.slug}-${sub.slug}`] || 0 })
-              ]
-            },
-            sub.id
-          );
-        }) })
-      ] }, category.id);
-    }) })
-  ] });
-}
-function MobileFilterSheet({
-  children,
-  activeCategory,
-  activeSubCategory
-}) {
-  const [open, setOpen] = useState(false);
-  return /* @__PURE__ */ jsxs(Sheet, { open, onOpenChange: setOpen, children: [
-    /* @__PURE__ */ jsx(SheetTrigger, { asChild: true, children: /* @__PURE__ */ jsxs(Button, { variant: "outline", size: "sm", className: "lg:hidden gap-2", children: [
-      /* @__PURE__ */ jsx(Filter, { className: "w-4 h-4" }),
-      "Filters",
-      (activeCategory || activeSubCategory) && /* @__PURE__ */ jsx(Badge, { variant: "secondary", className: "ml-1 text-xs", children: "1" })
-    ] }) }),
-    /* @__PURE__ */ jsxs(SheetContent, { side: "left", className: "w-[300px] sm:w-[350px] p-0", children: [
-      /* @__PURE__ */ jsx(SheetHeader, { className: "p-4 pb-2", children: /* @__PURE__ */ jsxs(SheetTitle, { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx(Filter, { className: "w-5 h-5" }),
-        "Filter Products"
-      ] }) }),
-      /* @__PURE__ */ jsx(ScrollArea, { className: "h-[calc(100vh-80px)] px-4 pb-4", children })
-    ] })
-  ] });
-}
-function BreadcrumbNav({
-  activeCategory,
-  activeSubCategory,
-  categories: categories2
-}) {
-  const category = activeCategory ? categories2.find((c) => c.slug === activeCategory) : null;
-  const subCategory = category && activeSubCategory ? category.subCategories.find((s2) => s2.slug === activeSubCategory) : null;
-  return /* @__PURE__ */ jsxs("nav", { className: "flex items-center gap-2 text-sm text-muted-foreground mb-4", children: [
-    /* @__PURE__ */ jsx(Link, { href: "/", className: "hover:text-foreground transition-colors", children: "Home" }),
-    /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" }),
-    /* @__PURE__ */ jsx(Link, { href: "/shop", className: "hover:text-foreground transition-colors", children: "Shop" }),
-    category && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" }),
-      /* @__PURE__ */ jsx("span", { className: cn("hover:text-foreground transition-colors", !subCategory && "text-foreground font-medium"), children: category.name })
-    ] }),
-    subCategory && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" }),
-      /* @__PURE__ */ jsx("span", { className: "text-foreground font-medium", children: subCategory.name })
-    ] })
-  ] });
-}
-function Shop() {
-  const [location, setLocation] = useLocation();
-  const searchParams = new URLSearchParams(window.location.search);
-  const categoryParam = searchParams.get("category");
-  const subCategoryParam = searchParams.get("subcategory");
-  const [activeCategory, setActiveCategory] = useState(categoryParam);
-  const [activeSubCategory, setActiveSubCategory] = useState(subCategoryParam);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [sortBy, setSortBy] = useState("featured");
-  const [viewMode, setViewMode] = useState("grid");
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (activeCategory) params.set("category", activeCategory);
-    if (activeSubCategory) params.set("subcategory", activeSubCategory);
-    if (debouncedSearch) params.set("search", debouncedSearch);
-    const newUrl = `/shop${params.toString() ? `?${params.toString()}` : ""}`;
-    window.history.replaceState({}, "", newUrl);
-  }, [activeCategory, activeSubCategory, debouncedSearch]);
-  useEffect(() => {
-    const t2 = setTimeout(() => setDebouncedSearch(searchQuery), 350);
-    return () => clearTimeout(t2);
-  }, [searchQuery]);
-  const { data: dbProducts, isLoading } = trpc.product.list.useQuery({
-    category: activeCategory || void 0,
-    subcategory: activeSubCategory || void 0,
-    search: debouncedSearch || void 0,
-    limit: 48,
-    offset: 0
-  });
-  const { data: apiCategories } = trpc.category.listWithSubs.useQuery();
-  const allCategories = useMemo(() => {
-    return transformApiCategories(apiCategories) || SHOP_CATEGORIES;
-  }, [apiCategories]);
-  const getCategoryBySlug = useCallback((slug) => {
-    return allCategories.find((c) => c.slug === slug);
-  }, [allCategories]);
-  const displayProducts = useMemo(() => {
-    let products2 = dbProducts && dbProducts.length > 0 ? dbProducts.map((p) => ({
-      ...p,
-      startingPrice: "Request Quote",
-      moq: "50 pcs",
-      mainImage: p.mainImage ?? void 0
-    })) : DEMO_PRODUCTS.map((p) => ({
-      id: p.id,
-      slug: p.slug,
-      title: p.title,
-      category: p.category,
-      shortDescription: p.shortDescription,
-      mainImage: p.mainImage,
-      isFeatured: p.isFeatured,
-      freeShipping: p.freeShipping,
-      startingPrice: p.startingPrice,
-      moq: p.moq,
-      subCategory: p.subCategory
-    }));
-    if (activeSubCategory && activeCategory) {
-      products2 = products2.filter((p) => {
-        const categoryData = getCategoryBySlug(activeCategory);
-        const subCategoryData = categoryData?.subCategories.find((s2) => s2.slug === activeSubCategory);
-        if (!subCategoryData) return true;
-        const nameLower = p.title.toLowerCase();
-        const subNameLower = subCategoryData.name.toLowerCase();
-        if (subNameLower.includes("jacket") && nameLower.includes("jacket")) return true;
-        if (subNameLower.includes("pant") && (nameLower.includes("pant") || nameLower.includes("trouser") || nameLower.includes("bib"))) return true;
-        if (subNameLower.includes("hoodie") && nameLower.includes("hoodie")) return true;
-        if (subNameLower.includes("t-shirt") && (nameLower.includes("tee") || nameLower.includes("shirt"))) return true;
-        if (subNameLower.includes("gi") && nameLower.includes("gi")) return true;
-        if (subNameLower.includes("rashguard") && nameLower.includes("rashguard")) return true;
-        if (subNameLower.includes("short") && nameLower.includes("short")) return true;
-        if (subNameLower.includes("vest") && nameLower.includes("vest")) return true;
-        if (subNameLower.includes("cargo") && nameLower.includes("cargo")) return true;
-        return p.category.toLowerCase().replace(/\s+/g, "-") === activeCategory.toLowerCase() || p.category === categoryData?.name;
-      });
-    }
-    if (debouncedSearch) {
-      products2 = products2.filter(
-        (p) => p.title.toLowerCase().includes(debouncedSearch.toLowerCase()) || p.shortDescription.toLowerCase().includes(debouncedSearch.toLowerCase()) || p.category.toLowerCase().includes(debouncedSearch.toLowerCase())
-      );
-    }
-    products2 = [...products2].sort((a, b) => {
-      if (sortBy === "name") return a.title.localeCompare(b.title);
-      if (sortBy === "featured") return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
-      if (sortBy === "price-low") {
-        const aPrice = parseFloat(a.startingPrice?.replace(/[^0-9.]/g, "") || "0");
-        const bPrice = parseFloat(b.startingPrice?.replace(/[^0-9.]/g, "") || "0");
-        return aPrice - bPrice;
-      }
-      return 0;
-    });
-    return products2;
-  }, [dbProducts, activeCategory, activeSubCategory, debouncedSearch, sortBy]);
-  useEffect(() => {
-    console.log("=== SHOP DEBUG ===");
-    console.log("dbProducts:", dbProducts);
-    console.log("allCategories:", allCategories);
-    console.log("First product categoryId:", dbProducts?.[0]?.categoryId);
-    console.log("First product subcategoryId:", dbProducts?.[0]?.subcategoryId);
-    console.log("First category id:", allCategories?.[0]?.id);
-  }, [dbProducts, allCategories]);
-  const productCounts = useMemo(() => {
-    const counts = {};
-    if (!dbProducts || dbProducts.length === 0) {
-      console.log("No dbProducts, using DEMO_PRODUCTS");
-      DEMO_PRODUCTS.forEach((p) => {
-        const catSlug = p.category.toLowerCase().replace(/\s+/g, "-");
-        counts[catSlug] = (counts[catSlug] || 0) + 1;
-      });
-      return counts;
-    }
-    console.log("Calculating counts from", dbProducts.length, "products");
-    dbProducts.forEach((p) => {
-      console.log("Processing product:", p.id, "categoryId:", p.categoryId, "subcategoryId:", p.subcategoryId);
-      const category = allCategories.find((c) => String(c.id) === String(p.categoryId));
-      if (category) {
-        console.log("Found category:", category.slug);
-        counts[category.slug] = (counts[category.slug] || 0) + 1;
-        if (p.subcategoryId) {
-          const subcategory = category.subCategories.find((s2) => String(s2.id) === String(p.subcategoryId));
-          if (subcategory) {
-            const key = `${category.slug}-${subcategory.slug}`;
-            console.log("Found subcategory:", key);
-            counts[key] = (counts[key] || 0) + 1;
-          } else {
-            console.log("Subcategory not found for id:", p.subcategoryId);
-            console.log("Available subcategories:", category.subCategories.map((s2) => ({ id: s2.id, name: s2.name })));
-          }
-        }
-      } else {
-        console.log("Category not found for id:", p.categoryId);
-        const catSlug = p.category?.toLowerCase().replace(/\s+/g, "-") || "";
-        if (catSlug) {
-          counts[catSlug] = (counts[catSlug] || 0) + 1;
-        }
-      }
-    });
-    console.log("Final counts:", counts);
-    return counts;
-  }, [dbProducts, allCategories]);
-  const totalCount = displayProducts.length;
-  const handleCategoryChange = (category, subCategory) => {
-    setActiveCategory(category);
-    setActiveSubCategory(subCategory);
-  };
-  const seoContent = activeCategory ? CATEGORY_SEO_CONTENT[activeCategory] : null;
-  const seoTitle = activeSubCategory && activeCategory ? `${getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name} | ${getCategoryBySlug(activeCategory)?.name} | Sialkot Sample Masters` : seoContent?.title || (activeCategory ? `${getCategoryBySlug(activeCategory)?.name} | Custom Manufacturer | Sialkot Sample Masters` : "Shop Custom Streetwear | B2B Wholesale Catalog | Sialkot Sample Masters Pakistan");
-  const seoDescription = seoContent?.description || (activeCategory ? `Custom ${getCategoryBySlug(activeCategory)?.name.toLowerCase()} manufacturing. Low MOQ from 50 pieces. OEM & private label services from Sialkot, Pakistan.` : "Browse Sialkot Sample Masters' B2B custom apparel catalog. Ski wear, streetwear, sportswear & more. Slab pricing, low MOQ from 50 pcs, private label manufacturing.");
-  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
-    /* @__PURE__ */ jsx(
-      SEOHead,
-      {
-        title: seoTitle,
-        description: seoDescription,
-        keywords: seoContent?.keywords || "custom apparel manufacturer Pakistan, B2B clothing wholesale, private label manufacturing, low MOQ clothing supplier",
-        canonical: `/shop${activeCategory ? `?category=${activeCategory}` : ""}${activeSubCategory ? `&subcategory=${activeSubCategory}` : ""}`,
-        breadcrumbs: [
-          { name: "Home", item: "/" },
-          { name: "Shop", item: "/shop" },
-          ...activeCategory ? [{ name: getCategoryBySlug(activeCategory)?.name || activeCategory, item: `/shop?category=${activeCategory}` }] : [],
-          ...activeSubCategory && activeCategory ? [{ name: getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name || activeSubCategory, item: `/shop?category=${activeCategory}&subcategory=${activeSubCategory}` }] : []
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsx("script", { type: "application/ld+json", dangerouslySetInnerHTML: {
-      __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": activeCategory ? getCategoryBySlug(activeCategory)?.name + " Catalog" : "Sialkot Sample Masters Catalog",
-        "description": seoDescription,
-        "numberOfItems": totalCount,
-        "itemListElement": displayProducts.slice(0, 10).map((p, i) => ({
-          "@type": "ListItem",
-          "position": i + 1,
-          "name": p.title,
-          "url": "https://sialkotsamplemasters.com/shop/" + p.slug
-        }))
-      })
-    } }),
-    /* @__PURE__ */ jsxs("main", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsxs(
-        "section",
-        {
-          className: "relative pt-16 pb-12 overflow-hidden",
-          style: { backgroundImage: `url(${IMAGES.shopBg})`, backgroundSize: "cover", backgroundPosition: "center" },
-          children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-[2px]" }),
-            /* @__PURE__ */ jsx("div", { className: "container relative z-10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
-              /* @__PURE__ */ jsx(FadeIn, { direction: "down", delay: 0.1, children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
-                /* @__PURE__ */ jsx("div", { className: "h-px w-8 bg-gold" }),
-                /* @__PURE__ */ jsx("span", { className: "text-gold font-condensed text-sm uppercase tracking-widest", children: "Global Manufacturing Hub" })
-              ] }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.2, children: /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl md:text-5xl font-bold text-white mb-4 leading-tight", children: activeCategory ? /* @__PURE__ */ jsxs(Fragment, { children: [
-                getCategoryBySlug(activeCategory)?.icon,
-                " ",
-                getCategoryBySlug(activeCategory)?.name
-              ] }) : activeSubCategory ? /* @__PURE__ */ jsx(Fragment, { children: getCategoryBySlug(activeCategory || "")?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-                "Premium B2B ",
-                /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "Apparel Catalog" })
-              ] }) }) }),
-              /* @__PURE__ */ jsx(FadeIn, { delay: 0.3, children: /* @__PURE__ */ jsx("p", { className: "text-slate-200 text-lg max-w-xl leading-relaxed mb-6", children: activeCategory ? getCategoryBySlug(activeCategory)?.description : "Direct from Sialkot to your warehouse. Explore our export-quality collections across streetwear, sportswear, and technical garments." }) }),
-              /* @__PURE__ */ jsx(StaggerChildren, { className: "flex flex-wrap gap-x-6 gap-y-2", stagger: 0.05, children: [
-                { icon: Star, text: "ISO 9001:2015" },
-                { icon: Package, text: "MOQ from 50 pcs" },
-                { icon: Truck, text: "Global DDP/FOB" },
-                { icon: Tag, text: "Tiered Pricing" }
-              ].map(({ icon: Icon, text }) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "left", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm text-slate-300", children: [
-                /* @__PURE__ */ jsx(Icon, { className: "w-4 h-4 text-gold" }),
-                /* @__PURE__ */ jsx("span", { className: "font-condensed font-semibold uppercase tracking-wider", children: text })
-              ] }) }, text)) })
-            ] }) })
-          ]
-        }
-      ),
-      /* @__PURE__ */ jsx("div", { className: "border-b border-border bg-card/50", children: /* @__PURE__ */ jsx("div", { className: "container py-3", children: /* @__PURE__ */ jsx(BreadcrumbNav, { activeCategory, activeSubCategory, categories: allCategories }) }) }),
-      /* @__PURE__ */ jsx("div", { className: "container py-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col lg:flex-row gap-6", children: [
-        /* @__PURE__ */ jsxs("aside", { className: "w-full lg:w-64 flex-shrink-0", children: [
-          /* @__PURE__ */ jsx("div", { className: "block lg:hidden mb-4", children: /* @__PURE__ */ jsx(MobileFilterSheet, { activeCategory, activeSubCategory, children: /* @__PURE__ */ jsx(
-            CategorySidebar,
-            {
-              activeCategory,
-              activeSubCategory,
-              onCategoryChange: handleCategoryChange,
-              productCounts,
-              categories: allCategories
-            }
-          ) }) }),
-          /* @__PURE__ */ jsx("div", { className: "hidden lg:block", style: { display: "block !important" }, children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl p-4 sticky top-24", style: { position: "sticky", top: "96px" }, children: [
-            /* @__PURE__ */ jsxs("h3", { className: "font-condensed font-bold uppercase tracking-wider text-sm mb-4 flex items-center gap-2 text-foreground", children: [
-              /* @__PURE__ */ jsx(List, { className: "w-4 h-4" }),
-              "Categories"
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "max-h-[calc(100vh-300px)] overflow-y-auto scrollbar-thin", children: /* @__PURE__ */ jsx(
-              CategorySidebar,
-              {
-                activeCategory,
-                activeSubCategory,
-                onCategoryChange: handleCategoryChange,
-                productCounts,
-                categories: allCategories
-              }
-            ) })
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex-1 min-w-0", children: [
-          /* @__PURE__ */ jsx("div", { className: "bg-card border border-border rounded-xl p-4 mb-6", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-lg", children: activeSubCategory && activeCategory ? getCategoryBySlug(activeCategory)?.subCategories.find((s2) => s2.slug === activeSubCategory)?.name : activeCategory ? getCategoryBySlug(activeCategory)?.name : "All Products" }),
-              /* @__PURE__ */ jsxs(Badge, { variant: "outline", className: "text-xs", children: [
-                totalCount,
-                " items"
-              ] }),
-              (activeCategory || activeSubCategory) && /* @__PURE__ */ jsxs(
-                Button,
-                {
-                  variant: "ghost",
-                  size: "sm",
-                  onClick: () => handleCategoryChange(null, null),
-                  className: "text-xs h-7 px-2",
-                  children: [
-                    /* @__PURE__ */ jsx(X$1, { className: "w-3 h-3 mr-1" }),
-                    "Clear"
-                  ]
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 w-full sm:w-auto", children: [
-              /* @__PURE__ */ jsxs("div", { className: "relative flex-1 sm:w-64", children: [
-                /* @__PURE__ */ jsx(Search, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" }),
-                /* @__PURE__ */ jsx(
-                  Input,
-                  {
-                    placeholder: "Search products...",
-                    value: searchQuery,
-                    onChange: (e) => setSearchQuery(e.target.value),
-                    className: "pl-9 bg-secondary border-border text-sm h-10"
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ jsxs(
-                "select",
-                {
-                  value: sortBy,
-                  onChange: (e) => setSortBy(e.target.value),
-                  className: "bg-secondary border-border rounded-md text-sm px-3 h-10 text-muted-foreground focus:ring-1 focus:ring-gold outline-none cursor-pointer",
-                  children: [
-                    /* @__PURE__ */ jsx("option", { value: "featured", children: "Featured" }),
-                    /* @__PURE__ */ jsx("option", { value: "name", children: "Name (A-Z)" }),
-                    /* @__PURE__ */ jsx("option", { value: "price-low", children: "Price: Low to High" })
-                  ]
-                }
-              )
-            ] })
-          ] }) }),
-          isLoading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: Array.from({ length: 8 }).map((_, i) => /* @__PURE__ */ jsx(ProductCardSkeleton, {}, i)) }) : displayProducts.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "text-center py-24 bg-card border border-border rounded-xl", children: [
-            /* @__PURE__ */ jsx(Package, { className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
-            /* @__PURE__ */ jsx("h3", { className: "font-serif text-2xl text-foreground mb-2", children: "No products found" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6 max-w-md mx-auto", children: "Try adjusting your filters or search query. We have products across all major apparel categories." }),
-            /* @__PURE__ */ jsx(Button, { onClick: () => {
-              handleCategoryChange(null, null);
-              setSearchQuery("");
-            }, children: "Clear All Filters" })
-          ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-            !activeCategory && !debouncedSearch && /* @__PURE__ */ jsxs("div", { className: "mb-10", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
-                /* @__PURE__ */ jsx(Star, { className: "w-5 h-5 text-gold" }),
-                /* @__PURE__ */ jsx("h3", { className: "font-condensed text-lg font-bold uppercase tracking-wider text-foreground", children: "Featured Products" }),
-                /* @__PURE__ */ jsx("div", { className: "flex-1 h-px bg-border" })
-              ] }),
-              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5", children: displayProducts.filter((p) => p.isFeatured).slice(0, 4).map((p) => /* @__PURE__ */ jsx(ProductCard, { product: p }, `featured-${p.id}`)) })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: cn(
-              "grid gap-5",
-              viewMode === "grid" ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-4" : "grid-cols-1"
-            ), children: displayProducts.filter((p) => !(!activeCategory && !debouncedSearch && p.isFeatured)).map((p) => /* @__PURE__ */ jsx(ProductCard, { product: p }, p.id)) })
-          ] })
-        ] })
-      ] }) }),
-      activeCategory && /* @__PURE__ */ jsx("section", { className: "py-16 bg-card border-t border-border mt-12", children: /* @__PURE__ */ jsx("div", { className: "container", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto text-center", children: [
-        /* @__PURE__ */ jsxs("h2", { className: "font-serif text-3xl font-bold mb-4", children: [
-          "Custom ",
-          getCategoryBySlug(activeCategory)?.name,
-          " Manufacturing"
-        ] }),
-        /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground text-lg leading-relaxed mb-8", children: [
-          "Looking for a reliable ",
-          getCategoryBySlug(activeCategory)?.name.toLowerCase(),
-          " manufacturer in Pakistan? Sialkot Sample Masters offers premium quality with low MOQ starting at 50 pieces. OEM and private label services available for global brands."
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center gap-4", children: [
-          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-widest", children: "Request Quote" }) }),
-          /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "font-condensed font-bold uppercase tracking-widest", children: "Contact Sales" }) })
-        ] })
-      ] }) }) })
-    ] })
-  ] });
-}
 function ZoomableImage({ src, alt }) {
   const [zoomed, setZoomed] = useState(false);
   const [position, setPosition] = useState({ x: 50, y: 50 });
@@ -6223,7 +4879,7 @@ function ZoomableImage({ src, alt }) {
             draggable: false
           }
         ),
-        !zoomed && /* @__PURE__ */ jsxs("div", { className: "absolute bottom-4 right-4 bg-background/90 backdrop-blur border border-border text-foreground text-[10px] uppercase tracking-widest px-3 py-1.5 flex items-center gap-1.5 shadow-sm", children: [
+        !zoomed && /* @__PURE__ */ jsxs("div", { className: "absolute bottom-4 right-4 bg-[#0d0d0d]/90 backdrop-blur border border-white/10 text-white text-[10px] uppercase tracking-widest px-3 py-1.5 flex items-center gap-1.5 shadow-sm", children: [
           /* @__PURE__ */ jsx(ZoomIn, { className: "w-3.5 h-3.5" }),
           " Hover to Zoom"
         ] })
@@ -6233,11 +4889,11 @@ function ZoomableImage({ src, alt }) {
 }
 function AlibabaPricingTable({ slabs, formatCurrency }) {
   if (!slabs || slabs.length === 0) return null;
-  return /* @__PURE__ */ jsx("div", { className: "flex bg-secondary/20 rounded border border-border overflow-hidden mb-6 divide-x divide-border", children: slabs.slice(0, 3).map((slab, i) => {
+  return /* @__PURE__ */ jsx("div", { className: "flex bg-[#161616] rounded border border-white/10 overflow-hidden mb-6 divide-x divide-border", children: slabs.slice(0, 3).map((slab, i) => {
     const qtyLabel = slab.maxQty ? `${slab.minQty} - ${slab.maxQty}` : `≥${slab.minQty}`;
-    return /* @__PURE__ */ jsxs("div", { className: "flex-1 py-3 px-2 text-center hover:bg-secondary/40 transition-colors", children: [
-      /* @__PURE__ */ jsx("div", { className: "text-xl sm:text-2xl font-bold text-foreground", children: formatCurrency(slab.pricePerUnit) }),
-      /* @__PURE__ */ jsxs("div", { className: "text-[10px] sm:text-xs text-muted-foreground mt-0.5 whitespace-nowrap", children: [
+    return /* @__PURE__ */ jsxs("div", { className: "flex-1 py-3 px-2 text-center hover:bg-[#1a1a1a] transition-colors", children: [
+      /* @__PURE__ */ jsx("div", { className: "text-xl sm:text-2xl font-bold text-white", children: formatCurrency(slab.pricePerUnit) }),
+      /* @__PURE__ */ jsxs("div", { className: "text-[10px] sm:text-xs text-white/70 mt-0.5 whitespace-nowrap", children: [
         qtyLabel,
         " ",
         slab.label || "Pieces"
@@ -6254,22 +4910,22 @@ function SizeChartModal({ sizeChart, open, onClose }) {
     rows = [];
   }
   const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
-  return /* @__PURE__ */ jsx(Dialog, { open, onOpenChange: onClose, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl bg-background border-border p-0 overflow-hidden", children: [
-    /* @__PURE__ */ jsxs(DialogHeader, { className: "p-6 border-b border-border bg-secondary/30", children: [
-      /* @__PURE__ */ jsxs(DialogTitle, { className: "font-serif text-2xl text-foreground flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx(Ruler, { className: "w-5 h-5 text-gold" }),
+  return /* @__PURE__ */ jsx(Dialog, { open, onOpenChange: onClose, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-3xl bg-[#0d0d0d] border-white/10 p-0 overflow-hidden", children: [
+    /* @__PURE__ */ jsxs(DialogHeader, { className: "p-6 border-b border-white/10 bg-[#161616]", children: [
+      /* @__PURE__ */ jsxs(DialogTitle, { className: "font-serif text-2xl text-white flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx(Ruler, { className: "w-5 h-5 text-[#ff6b00]" }),
         " Comprehensive Tech Pack Size Guide"
       ] }),
-      /* @__PURE__ */ jsxs("p", { className: "text-sm text-muted-foreground mt-1", children: [
+      /* @__PURE__ */ jsxs("p", { className: "text-sm text-white/70 mt-1", children: [
         "All measurements in ",
         /* @__PURE__ */ jsx("strong", { children: sizeChart.unit }),
         ". ",
         sizeChart.notes && `Note: ${sizeChart.notes}`
       ] })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "overflow-x-auto p-6", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-sm text-left border border-border", children: [
-      /* @__PURE__ */ jsx("thead", { className: "bg-secondary/50 text-foreground border-b border-border", children: /* @__PURE__ */ jsx("tr", { children: columns.map((col) => /* @__PURE__ */ jsx("th", { className: "px-4 py-3 font-semibold text-xs tracking-wider uppercase whitespace-nowrap border-r border-border last:border-0", children: col }, col)) }) }),
-      /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-border", children: rows.map((row, i) => /* @__PURE__ */ jsx("tr", { className: "hover:bg-secondary/10 transition-colors", children: columns.map((col) => /* @__PURE__ */ jsx("td", { className: `px-4 py-3 whitespace-nowrap border-r border-border last:border-0 ${col.toLowerCase() === "size" ? "font-bold text-foreground bg-secondary/20" : "text-muted-foreground"}`, children: row[col] }, col)) }, i)) })
+    /* @__PURE__ */ jsx("div", { className: "overflow-x-auto p-6", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-sm text-left border border-white/10", children: [
+      /* @__PURE__ */ jsx("thead", { className: "bg-[#161616] text-white border-b border-white/10", children: /* @__PURE__ */ jsx("tr", { children: columns.map((col) => /* @__PURE__ */ jsx("th", { className: "px-4 py-3 font-semibold text-xs tracking-wider uppercase whitespace-nowrap border-r border-white/10 last:border-0", children: col }, col)) }) }),
+      /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-border", children: rows.map((row, i) => /* @__PURE__ */ jsx("tr", { className: "hover:bg-[#161616]/50 transition-colors", children: columns.map((col) => /* @__PURE__ */ jsx("td", { className: `px-4 py-3 whitespace-nowrap border-r border-white/10 last:border-0 ${col.toLowerCase() === "size" ? "font-bold text-white bg-[#161616]" : "text-white/70"}`, children: row[col] }, col)) }, i)) })
     ] }) })
   ] }) });
 }
@@ -6308,13 +4964,13 @@ function ProductDetail() {
     if (availableColors.length > 0 && !selectedColor) setSelectedColor(availableColors[0]);
   }, [availableSizes.length, availableColors.length, selectedSize, selectedColor]);
   if (isLoading) {
-    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#f7f8fa] dark:bg-background pt-24 pb-12", children: /* @__PURE__ */ jsx("div", { className: "max-w-[1400px] mx-auto px-4", children: /* @__PURE__ */ jsx("div", { className: "h-[600px] bg-secondary/50 animate-pulse rounded" }) }) });
+    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] pt-24 pb-12", children: /* @__PURE__ */ jsx("div", { className: "max-w-[1400px] mx-auto px-4", children: /* @__PURE__ */ jsx("div", { className: "h-[600px] bg-[#161616] animate-pulse rounded" }) }) });
   }
   if (!product) {
-    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-background flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-      /* @__PURE__ */ jsx(Package, { className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
-      /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl text-foreground mb-4", children: "Product Not Found" }),
-      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", children: "Back to Catalog" }) })
+    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+      /* @__PURE__ */ jsx(Package, { className: "w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl text-white mb-4", children: "Product Not Found" }),
+      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", children: "Back to Catalog" }) })
     ] }) });
   }
   const images = product?.images ?? [];
@@ -6390,130 +5046,130 @@ function ProductDetail() {
         } : void 0
       })
     } }),
-    /* @__PURE__ */ jsxs("main", { className: "min-h-screen bg-[#f5f5f5] dark:bg-[#0a0a0a]", children: [
-      /* @__PURE__ */ jsx("div", { className: "bg-white dark:bg-card border-b border-border text-xs py-3 px-4 sm:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1400px] mx-auto flex items-center gap-2 text-muted-foreground", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/", className: "hover:text-foreground", children: "Home" }),
+    /* @__PURE__ */ jsxs("main", { className: "min-h-screen bg-[#0d0d0d]", children: [
+      /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border-b border-white/10 text-xs py-3 px-4 sm:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1400px] mx-auto flex items-center gap-2 text-white/70", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/", className: "hover:text-white", children: "Home" }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
-        /* @__PURE__ */ jsx(Link, { href: "/shop", className: "hover:text-foreground", children: "Apparel Manufacturing" }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/shop", className: "hover:text-white", children: "Apparel Manufacturing" }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
-        /* @__PURE__ */ jsx(Link, { href: `/shop?category=${product.category}`, className: "hover:text-foreground", children: product.category }),
+        /* @__PURE__ */ jsx(Link$1, { href: `/shop?category=${product.category}`, className: "hover:text-white", children: product.category }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
-        /* @__PURE__ */ jsx("span", { className: "text-foreground font-medium truncate", children: product.title })
+        /* @__PURE__ */ jsx("span", { className: "text-white font-medium truncate", children: product.title })
       ] }) }),
       /* @__PURE__ */ jsx("div", { className: "max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6 items-start", children: [
-        /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4 bg-white dark:bg-card p-4 rounded-md shadow-sm border border-border sticky top-24", children: [
+        /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4 bg-[#111111] p-4 rounded-md shadow-sm border border-white/10 sticky top-24", children: [
           /* @__PURE__ */ jsx(ZoomableImage, { src: activeImage.imageUrl, alt: `${activeImage.altText || product.title} - Apparel Manufacturer Sialkot` }),
           allImages.length > 1 && /* @__PURE__ */ jsx("div", { className: "flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide", children: allImages.map((img, idx) => /* @__PURE__ */ jsx(
             "button",
             {
               onClick: () => setActiveImageIdx(idx),
-              className: `w-16 h-20 shrink-0 rounded overflow-hidden border-2 transition-all ${idx === activeImageIdx ? "border-gold" : "border-transparent opacity-60 hover:opacity-100"}`,
-              children: /* @__PURE__ */ jsx("img", { src: img.imageUrl, alt: "thumbnail", className: "w-full h-full object-cover bg-secondary/50" })
+              className: `w-16 h-20 shrink-0 rounded overflow-hidden border-2 transition-all ${idx === activeImageIdx ? "border-[#ff6b00]" : "border-transparent opacity-60 hover:opacity-100"}`,
+              children: /* @__PURE__ */ jsx("img", { src: img.imageUrl, alt: "thumbnail", className: "w-full h-full object-cover bg-[#161616]" })
             },
             img.id
           )) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 bg-transparent lg:px-2 space-y-6", children: [
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("h1", { className: "text-2xl sm:text-3xl lg:text-[28px] font-bold text-foreground leading-tight mb-3", children: product.title }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm leading-relaxed mb-4", children: product.shortDescription || product.material })
+            /* @__PURE__ */ jsx("h1", { className: "text-2xl sm:text-3xl lg:text-[28px] font-bold text-white leading-tight mb-3", children: product.title }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm leading-relaxed mb-4", children: product.shortDescription || product.material })
           ] }),
           slabs.length > 0 && /* @__PURE__ */ jsx(AlibabaPricingTable, { slabs, formatCurrency }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-card p-5 rounded-md border border-border shadow-sm text-sm space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-border pb-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Material:" }),
-              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-foreground font-medium", children: product.material || "Custom Export Quality Blend" })
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] p-5 rounded-md border border-white/10 shadow-sm text-sm space-y-3", children: [
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-white/10 pb-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Material:" }),
+              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-white font-medium", children: product.material || "Custom Export Quality Blend" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-border pb-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Min. Order:" }),
-              /* @__PURE__ */ jsxs("span", { className: "col-span-2 text-foreground font-medium", children: [
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-white/10 pb-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Min. Order:" }),
+              /* @__PURE__ */ jsxs("span", { className: "col-span-2 text-white font-medium", children: [
                 slabs[0]?.minQty || 50,
                 " Pieces"
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-border pb-3", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Lead Time:" }),
-              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-foreground font-medium", children: "7 Days (Sample) | 21 Days (Bulk)" })
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2 border-b border-white/10 pb-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Lead Time:" }),
+              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-white font-medium", children: "7 Days (Sample) | 21 Days (Bulk)" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Customization:" }),
-              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-foreground font-medium", children: "OEM/ODM, Custom Logo, Custom Tags" })
+              /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Customization:" }),
+              /* @__PURE__ */ jsx("span", { className: "col-span-2 text-white font-medium", children: "OEM/ODM, Custom Logo, Custom Tags" })
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "lg:col-span-3 space-y-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-card border border-border rounded-md p-5 shadow-lg sticky top-24", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-bold text-foreground mb-4 pb-2 border-b border-border", children: "Order Requirements" }),
+        /* @__PURE__ */ jsx("div", { className: "lg:col-span-3 space-y-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-md p-5 shadow-lg sticky top-24", children: [
+          /* @__PURE__ */ jsx("h3", { className: "font-bold text-white mb-4 pb-2 border-b border-white/10", children: "Order Requirements" }),
           availableSizes.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mb-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-foreground", children: "Size:" }),
+              /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-white", children: "Size:" }),
               sizeChart && /* @__PURE__ */ jsx("button", { onClick: () => setSizeChartOpen(true), className: "text-[10px] text-blue-600 dark:text-blue-400 hover:underline", children: "View Size Guide" })
             ] }),
             /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: availableSizes.map((size) => /* @__PURE__ */ jsx(
               "button",
               {
                 onClick: () => setSelectedSize(size),
-                className: `min-w-[40px] px-2 py-1.5 text-xs text-center border rounded-sm transition-all ${selectedSize === size ? "border-gold bg-gold/5 text-foreground font-bold" : "border-border text-muted-foreground hover:border-foreground"}`,
+                className: `min-w-[40px] px-2 py-1.5 text-xs text-center border rounded-sm transition-all ${selectedSize === size ? "border-[#ff6b00] bg-[#ff6b00]/5 text-white font-bold" : "border-white/10 text-white/70 hover:border-foreground"}`,
                 children: size
               },
               size
             )) })
           ] }),
           availableColors.length > 0 && /* @__PURE__ */ jsxs("div", { className: "mb-4", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-foreground block mb-2", children: "Color Setup:" }),
+            /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-white block mb-2", children: "Color Setup:" }),
             /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-1.5", children: availableColors.map((color) => /* @__PURE__ */ jsx(
               "button",
               {
                 onClick: () => setSelectedColor(color),
-                className: `px-3 py-1.5 text-xs border rounded-sm transition-all ${selectedColor === color ? "border-gold bg-gold/5 text-foreground font-bold" : "border-border text-muted-foreground hover:border-foreground"}`,
+                className: `px-3 py-1.5 text-xs border rounded-sm transition-all ${selectedColor === color ? "border-[#ff6b00] bg-[#ff6b00]/5 text-white font-bold" : "border-white/10 text-white/70 hover:border-foreground"}`,
                 children: color
               },
               color
             )) })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-foreground block mb-2", children: "Quantity (Pieces):" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center border border-border rounded-sm w-full", children: [
-              /* @__PURE__ */ jsx("button", { onClick: () => setQuantity((q) => Math.max(1, q - 10)), className: "w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg", children: "−" }),
-              /* @__PURE__ */ jsx("input", { type: "number", value: quantity, onChange: (e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1)), className: "flex-1 h-10 text-center bg-transparent border-x border-border text-sm font-medium focus:outline-none", min: 1 }),
-              /* @__PURE__ */ jsx("button", { onClick: () => setQuantity((q) => q + 10), className: "w-10 h-10 flex items-center justify-center bg-secondary/50 hover:bg-secondary text-foreground text-lg", children: "+" })
+            /* @__PURE__ */ jsx("span", { className: "text-xs font-semibold text-white block mb-2", children: "Quantity (Pieces):" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center border border-white/10 rounded-sm w-full", children: [
+              /* @__PURE__ */ jsx("button", { onClick: () => setQuantity((q) => Math.max(1, q - 10)), className: "w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#1a1a1a] text-white text-lg", children: "−" }),
+              /* @__PURE__ */ jsx("input", { type: "number", value: quantity, onChange: (e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1)), className: "flex-1 h-10 text-center bg-transparent border-x border-white/10 text-sm font-medium focus:outline-none", min: 1 }),
+              /* @__PURE__ */ jsx("button", { onClick: () => setQuantity((q) => q + 10), className: "w-10 h-10 flex items-center justify-center bg-[#161616] hover:bg-[#1a1a1a] text-white text-lg", children: "+" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-secondary/30 p-3 rounded-sm mb-6 border border-border/50", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#161616] p-3 rounded-sm mb-6 border border-white/5", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center text-sm mb-1", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Unit Price:" }),
-              /* @__PURE__ */ jsx("span", { className: "font-semibold text-foreground", children: formatCurrency(unitPrice) })
+              /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Unit Price:" }),
+              /* @__PURE__ */ jsx("span", { className: "font-semibold text-white", children: formatCurrency(unitPrice) })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center pt-2 mt-2 border-t border-border/50", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-foreground font-bold", children: "Subtotal:" }),
-              /* @__PURE__ */ jsx("span", { className: "font-bold text-xl text-gold-dark dark:text-gold-light", children: formatCurrency(lineTotal) })
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center pt-2 mt-2 border-t border-white/5", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: "Subtotal:" }),
+              /* @__PURE__ */ jsx("span", { className: "font-bold text-xl text-[#ff6b00]", children: formatCurrency(lineTotal) })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2.5", children: [
-            /* @__PURE__ */ jsx(Button, { onClick: handleStartOrder, className: "w-full bg-gold hover:bg-gold/90 text-background font-bold rounded-full py-6", children: "Start Order" }),
-            /* @__PURE__ */ jsx(Button, { onClick: handleAddToCart, variant: "outline", className: "w-full border-gold text-gold hover:bg-gold/10 font-bold rounded-full py-6", children: "Add to Inquiry Cart" }),
-            /* @__PURE__ */ jsx("div", { className: "text-center mt-2", children: /* @__PURE__ */ jsxs("span", { className: "text-[10px] text-muted-foreground flex justify-center items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Button, { onClick: handleStartOrder, className: "w-full bg-[#ff6b00] hover:bg-[#ff6b00]/90 text-background font-bold rounded-full py-6", children: "Start Order" }),
+            /* @__PURE__ */ jsx(Button, { onClick: handleAddToCart, variant: "outline", className: "w-full border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10 font-bold rounded-full py-6", children: "Add to Inquiry Cart" }),
+            /* @__PURE__ */ jsx("div", { className: "text-center mt-2", children: /* @__PURE__ */ jsxs("span", { className: "text-[10px] text-white/70 flex justify-center items-center gap-1", children: [
               /* @__PURE__ */ jsx(Lock, { className: "w-3 h-3" }),
               " Safe & Secure Payments"
             ] }) })
           ] })
         ] }) })
       ] }) }),
-      /* @__PURE__ */ jsx("div", { className: "max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-20", children: /* @__PURE__ */ jsxs("div", { className: "bg-white dark:bg-card border border-border rounded-md shadow-sm overflow-hidden", children: [
-        /* @__PURE__ */ jsx("div", { className: "flex overflow-x-auto border-b border-border bg-secondary/20 sticky top-0 z-10 scrollbar-hide", children: ["Product Details", "Technical Specifications", "Manufacturing & Factory"].map((tab, i) => /* @__PURE__ */ jsx("button", { className: `px-6 py-4 text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${i === 0 ? "text-gold border-b-2 border-gold bg-background" : "text-muted-foreground hover:text-foreground"}`, children: tab }, tab)) }),
+      /* @__PURE__ */ jsx("div", { className: "max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-20", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-md shadow-sm overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex overflow-x-auto border-b border-white/10 bg-[#161616] sticky top-0 z-10 scrollbar-hide", children: ["Product Details", "Technical Specifications", "Manufacturing & Factory"].map((tab, i) => /* @__PURE__ */ jsx("button", { className: `px-6 py-4 text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${i === 0 ? "text-[#ff6b00] border-b-2 border-[#ff6b00] bg-[#0d0d0d]" : "text-white/70 hover:text-white"}`, children: tab }, tab)) }),
         /* @__PURE__ */ jsxs("div", { className: "p-6 md:p-10 space-y-16", children: [
           product.description && /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-foreground mb-6 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-gold rounded-full" }),
+            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-white mb-6 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-[#ff6b00] rounded-full" }),
               " Product Overview"
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "text-muted-foreground text-sm leading-8 whitespace-pre-line max-w-4xl", children: product.description })
+            /* @__PURE__ */ jsx("div", { className: "text-white/70 text-sm leading-8 whitespace-pre-line max-w-4xl", children: product.description })
           ] }),
           /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-foreground mb-6 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-gold rounded-full" }),
+            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-white mb-6 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-[#ff6b00] rounded-full" }),
               " Technical Specifications"
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 border-t border-l border-border rounded overflow-hidden text-sm", children: [
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0 border-t border-l border-white/10 rounded overflow-hidden text-sm", children: [
               { label: "Product Name", value: product.title },
               { label: "Material Composition", value: product.material || "Refer to care label" },
               { label: "Place of Origin", value: "Sialkot, Punjab, Pakistan" },
@@ -6526,14 +5182,14 @@ function ProductDetail() {
               { label: "Minimum Order", value: `${slabs[0]?.minQty || 50} Pieces` },
               { label: "Packaging Details", value: "1pc/polybag, 50pcs/carton (Custom pkg available)" },
               { label: "Sample Time", value: "7-10 working days" }
-            ].map((row, i) => /* @__PURE__ */ jsxs("div", { className: "flex border-b border-r border-border", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-1/3 bg-secondary/40 p-3 font-semibold text-muted-foreground", children: row.label }),
-              /* @__PURE__ */ jsx("div", { className: "w-2/3 p-3 text-foreground", children: row.value })
+            ].map((row, i) => /* @__PURE__ */ jsxs("div", { className: "flex border-b border-r border-white/10", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-1/3 bg-[#1a1a1a] p-3 font-semibold text-white/70", children: row.label }),
+              /* @__PURE__ */ jsx("div", { className: "w-2/3 p-3 text-white", children: row.value })
             ] }, i)) })
           ] }),
           (product.manufacturingStory || product.manufacturingInfographic) && /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-foreground mb-8 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-gold rounded-full" }),
+            /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold font-serif text-white mb-8 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "w-1 h-6 bg-[#ff6b00] rounded-full" }),
               " Manufacturing Process & Capability"
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "bg-zinc-950 rounded-xl overflow-hidden shadow-2xl", children: [
@@ -6549,7 +5205,7 @@ function ProductDetail() {
               ].map((step, i) => /* @__PURE__ */ jsxs("div", { className: "relative aspect-square group bg-zinc-900 overflow-hidden", children: [
                 /* @__PURE__ */ jsx("img", { src: step.img, alt: step.title, className: "w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 mix-blend-luminosity hover:mix-blend-normal" }),
                 /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "text-gold font-condensed font-bold text-xl leading-none", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "text-[#ff6b00] font-condensed font-bold text-xl leading-none", children: [
                     "0",
                     i + 1
                   ] }),
@@ -6561,28 +5217,28 @@ function ProductDetail() {
               ] }, i)) })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("section", { className: "bg-secondary/20 rounded-xl p-8 border border-border mt-12", children: [
-            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-foreground mb-6 uppercase tracking-wider", children: "Packaging & Global Delivery" }),
+          /* @__PURE__ */ jsxs("section", { className: "bg-[#161616] rounded-xl p-8 border border-white/10 mt-12", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-6 uppercase tracking-wider", children: "Packaging & Global Delivery" }),
             /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-8", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
-                /* @__PURE__ */ jsx(Package, { className: "w-8 h-8 text-muted-foreground shrink-0" }),
+                /* @__PURE__ */ jsx(Package, { className: "w-8 h-8 text-white/70 shrink-0" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h4", { className: "font-bold text-sm mb-1", children: "Custom Packaging" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground leading-relaxed", children: "Poly bags, frosted zipper bags, or custom branded boxes. Insert cards and silica gels included to prevent moisture damage during transit." })
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 leading-relaxed", children: "Poly bags, frosted zipper bags, or custom branded boxes. Insert cards and silica gels included to prevent moisture damage during transit." })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
-                /* @__PURE__ */ jsx(Truck, { className: "w-8 h-8 text-muted-foreground shrink-0" }),
+                /* @__PURE__ */ jsx(Truck, { className: "w-8 h-8 text-white/70 shrink-0" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h4", { className: "font-bold text-sm mb-1", children: "Air & Sea Freight" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground leading-relaxed", children: "Partnered with DHL, FedEx, and major sea lines. DDP (Delivered Duty Paid) options available for US and EU markets to handle all customs." })
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 leading-relaxed", children: "Partnered with DHL, FedEx, and major sea lines. DDP (Delivered Duty Paid) options available for US and EU markets to handle all customs." })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
-                /* @__PURE__ */ jsx(Factory, { className: "w-8 h-8 text-muted-foreground shrink-0" }),
+                /* @__PURE__ */ jsx(Factory, { className: "w-8 h-8 text-white/70 shrink-0" }),
                 /* @__PURE__ */ jsxs("div", { children: [
                   /* @__PURE__ */ jsx("h4", { className: "font-bold text-sm mb-1", children: "Factory Direct" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground leading-relaxed", children: "No middlemen. Manufactured in our Sialkot facility and shipped directly to your warehouse. Full supply chain transparency." })
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 leading-relaxed", children: "No middlemen. Manufactured in our Sialkot facility and shipped directly to your warehouse. Full supply chain transparency." })
                 ] })
               ] })
             ] })
@@ -6633,9 +5289,9 @@ function GeoLanding() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: `Premier Streetwear Manufacturer for ${data.name} Brands | Sialkot Sample Masters`,
-        description: `Custom apparel manufacturing for ${data.name} based streetwear brands. High-quality production, low MOQ, and fast shipping to ${data.name}. Direct from Sialkot factory.`,
-        keywords: `streetwear manufacturer ${data.name}, custom clothing supplier ${data.name}, wholesale apparel ${data.name}, garment factory Pakistan`,
+        title: `Premier Performance Apparel Manufacturing Specialists for ${data.name} Brands | Sialkot Sample Masters`,
+        description: `Custom apparel manufacturing for ${data.name} based Performance Apparel brands. High-quality production, low MOQ, and fast shipping to ${data.name}. Direct from Sialkot factory.`,
+        keywords: `performance apparel manufacturer ${data.name}, custom clothing supplier ${data.name}, wholesale apparel ${data.name}, garment factory Pakistan`,
         canonical: `/manufacturing/${region || "usa"}`
       }
     ),
@@ -6673,11 +5329,11 @@ function GeoLanding() {
           " with door-to-door delivery."
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
             "Get Your Quote ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsx(Link, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-zinc-700 text-white hover:bg-white/10 px-8 py-6 rounded-sm backdrop-blur-sm", children: "View Our Work" }) })
+          /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-zinc-700 text-white hover:bg-white/10 px-8 py-6 rounded-sm backdrop-blur-sm", children: "View Our Work" }) })
         ] })
       ] })
     ] }),
@@ -6765,7 +5421,7 @@ function GeoLanding() {
         data.name,
         " brands sourcing directly from the source. Response guaranteed within 24 hours."
       ] }),
-      /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
+      /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
     ] }) })
   ] });
 }
@@ -6804,7 +5460,7 @@ function BlogCMTGuide() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -6969,11 +5625,11 @@ function BlogCMTGuide() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl md:text-5xl font-bold text-background mb-8", children: "Ready to Scale Your Production?" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/80 text-lg mb-10 max-w-2xl mx-auto", children: "Book a factory visit or request a custom CMT quote for your next export order. Our specialists are ready to assist." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Get a CMT Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Contact Our Branch" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Contact Our Branch" }) })
       ] })
     ] }) })
   ] });
@@ -7018,7 +5674,7 @@ function BlogSublimationGuide() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -7196,11 +5852,11 @@ function BlogSublimationGuide() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Level Up Your Sportswear Brand" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Ready to see the difference premium Italian ink makes? Request a sample kit featuring our latest sublimated performance fabrics." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
           "Request Sample Kit ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Speak to a Print Expert" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Speak to a Print Expert" }) })
       ] })
     ] }) })
   ] });
@@ -7230,7 +5886,7 @@ function BlogCADvsManual() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -7359,11 +6015,11 @@ function BlogCADvsManual() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Digitize Your Pattern Library Today" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/60 text-lg mb-12 max-w-2xl mx-auto", children: "Stop wasting fabric and risking rejection. Our pattern masters can convert your existing paper patterns into high-precision digital assets." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-light px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-light px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Get a Digitizing Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold text-gold hover:bg-gold hover:text-background px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request a Live Demo" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold text-gold hover:bg-gold hover:text-background px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request a Live Demo" }) })
       ] })
     ] }) })
   ] });
@@ -7414,7 +6070,7 @@ function BlogQCChecklist() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -7496,7 +6152,7 @@ function BlogQCChecklist() {
           /* @__PURE__ */ jsx("strong", { children: "4.0 for Minor Defects" }),
           "."
         ] }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Download our full QA Handbook (PDF)" })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Download our full QA Handbook (PDF)" })
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { className: "container max-w-3xl", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center text-center", children: [
@@ -7529,11 +6185,11 @@ function BlogQCChecklist() {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto", children: "Experience the peace of mind that comes with a manufacturing partner who cares about your reputation as much as you do." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Inquire About QC Services ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Audit Samples" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Audit Samples" }) })
       ] })
     ] }) })
   ] });
@@ -7573,7 +6229,7 @@ function BlogOutsourcingBenefits() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -7703,7 +6359,7 @@ function BlogOutsourcingBenefits() {
           /* @__PURE__ */ jsx("strong", { children: "one thing." }),
           " If your brand sells high-performance joggers, don't use a unit that mostly switches between hoodies and t-shirts. Specialized units have custom folders and machine settings specifically for heavy stretch/interlock seams."
         ] }),
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Request a tour of our specialized production lines" })
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Request a tour of our specialized production lines" })
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsxs("section", { className: "py-24 bg-gold relative overflow-hidden", children: [
@@ -7712,11 +6368,11 @@ function BlogOutsourcingBenefits() {
         /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Scale Your Brand Without the Stress" }),
         /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Ready to transition to a lean, profitable manufacturing model? Let’s discuss how our CMT unit can become your brand's secret competitive advantage." }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
             "Get a Custom Audit ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Discuss Strategy" }) })
+          /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Discuss Strategy" }) })
         ] })
       ] })
     ] })
@@ -7762,7 +6418,7 @@ function BlogSublimationRedFlags() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -7828,7 +6484,7 @@ function BlogSublimationRedFlags() {
           /* @__PURE__ */ jsx(ShieldAlert, { className: "w-12 h-12 text-gold mb-4" }),
           /* @__PURE__ */ jsx("h4", { className: "font-serif text-xl font-bold mb-2", children: "Feeling Unsure?" }),
           /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs leading-relaxed mb-6", children: "Receive a free technical audit of your current production samples." }),
-          /* @__PURE__ */ jsx(Link, { href: "/contact", className: "text-gold font-bold text-xs underline uppercase tracking-widest", children: "Book Audit" })
+          /* @__PURE__ */ jsx(Link$1, { href: "/contact", className: "text-gold font-bold text-xs underline uppercase tracking-widest", children: "Book Audit" })
         ] })
       ] })
     ] }) }),
@@ -7866,11 +6522,11 @@ function BlogSublimationRedFlags() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Stop Settling for Second-Best" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Experience what true Italian-ink sublimation looks like. Request a tech-pack audit and a free sample of our performance-grade printing today." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
           "Get a Printing Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Samples" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Samples" }) })
       ] })
     ] }) })
   ] });
@@ -7902,7 +6558,7 @@ function BlogPuffEmbroidery() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Impact of 3D Puff Embroidery on Streetwear Export Orders",
+        title: "Impact of 3D Puff Embroidery on Technical Apparel Export Orders",
         description: "Learn how 3D puff embroidery elevates brand perception and justifies premium pricing for streetwear export orders from Sialkot.",
         canonical: "/blog/3d-puff-embroidery-streetwear-impact",
         ogType: "article",
@@ -7910,7 +6566,7 @@ function BlogPuffEmbroidery() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -7930,7 +6586,7 @@ function BlogPuffEmbroidery() {
           /* @__PURE__ */ jsxs("h1", { className: "font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight mb-8", children: [
             "The Power of ",
             /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: "3D Puff" }),
-            " in Streetwear Export"
+            " in Technical Apparel Export"
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg leading-relaxed mb-10", children: "In a crowded market, your logo needs to stand out—literally. Discover why the world's leading hypebeast brands are obsessed with 3D embroidery." }),
           /* @__PURE__ */ jsxs("div", { className: "blog-callout border-gold/40", children: [
@@ -7970,7 +6626,7 @@ function BlogPuffEmbroidery() {
       ) }) }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl md:text-4xl font-bold mb-6", children: "Beyond Aesthetics: The B2B Math" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-8", children: `For Sialkot exporters, 3D puff isn't just a design choice; it's a strategic move to secure higher-tier clients. While the production cost per unit increases slightly, the ability to anchor your brand in the "Luxury Streetwear" category far outweighs the initial investment.` }),
+        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-8", children: `For Sialkot exporters, 3D puff isn't just a design choice; it's a strategic move to secure higher-tier clients. While the production cost per unit increases slightly, the ability to anchor your brand in the "Luxury Technical Apparel" category far outweighs the initial investment.` }),
         /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex gap-4 p-6 bg-muted/30 rounded-sm", children: [
             /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsx(Award, { className: "w-5 h-5 text-gold" }) }),
@@ -8013,16 +6669,16 @@ function BlogPuffEmbroidery() {
     ] }) }),
     /* @__PURE__ */ jsx("section", { className: "py-24 bg-card border-t border-border", children: /* @__PURE__ */ jsxs("div", { className: "container text-center", children: [
       /* @__PURE__ */ jsxs("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-foreground mb-8", children: [
-        "Elevate Your Technical ",
-        /* @__PURE__ */ jsx("span", { className: "text-gold italic", children: "Streetwear" })
+        "Elevate Your ",
+        /* @__PURE__ */ jsx("span", { className: "text-gold italic", children: "Technical Apparel" })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto", children: "Ready to add that luxury three-dimensional touch to your next production run? Our embroidery masters are ready to digitize your vision." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Inquire About Embroidery ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Swatch Samples" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Swatch Samples" }) })
       ] })
     ] }) })
   ] });
@@ -8062,7 +6718,7 @@ function BlogCADGrading() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -8178,17 +6834,17 @@ function BlogCADGrading() {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto leading-relaxed", children: "Ensure your next export order fits perfectly in every market. Leverage our advanced CAD grading services for your technical apparel manufacturing." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl transition-all hover:-translate-y-1", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl transition-all hover:-translate-y-1", children: [
           "Start Tech-Pack Consultation ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm transition-all hover:-translate-y-1", children: "Request Sample Sizes" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm transition-all hover:-translate-y-1", children: "Request Sample Sizes" }) })
       ] })
     ] }) })
   ] });
 }
 const BlogCMTCosting = () => {
-  const fadeInUp2 = {
+  const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6 }
@@ -8203,7 +6859,7 @@ const BlogCMTCosting = () => {
       }
     ),
     /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6", children: [
-      /* @__PURE__ */ jsxs(motion.div, { ...fadeInUp2, className: "text-center mb-16", children: [
+      /* @__PURE__ */ jsxs(motion.div, { ...fadeInUp, className: "text-center mb-16", children: [
         /* @__PURE__ */ jsx("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ jsx("span", { className: "px-4 py-1.5 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/20 text-[#C5A059] text-sm font-medium tracking-wide", children: "MANUFACTURING STRATEGY" }) }),
         /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent", children: "How to Calculate CMT Costs for Your Next Export Shipment" }),
         /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed", children: "Transparent pricing is the foundation of a successful export partnership. Learn the exact formula Sialkot factories use to quote your streetwear designs." })
@@ -8328,7 +6984,7 @@ const BlogCMTCosting = () => {
   ] });
 };
 const BlogPatchMistakes = () => {
-  const fadeInUp2 = {
+  const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6 }
@@ -8343,7 +6999,7 @@ const BlogPatchMistakes = () => {
       }
     ),
     /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-6", children: [
-      /* @__PURE__ */ jsxs(motion.div, { ...fadeInUp2, className: "text-center mb-16", children: [
+      /* @__PURE__ */ jsxs(motion.div, { ...fadeInUp, className: "text-center mb-16", children: [
         /* @__PURE__ */ jsx("div", { className: "flex justify-center mb-6", children: /* @__PURE__ */ jsx("span", { className: "px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-medium tracking-wide", children: "QUALITY ALERT" }) }),
         /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent", children: "Top 3 Mistakes Sialkot Exporters Make When Ordering Custom Patches" }),
         /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed", children: "A single poorly executed patch can ruin a multi-thousand dollar export shipment. Ensure your finishing matches your garment quality." })
@@ -8468,6 +7124,1432 @@ const BlogPatchMistakes = () => {
     ] }) })
   ] });
 };
+const patternComparison = [
+  { feature: "Pattern Style", realtree: "Photo-realistic", mossyOak: "Abstract/Enhanced" },
+  { feature: "Best Terrain", realtree: "Open woods, early season", mossyOak: "Thick timber, late season" },
+  { feature: "Color Palette", realtree: "Greens, browns, grays", mossyOak: "Deep browns, blacks, tans" },
+  { feature: "Licensing Cost", realtree: "$$ (Medium)", mossyOak: "$$$ (Premium)" },
+  { feature: "Brand Recognition", realtree: "★★★★☆", mossyOak: "★★★★★" },
+  { feature: "Customization", realtree: "★★★★★", mossyOak: "★★★☆☆" }
+];
+const environmentMatrix = [
+  { environment: "Open Hardwood Forests", realtree: "95%", mossyOak: "75%", winner: "realtree" },
+  { environment: "Pine/Conifer Woods", realtree: "70%", mossyOak: "90%", winner: "mossyOak" },
+  { environment: "Cornfield/Ag Edges", realtree: "85%", mossyOak: "80%", winner: "realtree" },
+  { environment: "Swamp/Wetlands", realtree: "75%", mossyOak: "95%", winner: "mossyOak" },
+  { environment: "Late Season/Dead Foliage", realtree: "70%", mossyOak: "98%", winner: "mossyOak" },
+  { environment: "Mountain/Alpine", realtree: "90%", mossyOak: "70%", winner: "realtree" }
+];
+const roiData = [
+  { metric: "Consumer Recognition", realtree: 85, mossyOak: 92 },
+  { metric: "Versatility Score", realtree: 88, mossyOak: 78 },
+  { metric: "Manufacturing Cost", realtree: 70, mossyOak: 65 },
+  { metric: "Market Saturation", realtree: 75, mossyOak: 60 },
+  { metric: "Premium Pricing Power", realtree: 72, mossyOak: 88 }
+];
+function BlogRealtreeVsMossyOak() {
+  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        title: "Realtree vs Mossy Oak: Complete Guide for Hunting Apparel Brands",
+        description: "Compare Realtree and Mossy Oak camo patterns for your hunting apparel line. Learn licensing costs, best environments, ROI analysis, and which pattern suits your target market.",
+        keywords: "Realtree vs Mossy Oak, camo pattern comparison, hunting apparel camo, Realtree EDGE, Mossy Oak Break-Up, camo licensing costs, custom hunting gear",
+        canonical: "/blog/realtree-vs-mossy-oak-guide",
+        ogImage: "https://xelenthuntgear.com/images/blog-realtree-vs-mossyoak.jpg",
+        breadcrumbs: [
+          { name: "Home", item: "/" },
+          { name: "Blog", item: "/blog" },
+          { name: "Realtree vs Mossy Oak Guide", item: "/blog/realtree-vs-mossy-oak-guide" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: [
+      { name: "Home", href: "/" },
+      { name: "Blog", href: "/blog" },
+      { name: "Realtree vs Mossy Oak Guide" }
+    ] }) }) }),
+    /* @__PURE__ */ jsxs("article", { className: "bg-[#0d0d0d] min-h-screen", children: [
+      /* @__PURE__ */ jsx("header", { className: "relative py-20 bg-gradient-to-b from-[#111111] to-[#0d0d0d]", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-[#ff6b00] text-sm font-medium mb-4", children: [
+          /* @__PURE__ */ jsx(Palette, { className: "w-4 h-4" }),
+          /* @__PURE__ */ jsx("span", { children: "Camo Pattern Guide" })
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6", children: [
+          "Realtree vs Mossy Oak:",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "The Definitive Brand Guide" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-xl text-white/70 max-w-3xl mb-8", children: "Choosing between America's two biggest camouflage brands for your hunting apparel line. We break down licensing costs, terrain effectiveness, and ROI to help you make the right decision." }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 text-sm text-white/50", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00]/20 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-bold", children: "XH" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("div", { className: "text-white font-medium", children: "Xelent Huntgear" }),
+              /* @__PURE__ */ jsx("div", { children: "Hunting Apparel Manufacturer" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "15 min read" }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "March 2026" })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "relative rounded-lg overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "aspect-[21/9] bg-gradient-to-r from-[#2d5016] via-[#1a1a1a] to-[#3d2817] relative", children: /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 flex", children: [
+          /* @__PURE__ */ jsxs("div", { className: "w-1/2 relative overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#2d5016]/30" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+              /* @__PURE__ */ jsx(TreePine, { className: "w-20 h-20 text-[#4a7c23] mx-auto mb-4" }),
+              /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: "REALTREE" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/60 mt-2", children: "Photo-Realistic • Open Woods" })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "w-px bg-[#ff6b00] relative z-10" }),
+          /* @__PURE__ */ jsxs("div", { className: "w-1/2 relative overflow-hidden", children: [
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#3d2817]/30" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+              /* @__PURE__ */ jsx(Mountain, { className: "w-20 h-20 text-[#5c3d1e] mx-auto mb-4" }),
+              /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: "MOSSY OAK" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/60 mt-2", children: "Abstract • Deep Timber" })
+            ] }) })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("div", { className: "bg-[#111111] px-4 py-3 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-white/50 text-sm", children: [
+          /* @__PURE__ */ jsx(Camera, { className: "w-4 h-4 inline mr-2" }),
+          "The two dominant forces in hunting camouflage: Realtree's photo-realistic approach vs Mossy Oak's enhanced abstract patterns"
+        ] }) })
+      ] }) }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+        /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6 mb-12", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-white font-bold mb-4", children: "In This Guide:" }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3", children: [
+            "Pattern Philosophy",
+            "Terrain Effectiveness",
+            "Licensing Costs",
+            "ROI Analysis",
+            "Our Recommendation",
+            "Getting Started"
+          ].map((item, i) => /* @__PURE__ */ jsxs(
+            "a",
+            {
+              href: `#section-${i + 1}`,
+              className: "text-[#ff6b00] hover:text-white transition-colors text-sm flex items-center gap-2",
+              children: [
+                /* @__PURE__ */ jsx("span", { className: "w-5 h-5 rounded bg-[#ff6b00]/20 text-[#ff6b00] text-xs flex items-center justify-center font-bold", children: i + 1 }),
+                item
+              ]
+            },
+            i
+          )) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-1", className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "1. Understanding the Pattern Philosophy" }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none", children: /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Before diving into licensing fees and market data, it's crucial to understand the fundamental difference in how these two camo giants approach concealment. This philosophical difference directly impacts your product line's effectiveness and market positioning." }) }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8", children: [
+            /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                whileHover: { scale: 1.02 },
+                className: "bg-gradient-to-br from-[#1a2e12] to-[#0d0d0d] border border-[#4a7c23]/30 rounded-lg p-6",
+                children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-[#4a7c23]/20 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsx(Camera, { className: "w-6 h-6 text-[#4a7c23]" }) }),
+                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Realtree Approach" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-white/70 mb-4", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Photo-Realistic Mimicry:" }),
+                    " Realtree patterns are created from actual photographs of natural environments, then digitally enhanced. The result is a pattern that looks exactly like the real woods, leaves, bark, and shadows."
+                  ] }),
+                  /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Actual photographed elements", "True-to-nature colors", "Open environment focused", "High detail at distance"].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-white/60 text-sm", children: [
+                    /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-[#4a7c23]" }),
+                    item
+                  ] }, i)) })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                whileHover: { scale: 1.02 },
+                className: "bg-gradient-to-br from-[#2d1f12] to-[#0d0d0d] border border-[#5c3d1e]/30 rounded-lg p-6",
+                children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-[#5c3d1e]/20 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsx(Palette, { className: "w-6 h-6 text-[#5c3d1e]" }) }),
+                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Mossy Oak Approach" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-white/70 mb-4", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Abstract Enhancement:" }),
+                    " Mossy Oak takes natural elements and artistically enhances them. The patterns are designed to break up the human silhouette more aggressively, with deeper shadows and higher contrast."
+                  ] }),
+                  /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Artistically enhanced elements", "Deeper contrast & shadows", "Dense cover focused", "Superior close-range breakup"].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-white/60 text-sm", children: [
+                    /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-[#5c3d1e]" }),
+                    item
+                  ] }, i)) })
+                ]
+              }
+            )
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-2", className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "2. Head-to-Head Feature Comparison" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full", children: [
+            /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-[#161616]", children: [
+              /* @__PURE__ */ jsx("th", { className: "text-left px-6 py-4 text-white font-bold", children: "Feature" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-6 py-4 text-[#4a7c23] font-bold", children: "Realtree" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-6 py-4 text-[#5c3d1e] font-bold", children: "Mossy Oak" })
+            ] }) }),
+            /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-white/10", children: patternComparison.map((row, i) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors", children: [
+              /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-white/80 font-medium", children: row.feature }),
+              /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-center text-white/70", children: row.realtree }),
+              /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-center text-white/70", children: row.mossyOak })
+            ] }, i)) })
+          ] }) }) }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm mt-4 text-center", children: "Data compiled from licensing agreements, consumer surveys, and industry reports (2024-2026)" })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-3", className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "3. Terrain Effectiveness Matrix" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-8", children: "Not all camo works everywhere. This matrix shows effectiveness scores across different hunting environments, based on independent field testing and hunter feedback data." }),
+          /* @__PURE__ */ jsx("div", { className: "space-y-4", children: environmentMatrix.map((env, i) => /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, x: -20 },
+              whileInView: { opacity: 1, x: 0 },
+              viewport: { once: true },
+              transition: { delay: i * 0.1 },
+              className: "bg-[#111111] border border-white/10 rounded-lg p-4",
+              children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-3", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "text-white font-medium flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(TreePine, { className: "w-4 h-4 text-[#ff6b00]" }),
+                    env.environment
+                  ] }),
+                  /* @__PURE__ */ jsxs("span", { className: `text-sm font-bold ${env.winner === "realtree" ? "text-[#4a7c23]" : "text-[#5c3d1e]"}`, children: [
+                    "Winner: ",
+                    env.winner === "realtree" ? "Realtree" : "Mossy Oak"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-white/50 mb-1", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Realtree" }),
+                      /* @__PURE__ */ jsx("span", { children: env.realtree })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "h-2 bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
+                      motion.div,
+                      {
+                        initial: { width: 0 },
+                        whileInView: { width: env.realtree },
+                        viewport: { once: true },
+                        transition: { duration: 1, delay: 0.2 },
+                        className: `h-full rounded-full ${env.winner === "realtree" ? "bg-[#4a7c23]" : "bg-[#4a7c23]/50"}`
+                      }
+                    ) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-white/50 mb-1", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Mossy Oak" }),
+                      /* @__PURE__ */ jsx("span", { children: env.mossyOak })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "h-2 bg-white/10 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
+                      motion.div,
+                      {
+                        initial: { width: 0 },
+                        whileInView: { width: env.mossyOak },
+                        viewport: { once: true },
+                        transition: { duration: 1, delay: 0.3 },
+                        className: `h-full rounded-full ${env.winner === "mossyOak" ? "bg-[#5c3d1e]" : "bg-[#5c3d1e]/50"}`
+                      }
+                    ) })
+                  ] })
+                ] })
+              ]
+            },
+            i
+          )) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsx("div", { className: "bg-gradient-to-r from-[#ff6b00]/10 via-[#111111] to-[#ff6b00]/10 border border-[#ff6b00]/30 rounded-lg p-8", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
+          /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-[#ff6b00]/20 rounded-lg flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Shield, { className: "w-7 h-7 text-[#ff6b00]" }) }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Manufacturing with Licensed Patterns" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-4", children: "At Xelent Huntgear, we're licensed manufacturers for both Realtree and Mossy Oak patterns. Our facility in Sialkot, Pakistan can produce custom hunting apparel with authentic licensed camo at competitive B2B pricing." }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6", children: [
+              { label: "MOQ", value: "50 pcs" },
+              { label: "Sample Time", value: "7 days" },
+              { label: "Bulk Time", value: "25-35 days" },
+              { label: "Licensed", value: "Both" }
+            ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded p-3 text-center", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
+              /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
+            ] }, i)) }),
+            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+              "Request Camo Manufacturing Quote",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+            ] }) })
+          ] })
+        ] }) }) }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-4", className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "4. ROI Analysis for Your Brand" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-8", children: "Beyond the licensing fees, which pattern delivers better return on investment for your hunting apparel brand? Here's the data-driven breakdown." }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-white font-bold mb-6 text-center", children: "Business Performance Metrics" }),
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: roiData.map((item, i) => /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm text-white/70 mb-2", children: [
+                /* @__PURE__ */ jsx("span", { children: item.metric }),
+                /* @__PURE__ */ jsx("span", { className: "text-white/40", children: "Score out of 100" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "relative h-8 bg-white/5 rounded-full overflow-hidden", children: [
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.realtree}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 },
+                    className: "absolute left-0 top-0 bottom-0 bg-[#4a7c23] rounded-full flex items-center justify-end pr-2",
+                    style: { width: `${item.realtree}%` },
+                    children: /* @__PURE__ */ jsx("span", { className: "text-xs text-white font-bold", children: item.realtree })
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.mossyOak}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 + 0.1 },
+                    className: "absolute left-0 top-0 bottom-0 bg-[#5c3d1e]/70 rounded-full border-2 border-[#5c3d1e] flex items-center justify-end pr-2 -mt-1",
+                    style: { width: `${item.mossyOak}%`, height: "50%", top: "50%" },
+                    children: /* @__PURE__ */ jsx("span", { className: "text-xs text-white font-bold", children: item.mossyOak })
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-4 mt-1 text-xs", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-[#4a7c23]", children: "■ Realtree" }),
+                /* @__PURE__ */ jsx("span", { className: "text-[#5c3d1e]", children: "■ Mossy Oak" })
+              ] })
+            ] }, i)) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-8 bg-[#161616] border border-white/10 rounded-lg p-6", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-[#ff6b00]" }),
+              "Licensing Cost Structure"
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("h4", { className: "text-[#4a7c23] font-bold mb-3", children: "Realtree Licensing" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-white/70 text-sm", children: [
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Initial License Fee" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$2,500 - $5,000" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Annual Renewal" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$1,500 - $3,000" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Royalty Rate" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "8-12%" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Minimum Guarantee" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$10,000/year" })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("h4", { className: "text-[#5c3d1e] font-bold mb-3", children: "Mossy Oak Licensing" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-white/70 text-sm", children: [
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Initial License Fee" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$5,000 - $10,000" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Annual Renewal" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$3,000 - $5,000" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Royalty Rate" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "10-15%" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Minimum Guarantee" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white", children: "$25,000/year" })
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/40 text-xs mt-4", children: "*Costs are estimates based on standard agreements. Actual fees vary by brand size and volume." })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-5", className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "5. Our Recommendation" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a2e12]/30 border border-[#4a7c23]/30 rounded-lg p-6", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-[#4a7c23] mb-4", children: "Choose Realtree If:" }),
+              /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: [
+                "Your target market hunts open woods, fields, or early season",
+                "You're a startup brand with limited licensing budget",
+                "You want maximum versatility across environments",
+                "Your customers prioritize value over premium branding",
+                "You plan to customize/alter patterns significantly"
+              ].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-white/70 text-sm", children: [
+                /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-[#4a7c23] shrink-0 mt-0.5" }),
+                item
+              ] }, i)) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#2d1f12]/30 border border-[#5c3d1e]/30 rounded-lg p-6", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-[#5c3d1e] mb-4", children: "Choose Mossy Oak If:" }),
+              /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: [
+                "Your target market hunts dense timber or late season",
+                "You're positioning as a premium/lifestyle brand",
+                "Your customers are brand-conscious and loyal",
+                "You have budget for higher licensing costs",
+                "You want immediate brand recognition"
+              ].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-2 text-white/70 text-sm", children: [
+                /* @__PURE__ */ jsx(Check, { className: "w-4 h-4 text-[#5c3d1e] shrink-0 mt-0.5" }),
+                item
+              ] }, i)) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-8 p-6 bg-[#ff6b00]/10 border border-[#ff6b00]/30 rounded-lg", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 Pro Tip from Xelent Huntgear" }),
+            /* @__PURE__ */ jsxs("p", { className: "text-white/70", children: [
+              "Many successful brands offer ",
+              /* @__PURE__ */ jsx("strong", { children: "both" }),
+              " patterns in their lineup. Realtree for your entry-level/value line and Mossy Oak for premium products. This captures both market segments without alienating either customer type. We've helped 40+ brands implement this dual-pattern strategy."
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { id: "section-6", className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#111111] to-[#161616] border border-white/10 rounded-lg p-8 text-center", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Ready to Launch Your Camo Line?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 max-w-2xl mx-auto mb-8", children: "Xelent Huntgear is a licensed manufacturer for both Realtree and Mossy Oak patterns. We handle the licensing paperwork, source authentic materials, and deliver production-ready samples in 7 days. Start with just 50 pieces per style." }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 max-w-3xl mx-auto", children: [
+            { icon: Shield, label: "Licensed Manufacturer", desc: "Both patterns" },
+            { icon: Clock, label: "Fast Samples", desc: "7 days" },
+            { icon: DollarSign, label: "Low MOQ", desc: "50 pieces" },
+            { icon: TreePine, label: "Experience", desc: "40+ brands" }
+          ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded-lg p-4", children: [
+            /* @__PURE__ */ jsx(stat.icon, { className: "w-6 h-6 text-[#ff6b00] mx-auto mb-2" }),
+            /* @__PURE__ */ jsx("div", { className: "text-white font-bold text-sm", children: stat.label }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.desc })
+          ] }, i)) }),
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+              "Get Your Free Quote",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+            ] }) }),
+            /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Camo Work" }) })
+          ] })
+        ] }) }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-6", children: "Related Articles" }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-4", children: [
+            { title: "Scent-Control Technology: Silver-Ion vs Carbon", slug: "scent-control-technology", readTime: "8 min" },
+            { title: "Waterproof Ratings Explained: 10K vs 20K", slug: "waterproof-ratings-guide", readTime: "6 min" },
+            { title: "Hunting Apparel Manufacturing: Pakistan vs China", slug: "manufacturing-comparison", readTime: "10 min" }
+          ].map((article, i) => /* @__PURE__ */ jsx(Link$1, { href: `/blog/${article.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-4 hover:border-[#ff6b00]/50 transition-colors group", children: [
+            /* @__PURE__ */ jsx("h4", { className: "text-white font-medium group-hover:text-[#ff6b00] transition-colors mb-2", children: article.title }),
+            /* @__PURE__ */ jsxs("span", { className: "text-white/40 text-sm", children: [
+              article.readTime,
+              " read"
+            ] })
+          ] }) }, i)) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "border-t border-white/10 pt-8", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
+          /* @__PURE__ */ jsx("div", { className: "w-16 h-16 bg-[#ff6b00]/20 rounded-full flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-bold text-xl", children: "XH" }) }),
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("h4", { className: "text-white font-bold", children: "Xelent Huntgear" }),
+            /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] text-sm mb-2", children: "Custom Hunting Apparel Manufacturer" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/60 text-sm max-w-2xl", children: "We've manufactured hunting apparel for 500+ brands worldwide since 2009. Our Sialkot facility specializes in waterproof gear, licensed camo patterns, and private label production with low MOQ from 50 pieces." })
+          ] })
+        ] }) }) })
+      ] })
+    ] })
+  ] });
+}
+const techComparison = [
+  {
+    feature: "Odor Elimination Method",
+    silverIon: "Kills bacteria that cause odor",
+    carbon: "Adsorbs odor molecules",
+    zeolite: "Traps odor molecules"
+  },
+  {
+    feature: "Effectiveness Duration",
+    silverIon: "Permanent (in fabric)",
+    carbon: "50-100 washes",
+    zeolite: "25-50 washes"
+  },
+  {
+    feature: "Cost per Garment",
+    silverIon: "$ +",
+    carbon: "$$",
+    zeolite: "$"
+  },
+  {
+    feature: "Weight Added",
+    silverIon: "None",
+    carbon: "Medium (100-200g)",
+    zeolite: "Light (50-100g)"
+  },
+  {
+    feature: "Rechargeable",
+    silverIon: "No (permanent)",
+    carbon: "Yes (dryer heat)",
+    zeolite: "Limited"
+  },
+  {
+    feature: "Best For",
+    silverIon: "Base layers, all garments",
+    carbon: "Hunting outerwear",
+    zeolite: "Budget options"
+  }
+];
+const effectivenessData = [
+  { activity: "Sedentary (Tree Stand)", noTreatment: 20, zeolite: 50, carbon: 80, silverIon: 85 },
+  { activity: "Moderate (Stalking)", noTreatment: 15, zeolite: 45, carbon: 75, silverIon: 82 },
+  { activity: "High Activity (Spot & Stalk)", noTreatment: 10, zeolite: 35, carbon: 70, silverIon: 78 },
+  { activity: "Late Season (Heavy Clothing)", noTreatment: 25, zeolite: 55, carbon: 85, silverIon: 88 },
+  { activity: "Warm Weather (Light Clothing)", noTreatment: 15, zeolite: 40, carbon: 65, silverIon: 80 }
+];
+function BlogScentControl() {
+  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        title: "Scent-Control Technology in Hunting Apparel: Silver-Ion vs Carbon",
+        description: "Compare scent-control technologies for hunting clothing. Silver-ion antimicrobial vs activated carbon vs zeolite. Learn which technology works best for your hunting apparel line.",
+        keywords: "scent control hunting clothes, silver-ion hunting apparel, carbon scent control, odor blocking hunting gear, antimicrobial hunting clothing, scent elimination technology",
+        canonical: "/blog/scent-control-technology",
+        ogImage: "https://xelenthuntgear.com/images/blog-scent-control.jpg",
+        breadcrumbs: [
+          { name: "Home", item: "/" },
+          { name: "Blog", item: "/blog" },
+          { name: "Scent-Control Technology Guide", item: "/blog/scent-control-technology" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: [
+      { name: "Home", href: "/" },
+      { name: "Blog", href: "/blog" },
+      { name: "Scent-Control Technology Guide" }
+    ] }) }) }),
+    /* @__PURE__ */ jsxs("article", { className: "bg-[#0d0d0d] min-h-screen", children: [
+      /* @__PURE__ */ jsx("header", { className: "relative py-20 bg-gradient-to-b from-[#111111] to-[#0d0d0d]", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-[#ff6b00] text-sm font-medium mb-4", children: [
+          /* @__PURE__ */ jsx(Wind, { className: "w-4 h-4" }),
+          /* @__PURE__ */ jsx("span", { children: "Technology Deep Dive" })
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6", children: [
+          "Scent-Control Technology:",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "The Science of Staying Undetected" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-xl text-white/70 max-w-3xl mb-8", children: "Silver-ion, activated carbon, or zeolite? We break down the science behind scent-control technologies to help you choose the right solution for your hunting apparel line." }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 text-sm text-white/50", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00]/20 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-bold", children: "XH" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("div", { className: "text-white font-medium", children: "Xelent Huntgear" }),
+              /* @__PURE__ */ jsx("div", { children: "Technical Apparel Lab" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "12 min read" }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "Updated March 2026" })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "aspect-[21/9] bg-gradient-to-r from-blue-900/20 via-gray-800/20 to-gray-600/20 relative", children: /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 flex items-center justify-around", children: [
+          /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                animate: { scale: [1, 1.1, 1] },
+                transition: { duration: 2, repeat: Infinity },
+                className: "w-24 h-24 bg-blue-500/20 rounded-full flex items-center justify-center mb-4",
+                children: /* @__PURE__ */ jsx(Zap, { className: "w-10 h-10 text-blue-400" })
+              }
+            ),
+            /* @__PURE__ */ jsx("span", { className: "text-blue-400 font-bold", children: "Silver-Ion" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/50 text-xs mt-1", children: "Antimicrobial Action" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                animate: { rotate: 360 },
+                transition: { duration: 20, repeat: Infinity, ease: "linear" },
+                className: "w-24 h-24 bg-gray-700/40 rounded-full flex items-center justify-center mb-4",
+                children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-3 gap-1", children: [...Array(9)].map((_, i) => /* @__PURE__ */ jsx("div", { className: "w-3 h-3 bg-gray-500 rounded-full" }, i)) })
+              }
+            ),
+            /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-bold", children: "Carbon" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/50 text-xs mt-1", children: "Adsorption" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+            /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                animate: { y: [0, -5, 0] },
+                transition: { duration: 2, repeat: Infinity },
+                className: "w-24 h-24 bg-gray-500/20 rounded-full flex items-center justify-center mb-4",
+                children: /* @__PURE__ */ jsx("div", { className: "w-12 h-12 border-2 border-gray-400 rotate-45" })
+              }
+            ),
+            /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-bold", children: "Zeolite" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/50 text-xs mt-1", children: "Molecular Trap" })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] px-4 py-3 text-center", children: /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: "Three primary scent-control technologies used in modern hunting apparel" }) })
+      ] }) }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "A deer's nose is its primary defense. With up to 297 million olfactory receptors (compared to humans' 5 million), a whitetail can detect human scent from hundreds of yards away. This biological reality has driven the hunting apparel industry to develop sophisticated scent-control technologies." }),
+          /* @__PURE__ */ jsxs("p", { className: "text-white/80 text-lg leading-relaxed", children: [
+            "As a hunting apparel manufacturer, understanding these technologies isn't just about feature lists—it's about delivering real value to hunters who invest in your gear. Let's examine the three dominant technologies: ",
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Silver-Ion" }),
+            ",",
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: " Activated Carbon" }),
+            ", and ",
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Zeolite" }),
+            "."
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "1. The Science of Human Odor" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6 mb-8", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(Microscope, { className: "w-5 h-5 text-[#ff6b00]" }),
+              "Where Does Hunting Odor Come From?"
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [
+              { source: "Sweat Glands", contribution: "60%", description: "Apocrine glands produce fatty acids that bacteria feed on" },
+              { source: "Skin Bacteria", contribution: "30%", description: "Micrococcus & Staphylococcus produce volatile compounds" },
+              { source: "External Sources", contribution: "10%", description: "Food, smoke, perfumes, gasoline, household odors" }
+            ].map((item, i) => /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded-lg p-4", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold text-2xl mb-1", children: item.contribution }),
+              /* @__PURE__ */ jsx("div", { className: "text-white font-medium mb-2", children: item.source }),
+              /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: item.description })
+            ] }, i)) })
+          ] }),
+          /* @__PURE__ */ jsxs("p", { className: "text-white/70 leading-relaxed", children: [
+            "Understanding that ",
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "bacteria are the real culprits" }),
+            " helps explain why different scent-control technologies work differently. Silver-ion attacks the bacteria directly, while carbon and zeolite try to trap the odors they produce."
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "2. Technology Comparison" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full", children: [
+            /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-[#161616]", children: [
+              /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-4 text-white font-bold", children: "Feature" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-4 py-4 text-blue-400 font-bold", children: "Silver-Ion" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-4 py-4 text-gray-400 font-bold", children: "Carbon" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-4 py-4 text-gray-500 font-bold", children: "Zeolite" })
+            ] }) }),
+            /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-white/10", children: techComparison.map((row, i) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors", children: [
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-white/80 font-medium", children: row.feature }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-center text-blue-300/80 text-sm", children: row.silverIon }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-center text-gray-300/80 text-sm", children: row.carbon }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-center text-gray-400/80 text-sm", children: row.zeolite })
+            ] }, i)) })
+          ] }) }) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "3. Technology Deep Dive" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                whileHover: { y: -5 },
+                className: "bg-gradient-to-b from-blue-900/20 to-[#111111] border border-blue-500/30 rounded-lg p-6",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Zap, { className: "w-6 h-6 text-blue-400" }) }),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-blue-400 mb-3", children: "Silver-Ion" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Silver ions (Ag+) are embedded into fabric fibers. They disrupt bacterial cell membranes, preventing odor-causing bacteria from multiplying." }),
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Permanent treatment" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "No added weight" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(XCircle, { className: "w-4 h-4 text-red-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Won't adsorb existing odors" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-4 pt-4 border-t border-white/10", children: /* @__PURE__ */ jsx("span", { className: "text-blue-400 text-sm font-medium", children: "Best for: Base layers" }) })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                whileHover: { y: -5 },
+                className: "bg-gradient-to-b from-gray-700/30 to-[#111111] border border-gray-500/30 rounded-lg p-6",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-gray-600/30 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-0.5", children: [...Array(4)].map((_, i) => /* @__PURE__ */ jsx("div", { className: "w-2 h-2 bg-gray-400 rounded-full" }, i)) }) }),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-gray-300 mb-3", children: "Activated Carbon" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Charcoal that has been treated to create millions of microscopic pores. One gram has a surface area of 500-1500 m²—incredible adsorption capacity." }),
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Adsorbs existing odors" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Rechargeable in dryer" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(XCircle, { className: "w-4 h-4 text-red-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Adds weight to garment" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-4 pt-4 border-t border-white/10", children: /* @__PURE__ */ jsx("span", { className: "text-gray-300 text-sm font-medium", children: "Best for: Outerwear" }) })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              motion.div,
+              {
+                whileHover: { y: -5 },
+                className: "bg-gradient-to-b from-gray-500/20 to-[#111111] border border-gray-400/30 rounded-lg p-6",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-gray-500/20 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx("div", { className: "w-5 h-5 border-2 border-gray-400 rotate-45" }) }),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-gray-400 mb-3", children: "Zeolite" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Microporous aluminosilicate minerals with a cage-like structure that traps odor molecules. Naturally occurring, eco-friendly option." }),
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Lower cost" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-green-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Lightweight" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm", children: [
+                      /* @__PURE__ */ jsx(XCircle, { className: "w-4 h-4 text-red-500" }),
+                      /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Shorter lifespan" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-4 pt-4 border-t border-white/10", children: /* @__PURE__ */ jsx("span", { className: "text-gray-400 text-sm font-medium", children: "Best for: Budget lines" }) })
+                ]
+              }
+            )
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "4. Real-World Effectiveness by Activity" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-8", children: "Effectiveness scores based on controlled field testing with whitetail deer. Scores represent percentage reduction in detectable human odor at 100 yards." }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6", children: /* @__PURE__ */ jsx("div", { className: "space-y-6", children: effectivenessData.map((item, i) => /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-2", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-white font-medium text-sm", children: item.activity }),
+              /* @__PURE__ */ jsx("span", { className: "text-white/40 text-xs", children: "Odor Reduction Score" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "relative h-16 bg-white/5 rounded-lg overflow-hidden", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-0 top-0 h-1/4 w-full flex items-center", children: [
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.noTreatment}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 },
+                    className: "h-full bg-red-500/60 rounded-r"
+                  }
+                ),
+                /* @__PURE__ */ jsxs("span", { className: "ml-2 text-xs text-red-400", children: [
+                  "None: ",
+                  item.noTreatment,
+                  "%"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-0 top-1/4 h-1/4 w-full flex items-center", children: [
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.zeolite}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 + 0.1 },
+                    className: "h-full bg-gray-500/60 rounded-r"
+                  }
+                ),
+                /* @__PURE__ */ jsxs("span", { className: "ml-2 text-xs text-gray-400", children: [
+                  "Zeolite: ",
+                  item.zeolite,
+                  "%"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-0 top-2/4 h-1/4 w-full flex items-center", children: [
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.carbon}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 + 0.2 },
+                    className: "h-full bg-gray-400/60 rounded-r"
+                  }
+                ),
+                /* @__PURE__ */ jsxs("span", { className: "ml-2 text-xs text-gray-300", children: [
+                  "Carbon: ",
+                  item.carbon,
+                  "%"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "absolute left-0 top-3/4 h-1/4 w-full flex items-center", children: [
+                /* @__PURE__ */ jsx(
+                  motion.div,
+                  {
+                    initial: { width: 0 },
+                    whileInView: { width: `${item.silverIon}%` },
+                    viewport: { once: true },
+                    transition: { duration: 0.8, delay: i * 0.1 + 0.3 },
+                    className: "h-full bg-blue-500/60 rounded-r"
+                  }
+                ),
+                /* @__PURE__ */ jsxs("span", { className: "ml-2 text-xs text-blue-400", children: [
+                  "Silver-Ion: ",
+                  item.silverIon,
+                  "%"
+                ] })
+              ] })
+            ] })
+          ] }, i)) }) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-[#ff6b00]/10 via-[#111111] to-blue-900/10 border border-[#ff6b00]/30 rounded-lg p-8", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Manufacturing Scent-Control Apparel" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "At Xelent Huntgear, we integrate all three technologies into our manufacturing process. Our lab in Sialkot can apply silver-ion treatments, carbon-integrated fabrics, or zeolite infusions based on your product requirements and budget." }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6", children: [
+            { label: "Lab Tested", value: "AATCC 100" },
+            { label: "Treatment Types", value: "All 3" },
+            { label: "MOQ", value: "50 pcs" },
+            { label: "Turnaround", value: "7 days" }
+          ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded-lg p-3 text-center", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
+          ] }, i)) }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+            "Discuss Scent-Control Manufacturing",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+          ] }) })
+        ] }) }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "5. Our Recommendation" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#161616] border border-white/10 rounded-lg p-6", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-4", children: "The Hybrid Approach" }),
+            /* @__PURE__ */ jsxs("p", { className: "text-white/70 mb-6", children: [
+              "After manufacturing 500K+ scent-control garments, we recommend a ",
+              /* @__PURE__ */ jsx("strong", { className: "text-white", children: "layered approach" }),
+              ":"
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "space-y-4", children: [
+              { layer: "Base Layers", tech: "Silver-Ion", reason: "Direct skin contact, permanent treatment, kills bacteria at source" },
+              { layer: "Mid Layers", tech: "Silver-Ion or Zeolite", reason: "Cost-effective odor prevention" },
+              { layer: "Outer Shells", tech: "Activated Carbon", reason: "Traps external odors, can be recharged" }
+            ].map((item, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4 bg-black/20 rounded-lg p-4", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00]/20 rounded-full flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-bold", children: i + 1 }) }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("div", { className: "text-white font-bold", children: item.layer }),
+                /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] text-sm font-medium", children: item.tech }),
+                /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: item.reason })
+              ] })
+            ] }, i)) })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#111111] to-[#161616] border border-white/10 rounded-lg p-8 text-center", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Ready to Add Scent-Control to Your Line?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 max-w-2xl mx-auto mb-8", children: "Our technical team can help you choose the right scent-control technology for your target market and price point. We provide fabric samples with different treatments so you can test before committing." }),
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+              "Request Fabric Samples",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+            ] }) }),
+            /* @__PURE__ */ jsx(Link$1, { href: "/services", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View All Services" }) })
+          ] })
+        ] }) }) })
+      ] })
+    ] })
+  ] });
+}
+const ratingData = [
+  {
+    rating: "5,000mm",
+    label: "Entry",
+    use: "Light rain, short exposure",
+    pressure: "Light shower",
+    suitable: ["Upland bird hunting", "Early season", "Backup jacket"],
+    unsuitable: ["Heavy rain", "All-day hunts", "Waterfowl"]
+  },
+  {
+    rating: "10,000mm",
+    label: "Standard",
+    use: "Moderate rain, extended exposure",
+    pressure: "Steady rain",
+    suitable: ["Deer hunting", "General use", "3-season"],
+    unsuitable: ["Downpours", "Sitting in rain"]
+  },
+  {
+    rating: "15,000mm",
+    label: "Performance",
+    use: "Heavy rain, all-day hunts",
+    pressure: "Heavy rain",
+    suitable: ["All-day sits", "Late season", "Mountain hunting"],
+    unsuitable: ["Torrential downpours"]
+  },
+  {
+    rating: "20,000mm+",
+    label: "Professional",
+    use: "Extreme conditions, waterfowl",
+    pressure: "Torrential rain",
+    suitable: ["Waterfowl hunting", "Alaska/Pacific NW", "Guide use"],
+    unsuitable: []
+  }
+];
+const activityMatrix = [
+  { activity: "Whitetail Treestand (Morning)", minRating: "10,000mm", recommended: "15,000mm", reason: "Long sits, condensation" },
+  { activity: "Waterfowl Marsh", minRating: "15,000mm", recommended: "20,000mm", reason: "Constant moisture exposure" },
+  { activity: "Elk Spot & Stalk", minRating: "10,000mm", recommended: "15,000mm", reason: "Variable mountain weather" },
+  { activity: "Turkey Spring", minRating: "5,000mm", recommended: "10,000mm", reason: "Occasional showers" },
+  { activity: "Upland Bird", minRating: "5,000mm", recommended: "10,000mm", reason: "Active movement" },
+  { activity: "Late Season Big Game", minRating: "15,000mm", recommended: "20,000mm", reason: "Snow, extended sits" }
+];
+function BlogWaterproofRatings() {
+  return /* @__PURE__ */ jsxs(PageWrapper, { children: [
+    /* @__PURE__ */ jsx(
+      SEOHead,
+      {
+        title: "Waterproof Ratings Explained: 10K vs 20K for Hunting Jackets",
+        description: "Understand waterproof ratings for hunting apparel. Learn what 10,000mm vs 20,000mm means, hydrostatic head testing, and which rating is right for different hunting conditions.",
+        keywords: "waterproof hunting jacket ratings, 10k vs 20k waterproof, hydrostatic head explained, hunting rain gear ratings, mm waterproof rating, hunting jacket waterproofing",
+        canonical: "/blog/waterproof-ratings-guide",
+        ogImage: "https://xelenthuntgear.com/images/blog-waterproof-ratings.jpg",
+        breadcrumbs: [
+          { name: "Home", item: "/" },
+          { name: "Blog", item: "/blog" },
+          { name: "Waterproof Ratings Guide", item: "/blog/waterproof-ratings-guide" }
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: [
+      { name: "Home", href: "/" },
+      { name: "Blog", href: "/blog" },
+      { name: "Waterproof Ratings Guide" }
+    ] }) }) }),
+    /* @__PURE__ */ jsxs("article", { className: "bg-[#0d0d0d] min-h-screen", children: [
+      /* @__PURE__ */ jsx("header", { className: "relative py-20 bg-gradient-to-b from-[#111111] to-[#0d0d0d]", children: /* @__PURE__ */ jsx("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-[#ff6b00] text-sm font-medium mb-4", children: [
+          /* @__PURE__ */ jsx(Droplets, { className: "w-4 h-4" }),
+          /* @__PURE__ */ jsx("span", { children: "Technical Standards Guide" })
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6", children: [
+          "Waterproof Ratings:",
+          /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "10K vs 20K Explained" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-xl text-white/70 max-w-3xl mb-8", children: 'What do those "mm" numbers actually mean? We break down hydrostatic head testing, breathability trade-offs, and help you choose the right waterproof rating for your hunting apparel line.' }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6 text-sm text-white/50", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-[#ff6b00]/20 rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-bold", children: "XH" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("div", { className: "text-white font-medium", children: "Xelent Huntgear" }),
+              /* @__PURE__ */ jsx("div", { children: "ISO 9001 Certified Lab" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "10 min read" }),
+          /* @__PURE__ */ jsx("div", { className: "h-8 w-px bg-white/10" }),
+          /* @__PURE__ */ jsx("div", { children: "March 2026" })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden", children: [
+        /* @__PURE__ */ jsxs("div", { className: "aspect-[21/9] bg-gradient-to-b from-blue-900/10 to-[#0d0d0d] relative p-8", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-center text-white font-bold mb-8", children: "Hydrostatic Head Pressure Visualization" }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-4 h-full items-end", children: [
+            { rating: "5K", height: "25%", color: "bg-blue-400/40", label: "Light Rain" },
+            { rating: "10K", height: "50%", color: "bg-blue-500/50", label: "Steady Rain" },
+            { rating: "15K", height: "75%", color: "bg-blue-600/60", label: "Heavy Rain" },
+            { rating: "20K+", height: "95%", color: "bg-blue-700/70", label: "Extreme" }
+          ].map((item, i) => /* @__PURE__ */ jsxs("div", { className: "relative h-full flex flex-col justify-end", children: [
+            /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                initial: { height: 0 },
+                whileInView: { height: item.height },
+                viewport: { once: true },
+                transition: { duration: 1, delay: i * 0.2 },
+                className: `w-full ${item.color} rounded-t-lg relative`,
+                children: /* @__PURE__ */ jsx("div", { className: "absolute top-2 left-0 right-0 text-center", children: /* @__PURE__ */ jsx(Waves, { className: "w-5 h-5 text-white/70 mx-auto" }) })
+              }
+            ),
+            /* @__PURE__ */ jsxs("div", { className: "text-center mt-2", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-white font-bold", children: item.rating }),
+              /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: item.label })
+            ] })
+          ] }, i)) })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] px-4 py-3 text-center", children: /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: 'Higher "mm" ratings = taller water column = more pressure resistance' }) })
+      ] }) }) }),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'What Does "mm" Actually Mean?' }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6 mb-8", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-blue-500/20 rounded-lg flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Droplets, { className: "w-7 h-7 text-blue-400" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Hydrostatic Head Testing (ISO 811)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-4", children: 'The "mm" rating represents the height of a water column that fabric can withstand before leaking. A 10,000mm rating means the fabric holds back a column of water 10 meters (33 feet) tall.' }),
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-4", children: [
+                /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded p-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-blue-400 font-bold text-lg", children: "1. Test Setup" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: "Fabric sample secured in test apparatus" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded p-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-blue-400 font-bold text-lg", children: "2. Pressure Applied" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: "Water pressure increased gradually" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded p-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-blue-400 font-bold text-lg", children: "3. Leak Point" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm", children: "Pressure at first drop = rating" })
+                ] })
+              ] })
+            ] })
+          ] }) }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#ff6b00]/10 border border-[#ff6b00]/30 rounded-lg p-4", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+            /* @__PURE__ */ jsx(AlertTriangle, { className: "w-5 h-5 text-[#ff6b00] shrink-0 mt-0.5" }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-white font-bold mb-1", children: "Important Note for Manufacturers" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm", children: "ISO 811 tests new fabric under controlled conditions. Real-world performance decreases with wear, washing, and contamination (dirt, oils, detergent residue). Always over-spec by 20-30% for hunting applications." })
+            ] })
+          ] }) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Waterproof Rating Breakdown" }),
+          /* @__PURE__ */ jsx("div", { className: "space-y-4", children: ratingData.map((item, i) => /* @__PURE__ */ jsx(
+            motion.div,
+            {
+              initial: { opacity: 0, x: -20 },
+              whileInView: { opacity: 1, x: 0 },
+              viewport: { once: true },
+              transition: { delay: i * 0.1 },
+              className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden",
+              children: /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-center gap-4 mb-4", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: `w-16 h-16 rounded-lg flex items-center justify-center ${i === 0 ? "bg-blue-400/20" : i === 1 ? "bg-blue-500/20" : i === 2 ? "bg-blue-600/20" : "bg-blue-700/20"}`, children: /* @__PURE__ */ jsx(Droplets, { className: `w-8 h-8 ${i === 0 ? "text-blue-400" : i === 1 ? "text-blue-500" : i === 2 ? "text-blue-600" : "text-blue-700"}` }) }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("div", { className: "text-2xl font-bold text-white", children: item.rating }),
+                      /* @__PURE__ */ jsxs("div", { className: "text-[#ff6b00] font-medium", children: [
+                        item.label,
+                        " Level"
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex-1 md:px-6 md:border-l md:border-white/10", children: [
+                    /* @__PURE__ */ jsx("div", { className: "text-white/70", children: item.use }),
+                    /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: item.pressure })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-green-400 text-sm font-medium mb-2 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4" }),
+                      " Suitable For"
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: item.suitable.map((use, j) => /* @__PURE__ */ jsx("span", { className: "bg-green-500/10 text-green-400 text-xs px-2 py-1 rounded", children: use }, j)) })
+                  ] }),
+                  item.unsuitable.length > 0 && /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-red-400 text-sm font-medium mb-2 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4" }),
+                      " Not Ideal For"
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: item.unsuitable.map((use, j) => /* @__PURE__ */ jsx("span", { className: "bg-red-500/10 text-red-400 text-xs px-2 py-1 rounded", children: use }, j)) })
+                  ] })
+                ] })
+              ] })
+            },
+            i
+          )) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Recommended Ratings by Hunt Type" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border border-white/10 rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full", children: [
+            /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-[#161616]", children: [
+              /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-4 text-white font-bold", children: "Hunting Activity" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-4 py-4 text-white/70 font-medium", children: "Minimum" }),
+              /* @__PURE__ */ jsx("th", { className: "text-center px-4 py-4 text-[#ff6b00] font-bold", children: "Recommended" }),
+              /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-4 text-white/70 font-medium", children: "Why?" })
+            ] }) }),
+            /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-white/10", children: activityMatrix.map((row, i) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors", children: [
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-white font-medium", children: row.activity }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-center text-white/50", children: row.minRating }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-center", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00]/20 text-[#ff6b00] font-bold px-3 py-1 rounded", children: row.recommended }) }),
+              /* @__PURE__ */ jsx("td", { className: "px-4 py-4 text-white/50 text-sm", children: row.reason })
+            ] }, i)) })
+          ] }) }) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "The Breathability Trade-Off" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "Higher waterproof ratings often mean lower breathability. Here's what you need to know when specifying your hunting apparel." }),
+          /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                /* @__PURE__ */ jsx(Wind, { className: "w-6 h-6 text-[#ff6b00]" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "MVTR (Breathability)" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Moisture Vapor Transmission Rate measures how much sweat can escape (measured in g/m²/24hr). For hunting:" }),
+              /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: [
+                { label: "Entry", value: "5,000g - Minimal activity" },
+                { label: "Standard", value: "10,000g - Moderate activity" },
+                { label: "Performance", value: "15,000g - Active hunting" },
+                { label: "Professional", value: "20,000g+ - High exertion" }
+              ].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex justify-between text-sm", children: [
+                /* @__PURE__ */ jsxs("span", { className: "text-white/50", children: [
+                  item.label,
+                  ":"
+                ] }),
+                /* @__PURE__ */ jsx("span", { className: "text-white", children: item.value })
+              ] }, i)) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+                /* @__PURE__ */ jsx(Thermometer, { className: "w-6 h-6 text-[#ff6b00]" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "The Sweat Trap" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "A 20K/5K jacket (20K waterproof, 5K breathable) will keep rain out but trap sweat during active hunts. Result: you're wet from the inside." }),
+              /* @__PURE__ */ jsx("div", { className: "bg-[#ff6b00]/10 border border-[#ff6b00]/30 rounded p-3", children: /* @__PURE__ */ jsxs("p", { className: "text-white text-sm", children: [
+                /* @__PURE__ */ jsx("strong", { children: "Rule of Thumb:" }),
+                " Keep waterproof and breathability ratings within 5,000mm of each other for balanced performance."
+              ] }) })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-blue-900/20 via-[#111111] to-[#ff6b00]/10 border border-[#ff6b00]/30 rounded-lg p-8", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Manufacturing Waterproof Hunting Gear" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "Xelent Huntgear is equipped for full waterproof manufacturing: 3-layer laminates, seam sealing, DWR treatments, and hydrostatic head testing to ISO 811 standards. We offer ratings from 10K/10K to 20K/20K." }),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6", children: [
+            { label: "Test Standard", value: "ISO 811" },
+            { label: "Ratings", value: "10K-20K" },
+            { label: "Seam Sealing", value: "Hot Air" },
+            { label: "MOQ", value: "50 pcs" }
+          ].map((stat, i) => /* @__PURE__ */ jsxs("div", { className: "bg-black/30 rounded-lg p-3 text-center", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
+            /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
+          ] }, i)) }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+            "Discuss Waterproof Manufacturing",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+          ] }) })
+        ] }) }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quick Reference: Our Recommendations" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#161616] border border-white/10 rounded-lg p-6", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "text-center p-4 bg-black/30 rounded-lg", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-3xl mb-2", children: "🎯" }),
+              /* @__PURE__ */ jsx("h4", { className: "text-white font-bold mb-2", children: "Entry Line" }),
+              /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: "10K/10K" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm mt-2", children: "Weekend hunters, budget-conscious" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "text-center p-4 bg-black/30 rounded-lg border border-[#ff6b00]/30", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-3xl mb-2", children: "🏆" }),
+              /* @__PURE__ */ jsx("h4", { className: "text-white font-bold mb-2", children: "Mid-Range" }),
+              /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: "15K/15K" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm mt-2", children: "Serious hunters, best value" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "text-center p-4 bg-black/30 rounded-lg", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-3xl mb-2", children: "💎" }),
+              /* @__PURE__ */ jsx("h4", { className: "text-white font-bold mb-2", children: "Premium" }),
+              /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: "20K/20K" }),
+              /* @__PURE__ */ jsx("p", { className: "text-white/50 text-sm mt-2", children: "Guides, extreme conditions" })
+            ] })
+          ] }) })
+        ] }) }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsx(FadeIn, { children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#111111] to-[#161616] border border-white/10 rounded-lg p-8 text-center", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Need Help Choosing the Right Rating?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/70 max-w-2xl mx-auto mb-8", children: "Our technical team can recommend the optimal waterproof/breathability combination based on your target market and price point. We provide fabric samples for testing." }),
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
+            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+              "Request Waterproof Samples",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
+            ] }) }),
+            /* @__PURE__ */ jsx(Link$1, { href: "/products", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Capabilities" }) })
+          ] })
+        ] }) }) })
+      ] })
+    ] })
+  ] });
+}
+function usePersistFn(fn) {
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
+  const persistFn = useRef(null);
+  if (!persistFn.current) {
+    persistFn.current = function(...args) {
+      return fnRef.current.apply(this, args);
+    };
+  }
+  return persistFn.current;
+}
+function useComposition(options = {}) {
+  const {
+    onKeyDown: originalOnKeyDown,
+    onCompositionStart: originalOnCompositionStart,
+    onCompositionEnd: originalOnCompositionEnd
+  } = options;
+  const c = useRef(false);
+  const timer = useRef(null);
+  const timer2 = useRef(null);
+  const onCompositionStart = usePersistFn((e) => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+    if (timer2.current) {
+      clearTimeout(timer2.current);
+      timer2.current = null;
+    }
+    c.current = true;
+    originalOnCompositionStart?.(e);
+  });
+  const onCompositionEnd = usePersistFn((e) => {
+    timer.current = setTimeout(() => {
+      timer2.current = setTimeout(() => {
+        c.current = false;
+      });
+    });
+    originalOnCompositionEnd?.(e);
+  });
+  const onKeyDown = usePersistFn((e) => {
+    if (c.current && (e.key === "Escape" || e.key === "Enter" && !e.shiftKey)) {
+      e.stopPropagation();
+      return;
+    }
+    originalOnKeyDown?.(e);
+  });
+  const isComposing = usePersistFn(() => {
+    return c.current;
+  });
+  return {
+    onCompositionStart,
+    onCompositionEnd,
+    onKeyDown,
+    isComposing
+  };
+}
+function Input({
+  className,
+  type,
+  onKeyDown,
+  onCompositionStart,
+  onCompositionEnd,
+  ...props
+}) {
+  const dialogComposition = useDialogComposition();
+  const {
+    onCompositionStart: handleCompositionStart,
+    onCompositionEnd: handleCompositionEnd,
+    onKeyDown: handleKeyDown
+  } = useComposition({
+    onKeyDown: (e) => {
+      const isComposing = e.nativeEvent.isComposing || dialogComposition.justEndedComposing();
+      if (e.key === "Enter" && isComposing) {
+        return;
+      }
+      onKeyDown?.(e);
+    },
+    onCompositionStart: (e) => {
+      dialogComposition.setComposing(true);
+      onCompositionStart?.(e);
+    },
+    onCompositionEnd: (e) => {
+      dialogComposition.markCompositionEnd();
+      setTimeout(() => {
+        dialogComposition.setComposing(false);
+      }, 100);
+      onCompositionEnd?.(e);
+    }
+  });
+  return /* @__PURE__ */ jsx(
+    "input",
+    {
+      type,
+      "data-slot": "input",
+      className: cn(
+        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        className
+      ),
+      onCompositionStart: handleCompositionStart,
+      onCompositionEnd: handleCompositionEnd,
+      onKeyDown: handleKeyDown,
+      ...props
+    }
+  );
+}
+function Label({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    LabelPrimitive.Root,
+    {
+      "data-slot": "label",
+      className: cn(
+        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function Select({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(SelectPrimitive.Root, { "data-slot": "select", ...props });
+}
+function SelectValue({
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(SelectPrimitive.Value, { "data-slot": "select-value", ...props });
+}
+function SelectTrigger({
+  className,
+  size = "default",
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxs(
+    SelectPrimitive.Trigger,
+    {
+      "data-slot": "select-trigger",
+      "data-size": size,
+      className: cn(
+        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      ),
+      ...props,
+      children: [
+        children,
+        /* @__PURE__ */ jsx(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4 opacity-50" }) })
+      ]
+    }
+  );
+}
+function SelectContent({
+  className,
+  children,
+  position = "popper",
+  align = "center",
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(SelectPrimitive.Portal, { children: /* @__PURE__ */ jsxs(
+    SelectPrimitive.Content,
+    {
+      "data-slot": "select-content",
+      className: cn(
+        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
+        position === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+        className
+      ),
+      position,
+      align,
+      ...props,
+      children: [
+        /* @__PURE__ */ jsx(SelectScrollUpButton, {}),
+        /* @__PURE__ */ jsx(
+          SelectPrimitive.Viewport,
+          {
+            className: cn(
+              "p-1",
+              position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
+            ),
+            children
+          }
+        ),
+        /* @__PURE__ */ jsx(SelectScrollDownButton, {})
+      ]
+    }
+  ) });
+}
+function SelectItem({
+  className,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxs(
+    SelectPrimitive.Item,
+    {
+      "data-slot": "select-item",
+      className: cn(
+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        className
+      ),
+      ...props,
+      children: [
+        /* @__PURE__ */ jsx("span", { className: "absolute right-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ jsx(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ jsx(CheckIcon, { className: "size-4" }) }) }),
+        /* @__PURE__ */ jsx(SelectPrimitive.ItemText, { children })
+      ]
+    }
+  );
+}
+function SelectScrollUpButton({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    SelectPrimitive.ScrollUpButton,
+    {
+      "data-slot": "select-scroll-up-button",
+      className: cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      ),
+      ...props,
+      children: /* @__PURE__ */ jsx(ChevronUpIcon, { className: "size-4" })
+    }
+  );
+}
+function SelectScrollDownButton({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    SelectPrimitive.ScrollDownButton,
+    {
+      "data-slot": "select-scroll-down-button",
+      className: cn(
+        "flex cursor-default items-center justify-center py-1",
+        className
+      ),
+      ...props,
+      children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4" })
+    }
+  );
+}
+function Separator({
+  className,
+  orientation = "horizontal",
+  decorative = true,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    SeparatorPrimitive.Root,
+    {
+      "data-slot": "separator",
+      decorative,
+      orientation,
+      className: cn(
+        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
+        className
+      ),
+      ...props
+    }
+  );
+}
 function RadioGroup({
   className,
   ...props
@@ -8586,22 +8668,22 @@ const checkoutSchema = z$1.object({
   paymentMethod: z$1.enum(["stripe", "invoice"])
 });
 function OrderConfirmation({ orderNumber }) {
-  return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background flex items-center justify-center py-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-lg w-full mx-auto text-center px-4", children: [
-    /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-gold/10 border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsx(Check, { className: "w-10 h-10 text-gold" }) }),
+  return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-[#0d0d0d] flex items-center justify-center py-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-lg w-full mx-auto text-center px-4", children: [
+    /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-[#ff6b00]/10 border-2 border-[#ff6b00] rounded-full flex items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsx(Check, { className: "w-10 h-10 text-[#ff6b00]" }) }),
     /* @__PURE__ */ jsx("h1", { className: "font-serif text-3xl font-bold text-foreground mb-3", children: "Order Received!" }),
-    /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-2", children: "Your order has been successfully placed." }),
-    /* @__PURE__ */ jsxs("div", { className: "bg-secondary rounded-lg p-4 my-6 border border-border", children: [
-      /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1", children: "Order Number" }),
-      /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xl text-gold", children: orderNumber })
+    /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-2", children: "Your order has been successfully placed." }),
+    /* @__PURE__ */ jsxs("div", { className: "bg-secondary rounded-lg p-4 my-6 border border-white/10", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 uppercase tracking-wider mb-1", children: "Order Number" }),
+      /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xl text-[#ff6b00]", children: orderNumber })
     ] }),
-    /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground text-sm mb-8", children: [
+    /* @__PURE__ */ jsxs("p", { className: "text-white/70 text-sm mb-8", children: [
       "Our team will review your order and contact you within ",
       /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "24 hours" }),
       " to confirm production details, payment, and shipping timeline."
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
-      /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
+      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
+      /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
     ] })
   ] }) });
 }
@@ -8664,10 +8746,10 @@ function Checkout() {
     return /* @__PURE__ */ jsx(OrderConfirmation, { orderNumber: confirmedOrder });
   }
   if (items.length === 0) {
-    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-background flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-40" }),
+    return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+      /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" }),
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl text-foreground mb-2", children: "Your cart is empty" }),
-      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "mt-4 bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
+      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "mt-4 bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
     ] }) });
   }
   return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -8678,93 +8760,93 @@ function Checkout() {
         description: "Complete your B2B order for custom streetwear from Sialkot Sample Masters Pakistan."
       }
     ),
-    /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-background py-12", children: /* @__PURE__ */ jsxs("div", { className: "container max-w-5xl", children: [
+    /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] py-12", children: /* @__PURE__ */ jsxs("div", { className: "container max-w-5xl", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-        /* @__PURE__ */ jsxs(Link, { href: "/shop", className: "flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-4", children: [
+        /* @__PURE__ */ jsxs(Link$1, { href: "/shop", className: "flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-4", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Shop"
         ] }),
         /* @__PURE__ */ jsx("h1", { className: "font-serif text-3xl font-bold text-foreground", children: "Checkout" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mt-1", children: "Complete your order details below. Our team will confirm within 24 hours." })
+        /* @__PURE__ */ jsx("p", { className: "text-white/70 mt-1", children: "Complete your order details below. Our team will confirm within 24 hours." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-5 gap-8", children: [
         /* @__PURE__ */ jsx("div", { className: "lg:col-span-3", children: /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit(onSubmit), className: "space-y-6", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl p-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-xl p-6", children: [
             /* @__PURE__ */ jsxs("h2", { className: "font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold", children: "1" }),
+              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold", children: "1" }),
               "Contact Information"
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Full Name *" }),
-                /* @__PURE__ */ jsx(Input, { ...register("customerName"), placeholder: "John Smith", className: "bg-secondary border-border" }),
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Full Name *" }),
+                /* @__PURE__ */ jsx(Input, { ...register("customerName"), placeholder: "John Smith", className: "bg-secondary border-white/10" }),
                 errors.customerName && /* @__PURE__ */ jsx("p", { className: "text-destructive text-xs mt-1", children: errors.customerName.message })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Email *" }),
-                /* @__PURE__ */ jsx(Input, { ...register("customerEmail"), type: "email", placeholder: "john@brand.com", className: "bg-secondary border-border" }),
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Email *" }),
+                /* @__PURE__ */ jsx(Input, { ...register("customerEmail"), type: "email", placeholder: "john@brand.com", className: "bg-secondary border-white/10" }),
                 errors.customerEmail && /* @__PURE__ */ jsx("p", { className: "text-destructive text-xs mt-1", children: errors.customerEmail.message })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Phone" }),
-                /* @__PURE__ */ jsx(Input, { ...register("customerPhone"), placeholder: "+1 555 000 0000", className: "bg-secondary border-border" })
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Phone" }),
+                /* @__PURE__ */ jsx(Input, { ...register("customerPhone"), placeholder: "+1 555 000 0000", className: "bg-secondary border-white/10" })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Company Name" }),
-                /* @__PURE__ */ jsx(Input, { ...register("companyName"), placeholder: "Your Brand LLC", className: "bg-secondary border-border" })
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Company Name" }),
+                /* @__PURE__ */ jsx(Input, { ...register("companyName"), placeholder: "Your Brand LLC", className: "bg-secondary border-white/10" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl p-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-xl p-6", children: [
             /* @__PURE__ */ jsxs("h2", { className: "font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold", children: "2" }),
+              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold", children: "2" }),
               "Shipping Address"
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Country *" }),
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Country *" }),
                 /* @__PURE__ */ jsxs(
                   Select,
                   {
                     defaultValue: "US",
                     onValueChange: (val) => setValue("countryCode", val),
                     children: [
-                      /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-secondary border-border", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select country" }) }),
-                      /* @__PURE__ */ jsx(SelectContent, { className: "bg-card border-border max-h-64", children: COUNTRIES.map((c) => /* @__PURE__ */ jsx(SelectItem, { value: c.code, children: c.name }, c.code)) })
+                      /* @__PURE__ */ jsx(SelectTrigger, { className: "bg-secondary border-white/10", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select country" }) }),
+                      /* @__PURE__ */ jsx(SelectContent, { className: "bg-[#111111] border-white/10 max-h-64", children: COUNTRIES.map((c) => /* @__PURE__ */ jsx(SelectItem, { value: c.code, children: c.name }, c.code)) })
                     ]
                   }
                 ),
                 errors.countryCode && /* @__PURE__ */ jsx("p", { className: "text-destructive text-xs mt-1", children: errors.countryCode.message })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Address Line 1 *" }),
-                /* @__PURE__ */ jsx(Input, { ...register("addressLine1"), placeholder: "123 Main Street", className: "bg-secondary border-border" }),
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Address Line 1 *" }),
+                /* @__PURE__ */ jsx(Input, { ...register("addressLine1"), placeholder: "123 Main Street", className: "bg-secondary border-white/10" }),
                 errors.addressLine1 && /* @__PURE__ */ jsx("p", { className: "text-destructive text-xs mt-1", children: errors.addressLine1.message })
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Address Line 2" }),
-                /* @__PURE__ */ jsx(Input, { ...register("addressLine2"), placeholder: "Suite, Floor, etc.", className: "bg-secondary border-border" })
+                /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Address Line 2" }),
+                /* @__PURE__ */ jsx(Input, { ...register("addressLine2"), placeholder: "Suite, Floor, etc.", className: "bg-secondary border-white/10" })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: [
                 /* @__PURE__ */ jsxs("div", { className: "col-span-2 sm:col-span-1", children: [
-                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "City *" }),
-                  /* @__PURE__ */ jsx(Input, { ...register("city"), placeholder: "New York", className: "bg-secondary border-border" }),
+                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "City *" }),
+                  /* @__PURE__ */ jsx(Input, { ...register("city"), placeholder: "New York", className: "bg-secondary border-white/10" }),
                   errors.city && /* @__PURE__ */ jsx("p", { className: "text-destructive text-xs mt-1", children: errors.city.message })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "State / Region" }),
-                  /* @__PURE__ */ jsx(Input, { ...register("state"), placeholder: "NY", className: "bg-secondary border-border" })
+                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "State / Region" }),
+                  /* @__PURE__ */ jsx(Input, { ...register("state"), placeholder: "NY", className: "bg-secondary border-white/10" })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-muted-foreground uppercase tracking-wider mb-1 block", children: "Postal Code" }),
-                  /* @__PURE__ */ jsx(Input, { ...register("postalCode"), placeholder: "10001", className: "bg-secondary border-border" })
+                  /* @__PURE__ */ jsx(Label, { className: "text-xs text-white/70 uppercase tracking-wider mb-1 block", children: "Postal Code" }),
+                  /* @__PURE__ */ jsx(Input, { ...register("postalCode"), placeholder: "10001", className: "bg-secondary border-white/10" })
                 ] })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl p-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-xl p-6", children: [
             /* @__PURE__ */ jsxs("h2", { className: "font-condensed font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-gold text-black rounded-full flex items-center justify-center text-xs font-bold", children: "3" }),
+              /* @__PURE__ */ jsx("span", { className: "w-6 h-6 bg-[#ff6b00] text-black rounded-full flex items-center justify-center text-xs font-bold", children: "3" }),
               "Payment Method"
             ] }),
             /* @__PURE__ */ jsxs(
@@ -8774,24 +8856,24 @@ function Checkout() {
                 onValueChange: (val) => setValue("paymentMethod", val),
                 className: "space-y-3",
                 children: [
-                  /* @__PURE__ */ jsx("label", { htmlFor: "pay-stripe", className: `relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === "stripe" ? "border-gold bg-gold/5" : "border-border bg-secondary/50 hover:bg-secondary/80"}`, children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+                  /* @__PURE__ */ jsx("label", { htmlFor: "pay-stripe", className: `relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === "stripe" ? "border-[#ff6b00] bg-[#ff6b00]/5" : "border-white/10 bg-secondary/50 hover:bg-secondary/80"}`, children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
                     /* @__PURE__ */ jsx(RadioGroupItem, { value: "stripe", id: "pay-stripe", className: "mt-1" }),
                     /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
                       /* @__PURE__ */ jsxs("span", { className: "text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2", children: [
-                        /* @__PURE__ */ jsx(CreditCard, { className: "w-4 h-4 text-gold" }),
+                        /* @__PURE__ */ jsx(CreditCard, { className: "w-4 h-4 text-[#ff6b00]" }),
                         " Credit Card / Apple Pay"
                       ] }),
-                      /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "Pay securely right now via Stripe. We accept all major credit cards and digital wallets." })
+                      /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 mt-1", children: "Pay securely right now via Stripe. We accept all major credit cards and digital wallets." })
                     ] })
                   ] }) }),
-                  /* @__PURE__ */ jsx("label", { htmlFor: "pay-invoice", className: `relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === "invoice" ? "border-gold bg-gold/5" : "border-border bg-secondary/50 hover:bg-secondary/80"}`, children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+                  /* @__PURE__ */ jsx("label", { htmlFor: "pay-invoice", className: `relative border rounded-lg p-4 cursor-pointer transition-colors block ${paymentMethod === "invoice" ? "border-[#ff6b00] bg-[#ff6b00]/5" : "border-white/10 bg-secondary/50 hover:bg-secondary/80"}`, children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
                     /* @__PURE__ */ jsx(RadioGroupItem, { value: "invoice", id: "pay-invoice", className: "mt-1" }),
                     /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
                       /* @__PURE__ */ jsxs("span", { className: "text-sm font-semibold text-foreground cursor-pointer flex items-center gap-2", children: [
-                        /* @__PURE__ */ jsx(Receipt, { className: "w-4 h-4 text-gold" }),
+                        /* @__PURE__ */ jsx(Receipt, { className: "w-4 h-4 text-[#ff6b00]" }),
                         " Pay Later via Invoice"
                       ] }),
-                      /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise." })
+                      /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70 mt-1", children: "After confirmation, we will send you a proforma invoice. Payment is accepted via Bank Transfer (T/T), PayPal, or Wise." })
                     ] })
                   ] }) })
                 ]
@@ -8803,7 +8885,7 @@ function Checkout() {
             {
               type: "submit",
               disabled: createOrder.isPending,
-              className: "w-full bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider py-6 text-base",
+              className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider py-6 text-base",
               children: createOrder.isPending ? /* @__PURE__ */ jsxs(Fragment, { children: [
                 /* @__PURE__ */ jsx(Loader2, { className: "w-5 h-5 mr-2 animate-spin" }),
                 " Placing Order..."
@@ -8815,7 +8897,7 @@ function Checkout() {
           )
         ] }) }),
         /* @__PURE__ */ jsx("div", { className: "lg:col-span-2", children: /* @__PURE__ */ jsxs("div", { className: "sticky top-24 space-y-4", children: [
-          /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl p-5", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-xl p-5", children: [
             /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold uppercase tracking-wider text-foreground mb-4", children: "Order Summary" }),
             /* @__PURE__ */ jsx("div", { className: "space-y-3 mb-4", children: items.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
               /* @__PURE__ */ jsx(
@@ -8828,7 +8910,7 @@ function Checkout() {
               ),
               /* @__PURE__ */ jsxs("div", { className: "flex-1 min-w-0", children: [
                 /* @__PURE__ */ jsx("p", { className: "text-foreground text-xs font-semibold truncate", children: item.title }),
-                /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground text-xs", children: [
+                /* @__PURE__ */ jsxs("p", { className: "text-white/70 text-xs", children: [
                   item.quantity,
                   " pcs",
                   item.selectedSize ? ` · ${item.selectedSize}` : ""
@@ -8842,17 +8924,17 @@ function Checkout() {
             /* @__PURE__ */ jsx(Separator, { className: "bg-border my-4" }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-sm", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "Subtotal" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white/70", children: "Subtotal" }),
                 /* @__PURE__ */ jsxs("span", { className: "text-foreground font-condensed font-semibold", children: [
                   "$",
                   subtotal().toFixed(2)
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
-                /* @__PURE__ */ jsxs("span", { className: "text-muted-foreground flex items-center gap-1", children: [
+                /* @__PURE__ */ jsxs("span", { className: "text-white/70 flex items-center gap-1", children: [
                   /* @__PURE__ */ jsx(Truck, { className: "w-3.5 h-3.5" }),
                   " Shipping",
-                  shippingData && /* @__PURE__ */ jsxs("span", { className: "text-xs text-muted-foreground", children: [
+                  shippingData && /* @__PURE__ */ jsxs("span", { className: "text-xs text-white/70", children: [
                     "(",
                     shippingData.zoneName,
                     ")"
@@ -8860,7 +8942,7 @@ function Checkout() {
                 ] }),
                 /* @__PURE__ */ jsx("span", { className: "text-foreground font-condensed font-semibold", children: shippingLoading ? /* @__PURE__ */ jsx(Loader2, { className: "w-3.5 h-3.5 animate-spin" }) : shippingData?.freeShipping ? /* @__PURE__ */ jsx("span", { className: "text-green-400 font-bold", children: "FREE" }) : `$${shippingCost.toFixed(2)}` })
               ] }),
-              shippingData && !shippingData.freeShipping && /* @__PURE__ */ jsxs("p", { className: "text-xs text-muted-foreground", children: [
+              shippingData && !shippingData.freeShipping && /* @__PURE__ */ jsxs("p", { className: "text-xs text-white/70", children: [
                 "Est. delivery: ",
                 shippingData.estimatedDays.min,
                 "–",
@@ -8870,15 +8952,15 @@ function Checkout() {
               /* @__PURE__ */ jsx(Separator, { className: "bg-border" }),
               /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-base", children: [
                 /* @__PURE__ */ jsx("span", { className: "font-semibold text-foreground", children: "Total" }),
-                /* @__PURE__ */ jsxs("span", { className: "font-condensed font-bold text-xl text-gold", children: [
+                /* @__PURE__ */ jsxs("span", { className: "font-condensed font-bold text-xl text-[#ff6b00]", children: [
                   "$",
                   orderTotal.toFixed(2)
                 ] })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs text-muted-foreground justify-center", children: [
-            /* @__PURE__ */ jsx(Shield, { className: "w-4 h-4 text-gold" }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs text-white/70 justify-center", children: [
+            /* @__PURE__ */ jsx(Shield, { className: "w-4 h-4 text-[#ff6b00]" }),
             /* @__PURE__ */ jsx("span", { children: "Secure order. No payment required now." })
           ] })
         ] }) })
@@ -8892,17 +8974,17 @@ function CheckoutSuccess() {
   const orderNumber = params.get("order_number") || "UNKNOWN";
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(SEOHead, { title: "Payment Successful | Sialkot Sample Masters", description: "Your payment was successful." }),
-    /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background flex flex-col items-center justify-center p-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md w-full text-center", children: [
+    /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-[#0d0d0d] flex flex-col items-center justify-center p-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md w-full text-center", children: [
       /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-green-500/10 border-2 border-green-500 rounded-full flex flex-col items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsx(Check, { className: "w-10 h-10 text-green-500" }) }),
       /* @__PURE__ */ jsx("h1", { className: "font-serif text-3xl font-bold text-foreground mb-4", children: "Payment Successful!" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6", children: "Thank you for your order. Your payment has been processed successfully." }),
-      /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-lg p-6 mb-8", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground uppercase tracking-wider mb-2", children: "Order Number" }),
-        /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-2xl text-gold", children: orderNumber })
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "Thank you for your order. Your payment has been processed successfully." }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-6 mb-8", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-sm text-white/70 uppercase tracking-wider mb-2", children: "Order Number" }),
+        /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-2xl text-[#ff6b00]", children: orderNumber })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
       ] })
     ] }) })
   ] });
@@ -8910,13 +8992,13 @@ function CheckoutSuccess() {
 function CheckoutCancel() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(SEOHead, { title: "Payment Cancelled | Sialkot Sample Masters", description: "Your payment was cancelled." }),
-    /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background flex flex-col items-center justify-center p-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md w-full text-center", children: [
+    /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-[#0d0d0d] flex flex-col items-center justify-center p-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md w-full text-center", children: [
       /* @__PURE__ */ jsx("div", { className: "w-20 h-20 bg-destructive/10 border-2 border-destructive rounded-full flex flex-col items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsx(XCircle, { className: "w-10 h-10 text-destructive" }) }),
       /* @__PURE__ */ jsx("h1", { className: "font-serif text-3xl font-bold text-foreground mb-4", children: "Payment Cancelled" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "Your payment was cancelled and your order has not been placed. Your cart items are still saved if you wish to try again." }),
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-8", children: "Your payment was cancelled and your order has not been placed. Your cart items are still saved if you wish to try again." }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/checkout", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-gold text-black hover:bg-gold-light font-condensed font-bold uppercase tracking-wider", children: "Return to Checkout" }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
+        /* @__PURE__ */ jsx(Link$1, { href: "/checkout", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Return to Checkout" }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
       ] })
     ] }) })
   ] });
@@ -8955,7 +9037,7 @@ function AdminLogin() {
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center mb-8", children: [
       /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Shield, { className: "w-6 h-6 text-primary" }) }),
       /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold font-heading text-foreground", children: "Admin Portal" }),
-      /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mt-1 text-center", children: "Sign in to access the Sialkot Sample Masters dashboard." })
+      /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mt-1 text-center", children: "Sign in to access the Xelent Huntgear dashboard." })
     ] }),
     /* @__PURE__ */ jsxs("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
       /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
@@ -8965,7 +9047,7 @@ function AdminLogin() {
           {
             id: "email",
             type: "email",
-            placeholder: "admin@sialkotsamplemasters.com",
+            placeholder: "admin@xelenthuntgear.com",
             value: email,
             onChange: (e) => setEmail(e.target.value),
             required: true
@@ -9088,7 +9170,7 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         fixed lg:sticky top-0 left-0 z-50 h-screen w-[260px] bg-[#0c0c0e] flex flex-col transition-transform duration-300 ease-out
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `, children: [
-      /* @__PURE__ */ jsx("div", { className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer group", children: [
+      /* @__PURE__ */ jsx("div", { className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { className: "text-black font-extrabold text-sm", children: "S" }) }),
         /* @__PURE__ */ jsxs("div", { className: "leading-none", children: [
           /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Sialkot Sample" }),
@@ -9099,7 +9181,7 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         /* @__PURE__ */ jsx("p", { className: "text-[10px] font-condensed font-bold uppercase tracking-[0.2em] text-white/30 px-3 mb-3", children: "Main Menu" }),
         NAVIGATION.map((item) => {
           const active = isActive(item.href, item.exact);
-          return /* @__PURE__ */ jsx(Link, { href: item.href, children: /* @__PURE__ */ jsxs(
+          return /* @__PURE__ */ jsx(Link$1, { href: item.href, children: /* @__PURE__ */ jsxs(
             "div",
             {
               className: `
@@ -9118,7 +9200,7 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "border-t border-white/[0.06] p-3 shrink-0 space-y-2", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
           /* @__PURE__ */ jsx(Store, { className: "w-[18px] h-[18px] text-white/30 group-hover:text-white/50" }),
           /* @__PURE__ */ jsx("span", { children: "Visit Store" }),
           /* @__PURE__ */ jsx(ChevronRight, { className: "w-3 h-3 ml-auto text-white/20" })
@@ -9202,6 +9284,38 @@ function AdminLayout({ children }) {
     ] })
   ] });
 }
+const badgeVariants = cva(
+  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  {
+    variants: {
+      variant: {
+        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+        secondary: "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
+        destructive: "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+);
+function Badge({
+  className,
+  variant,
+  asChild = false,
+  ...props
+}) {
+  const Comp = asChild ? Slot : "span";
+  return /* @__PURE__ */ jsx(
+    Comp,
+    {
+      "data-slot": "badge",
+      className: cn(badgeVariants({ variant }), className),
+      ...props
+    }
+  );
+}
 const STATUS_COLORS$3 = {
   pending: "bg-amber-500/15 text-amber-500 border-amber-500/30",
   paid: "bg-blue-500/15 text-blue-500 border-blue-500/30",
@@ -9269,11 +9383,11 @@ function AdminDashboard() {
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Welcome back. Here's what's happening with your store." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-condensed font-bold uppercase tracking-wider text-xs h-9 px-4", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-condensed font-bold uppercase tracking-wider text-xs h-9 px-4", children: [
           /* @__PURE__ */ jsx(Plus, { className: "w-4 h-4 mr-1.5" }),
           " New Product"
         ] }) }),
-        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", size: "sm", className: "text-xs font-medium gap-1.5", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", size: "sm", className: "text-xs font-medium gap-1.5", children: [
           /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" }),
           " View Store"
         ] }) })
@@ -9298,13 +9412,13 @@ function AdminDashboard() {
       kpi.label
     )) }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3", children: [
-      (stats2?.pendingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-amber-500/20 transition-colors", children: [
+      (stats2?.pendingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-amber-500/20 transition-colors", children: [
         /* @__PURE__ */ jsx(Clock, { className: "w-3.5 h-3.5" }),
         stats2?.pendingCount,
         " Pending Orders",
         /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
       ] }) }),
-      (stats2?.processingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 text-violet-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-violet-500/20 transition-colors", children: [
+      (stats2?.processingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 text-violet-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-violet-500/20 transition-colors", children: [
         /* @__PURE__ */ jsx(Truck, { className: "w-3.5 h-3.5" }),
         stats2?.processingCount,
         " Processing",
@@ -9317,7 +9431,7 @@ function AdminDashboard() {
           /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground", children: "Recent Orders" }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: "Latest activity in your store" })
         ] }),
-        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
           "View All ",
           /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
         ] }) })
@@ -9354,7 +9468,7 @@ function AdminDashboard() {
             ] }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Badge, { className: `border text-[10px] font-bold ${STATUS_COLORS$3[order.status] || ""}`, children: order.status.charAt(0).toUpperCase() + order.status.slice(1) }) }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-muted-foreground text-xs whitespace-nowrap", children: new Date(order.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }) }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link, { href: `/admin-saad/orders/${order.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(Eye, { className: "w-4 h-4 text-muted-foreground" }) }) }) })
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link$1, { href: `/admin-saad/orders/${order.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(Eye, { className: "w-4 h-4 text-muted-foreground" }) }) }) })
           ] }, order.id);
         }) })
       ] }) })
@@ -9365,7 +9479,7 @@ function AdminDashboard() {
           /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground", children: "Recent Inquiries" }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: "Latest quote requests from your website" })
         ] }),
-        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
+        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
           "View All ",
           /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
         ] }) })
@@ -9389,17 +9503,17 @@ function AdminDashboard() {
       ] }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-4", children: [
-      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Plus, { className: "w-5 h-5 text-gold" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Add Product" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "Create a new product listing" })
       ] }) }),
-      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(ShoppingBag, { className: "w-5 h-5 text-blue-500" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Manage Orders" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "View and process customer orders" })
       ] }) }),
-      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/products", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/products", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Package, { className: "w-5 h-5 text-violet-500" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Product Catalog" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "Edit products, images & pricing" })
@@ -9685,7 +9799,7 @@ function AdminOrderDetail() {
   if (!order) {
     return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "text-center py-24", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-foreground mb-2", children: "Order not found" }),
-      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
+      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
         " Back to Orders"
       ] }) })
@@ -9699,7 +9813,7 @@ function AdminOrderDetail() {
   return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto space-y-6", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("h1", { className: "font-serif text-2xl font-bold text-foreground flex items-center gap-3", children: [
             "Order ",
@@ -9979,7 +10093,7 @@ function AdminInquiries() {
               inq.status.charAt(0).toUpperCase() + inq.status.slice(1)
             ] }) }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-muted-foreground text-xs whitespace-nowrap", children: new Date(inq.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link, { href: `/admin-saad/inquiries/${inq.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-4 h-4 text-gold" }) }) }) })
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link$1, { href: `/admin-saad/inquiries/${inq.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-4 h-4 text-gold" }) }) }) })
           ]
         },
         inq.id
@@ -10064,7 +10178,7 @@ function AdminInquiryDetail() {
   if (!inquiry) {
     return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "text-center py-24", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-foreground mb-2", children: "Inquiry not found" }),
-      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
+      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
         " Back to Inquiries"
       ] }) })
@@ -10073,7 +10187,7 @@ function AdminInquiryDetail() {
   return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto space-y-5", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
             /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold tracking-tight text-foreground", children: inquiry.companyName }),
@@ -11341,6 +11455,53 @@ It is now shown in your product preview and will be displayed alongside the stor
     ] })
   ] });
 }
+function Textarea({
+  className,
+  onKeyDown,
+  onCompositionStart,
+  onCompositionEnd,
+  ...props
+}) {
+  const dialogComposition = useDialogComposition();
+  const {
+    onCompositionStart: handleCompositionStart,
+    onCompositionEnd: handleCompositionEnd,
+    onKeyDown: handleKeyDown
+  } = useComposition({
+    onKeyDown: (e) => {
+      const isComposing = e.nativeEvent.isComposing || dialogComposition.justEndedComposing();
+      if (e.key === "Enter" && !e.shiftKey && isComposing) {
+        return;
+      }
+      onKeyDown?.(e);
+    },
+    onCompositionStart: (e) => {
+      dialogComposition.setComposing(true);
+      onCompositionStart?.(e);
+    },
+    onCompositionEnd: (e) => {
+      dialogComposition.markCompositionEnd();
+      setTimeout(() => {
+        dialogComposition.setComposing(false);
+      }, 100);
+      onCompositionEnd?.(e);
+    }
+  });
+  return /* @__PURE__ */ jsx(
+    "textarea",
+    {
+      "data-slot": "textarea",
+      className: cn(
+        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        className
+      ),
+      onCompositionStart: handleCompositionStart,
+      onCompositionEnd: handleCompositionEnd,
+      onKeyDown: handleKeyDown,
+      ...props
+    }
+  );
+}
 function AIImageOptimizer() {
   const [rawFile, setRawFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -12367,7 +12528,7 @@ const PORTFOLIO_CATEGORIES = [
 ];
 function AdminContent() {
   const utils = trpc.useUtils();
-  const { data: portfolioItems, isLoading } = trpc.portfolio.adminList.useQuery();
+  const { data: portfolioItems2, isLoading } = trpc.portfolio.adminList.useQuery();
   const [showAdd, setShowAdd] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({
@@ -12419,11 +12580,11 @@ function AdminContent() {
         " Add Portfolio Item"
       ] })
     ] }),
-    isLoading ? /* @__PURE__ */ jsx("div", { className: "flex justify-center p-12", children: /* @__PURE__ */ jsx(Loader2, { className: "w-6 h-6 animate-spin text-muted-foreground" }) }) : (portfolioItems ?? []).length === 0 ? /* @__PURE__ */ jsxs("div", { className: "text-center py-16 px-4 bg-card border border-border rounded-xl shadow-sm", children: [
+    isLoading ? /* @__PURE__ */ jsx("div", { className: "flex justify-center p-12", children: /* @__PURE__ */ jsx(Loader2, { className: "w-6 h-6 animate-spin text-muted-foreground" }) }) : (portfolioItems2 ?? []).length === 0 ? /* @__PURE__ */ jsxs("div", { className: "text-center py-16 px-4 bg-card border border-border rounded-xl shadow-sm", children: [
       /* @__PURE__ */ jsx("div", { className: "bg-secondary/50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4", children: /* @__PURE__ */ jsx(Image$1, { className: "w-8 h-8 text-muted-foreground" }) }),
       /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-foreground mb-1", children: "No portfolio items yet" }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm max-w-sm mx-auto", children: "Showcase your best manufacturing work. Add items here to display them on the public portfolio page." })
-    ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: (portfolioItems ?? []).map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl overflow-hidden group", children: [
+    ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: (portfolioItems2 ?? []).map((item) => /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-xl overflow-hidden group", children: [
       /* @__PURE__ */ jsxs("div", { className: "aspect-[4/3] bg-secondary relative", children: [
         /* @__PURE__ */ jsx("img", { src: item.imageUrl, alt: item.title, className: "w-full h-full object-cover" }),
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3", children: /* @__PURE__ */ jsx(Button, { size: "icon", variant: "destructive", className: "h-9 w-9 rounded-full", onClick: () => deleteMutation.mutate({ id: item.id }), children: /* @__PURE__ */ jsx(Trash2, { className: "w-4 h-4" }) }) })
@@ -12621,6 +12782,59 @@ function CollapsibleContent({
     {
       "data-slot": "collapsible-content",
       ...props
+    }
+  );
+}
+function ScrollArea({
+  className,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ jsxs(
+    ScrollAreaPrimitive.Root,
+    {
+      "data-slot": "scroll-area",
+      className: cn("relative", className),
+      ...props,
+      children: [
+        /* @__PURE__ */ jsx(
+          ScrollAreaPrimitive.Viewport,
+          {
+            "data-slot": "scroll-area-viewport",
+            className: "focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1",
+            children
+          }
+        ),
+        /* @__PURE__ */ jsx(ScrollBar, {}),
+        /* @__PURE__ */ jsx(ScrollAreaPrimitive.Corner, {})
+      ]
+    }
+  );
+}
+function ScrollBar({
+  className,
+  orientation = "vertical",
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    ScrollAreaPrimitive.ScrollAreaScrollbar,
+    {
+      "data-slot": "scroll-area-scrollbar",
+      orientation,
+      className: cn(
+        "flex touch-none p-px transition-colors select-none",
+        orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
+        orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent",
+        className
+      ),
+      ...props,
+      children: /* @__PURE__ */ jsx(
+        ScrollAreaPrimitive.ScrollAreaThumb,
+        {
+          "data-slot": "scroll-area-thumb",
+          className: "bg-border relative flex-1 rounded-full"
+        }
+      )
     }
   );
 }
@@ -15493,8 +15707,10 @@ const SnapshotController = () => {
               alert("Failed to save snapshot on device.");
             }
           } else {
-            const { saveAs } = await import("file-saver");
-            saveAs(blob, filename);
+            import("file-saver").then(({ saveAs }) => {
+              saveAs(blob, filename);
+              console.log(`✅ Downloaded: ${filename} (${(blob.size / 1024 / 1024).toFixed(2)} MB)`);
+            });
           }
         } else {
           console.error("❌ Failed to create PNG blob");
@@ -18122,7 +18338,7 @@ function Customize() {
         zIndex: 100
       }, children: [
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
-          /* @__PURE__ */ jsx(Link, { href: "/", style: { color: "#c9a84c", fontWeight: 700, fontSize: "13px", textDecoration: "none", letterSpacing: "0.05em" }, children: "← Back" }),
+          /* @__PURE__ */ jsx(Link$1, { href: "/", style: { color: "#c9a84c", fontWeight: 700, fontSize: "13px", textDecoration: "none", letterSpacing: "0.05em" }, children: "← Back" }),
           /* @__PURE__ */ jsx("span", { style: { color: "rgba(255,255,255,0.15)", fontSize: "18px" }, children: "|" }),
           /* @__PURE__ */ jsx("span", { style: { color: "#fff", fontWeight: 600, fontSize: "13px", letterSpacing: "0.1em", textTransform: "uppercase" }, children: "3D Product Customizer" })
         ] }),
@@ -19315,7 +19531,7 @@ function BrandingStudio() {
     ),
     /* @__PURE__ */ jsxs("header", { className: "flex-shrink-0 h-14 bg-[#1a1a1a] border-b border-white/10 flex items-center justify-between px-4 z-30", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsx("button", { className: "w-9 h-9 rounded-full flex items-center justify-center bg-white/8 hover:bg-white/15 transition-colors", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 text-white" }) }) }),
+        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsx("button", { className: "w-9 h-9 rounded-full flex items-center justify-center bg-white/8 hover:bg-white/15 transition-colors", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 text-white" }) }) }),
         /* @__PURE__ */ jsxs("div", { className: "leading-tight", children: [
           /* @__PURE__ */ jsx("div", { className: "text-sm font-bold text-white", children: "Woven Label Studio" }),
           /* @__PURE__ */ jsxs("div", { className: "text-[10px] text-white/40 hidden sm:block", children: [
@@ -20522,10 +20738,13 @@ function Router() {
     /* @__PURE__ */ jsx(Route, { path: "/blog/apparel-manufacturing-qc-checklist", component: BlogQCChecklist }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/why-sportswear-brands-outsource-cmt-sialkot", component: BlogOutsourcingBenefits }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/5-signs-change-sublimation-vendor", component: BlogSublimationRedFlags }),
-    /* @__PURE__ */ jsx(Route, { path: "/blog/3d-puff-embroidery-streetwear-impact", component: BlogPuffEmbroidery }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/3d-puff-embroidery-Technical-Apparel-impact", component: BlogPuffEmbroidery }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/cad-grading-international-sizing-importance", component: BlogCADGrading }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/calculate-cmt-costs-export-shipment", component: BlogCMTCosting }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/3-mistakes-ordering-custom-patches-badges", component: BlogPatchMistakes }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/realtree-vs-mossy-oak-guide", component: BlogRealtreeVsMossyOak }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/scent-control-technology", component: BlogScentControl }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/waterproof-ratings-guide", component: BlogWaterproofRatings }),
     /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", component: BlogPost }),
     /* @__PURE__ */ jsx(Route, { path: "/rfq", component: RFQ }),
     /* @__PURE__ */ jsx(Route, { path: "/contact", component: Contact }),
