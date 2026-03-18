@@ -3953,25 +3953,28 @@ async function startServer() {
     if (seedDb) {
       const allAdmins = await seedDb.select().from(users).where(eq3(users.role, "admin"));
       const hasValidAdmin = allAdmins.some((a) => a.password && a.password.includes(":"));
-      const adminUser = allAdmins[0];
-      if (adminUser) {
-        console.log("[Auth] Resetting admin password for:", adminUser.email);
-        await seedDb.update(users).set({
-          password: hashPwd("Admin@123"),
-          email: "admin@xelenthuntgear.com",
-          openId: "admin@xelenthuntgear.com"
-        }).where(eq3(users.id, adminUser.id));
-        console.log("[Auth] Admin password reset to: Admin@123");
+      if (!hasValidAdmin) {
+        const noPasswordAdmin = allAdmins.find((a) => !a.password || !a.password.includes(":"));
+        if (noPasswordAdmin) {
+          console.log("[Auth] Updating existing admin row with default password...");
+          await seedDb.update(users).set({
+            password: hashPwd("admin123"),
+            email: "admin@xelenthuntgear.com",
+            openId: "admin@xelenthuntgear.com"
+          }).where(eq3(users.id, noPasswordAdmin.id));
+        } else {
+          console.log("[Auth] Creating fresh default admin: admin@xelenthuntgear.com / admin123");
+          await seedDb.insert(users).values({
+            openId: "admin@xelenthuntgear.com",
+            name: "Super Admin",
+            email: "admin@xelenthuntgear.com",
+            role: "admin",
+            loginMethod: "local",
+            password: hashPwd("admin123")
+          });
+        }
       } else {
-        console.log("[Auth] Creating default admin: admin@xelenthuntgear.com / Admin@123");
-        await seedDb.insert(users).values({
-          openId: "admin@xelenthuntgear.com",
-          name: "Super Admin",
-          email: "admin@xelenthuntgear.com",
-          role: "admin",
-          loginMethod: "local",
-          password: hashPwd("Admin@123")
-        });
+        console.log("[Auth] System has valid admin account(s). Login with your existing credentials.");
       }
     }
   } catch (seedErr) {
@@ -3987,10 +3990,20 @@ async function startServer() {
       console.log("[Login] Looking up:", email);
       const results = await db.select().from(users).where(eq3(users.email, email)).limit(1);
       const user = results[0];
-      if (!user) return res.status(401).json({ error: "Invalid credentials." });
-      if (user.role !== "admin") return res.status(401).json({ error: "Not an admin." });
-      if (!user.password) return res.status(401).json({ error: "Password not set." });
+      if (!user) {
+        console.log("[Login] User NOT FOUND in database:", email);
+        return res.status(401).json({ error: "Invalid credentials." });
+      }
+      if (user.role !== "admin") {
+        console.log("[Login] User role is NOT admin:", user.role);
+        return res.status(401).json({ error: "Not an admin." });
+      }
+      if (!user.password) {
+        console.log("[Login] User has NO password field set in DB");
+        return res.status(401).json({ error: "Password not set." });
+      }
       if (!verifyPwd(password, user.password)) {
+        console.log("[Login] PASSWORD VERIFICATION FAILED for:", email);
         return res.status(401).json({ error: "Invalid credentials." });
       }
       console.log("[Login] Password OK, creating JWT...");
