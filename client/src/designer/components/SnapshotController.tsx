@@ -1,8 +1,6 @@
 import { useThree } from '@react-three/fiber';
 import { useEffect } from 'react';
 import * as THREE from 'three';
-import pkg from 'file-saver';
-const { saveAs } = pkg;
 import { Capacitor } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { useConfiguratorStore } from '../store/configuratorStore';
@@ -113,10 +111,9 @@ export const SnapshotController = () => {
                         }
                     } else {
                         // Web Saving
+                        const { saveAs } = await import('file-saver');
                         saveAs(blob, filename);
-                        console.log(`✅ Downloaded: ${filename} (${(blob.size / 1024 / 1024).toFixed(2)} MB)`);
                     }
-
                 } else {
                     console.error('❌ Failed to create PNG blob');
                 }

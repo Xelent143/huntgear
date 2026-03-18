@@ -182,6 +182,9 @@ export default defineConfig({
       }
     }
   },
+  ssr: {
+    external: ["file-saver"],
+  },
   server: {
     host: true,
     allowedHosts: [

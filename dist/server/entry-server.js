@@ -40,7 +40,6 @@ import { useThree, useFrame, Canvas } from "@react-three/fiber";
 import { useGLTF, useTexture, Html, PerspectiveCamera, Environment, OrbitControls, ContactShadows, useProgress } from "@react-three/drei";
 import * as THREE from "three";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
-import pkg from "file-saver";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { HexColorPicker } from "react-colorful";
@@ -15424,7 +15423,6 @@ const GarmentModel = ({ url }) => {
   ] });
 };
 useGLTF.preload("/models/sample-garment.glb");
-const { saveAs } = pkg;
 const SnapshotController = () => {
   const { gl, scene, camera } = useThree();
   const { snapshotRequest } = useConfiguratorStore();
@@ -15495,8 +15493,8 @@ const SnapshotController = () => {
               alert("Failed to save snapshot on device.");
             }
           } else {
+            const { saveAs } = await import("file-saver");
             saveAs(blob, filename);
-            console.log(`✅ Downloaded: ${filename} (${(blob.size / 1024 / 1024).toFixed(2)} MB)`);
           }
         } else {
           console.error("❌ Failed to create PNG blob");
