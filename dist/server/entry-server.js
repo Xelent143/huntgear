@@ -387,7 +387,16 @@ const IMAGES = {
   // Technical Capabilities
   capWaterproof: "/svc-waterproof-tech.png",
   capCamoDesign: "/svc-camo-design-tech.png",
-  capScentControl: "/svc-scent-control-tech.png"
+  capScentControl: "/svc-scent-control-tech.png",
+  // Nav Category Thumbnails (Sitka/Kuiu Style)
+  navSpecWhitetail: "/nav-spec-whitetail.png",
+  navSpecBigGame: "/nav-spec-biggame.png",
+  navSpecWaterfowl: "/nav-spec-waterfowl.png",
+  navSpecTurkey: "/nav-spec-turkey.png",
+  navSysBase: "/nav-sys-base.png",
+  navSysInsulation: "/nav-sys-insulation.png",
+  navSysShell: "/nav-sys-shell.png",
+  navSysRain: "/nav-sys-rain.png"
 };
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
@@ -439,13 +448,17 @@ function AnnouncementBar() {
     }
   );
 }
-const productCategories = [
-  { name: "Sportswear & Team Kits", image: IMAGES.catSports, href: "/products#sportswear", tag: "Athletic" },
-  { name: "Hunting Wear", image: IMAGES.catHunting, href: "/products#hunting-wear", tag: "MIL-SPEC" },
-  { name: "Technical Apparel", image: IMAGES.catHuntingGear, href: "/products#technical-gear", tag: "Lifestyle" },
-  { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/products#security-uniforms", tag: "Guard" },
-  { name: "Tech Wear", image: IMAGES.catTechwear, href: "/products#techwear", tag: "Utility" },
-  { name: "Ski Wear", image: IMAGES.catSki, href: "/products#ski-wear", tag: "Alpine" }
+const speciesCategories = [
+  { name: "Whitetail", image: IMAGES.navSpecWhitetail, href: "/products?category=Whitetail", tag: "Hardwoods" },
+  { name: "Big Game", image: IMAGES.navSpecBigGame, href: "/products?category=Big+Game", tag: "Alpine" },
+  { name: "Waterfowl", image: IMAGES.navSpecWaterfowl, href: "/products?category=Waterfowl", tag: "Marsh" },
+  { name: "Turkey", image: IMAGES.navSpecTurkey, href: "/products?category=Turkey", tag: "Spring" }
+];
+const systemCategories = [
+  { name: "Base Layers", image: IMAGES.navSysBase, href: "/products?system=Base+Layer", tag: "Next-to-Skin" },
+  { name: "Insulation", image: IMAGES.navSysInsulation, href: "/products?system=Insulation", tag: "Thermal" },
+  { name: "Outerwear", image: IMAGES.navSysShell, href: "/products?system=Outerwear", tag: "Protection" },
+  { name: "Rain Gear", image: IMAGES.navSysRain, href: "/products?system=Rain+Gear", tag: "Waterproof" }
 ];
 const companyLinks = [
   { label: "About Us", href: "/about", icon: Award, desc: "Heritage, mission & values" },
@@ -456,14 +469,14 @@ const companyLinks = [
 ];
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Company", href: "#", megamenu: "company" },
-  { label: "Products", href: "#", megamenu: "products" },
+  { label: "Shop by Species", href: "#", megamenu: "species" },
+  { label: "Shop by System", href: "#", megamenu: "systems" },
   { label: "Shop", href: "/shop" },
+  { label: "Innovation", href: "#", megamenu: "company" },
   { label: "3D Design", href: "/customize" },
-  { label: "Brand Studio", href: "/branding-studio" },
   { label: "Contact", href: "/contact" }
 ];
-function ProductsMegamenu({ onClose }) {
+function SpeciesMegamenu({ onClose }) {
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -471,39 +484,75 @@ function ProductsMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-1/2 -translate-x-1/2 w-[1000px] glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-[#161616] px-6 py-3 border-b border-white/10 flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxs("div", { className: "bg-black/40 px-8 py-5 border-b border-white/10 flex items-center justify-between", children: [
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xs tracking-widest uppercase text-[#ff6b00]", children: "Product Catalog" }),
-            /* @__PURE__ */ jsx("p", { className: "text-white text-sm font-semibold", children: "Premium Hunting Gear Categories" })
+            /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-xs tracking-[0.3em] uppercase text-[#ff6b00]", children: "Shop by Species" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white text-lg font-heading font-semibold", children: "Engineered Systems for Every Environment" })
           ] }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1", children: [
-            "View All ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
+          /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-serif font-black uppercase tracking-widest text-xs rounded-none h-10 px-6 gap-2 vibe-glow-orange", children: [
+            "Explore All ",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5" })
           ] }) })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-0 p-4", children: productCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden rounded-sm cursor-pointer m-1", children: [
-          /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-[#0d0d0d]", children: [
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-6 p-8", children: speciesCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+          /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
                 src: cat.image,
                 alt: cat.name,
-                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
               }
             ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" })
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-2 left-2 bg-[#ff6b00] text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm", children: cat.tag }),
-          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 p-2", children: /* @__PURE__ */ jsx("p", { className: "text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-[#ff6b00] transition-colors", children: cat.name }) })
-        ] }) }, cat.href)) }),
-        /* @__PURE__ */ jsx("div", { className: "bg-[#161616]/40 border-t border-white/10 px-6 py-2.5 flex items-center gap-6 text-xs text-white/70", children: ["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-[#ff6b00]" }),
-          item
-        ] }, item)) })
+          /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 border border-white/20 bg-black/40 backdrop-blur-md text-white text-[9px] font-serif font-black tracking-[0.2em] uppercase px-2 py-1", children: cat.tag }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors mb-1", children: cat.name }),
+            /* @__PURE__ */ jsx("div", { className: "w-0 group-hover:w-full h-0.5 bg-[#ff6b00] transition-all duration-300" })
+          ] })
+        ] }) }, cat.href)) })
+      ]
+    }
+  );
+}
+function SystemsMegamenu({ onClose }) {
+  return /* @__PURE__ */ jsxs(
+    motion.div,
+    {
+      initial: { opacity: 0, y: -8 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -8 },
+      transition: { duration: 0.2, ease: "easeOut" },
+      className: "absolute top-full left-1/2 -translate-x-1/2 w-[1000px] glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
+      style: { zIndex: 200 },
+      children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
+        /* @__PURE__ */ jsx("div", { className: "bg-black/40 px-8 py-5 border-b border-white/10 flex items-center justify-between", children: /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-xs tracking-[0.3em] uppercase text-[#ff6b00]", children: "Shop by System" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white text-lg font-heading font-semibold", children: "Technical Layering for Peak Performance" })
+        ] }) }),
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-6 p-8", children: systemCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+          /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
+            /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: cat.image,
+                alt: cat.name,
+                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-[10px] text-[#ff6b00] font-serif font-black tracking-widest uppercase mb-1", children: cat.tag }),
+            /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors", children: cat.name })
+          ] })
+        ] }) }, cat.href)) })
       ]
     }
   );
@@ -516,7 +565,7 @@ function CompanyMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-72 bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-72 glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
@@ -624,7 +673,7 @@ function Navbar() {
                       {
                         onMouseEnter: () => handleMouseEnter(link.megamenu),
                         onMouseLeave: handleMouseLeave,
-                        children: link.megamenu === "products" ? /* @__PURE__ */ jsx(ProductsMegamenu, { onClose: closeMegamenu }) : /* @__PURE__ */ jsx(CompanyMegamenu, { onClose: closeMegamenu })
+                        children: link.megamenu === "species" ? /* @__PURE__ */ jsx(SpeciesMegamenu, { onClose: closeMegamenu }) : link.megamenu === "systems" ? /* @__PURE__ */ jsx(SystemsMegamenu, { onClose: closeMegamenu }) : /* @__PURE__ */ jsx(CompanyMegamenu, { onClose: closeMegamenu })
                       }
                     ) })
                   ]
@@ -682,21 +731,53 @@ function Navbar() {
                     ] }, link.href);
                   }) })
                 ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3", children: "Shop by Species" }),
+                  /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: speciesCategories.map((link) => /* @__PURE__ */ jsxs(
+                    Link$1,
+                    {
+                      href: link.href,
+                      onClick: () => setIsOpen(false),
+                      className: "flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm",
+                      children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight", children: link.name }),
+                        /* @__PURE__ */ jsx("span", { className: "text-[8px] text-[#ff6b00] font-serif font-bold uppercase tracking-[0.2em]", children: link.tag })
+                      ]
+                    },
+                    link.href
+                  )) })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-4", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3", children: "Technical Systems" }),
+                  /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: systemCategories.map((link) => /* @__PURE__ */ jsxs(
+                    Link$1,
+                    {
+                      href: link.href,
+                      onClick: () => setIsOpen(false),
+                      className: "flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm",
+                      children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight", children: link.name }),
+                        /* @__PURE__ */ jsx("span", { className: "text-[8px] text-white/40 font-serif font-bold uppercase tracking-[0.2em]", children: link.tag })
+                      ]
+                    },
+                    link.href
+                  )) })
+                ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-4", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3", children: "Quick Links" }),
                   /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: [
                     { label: "Home", href: "/" },
-                    { label: "Shop", href: "/shop" },
-                    { label: "Products", href: "/products" },
-                    { label: "3D Design", href: "/customize" },
-                    { label: "Brand Studio", href: "/branding-studio" },
+                    { label: "Shop All", href: "/shop" },
+                    { label: "3D Custom", href: "/customize" },
+                    { label: "Our Story", href: "/about" },
+                    { label: "Services", href: "/services" },
                     { label: "Contact", href: "/contact" }
                   ].map((link) => /* @__PURE__ */ jsx(
                     Link$1,
                     {
                       href: link.href,
                       onClick: () => setIsOpen(false),
-                      className: `flex justify-center items-center text-center p-4 text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"}`,
+                      className: `flex justify-center items-center text-center p-4 text-[10px] font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"}`,
                       children: link.label
                     },
                     link.href
