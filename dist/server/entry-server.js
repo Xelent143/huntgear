@@ -484,7 +484,7 @@ function SpeciesMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-full glass-vibe shadow-2xl shadow-black/90 overflow-hidden",
+      className: "absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
@@ -530,7 +530,7 @@ function SystemsMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-full glass-vibe shadow-2xl shadow-black/90 overflow-hidden",
+      className: "absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
@@ -569,7 +569,7 @@ function CompanyMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-72 glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-72 bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
