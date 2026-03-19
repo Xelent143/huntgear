@@ -350,7 +350,7 @@ const useCartStore = create()(
 );
 const IMAGES = {
   // Brand logos
-  logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
+  logoGold: "/logo-xh-gold.png",
   heroAlpineExtreme: "/hero-alpine-extreme.png",
   aboutBg: "/about-mfg-pro.png",
   servicesBg: "/master-craftsmanship-pro.png",
@@ -484,38 +484,40 @@ function SpeciesMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-1/2 -translate-x-1/2 w-[1000px] glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-full glass-vibe shadow-2xl shadow-black/90 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-black/40 px-8 py-5 border-b border-white/10 flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-xs tracking-[0.3em] uppercase text-[#ff6b00]", children: "Shop by Species" }),
-            /* @__PURE__ */ jsx("p", { className: "text-white text-lg font-heading font-semibold", children: "Engineered Systems for Every Environment" })
+        /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+          /* @__PURE__ */ jsxs("div", { className: "px-8 py-6 border-b border-white/5 flex items-center justify-between text-left", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1", children: "Shop by Species" }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white text-2xl font-heading font-bold tracking-tight", children: "Engineered Systems for Every Environment" })
+            ] }),
+            /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-black hover:bg-white transition-all font-serif font-black uppercase tracking-widest text-xs rounded-none h-11 px-8 gap-3 vibe-glow-orange group", children: [
+              "Explore All ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
+            ] }) })
           ] }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-serif font-black uppercase tracking-widest text-xs rounded-none h-10 px-6 gap-2 vibe-glow-orange", children: [
-            "Explore All ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5" })
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-6 p-8", children: speciesCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
-          /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
-            /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: cat.image,
-                alt: cat.name,
-                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 border border-white/20 bg-black/40 backdrop-blur-md text-white text-[9px] font-serif font-black tracking-[0.2em] uppercase px-2 py-1", children: cat.tag }),
-          /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors mb-1", children: cat.name }),
-            /* @__PURE__ */ jsx("div", { className: "w-0 group-hover:w-full h-0.5 bg-[#ff6b00] transition-all duration-300" })
-          ] })
-        ] }) }, cat.href)) })
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-8 p-10 pb-12", children: speciesCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+            /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: cat.image,
+                  alt: cat.name,
+                  className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 border border-white/20 bg-black/40 backdrop-blur-md text-white text-[9px] font-serif font-black tracking-[0.2em] uppercase px-2 py-1", children: cat.tag }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6 text-left", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors mb-1", children: cat.name }),
+              /* @__PURE__ */ jsx("div", { className: "w-0 group-hover:w-full h-0.5 bg-[#ff6b00] transition-all duration-300" })
+            ] })
+          ] }) }, cat.href)) })
+        ] })
       ]
     }
   );
@@ -528,31 +530,33 @@ function SystemsMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-1/2 -translate-x-1/2 w-[1000px] glass-vibe shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-full glass-vibe shadow-2xl shadow-black/90 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
-        /* @__PURE__ */ jsx("div", { className: "bg-black/40 px-8 py-5 border-b border-white/10 flex items-center justify-between", children: /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-xs tracking-[0.3em] uppercase text-[#ff6b00]", children: "Shop by System" }),
-          /* @__PURE__ */ jsx("p", { className: "text-white text-lg font-heading font-semibold", children: "Technical Layering for Peak Performance" })
-        ] }) }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-6 p-8", children: systemCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
-          /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
-            /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: cat.image,
-                alt: cat.name,
-                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" })
+        /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+          /* @__PURE__ */ jsxs("div", { className: "px-8 py-6 border-b border-white/5 text-left", children: [
+            /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1", children: "Shop by System" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-white text-2xl font-heading font-bold tracking-tight", children: "Technical Layering for Peak Performance" })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-[10px] text-[#ff6b00] font-serif font-black tracking-widest uppercase mb-1", children: cat.tag }),
-            /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors", children: cat.name })
-          ] })
-        ] }) }, cat.href)) })
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-8 p-10 pb-12", children: systemCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+            /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: cat.image,
+                  alt: cat.name,
+                  className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6 text-left", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-[#ff6b00] font-serif font-black tracking-widest uppercase mb-1", children: cat.tag }),
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors", children: cat.name })
+            ] })
+          ] }) }, cat.href)) })
+        ] })
       ]
     }
   );
