@@ -1543,9 +1543,9 @@ function Home() {
               initial: { opacity: 0, x: -20 },
               animate: { opacity: 1, x: 0 },
               transition: { duration: 0.6 },
-              className: "inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 mb-8",
+              className: "inline-flex items-center gap-3 glass-vibe px-4 py-2 mb-8",
               children: [
-                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] rounded-full animate-pulse shadow-[0_0_8px_#ff6b00]" }),
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] rounded-full animate-vibe-pulse shadow-[0_0_12px_#ff6b00]" }),
                 /* @__PURE__ */ jsx("span", { className: "text-white text-[10px] font-heading font-medium uppercase tracking-[0.3em]", children: "Premium B2B OEM Partner" })
               ]
             }
@@ -1556,7 +1556,7 @@ function Home() {
               initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
               transition: { duration: 0.8, delay: 0.2 },
-              className: "text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-serif font-black text-white leading-[0.85] mb-8 tracking-tighter",
+              className: "text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-serif font-black text-white leading-[0.85] mb-8 tracking-tighter text-vibe-glow",
               children: [
                 "PRECISION",
                 /* @__PURE__ */ jsx("br", {}),
@@ -1589,9 +1589,9 @@ function Home() {
               initial: { opacity: 0, y: 20 },
               animate: { opacity: 1, y: 0 },
               transition: { delay: 0.5 + i * 0.1 },
-              className: "bg-white/5 backdrop-blur-sm border border-white/10 p-4 transition-colors hover:bg-white/10",
+              className: "glass-vibe p-4 transition-all duration-300 hover:bg-white/10 group/spec",
               children: [
-                /* @__PURE__ */ jsx(spec.icon, { className: "w-4 h-4 text-[#ff6b00] mb-2" }),
+                /* @__PURE__ */ jsx(spec.icon, { className: "w-4 h-4 text-[#ff6b00] mb-2 vibe-glow-orange group-hover/spec:scale-110 transition-transform" }),
                 /* @__PURE__ */ jsx("div", { className: "text-[10px] text-white/40 uppercase tracking-widest mb-1", children: spec.label }),
                 /* @__PURE__ */ jsx("div", { className: "text-xs text-white font-bold", children: spec.value })
               ]
