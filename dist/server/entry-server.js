@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Users, Shield, Target, Droplets, Thermometer, Layers, Wind, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Zap, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, Scale, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, Droplets, Wind, Shield, Zap, ChevronRight, Users, Target, Thermometer, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, Scale, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -351,7 +351,7 @@ const useCartStore = create()(
 const IMAGES = {
   // Brand logos
   logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
-  heroCustomBg: "/hero-hunting.png",
+  heroAlpineExtreme: "/hero-alpine-extreme.png",
   aboutBg: "/about-mfg-pro.png",
   servicesBg: "/master-craftsmanship-pro.png",
   portfolioBg: "/portfolio-branding.png",
@@ -1527,13 +1527,13 @@ function Home() {
         /* @__PURE__ */ jsx(
           "img",
           {
-            src: IMAGES.heroCustomBg,
-            alt: "Professional Hunter in Xelent technical gear - Durable, waterproof performance apparel",
-            className: "w-full h-full object-cover opacity-60"
+            src: IMAGES.heroAlpineExtreme,
+            alt: "Alpine Extreme - Precision Hunting Apparel Systems by Xelent",
+            className: "w-full h-full object-cover opacity-80"
           }
         ),
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" })
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 z-10" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
@@ -1543,10 +1543,10 @@ function Home() {
               initial: { opacity: 0, x: -20 },
               animate: { opacity: 1, x: 0 },
               transition: { duration: 0.6 },
-              className: "inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 mb-8",
+              className: "inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 mb-8",
               children: [
-                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] animate-pulse" }),
-                /* @__PURE__ */ jsx("span", { className: "text-white text-xs font-condensed uppercase tracking-[0.2em]", children: "Now Accepting SS2026 Orders" })
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] rounded-full animate-pulse shadow-[0_0_8px_#ff6b00]" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white text-[10px] font-heading font-medium uppercase tracking-[0.3em]", children: "Premium B2B OEM Partner" })
               ]
             }
           ),
@@ -1556,73 +1556,48 @@ function Home() {
               initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
               transition: { duration: 0.8, delay: 0.2 },
-              className: "text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.9] mb-6",
+              className: "text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-serif font-black text-white leading-[0.85] mb-8 tracking-tighter",
               children: [
-                "Built for",
-                /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "the Hunt." })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            motion.p,
-            {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6, delay: 0.4 },
-              className: "text-xl sm:text-2xl text-white font-light mb-4",
-              children: "Premium Hunting Apparel Manufacturer"
-            }
-          ),
-          /* @__PURE__ */ jsxs(
-            motion.p,
-            {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6, delay: 0.5 },
-              className: "text-white/80 text-base sm:text-lg max-w-xl mb-6 leading-relaxed",
-              children: [
-                "B2B manufacturing for hunting brands worldwide. Specialist in ",
-                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ISO 811 certified 20,000mm waterproofing" }),
-                " and ",
-                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ASTM E96 breathable" }),
-                " membranes. REACH & OEKO-TEX compliant production. Low MOQ 50pcs."
+                "PRECISION",
+                /* @__PURE__ */ jsx("br", {}),
+                /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00]", children: "AT THE EDGE." })
               ]
             }
           ),
           /* @__PURE__ */ jsxs(
             motion.div,
             {
-              initial: { opacity: 0, scale: 0.95 },
-              animate: { opacity: 1, scale: 1 },
-              transition: { duration: 0.5, delay: 0.55 },
-              className: "bg-white/5 backdrop-blur-sm border-l-4 border-[#ff6b00] p-6 mb-10 max-w-xl",
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.4 },
+              className: "mb-8",
               children: [
-                /* @__PURE__ */ jsx("h3", { className: "text-[#ff6b00] font-condensed font-bold uppercase tracking-widest text-xs mb-3", children: "Key Manufacturing Takeaways" }),
-                /* @__PURE__ */ jsxs("ul", { className: "text-white/70 text-sm space-y-2 font-light", children: [
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Specialization" }),
-                    ": Technical Hunting Apparel & Tactical Security Uniforms"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Benchmarks" }),
-                    ": 20K Waterproofing / 15K Breathability (ISO/ASTM)"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Compliance" }),
-                    ": OEKO-TEX Standard 100 & REACH (EU) Certified"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Capability" }),
-                    ": 3D Pattern Development, Laser Cutting, Ultrasonic Sealing"
-                  ] })
-                ] })
+                /* @__PURE__ */ jsx("p", { className: "text-lg sm:text-xl text-white font-heading font-semibold uppercase tracking-[0.25em] mb-2", children: "Technical Hunting Systems" }),
+                /* @__PURE__ */ jsx("div", { className: "w-12 h-1 bg-[#ff6b00] mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/60 text-base sm:text-lg max-w-xl leading-relaxed italic border-l-2 border-white/20 pl-4", children: "Engineered for the most unforgiving environments on Earth." })
               ]
             }
           ),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12", children: [
+            { label: "Waterproof", value: "20,000mm", icon: Droplets },
+            { label: "Breathable", value: "ASTM E96", icon: Wind },
+            { label: "Certified", value: "OEKO-TEX", icon: Shield },
+            { label: "Response", value: "24h Quote", icon: Zap }
+          ].map((spec, i) => /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { delay: 0.5 + i * 0.1 },
+              className: "bg-white/5 backdrop-blur-sm border border-white/10 p-4 transition-colors hover:bg-white/10",
+              children: [
+                /* @__PURE__ */ jsx(spec.icon, { className: "w-4 h-4 text-[#ff6b00] mb-2" }),
+                /* @__PURE__ */ jsx("div", { className: "text-[10px] text-white/40 uppercase tracking-widest mb-1", children: spec.label }),
+                /* @__PURE__ */ jsx("div", { className: "text-xs text-white font-bold", children: spec.value })
+              ]
+            },
+            spec.label
+          )) }),
           /* @__PURE__ */ jsxs(
             motion.div,
             {
