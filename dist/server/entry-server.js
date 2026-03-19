@@ -652,7 +652,7 @@ function Navbar() {
               (link) => link.megamenu ? /* @__PURE__ */ jsxs(
                 "div",
                 {
-                  className: "relative",
+                  className: link.megamenu === "species" || link.megamenu === "systems" ? "" : "relative",
                   onMouseEnter: () => handleMouseEnter(link.megamenu),
                   onMouseLeave: handleMouseLeave,
                   children: [
