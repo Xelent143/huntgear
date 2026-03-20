@@ -406,6 +406,13 @@ function AnnouncementBar() {
       return true;
     }
   });
+  const dismissAnnouncement = () => {
+    try {
+      sessionStorage.setItem("xh-ann-dismissed", "1");
+    } catch {
+    }
+    setVisible(false);
+  };
   if (!visible) return null;
   return /* @__PURE__ */ jsx(
     motion.div,
@@ -431,7 +438,7 @@ function AnnouncementBar() {
         /* @__PURE__ */ jsx(
           "button",
           {
-            onClick: dismiss,
+            onClick: dismissAnnouncement,
             className: "absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1",
             "aria-label": "Dismiss announcement",
             children: /* @__PURE__ */ jsx(X$1, { className: "w-3.5 h-3.5" })
