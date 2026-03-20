@@ -389,7 +389,7 @@ const IMAGES = {
   capCamoDesign: "/svc-camo-design-tech.png",
   capScentControl: "/svc-scent-control-tech.png",
   // Nav Category Thumbnails (Sitka/Kuiu Style - Branded)
-  navSpecWhitetail: "/nav-spec-whitetail-branded.png",
+  navSpecWhitetail: "/nav-spec-whitetail-v2.jpg",
   navSpecBigGame: "/nav-spec-biggame-branded.png",
   navSpecWaterfowl: "/nav-spec-waterfowl-branded.png",
   navSpecTurkey: "/nav-spec-turkey-branded.png",
