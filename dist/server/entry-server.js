@@ -388,14 +388,14 @@ const IMAGES = {
   capWaterproof: "/svc-waterproof-tech.png",
   capCamoDesign: "/svc-camo-design-tech.png",
   capScentControl: "/svc-scent-control-tech.png",
-  // Nav Category Thumbnails (Sitka/Kuiu Style)
-  navSpecWhitetail: "/nav-spec-whitetail.png",
-  navSpecBigGame: "/nav-spec-biggame.png",
-  navSpecWaterfowl: "/nav-spec-waterfowl.png",
-  navSpecTurkey: "/nav-spec-turkey.png",
-  navSysBase: "/nav-sys-base.png",
-  navSysInsulation: "/nav-sys-insulation.png",
-  navSysShell: "/nav-sys-shell.png",
+  // Nav Category Thumbnails (Sitka/Kuiu Style - Branded)
+  navSpecWhitetail: "/nav-spec-whitetail-branded.png",
+  navSpecBigGame: "/nav-spec-biggame-branded.png",
+  navSpecWaterfowl: "/nav-spec-waterfowl-branded.png",
+  navSpecTurkey: "/nav-spec-turkey-branded.png",
+  navSysBase: "/nav-sys-base-branded.png",
+  navSysInsulation: "/nav-sys-insulation-branded.png",
+  navSysShell: "/nav-sys-shell-branded.png",
   navSysRain: "/nav-sys-rain.png"
 };
 function AnnouncementBar() {
