@@ -401,18 +401,11 @@ const IMAGES = {
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
     try {
-      return !sessionStorage.getItem("ssm-ann-dismissed");
+      return !sessionStorage.getItem("xh-ann-dismissed");
     } catch {
       return true;
     }
   });
-  const dismiss = () => {
-    try {
-      sessionStorage.setItem("ssm-ann-dismissed", "1");
-    } catch {
-    }
-    setVisible(false);
-  };
   if (!visible) return null;
   return /* @__PURE__ */ jsx(
     motion.div,
@@ -836,10 +829,10 @@ function Footer() {
             ),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Xelent" }),
-              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Masters" })
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Huntgear" })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-white/85 text-sm leading-relaxed mb-8 max-w-sm", children: "Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, technical apparel, tactical gear, and martial arts uniforms for global brands." }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/85 text-sm leading-relaxed mb-8 max-w-sm", children: "Xelent Huntgear: The pinnacle of performance hunting apparel. Engineered for the extreme, designed for the hunt, and manufactured with technical precision for global elite brands." }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 mb-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm", children: [
               /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs", children: "🏅" }),
@@ -913,7 +906,7 @@ function Footer() {
               /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Mail, { className: "w-4 h-4 text-[#ff6b00]" }) }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm mb-1", children: "Email inquiries" }),
-                /* @__PURE__ */ jsx("a", { href: "mailto:info@sialkotsamplemasters.com", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "info@sialkotsamplemasters.com" })
+                /* @__PURE__ */ jsx("a", { href: "mailto:info@xelenthuntgear.com", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "info@xelenthuntgear.com" })
               ] })
             ] })
           ] })
@@ -935,7 +928,7 @@ function Footer() {
     /* @__PURE__ */ jsx(
       "a",
       {
-        href: "https://wa.me/923022922242?text=Hello%20Sialkot%20Sample%20Masters!%20I'm%20interested%20in%20custom%20apparel%20manufacturing.",
+        href: "https://wa.me/923022922242?text=Hello%20Xelent%20Huntgear!%20I'm%20interested%20in%20custom%20hunting%20apparel%20manufacturing.",
         target: "_blank",
         rel: "noopener noreferrer",
         className: "fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-black/40 hover:scale-110 transition-transform",
@@ -2020,7 +2013,7 @@ const predefinedBreadcrumbs = {
   ]
 };
 const milestones = [
-  { year: "2009", title: "Founded", desc: "Started as a specialist sample house for hunting apparel manufacturers in Sialkot." },
+  { year: "2009", title: "Founded", desc: "Started as a specialist technical manufacturing unit for hunting apparel in Sialkot." },
   { year: "2012", title: "OEM Expansion", desc: "Transitioned into full-scale OEM manufacturing for US and European hunting brands." },
   { year: "2016", title: "ISO Certification", desc: "Achieved ISO 9001:2015 certification for quality management systems." },
   { year: "2019", title: "Tech Upgrade", desc: "Installed 50+ specialized machines for waterproof hunting gear production." },
@@ -2145,7 +2138,7 @@ function About() {
           /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "For Hunters" })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "w-16 h-1 bg-[#ff6b00] mb-6" }),
-        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Founded in Sialkot — Pakistan's manufacturing hub — Xelent Huntgear began as a specialist sample house for hunting apparel brands. Today, we're a vertically integrated manufacturer serving 500+ global brands." }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Founded in Sialkot — the global heart of technical apparel manufacturing — Xelent Huntgear was established to engineer the highest-performing hunting gear on the planet. Today, we are a vertically integrated technical facility serving 500+ elite global brands." }),
         /* @__PURE__ */ jsx("p", { className: "text-white/60 leading-relaxed mb-8", children: "Our facility features 50+ specialized machines for waterproof construction, seam sealing, and camo pattern printing. We understand what hunters need because we work with brands that live the hunting lifestyle." }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 mb-8", children: capabilities$1.map((cap) => /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
           /* @__PURE__ */ jsx("div", { className: "text-xl font-condensed font-bold text-white", children: cap.value }),
@@ -2926,7 +2919,7 @@ const posts = [
   {
     slug: "calculate-cmt-costs-export-shipment",
     title: "How to Calculate CMT Costs for Your Next Export Shipment",
-    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for technical apparel exports. Learn how to optimize your production budget with Xelent Huntgear.",
     date: "March 14, 2026",
     category: "Manufacturing strategy",
     image: "/cmt_cost_breakdown_pie_1773440983080.png",
@@ -3031,8 +3024,8 @@ function Blog() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan",
-        description: "Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer.",
+        title: "Technical Blog | Hunting Apparel Manufacturing Insights | Xelent Huntgear",
+        description: "Expert insights on high-performance hunting apparel manufacturing — Technical Shells, Insulation, Base Layers & Camo Systems. B2B guides from Xelent Huntgear, a leading technical apparel manufacturer.",
         keywords: "apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide",
         canonical: "/blog",
         breadcrumbs: [
@@ -3044,11 +3037,11 @@ function Blog() {
     /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-16 bg-[#111111] border-b border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
       /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
       /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
-        "The Sialkot Sample Masters",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Manufacturing Blog" })
+        "The Xelent Huntgear",
+        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Technical Journal" })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-xl mx-auto mt-6", children: "Expert guides, technical insights, and manufacturing knowledge for high-performance hunting apparel brands and B2B buyers." })
     ] }) }),
     /* @__PURE__ */ jsx("section", { className: "border-b border-white/10 bg-[#111111]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
@@ -9231,9 +9224,9 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `, children: [
       /* @__PURE__ */ jsx("div", { className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer group", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { className: "text-black font-extrabold text-sm", children: "S" }) }),
+        /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { className: "text-black font-extrabold text-sm", children: "XH" }) }),
         /* @__PURE__ */ jsxs("div", { className: "leading-none", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Sialkot Sample" }),
+          /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Xelent Huntgear" }),
           /* @__PURE__ */ jsx("span", { className: "text-gold/80 font-condensed font-semibold text-[11px] tracking-[0.12em] uppercase block mt-0.5", children: "Admin Panel" })
         ] })
       ] }) }) }),

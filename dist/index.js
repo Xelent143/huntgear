@@ -1120,7 +1120,7 @@ async function chatWithProductAgent(conversationHistory, userMessage, systemProm
   const result = await chat.sendMessage(userMessage);
   return result.response.text();
 }
-async function generateProductData(userDescription, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
+async function generateProductData(userDescription, brandContext = "Xelent Huntgear, a premium manufacturer of high-performance technical hunting apparel and outdoor gear from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -1259,7 +1259,7 @@ async function analyzeImageForSeo(base64, mimeType, apiKey, modelId = "gemini-2.
       responseMimeType: "application/json"
     }
   });
-  const prompt = `You are an expert SEO and B2B apparel consultant for Sialkot Sample Masters, a premium Pakistan-based manufacturer.
+  const prompt = `You are an expert SEO and B2B hunting apparel consultant for Xelent Huntgear, a premium Pakistan-based manufacturer.
 Analyze this raw image and return a JSON object with strictly these three properties:
 1. "filename": A highly SEO-optimized, lowercase, kebab-case filename (ending in .jpg) that describes the apparel item perfectly. Include localized B2B keywords where appropriate (e.g. "wholesale-bjj-kimono-manufacturer-pakistan.jpg"). Keep it under 60 characters if possible.
 2. "altText": Highly descriptive Alt Text for blind users and search bots. Describe exactly what the apparel item looks like (e.g. "White pearl weave Brazilian Jiu Jitsu Kimono jacket with custom embroidery on the shoulder").
@@ -1283,7 +1283,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
     throw new Error(`SEO analysis failed: ${err.message}`);
   }
 }
-async function analyzeUploadedProductImageBase64(base64, mimeType, brandContext = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
+async function analyzeUploadedProductImageBase64(base64, mimeType, brandContext = "Xelent Huntgear, a premium manufacturer of high-performance technical hunting apparel and outdoor gear from Pakistan", apiKey, modelId = "gemini-3.1-pro-preview") {
   const client = getClient(apiKey);
   const model = client.getGenerativeModel({
     model: modelId,
@@ -1540,7 +1540,7 @@ async function prefillProductDataFromGrid(imagePrompt, base64, mimeType, apiKey,
       temperature: 0.7
     }
   });
-  const prompt = `Act as an elite SEO Expert and E-commerce Manager for Sialkot Sample Masters (a premium B2B custom apparel manufacturer in Pakistan).
+  const prompt = `Act as an elite SEO Expert and E-commerce Manager for Xelent Huntgear (a premium B2B custom hunting and technical apparel manufacturer in Pakistan).
 I am providing you the original design prompt ("${imagePrompt}") and the generated multi-view design grid image.
 Generate a complete, highly-optimized product listing based on this apparel item.
 Return ONLY valid JSON matching this exact structure:
@@ -2138,7 +2138,7 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
 
 // server/ai/agentRouter.ts
 import { nanoid } from "nanoid";
-var AGENT_SYSTEM_PROMPT = `You are an Elite B2B Apparel Product Posting Consultant AI for Sialkot Sample Masters \u2014 a premium, eco-friendly custom apparel manufacturer based in Sialkot, Pakistan with 15+ years of experience exporting to 40+ countries.
+var AGENT_SYSTEM_PROMPT = `You are an Elite B2B Hunting Apparel Product Posting Consultant AI for Xelent Huntgear \u2014 a premium technical apparel manufacturer based in Sialkot, Pakistan with 15+ years of experience exporting to 40+ countries. Our brand represents the pinnacle of performance gear, from waterproof shells to specialized insulation systems.
 
 ## Your Expertise:
 - Deep knowledge of international apparel manufacturing (MOQ pricing, fabric specs, construction details)
@@ -3095,10 +3095,10 @@ var rfqRouter = router({
     ).join("\n");
     const kbContent = kb.map((k) => `[${k.category}] ${k.title}: ${k.content}`).join("\n\n");
     const previousNotes = notes.map((n) => `[${n.isAiGenerated ? "AI" : "Admin"}] ${n.content}`).join("\n---\n");
-    const systemPrompt = `You are a professional sales representative for Sialkot Sample Masters \u2014 a premium B2B custom apparel manufacturer from Sialkot, Pakistan. We specialize in custom sportswear, streetwear, hunting gear, tactical uniforms, martial arts uniforms, and private label manufacturing.
+    const systemPrompt = `You are a professional sales representative for Xelent Huntgear \u2014 a premium B2B custom technical hunting apparel manufacturer from Sialkot, Pakistan. We specialize in high-performance hunting gear, technical shells, insulation systems, base layers, and private label manufacturing.
 
 COMPANY INFO:
-- Name: Sialkot Sample Masters
+- Name: Xelent Huntgear
 - Location: Sialkot Industrial Estate, Sialkot 51310, Punjab, Pakistan
 - Phone/WhatsApp: +92 302 292 2242
 - Email: info@sialkotsamplemasters.com
@@ -3120,7 +3120,7 @@ RULES:
 - Reference specific products and capabilities when relevant
 - Include pricing guidance based on the product catalog when appropriate
 - Always be helpful and solution-oriented
-- Sign off as the Sialkot Sample Masters Sales Team
+- Sign off as the Xelent Huntgear Sales Team
 - Keep emails concise but thorough
 - Use proper email formatting with greeting and sign-off`;
     const inquiryContext = `INQUIRY DETAILS:
