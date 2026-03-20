@@ -350,7 +350,7 @@ const useCartStore = create()(
 );
 const IMAGES = {
   // Brand logos
-  logoGold: "/logo-xh-gold.png",
+  logoGold: "/logo-custom-white.png",
   heroAlpineExtreme: "/hero-alpine-extreme.png",
   aboutBg: "/about-mfg-pro.png",
   servicesBg: "/master-craftsmanship-pro.png",
