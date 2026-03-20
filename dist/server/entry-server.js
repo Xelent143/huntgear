@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, Droplets, Wind, Shield, Zap, ChevronRight, Users, Target, Thermometer, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, Scale, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronLeft, ChevronRight, Droplets, Wind, Scale, Thermometer, Shield, Zap, Users, Target, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -1472,6 +1472,163 @@ function PageWrapper({ children, className }) {
     }
   );
 }
+const featuredProducts = [
+  {
+    id: "alpine-shell",
+    name: "Apex Sentinel Shell",
+    category: "Outerwear",
+    image: IMAGES.catHunting,
+    tag: "Extreme Alpine",
+    specs: [
+      { label: "Waterproof", value: "20,000mm", icon: Droplets },
+      { label: "Breathable", value: "3-Layer", icon: Wind },
+      { label: "Weight", value: "18.4 oz", icon: Scale }
+    ]
+  },
+  {
+    id: "timber-parka",
+    name: "Timber Echo Parka",
+    category: "Insulation",
+    image: IMAGES.catSports,
+    tag: "Late Season",
+    specs: [
+      { label: "Fill", value: "850-Fill Down", icon: Thermometer },
+      { label: "Shell", value: "DWR Finish", icon: Droplets },
+      { label: "Temp", value: "-10°F Rated", icon: Thermometer }
+    ]
+  },
+  {
+    id: "merino-core",
+    name: "Grid-Flux Merino Core",
+    category: "Base Layer",
+    image: IMAGES.catHuntingGear,
+    tag: "All-Purpose",
+    specs: [
+      { label: "Fabric", value: "19.5 Micron", icon: Thermometer },
+      { label: "Scent", value: "Anti-Microbial", icon: Droplets },
+      { label: "Wick", value: "High-Efficiency", icon: Wind }
+    ]
+  },
+  {
+    id: "storm-bib",
+    name: "Storm-Front Bib",
+    category: "Bottoms",
+    image: IMAGES.catTechwear,
+    tag: "Marsh/Wetland",
+    specs: [
+      { label: "Durability", value: "Gore-Tex Pro", icon: Shield },
+      { label: "Reinforced", value: "Cordura Knee", icon: Shield },
+      { label: "Water", value: "Submersible", icon: Droplets }
+    ]
+  }
+];
+function FeaturedProductCarousel() {
+  const containerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const scroll = (direction) => {
+    if (containerRef.current) {
+      const scrollAmount = direction === "left" ? -400 : 400;
+      containerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+  return /* @__PURE__ */ jsx("section", { className: "py-24 bg-[#0a0a0a] border-t border-b border-white/[0.05] overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-8", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+          /* @__PURE__ */ jsx("span", { className: "w-8 h-[1px] bg-[#ff6b00]" }),
+          /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-[10px] font-condensed font-bold uppercase tracking-[0.3em]", children: "Precision Engineering" })
+        ] }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl md:text-5xl font-serif font-black text-white tracking-tighter", children: [
+          "FEATURED ",
+          /* @__PURE__ */ jsx("span", { className: "text-white/40 italic", children: "GEAR." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: () => scroll("left"),
+            disabled: !canScrollLeft,
+            className: `p-3 rounded-full border border-white/10 transition-all ${canScrollLeft ? "hover:bg-white/5 text-white" : "opacity-30 text-white/40 cursor-not-allowed"}`,
+            children: /* @__PURE__ */ jsx(ChevronLeft, { className: "w-5 h-5" })
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: () => scroll("right"),
+            disabled: !canScrollRight,
+            className: `p-3 rounded-full border border-white/10 transition-all ${canScrollRight ? "hover:bg-white/5 text-white" : "opacity-30 text-white/40 cursor-not-allowed"}`,
+            children: /* @__PURE__ */ jsx(ChevronRight, { className: "w-5 h-5" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        ref: containerRef,
+        onScroll: handleScroll,
+        className: "flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory",
+        children: [
+          featuredProducts.map((product) => /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              className: "min-w-[320px] md:min-w-[400px] group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden",
+              children: [
+                /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-[#1a1a1a]", children: [
+                  /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: product.image,
+                      alt: product.name,
+                      className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 ease-in-out"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("div", { className: "absolute top-6 left-6 z-20", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[9px] font-condensed font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-[0_0_20px_rgba(255,107,0,0.3)]", children: product.tag }) }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" }),
+                  /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0", children: [
+                    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 mb-6", children: product.specs.map((spec, idx) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center", children: /* @__PURE__ */ jsx(spec.icon, { className: "w-3.5 h-3.5 text-[#ff6b00]" }) }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("div", { className: "text-[9px] text-white/40 uppercase tracking-widest", children: spec.label }),
+                        /* @__PURE__ */ jsx("div", { className: "text-xs text-white font-bold", children: spec.value })
+                      ] })
+                    ] }, idx)) }),
+                    /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs("button", { className: "w-full py-4 bg-white text-black font-condensed font-bold uppercase tracking-wider text-xs hover:bg-[#ff6b00] hover:text-black transition-colors flex items-center justify-center gap-2", children: [
+                      "Inquire Custom Order ",
+                      /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+                    ] }) })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "p-6 border-t border-white/[0.05] bg-[#0d0d0d] group-hover:bg-[#111111] transition-colors", children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-[10px] text-[#ff6b00] font-condensed font-bold uppercase tracking-[0.15em] mb-1", children: product.category }),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-serif font-bold text-white group-hover:text-[#ff6b00] transition-colors leading-tight", children: product.name })
+                ] })
+              ]
+            },
+            product.id
+          )),
+          /* @__PURE__ */ jsx("div", { className: "min-w-[320px] md:min-w-[400px] h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all", children: /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 cursor-pointer", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#ff6b00] transition-colors", children: /* @__PURE__ */ jsx(ArrowRight, { className: "w-6 h-6 text-white/40 group-hover:text-[#ff6b00] transform transition-transform group-hover:translate-x-1" }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-white/40 font-condensed font-bold uppercase tracking-widest text-sm group-hover:text-white transition-colors", children: "View Full Portfolio" })
+          ] }) }) })
+        ]
+      }
+    )
+  ] }) });
+}
 const stats$1 = [
   { value: 15, suffix: "+", label: "Years", sublabel: "Excellence" },
   { value: 500, suffix: "+", label: "Brands", sublabel: "Served" },
@@ -1729,6 +1886,7 @@ function Home() {
         }
       )
     ] }),
+    /* @__PURE__ */ jsx(FeaturedProductCarousel, {}),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Pursuit-Driven Manufacturing" }),
