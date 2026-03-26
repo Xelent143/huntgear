@@ -122,7 +122,7 @@ export default function FeaturedProductCarousel() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="min-w-[280px] md:min-w-[300px] group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden"
+                                className="w-[300px] flex-shrink-0 group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden"
                             >
                                 {/* Product Image */}
                                 <div className="aspect-[3/4] overflow-hidden bg-[#1a1a1a]">
@@ -178,7 +178,7 @@ export default function FeaturedProductCarousel() {
                         )))}
 
                     {/* See More Card */}
-                    <div className="min-w-[280px] md:min-w-[300px] h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all">
+                    <div className="w-[300px] flex-shrink-0 h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all">
                         <Link href="/shop">
                             <div className="flex flex-col items-center gap-4 cursor-pointer">
                                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#ff6b00] transition-colors">
