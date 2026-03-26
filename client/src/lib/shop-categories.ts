@@ -15,6 +15,13 @@ export interface Category {
   slug: string;
   description: string;
   icon?: string;
+  showInNav?: boolean;
+  sortOrder?: number;
+  seo?: {
+    title: string;
+    description: string;
+    keywords: string;
+  };
   subCategories: SubCategory[];
 }
 

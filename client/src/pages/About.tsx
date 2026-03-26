@@ -8,7 +8,7 @@ import { FadeIn, StaggerChildren, AnimatedChild, PageWrapper } from "@/component
 import { Breadcrumb, predefinedBreadcrumbs } from "@/components/Breadcrumb";
 
 const milestones = [
-  { year: "2009", title: "Founded", desc: "Started as a specialist sample house for hunting apparel manufacturers in Sialkot." },
+  { year: "2009", title: "Founded", desc: "Started as a specialist technical manufacturing unit for hunting apparel in Sialkot." },
   { year: "2012", title: "OEM Expansion", desc: "Transitioned into full-scale OEM manufacturing for US and European hunting brands." },
   { year: "2016", title: "ISO Certification", desc: "Achieved ISO 9001:2015 certification for quality management systems." },
   { year: "2019", title: "Tech Upgrade", desc: "Installed 50+ specialized machines for waterproof hunting gear production." },
@@ -174,9 +174,7 @@ export default function About() {
                 </h2>
                 <div className="w-16 h-1 bg-[#ff6b00] mb-6" />
                 <p className="text-white/80 text-lg leading-relaxed mb-6">
-                  Founded in Sialkot — Pakistan's manufacturing hub — Xelent Huntgear began as a specialist
-                  sample house for hunting apparel brands. Today, we're a vertically integrated manufacturer
-                  serving 500+ global brands.
+                  Founded in Sialkot — the global heart of technical apparel manufacturing — Xelent Huntgear was established to engineer the highest-performing hunting gear on the planet. Today, we are a vertically integrated technical facility serving 500+ elite global brands.
                 </p>
                 <p className="text-white/60 leading-relaxed mb-8">
                   Our facility features 50+ specialized machines for waterproof construction,

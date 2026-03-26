@@ -64,7 +64,7 @@ async function startServer() {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       try {
-        const db = await getDbLocal();
+        const db = await getDb();
         if (db) {
           console.log(`[Stripe] Checkout completed for session ${session.id}. Marking as paid...`);
           await db.update(orders)
@@ -286,7 +286,7 @@ async function startServer() {
     }
 
     try {
-      const debugDb = await getDbLocal();
+      const debugDb = await getDb();
       if (!debugDb) { info.error = "Database not connected"; return res.json(info); }
       info.dbConnected = true;
       return res.json(info);

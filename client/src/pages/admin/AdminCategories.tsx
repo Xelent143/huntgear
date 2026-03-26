@@ -59,12 +59,12 @@ const defaultSubcategory: SubcategoryFormData = {
 export default function AdminCategories() {
   const { data: categories, isLoading, error } = trpc.category.adminList.useQuery();
   const utils = trpc.useUtils();
-  
+
   // Debug: log any errors
   if (error) {
     console.error("Categories fetch error:", error);
   }
-  
+
   const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set());
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
   const [isSubcategoryDialogOpen, setIsSubcategoryDialogOpen] = useState(false);
@@ -143,7 +143,7 @@ export default function AdminCategories() {
     setExpandedCategories(newExpanded);
   };
 
-  const openCategoryDialog = (category?: typeof categories extends undefined ? never : typeof categories[0]) => {
+  const openCategoryDialog = (category?: any) => {
     if (category) {
       setCategoryForm({
         id: category.id,
@@ -193,10 +193,10 @@ export default function AdminCategories() {
       toast.error("Name and slug are required");
       return;
     }
-    
+
     const data = { ...categoryForm };
     delete (data as any).id;
-    
+
     if (categoryForm.id) {
       updateCategory.mutate({ id: categoryForm.id, ...data });
     } else {
@@ -209,11 +209,11 @@ export default function AdminCategories() {
       toast.error("Name and slug are required");
       return;
     }
-    
+
     const data = { ...subcategoryForm };
     delete (data as any).id;
     delete (data as any).categoryId;
-    
+
     if (subcategoryForm.id && activeCategoryId) {
       updateSubcategory.mutate({ id: subcategoryForm.id, ...data });
     } else if (activeCategoryId) {
@@ -223,7 +223,7 @@ export default function AdminCategories() {
 
   const handleDelete = () => {
     if (!deleteId) return;
-    
+
     if (deleteType === "category") {
       deleteCategory.mutate({ id: deleteId });
     } else {
@@ -301,9 +301,9 @@ export default function AdminCategories() {
                           )}
                         </Button>
                       </CollapsibleTrigger>
-                      
+
                       <div className="text-2xl shrink-0">{category.icon || "📁"}</div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-semibold text-foreground">{category.name}</span>
@@ -518,7 +518,7 @@ export default function AdminCategories() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsCategoryDialogOpen(false)}>Cancel</Button>
-            <Button 
+            <Button
               onClick={handleSaveCategory}
               disabled={createCategory.isPending || updateCategory.isPending}
               className="bg-gold text-black hover:bg-gold-light"
@@ -596,7 +596,7 @@ export default function AdminCategories() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsSubcategoryDialogOpen(false)}>Cancel</Button>
-            <Button 
+            <Button
               onClick={handleSaveSubcategory}
               disabled={createSubcategory.isPending || updateSubcategory.isPending}
               className="bg-gold text-black hover:bg-gold-light"
@@ -624,7 +624,7 @@ export default function AdminCategories() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>Cancel</Button>
-            <Button 
+            <Button
               variant="destructive"
               onClick={handleDelete}
               disabled={deleteCategory.isPending || deleteSubcategory.isPending}

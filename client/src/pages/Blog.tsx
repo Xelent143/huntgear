@@ -98,7 +98,7 @@ const posts = [
   {
     slug: "calculate-cmt-costs-export-shipment",
     title: "How to Calculate CMT Costs for Your Next Export Shipment",
-    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for technical apparel exports. Learn how to optimize your production budget with Xelent Huntgear.",
     date: "March 14, 2026",
     category: "Manufacturing strategy",
     image: "/cmt_cost_breakdown_pie_1773440983080.png",
@@ -206,8 +206,8 @@ export default function Blog() {
   return (
     <PageWrapper>
       <SEOHead
-        title="Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan"
-        description="Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer."
+        title="Technical Blog | Hunting Apparel Manufacturing Insights | Xelent Huntgear"
+        description="Expert insights on high-performance hunting apparel manufacturing — Technical Shells, Insulation, Base Layers & Camo Systems. B2B guides from Xelent Huntgear, a leading technical apparel manufacturer."
         keywords="apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide"
         canonical="/blog"
         breadcrumbs={[
@@ -221,12 +221,12 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3">Insights & Guides</p>
           <h1 className="font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6">
-            The Sialkot Sample Masters
-            <span className="text-gradient-gold italic"> Manufacturing Blog</span>
+            The Xelent Huntgear
+            <span className="text-gradient-gold italic"> Technical Journal</span>
           </h1>
           <div className="gold-divider mx-auto" />
           <p className="text-white/70 text-lg max-w-xl mx-auto mt-6">
-            Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts.
+            Expert guides, technical insights, and manufacturing knowledge for high-performance hunting apparel brands and B2B buyers.
           </p>
         </div>
       </section>

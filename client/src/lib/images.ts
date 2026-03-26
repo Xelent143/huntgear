@@ -1,12 +1,13 @@
 // CDN image URLs for Sialkot Sample Masters website
 export const IMAGES = {
   // Brand logos
-  logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
-  logoWhite: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/OKGnXKsAOnAKhDrP.png",
+  logoGold: "/logo-custom-white.png",
+  logoWhite: "/logo-custom-white.png",
   // Page backgrounds
   heroBg: "/ssm_hero_custom.jpeg",
   eliteHeroBg: "/elite_hero_vogue.png",
   heroCustomBg: "/hero-hunting.png",
+  heroAlpineExtreme: "/hero-alpine-extreme.png",
   aboutBg: "/about-mfg-pro.png",
   servicesBg: "/master-craftsmanship-pro.png",
   portfolioBg: "/portfolio-branding.png",
@@ -29,6 +30,7 @@ export const IMAGES = {
   productBomber: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/QciUljbDTUuccOIG.jpg",
   // Category images
   catTechwear: "/cat-bottoms.png",
+  catStreetwear: "/cat-bottoms.png", // Added for compatibility
   catSki: "/cat-tactical-gear.png",
   catSports: "/cat-midlayer.png",
   catSecurityUniforms: "/cat-security-pro.png",
@@ -50,4 +52,13 @@ export const IMAGES = {
   capWaterproof: "/svc-waterproof-tech.png",
   capCamoDesign: "/svc-camo-design-tech.png",
   capScentControl: "/svc-scent-control-tech.png",
+  // Nav Category Thumbnails (Sitka/Kuiu Style - Branded)
+  navSpecWhitetail: "/nav-spec-whitetail-v2.jpg",
+  navSpecBigGame: "/nav-spec-biggame-branded.png",
+  navSpecWaterfowl: "/nav-spec-waterfowl-branded.png",
+  navSpecTurkey: "/nav-spec-turkey-branded.png",
+  navSysBase: "/nav-sys-base-branded.png",
+  navSysInsulation: "/nav-sys-insulation-branded.png",
+  navSysShell: "/nav-sys-shell-branded.png",
+  navSysRain: "/nav-sys-rain.png",
 };

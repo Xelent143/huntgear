@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Upload, CheckCircle, Send } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
@@ -8,7 +9,7 @@ import { FadeIn, PageWrapper } from "@/components/animations";
 
 const productTypes = [
   "Hunting Jackets",
-  "Hunting Pants", 
+  "Hunting Pants",
   "Camo Gear",
   "Base Layers",
   "Tactical Wear",
@@ -68,7 +69,7 @@ export default function RFQ() {
             >
               Get Started
             </motion.p>
-            
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -92,7 +93,7 @@ export default function RFQ() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-white/80 text-lg max-w-2xl leading-relaxed"
             >
-              Tell us about your hunting apparel project. We'll respond within 24 hours 
+              Tell us about your hunting apparel project. We'll respond within 24 hours
               with a detailed quote and production timeline.
             </motion.p>
           </div>
@@ -112,7 +113,7 @@ export default function RFQ() {
                 </div>
                 <h2 className="text-3xl font-bold text-white mb-4">Quote Request Received!</h2>
                 <p className="text-white/60 text-lg max-w-lg mx-auto mb-8">
-                  Thank you for your inquiry. Our team will review your requirements 
+                  Thank you for your inquiry. Our team will review your requirements
                   and respond within 24 hours with a detailed quote.
                 </p>
                 <Link href="/">
@@ -136,7 +137,7 @@ export default function RFQ() {
                   {step === 1 && (
                     <div className="space-y-6">
                       <h2 className="text-2xl font-bold text-white mb-6">Step 1: Your Information</h2>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-white/60 text-sm mb-2">Full Name *</label>
@@ -145,7 +146,7 @@ export default function RFQ() {
                             required
                             className="w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
                             value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           />
                         </div>
                         <div>
@@ -155,7 +156,7 @@ export default function RFQ() {
                             required
                             className="w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
                             value={formData.email}
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           />
                         </div>
                       </div>
@@ -166,12 +167,12 @@ export default function RFQ() {
                           type="text"
                           className="w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
                           value={formData.company}
-                          onChange={(e) => setFormData({...formData, company: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         />
                       </div>
 
                       <div className="pt-6">
-                        <Button 
+                        <Button
                           type="button"
                           onClick={() => setStep(2)}
                           className="bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3"
@@ -185,7 +186,7 @@ export default function RFQ() {
                   {step === 2 && (
                     <div className="space-y-6">
                       <h2 className="text-2xl font-bold text-white mb-6">Step 2: Project Details</h2>
-                      
+
                       <div>
                         <label className="block text-white/60 text-sm mb-3">Product Type *</label>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -193,12 +194,11 @@ export default function RFQ() {
                             <button
                               key={type}
                               type="button"
-                              onClick={() => setFormData({...formData, productType: type})}
-                              className={`p-3 text-sm border transition-all ${
-                                formData.productType === type
+                              onClick={() => setFormData({ ...formData, productType: type })}
+                              className={`p-3 text-sm border transition-all ${formData.productType === type
                                   ? "border-[#ff6b00] bg-[#ff6b00]/10 text-white"
                                   : "border-white/10 text-white/60 hover:border-white/30"
-                              }`}
+                                }`}
                             >
                               {type}
                             </button>
@@ -213,12 +213,11 @@ export default function RFQ() {
                             <button
                               key={qty}
                               type="button"
-                              onClick={() => setFormData({...formData, quantity: qty})}
-                              className={`px-4 py-2 text-sm border transition-all ${
-                                formData.quantity === qty
+                              onClick={() => setFormData({ ...formData, quantity: qty })}
+                              className={`px-4 py-2 text-sm border transition-all ${formData.quantity === qty
                                   ? "border-[#ff6b00] bg-[#ff6b00]/10 text-white"
                                   : "border-white/10 text-white/60 hover:border-white/30"
-                              }`}
+                                }`}
                             >
                               {qty}
                             </button>
@@ -233,12 +232,12 @@ export default function RFQ() {
                           className="w-full bg-[#0d0d0d] border border-white/10 px-4 py-3 text-white focus:border-[#ff6b00] focus:outline-none transition-colors resize-none"
                           placeholder="Describe your project requirements..."
                           value={formData.description}
-                          onChange={(e) => setFormData({...formData, description: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         />
                       </div>
 
                       <div className="flex gap-4 pt-6">
-                        <Button 
+                        <Button
                           type="button"
                           variant="outline"
                           onClick={() => setStep(1)}
@@ -246,7 +245,7 @@ export default function RFQ() {
                         >
                           Back
                         </Button>
-                        <Button 
+                        <Button
                           type="submit"
                           className="bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3"
                         >

@@ -7,7 +7,7 @@ import React__default, { Component, createContext, useState, useEffect, useRef, 
 import ReactDOMServer from "react-dom/server";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import superjson from "superjson";
-import { useLocation, Link as Link$1, useParams, useSearch, useRoute, Switch as Switch$1, Route, Router as Router$1 } from "wouter";
+import { useLocation, Link, useParams, useSearch, useRoute, Switch as Switch$1, Route, Router as Router$1 } from "wouter";
 import { useTheme } from "next-themes";
 import { Toaster as Toaster$1, toast } from "sonner";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X as X$1, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, ChevronRight, Users, Shield, Target, Droplets, Thermometer, Layers, Wind, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Zap, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, Scale, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, Loader2, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, Shield, Scale, Droplets, ChevronLeft, ChevronRight, Loader2, Wind, Zap, Users, Target, Thermometer, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -350,8 +350,8 @@ const useCartStore = create()(
 );
 const IMAGES = {
   // Brand logos
-  logoGold: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/PANeIvzIUruJzSQt.png",
-  heroCustomBg: "/hero-hunting.png",
+  logoGold: "/logo-custom-white.png",
+  heroAlpineExtreme: "/hero-alpine-extreme.png",
   aboutBg: "/about-mfg-pro.png",
   servicesBg: "/master-craftsmanship-pro.png",
   portfolioBg: "/portfolio-branding.png",
@@ -368,6 +368,8 @@ const IMAGES = {
   productHoodie: "https://files.manuscdn.com/user_upload_by_module/session_file/310419663026792105/BNBGdrUkHTSKNDhi.jpg",
   // Category images
   catTechwear: "/cat-bottoms.png",
+  catStreetwear: "/cat-bottoms.png",
+  // Added for compatibility
   catSki: "/cat-tactical-gear.png",
   catSports: "/cat-midlayer.png",
   catSecurityUniforms: "/cat-security-pro.png",
@@ -387,19 +389,28 @@ const IMAGES = {
   // Technical Capabilities
   capWaterproof: "/svc-waterproof-tech.png",
   capCamoDesign: "/svc-camo-design-tech.png",
-  capScentControl: "/svc-scent-control-tech.png"
+  capScentControl: "/svc-scent-control-tech.png",
+  // Nav Category Thumbnails (Sitka/Kuiu Style - Branded)
+  navSpecWhitetail: "/nav-spec-whitetail-v2.jpg",
+  navSpecBigGame: "/nav-spec-biggame-branded.png",
+  navSpecWaterfowl: "/nav-spec-waterfowl-branded.png",
+  navSpecTurkey: "/nav-spec-turkey-branded.png",
+  navSysBase: "/nav-sys-base-branded.png",
+  navSysInsulation: "/nav-sys-insulation-branded.png",
+  navSysShell: "/nav-sys-shell-branded.png",
+  navSysRain: "/nav-sys-rain.png"
 };
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
     try {
-      return !sessionStorage.getItem("ssm-ann-dismissed");
+      return !sessionStorage.getItem("xh-ann-dismissed");
     } catch {
       return true;
     }
   });
-  const dismiss = () => {
+  const dismissAnnouncement = () => {
     try {
-      sessionStorage.setItem("ssm-ann-dismissed", "1");
+      sessionStorage.setItem("xh-ann-dismissed", "1");
     } catch {
     }
     setVisible(false);
@@ -421,7 +432,7 @@ function AnnouncementBar() {
             " — ",
             "Field-tested gear with 7-day sample turnaround"
           ] }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs("span", { className: "hidden sm:inline-flex items-center gap-1 text-[#ff6b00] font-condensed font-bold uppercase tracking-wider hover:text-[#ff8533] transition-colors cursor-pointer group", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs("span", { className: "hidden sm:inline-flex items-center gap-1 text-[#ff6b00] font-condensed font-bold uppercase tracking-wider hover:text-[#ff8533] transition-colors cursor-pointer group", children: [
             "Request a Sample Kit ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3 group-hover:translate-x-0.5 transition-transform" })
           ] }) })
@@ -429,23 +440,27 @@ function AnnouncementBar() {
         /* @__PURE__ */ jsx(
           "button",
           {
-            onClick: dismiss,
+            onClick: dismissAnnouncement,
             className: "absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1",
             "aria-label": "Dismiss announcement",
-            children: /* @__PURE__ */ jsx(X$1, { className: "w-3.5 h-3.5" })
+            children: /* @__PURE__ */ jsx(X, { className: "w-3.5 h-3.5" })
           }
         )
       ] })
     }
   );
 }
-const productCategories = [
-  { name: "Sportswear & Team Kits", image: IMAGES.catSports, href: "/products#sportswear", tag: "Athletic" },
-  { name: "Hunting Wear", image: IMAGES.catHunting, href: "/products#hunting-wear", tag: "MIL-SPEC" },
-  { name: "Technical Apparel", image: IMAGES.catHuntingGear, href: "/products#technical-gear", tag: "Lifestyle" },
-  { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/products#security-uniforms", tag: "Guard" },
-  { name: "Tech Wear", image: IMAGES.catTechwear, href: "/products#techwear", tag: "Utility" },
-  { name: "Ski Wear", image: IMAGES.catSki, href: "/products#ski-wear", tag: "Alpine" }
+const speciesCategories = [
+  { name: "Whitetail", image: IMAGES.navSpecWhitetail, href: "/products?category=Whitetail", tag: "Hardwoods" },
+  { name: "Big Game", image: IMAGES.navSpecBigGame, href: "/products?category=Big+Game", tag: "Alpine" },
+  { name: "Waterfowl", image: IMAGES.navSpecWaterfowl, href: "/products?category=Waterfowl", tag: "Marsh" },
+  { name: "Turkey", image: IMAGES.navSpecTurkey, href: "/products?category=Turkey", tag: "Spring" }
+];
+const systemCategories = [
+  { name: "Base Layers", image: IMAGES.navSysBase, href: "/products?system=Base+Layer", tag: "Next-to-Skin" },
+  { name: "Insulation", image: IMAGES.navSysInsulation, href: "/products?system=Insulation", tag: "Thermal" },
+  { name: "Outerwear", image: IMAGES.navSysShell, href: "/products?system=Outerwear", tag: "Protection" },
+  { name: "Rain Gear", image: IMAGES.navSysRain, href: "/products?system=Rain+Gear", tag: "Waterproof" }
 ];
 const companyLinks = [
   { label: "About Us", href: "/about", icon: Award, desc: "Heritage, mission & values" },
@@ -456,14 +471,14 @@ const companyLinks = [
 ];
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Company", href: "#", megamenu: "company" },
-  { label: "Products", href: "#", megamenu: "products" },
+  { label: "Shop by Species", href: "#", megamenu: "species" },
+  { label: "Shop by System", href: "#", megamenu: "systems" },
   { label: "Shop", href: "/shop" },
+  { label: "Innovation", href: "#", megamenu: "company" },
   { label: "3D Design", href: "/customize" },
-  { label: "Brand Studio", href: "/branding-studio" },
   { label: "Contact", href: "/contact" }
 ];
-function ProductsMegamenu({ onClose }) {
+function SpeciesMegamenu({ onClose }) {
   return /* @__PURE__ */ jsxs(
     motion.div,
     {
@@ -471,39 +486,79 @@ function ProductsMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
-        /* @__PURE__ */ jsxs("div", { className: "bg-[#161616] px-6 py-3 border-b border-white/10 flex items-center justify-between", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-xs tracking-widest uppercase text-[#ff6b00]", children: "Product Catalog" }),
-            /* @__PURE__ */ jsx("p", { className: "text-white text-sm font-semibold", children: "Premium Hunting Gear Categories" })
+        /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+          /* @__PURE__ */ jsxs("div", { className: "px-8 py-6 border-b border-white/5 flex items-center justify-between text-left", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1", children: "Shop by Species" }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white text-2xl font-heading font-bold tracking-tight", children: "Engineered Systems for Every Environment" })
+            ] }),
+            /* @__PURE__ */ jsx(Link, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-black hover:bg-white transition-all font-serif font-black uppercase tracking-widest text-xs rounded-none h-11 px-8 gap-3 vibe-glow-orange group", children: [
+              "Explore All ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
+            ] }) })
           ] }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/products", onClick: onClose, children: /* @__PURE__ */ jsxs(Button, { size: "sm", className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1", children: [
-            "View All ",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-6 gap-0 p-4", children: productCategories.map((cat) => /* @__PURE__ */ jsx(Link$1, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden rounded-sm cursor-pointer m-1", children: [
-          /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-[#0d0d0d]", children: [
-            /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: cat.image,
-                alt: cat.name,
-                className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" })
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-8 p-10 pb-12", children: speciesCategories.map((cat) => /* @__PURE__ */ jsx(Link, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+            /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: cat.image,
+                  alt: cat.name,
+                  className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4 border border-white/20 bg-black/40 backdrop-blur-md text-white text-[9px] font-serif font-black tracking-[0.2em] uppercase px-2 py-1", children: cat.tag }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6 text-left", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors mb-1", children: cat.name }),
+              /* @__PURE__ */ jsx("div", { className: "w-0 group-hover:w-full h-0.5 bg-[#ff6b00] transition-all duration-300" })
+            ] })
+          ] }) }, cat.href)) })
+        ] })
+      ]
+    }
+  );
+}
+function SystemsMegamenu({ onClose }) {
+  return /* @__PURE__ */ jsxs(
+    motion.div,
+    {
+      initial: { opacity: 0, y: -8 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -8 },
+      transition: { duration: 0.2, ease: "easeOut" },
+      className: "absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden",
+      style: { zIndex: 200 },
+      children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
+        /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+          /* @__PURE__ */ jsxs("div", { className: "px-8 py-6 border-b border-white/5 text-left", children: [
+            /* @__PURE__ */ jsx("p", { className: "font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1", children: "Shop by System" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-white text-2xl font-heading font-bold tracking-tight", children: "Technical Layering for Peak Performance" })
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-2 left-2 bg-[#ff6b00] text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm", children: cat.tag }),
-          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 p-2", children: /* @__PURE__ */ jsx("p", { className: "text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-[#ff6b00] transition-colors", children: cat.name }) })
-        ] }) }, cat.href)) }),
-        /* @__PURE__ */ jsx("div", { className: "bg-[#161616]/40 border-t border-white/10 px-6 py-2.5 flex items-center gap-6 text-xs text-white/70", children: ["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1.5", children: [
-          /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-[#ff6b00]" }),
-          item
-        ] }, item)) })
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 gap-8 p-10 pb-12", children: systemCategories.map((cat) => /* @__PURE__ */ jsx(Link, { href: cat.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group relative overflow-hidden cursor-pointer", children: [
+            /* @__PURE__ */ jsxs("div", { className: "aspect-[4/5] overflow-hidden bg-black", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: cat.image,
+                  alt: cat.name,
+                  className: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-6 left-6 right-6 text-left", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[10px] text-[#ff6b00] font-serif font-black tracking-widest uppercase mb-1", children: cat.tag }),
+              /* @__PURE__ */ jsx("p", { className: "text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors", children: cat.name })
+            ] })
+          ] }) }, cat.href)) })
+        ] })
       ]
     }
   );
@@ -516,13 +571,13 @@ function CompanyMegamenu({ onClose }) {
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: -8 },
       transition: { duration: 0.2, ease: "easeOut" },
-      className: "absolute top-full left-0 w-72 bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden",
+      className: "absolute top-full left-0 w-72 bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/50 overflow-hidden",
       style: { zIndex: 200 },
       children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-3 left-0 right-0 h-3 pointer-events-auto" }),
         /* @__PURE__ */ jsx("div", { className: "p-1", children: companyLinks.map((link) => {
           const Icon = link.icon;
-          return /* @__PURE__ */ jsx(Link$1, { href: link.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-[#ff6b00]/5 transition-colors cursor-pointer", children: [
+          return /* @__PURE__ */ jsx(Link, { href: link.href, onClick: onClose, children: /* @__PURE__ */ jsxs("div", { className: "group flex items-center gap-3 px-4 py-3 rounded-sm hover:bg-[#ff6b00]/5 transition-colors cursor-pointer", children: [
             /* @__PURE__ */ jsx("div", { className: "w-9 h-9 rounded-sm bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/15 transition-colors", children: /* @__PURE__ */ jsx(Icon, { className: "w-4 h-4 text-[#ff6b00]" }) }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-sm text-white uppercase tracking-wide group-hover:text-[#ff6b00] transition-colors", children: link.label }),
@@ -530,7 +585,7 @@ function CompanyMegamenu({ onClose }) {
             ] })
           ] }) }, link.href);
         }) }),
-        /* @__PURE__ */ jsx("div", { className: "border-t border-white/10 px-4 py-3", children: /* @__PURE__ */ jsx(Link$1, { href: "/rfq", onClick: onClose, children: /* @__PURE__ */ jsxs("button", { className: "w-full text-xs font-condensed font-bold uppercase tracking-widest text-[#ff6b00] hover:text-[#ff6b00]-light transition-colors flex items-center justify-center gap-1 py-1", children: [
+        /* @__PURE__ */ jsx("div", { className: "border-t border-white/10 px-4 py-3", children: /* @__PURE__ */ jsx(Link, { href: "/rfq", onClick: onClose, children: /* @__PURE__ */ jsxs("button", { className: "w-full text-xs font-condensed font-bold uppercase tracking-widest text-[#ff6b00] hover:text-[#ff6b00]-light transition-colors flex items-center justify-center gap-1 py-1", children: [
           "Get a Free Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
         ] }) }) })
@@ -587,7 +642,7 @@ function Navbar() {
         className: `sticky top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#0a0a0a]/98 backdrop-blur-xl border-b border-white/10" : "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/10"}`,
         children: [
           /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between h-20", children: [
-            /* @__PURE__ */ jsx(Link$1, { href: "/", className: "flex items-center group shrink-0", children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsx(Link, { href: "/", className: "flex items-center group shrink-0", children: /* @__PURE__ */ jsx(
               "img",
               {
                 src: IMAGES.logoGold,
@@ -599,7 +654,7 @@ function Navbar() {
               (link) => link.megamenu ? /* @__PURE__ */ jsxs(
                 "div",
                 {
-                  className: "relative",
+                  className: link.megamenu === "species" || link.megamenu === "systems" ? "" : "relative",
                   onMouseEnter: () => handleMouseEnter(link.megamenu),
                   onMouseLeave: handleMouseLeave,
                   children: [
@@ -624,14 +679,14 @@ function Navbar() {
                       {
                         onMouseEnter: () => handleMouseEnter(link.megamenu),
                         onMouseLeave: handleMouseLeave,
-                        children: link.megamenu === "products" ? /* @__PURE__ */ jsx(ProductsMegamenu, { onClose: closeMegamenu }) : /* @__PURE__ */ jsx(CompanyMegamenu, { onClose: closeMegamenu })
+                        children: link.megamenu === "species" ? /* @__PURE__ */ jsx(SpeciesMegamenu, { onClose: closeMegamenu }) : link.megamenu === "systems" ? /* @__PURE__ */ jsx(SystemsMegamenu, { onClose: closeMegamenu }) : /* @__PURE__ */ jsx(CompanyMegamenu, { onClose: closeMegamenu })
                       }
                     ) })
                   ]
                 },
                 link.label
               ) : /* @__PURE__ */ jsxs(
-                Link$1,
+                Link,
                 {
                   href: link.href,
                   className: `relative px-4 py-2 text-sm font-medium tracking-wide uppercase transition-colors group ${location === link.href ? "text-[#ff6b00]" : "text-white/70 hover:text-white"}`,
@@ -645,7 +700,7 @@ function Navbar() {
             ) }),
             /* @__PURE__ */ jsxs("div", { className: "hidden lg:flex items-center gap-3 shrink-0", children: [
               /* @__PURE__ */ jsx(CartIconButton, {}),
-              /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-[#ff6b00]/20 hover:shadow-[#ff6b00]/30 transition-all", children: "Get a Quote" }) })
+              /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-2 rounded-sm shadow-md shadow-[#ff6b00]/20 hover:shadow-[#ff6b00]/30 transition-all", children: "Get a Quote" }) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "lg:hidden flex items-center gap-2", children: [
               /* @__PURE__ */ jsx(CartIconButton, {}),
@@ -655,7 +710,7 @@ function Navbar() {
                   className: "text-white p-2",
                   onClick: () => setIsOpen(!isOpen),
                   "aria-label": "Toggle menu",
-                  children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", initial: false, children: isOpen ? /* @__PURE__ */ jsx(motion.span, { initial: { rotate: -90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: 90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(X$1, { className: "w-6 h-6" }) }, "x") : /* @__PURE__ */ jsx(motion.span, { initial: { rotate: 90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: -90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(Menu, { className: "w-6 h-6" }) }, "menu") })
+                  children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", initial: false, children: isOpen ? /* @__PURE__ */ jsx(motion.span, { initial: { rotate: -90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: 90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6" }) }, "x") : /* @__PURE__ */ jsx(motion.span, { initial: { rotate: 90, opacity: 0 }, animate: { rotate: 0, opacity: 1 }, exit: { rotate: -90, opacity: 0 }, transition: { duration: 0.2 }, children: /* @__PURE__ */ jsx(Menu, { className: "w-6 h-6" }) }, "menu") })
                 }
               )
             ] })
@@ -673,7 +728,7 @@ function Navbar() {
                   /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3", children: "Company" }),
                   /* @__PURE__ */ jsx("div", { className: "grid gap-2", children: companyLinks.map((link) => {
                     const Icon = link.icon;
-                    return /* @__PURE__ */ jsxs(Link$1, { href: link.href, onClick: () => setIsOpen(false), className: "flex items-center gap-4 p-3 hover:bg-[#161616] text-white transition-all group active:scale-[0.98]", children: [
+                    return /* @__PURE__ */ jsxs(Link, { href: link.href, onClick: () => setIsOpen(false), className: "flex items-center gap-4 p-3 hover:bg-[#161616] text-white transition-all group active:scale-[0.98]", children: [
                       /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-[#161616] flex items-center justify-center shrink-0 group-hover:bg-[#ff6b00]/20 transition-colors", children: /* @__PURE__ */ jsx(Icon, { className: "w-5 h-5 text-[#ff6b00]" }) }),
                       /* @__PURE__ */ jsxs("div", { children: [
                         /* @__PURE__ */ jsx("span", { className: "block text-sm font-black uppercase tracking-widest group-hover:text-[#ff6b00] transition-colors", children: link.label }),
@@ -682,27 +737,59 @@ function Navbar() {
                     ] }, link.href);
                   }) })
                 ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3", children: "Shop by Species" }),
+                  /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: speciesCategories.map((link) => /* @__PURE__ */ jsxs(
+                    Link,
+                    {
+                      href: link.href,
+                      onClick: () => setIsOpen(false),
+                      className: "flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm",
+                      children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight", children: link.name }),
+                        /* @__PURE__ */ jsx("span", { className: "text-[8px] text-[#ff6b00] font-serif font-bold uppercase tracking-[0.2em]", children: link.tag })
+                      ]
+                    },
+                    link.href
+                  )) })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-4", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3", children: "Technical Systems" }),
+                  /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: systemCategories.map((link) => /* @__PURE__ */ jsxs(
+                    Link,
+                    {
+                      href: link.href,
+                      onClick: () => setIsOpen(false),
+                      className: "flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm",
+                      children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight", children: link.name }),
+                        /* @__PURE__ */ jsx("span", { className: "text-[8px] text-white/40 font-serif font-bold uppercase tracking-[0.2em]", children: link.tag })
+                      ]
+                    },
+                    link.href
+                  )) })
+                ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-4 pt-4", children: [
                   /* @__PURE__ */ jsx("p", { className: "text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3", children: "Quick Links" }),
                   /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3", children: [
                     { label: "Home", href: "/" },
-                    { label: "Shop", href: "/shop" },
-                    { label: "Products", href: "/products" },
-                    { label: "3D Design", href: "/customize" },
-                    { label: "Brand Studio", href: "/branding-studio" },
+                    { label: "Shop All", href: "/shop" },
+                    { label: "3D Custom", href: "/customize" },
+                    { label: "Our Story", href: "/about" },
+                    { label: "Services", href: "/services" },
                     { label: "Contact", href: "/contact" }
                   ].map((link) => /* @__PURE__ */ jsx(
-                    Link$1,
+                    Link,
                     {
                       href: link.href,
                       onClick: () => setIsOpen(false),
-                      className: `flex justify-center items-center text-center p-4 text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"}`,
+                      className: `flex justify-center items-center text-center p-4 text-[10px] font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"}`,
                       children: link.label
                     },
                     link.href
                   )) })
                 ] }),
-                /* @__PURE__ */ jsx("div", { className: "pt-6", children: /* @__PURE__ */ jsx(Link$1, { href: "/rfq", onClick: () => setIsOpen(false), children: /* @__PURE__ */ jsx(Button, { className: "w-full h-14 bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]", children: "Get a Free Quote" }) }) })
+                /* @__PURE__ */ jsx("div", { className: "pt-6", children: /* @__PURE__ */ jsx(Link, { href: "/rfq", onClick: () => setIsOpen(false), children: /* @__PURE__ */ jsx(Button, { className: "w-full h-14 bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-black tracking-[0.15em] uppercase text-sm rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.2)]", children: "Get a Free Quote" }) }) })
               ] })
             },
             "mobile-menu"
@@ -721,7 +808,7 @@ function Footer() {
         /* @__PURE__ */ jsx("p", { className: "text-background/70 text-sm mt-1.5", children: "Get a free quote in 24 hours. No commitment required." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 shrink-0", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs("button", { className: "flex items-center gap-2 bg-[#ff6b00] text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-[#ff6b00]/90 transition-colors shadow-lg shadow-[#ff6b00]/20 group", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs("button", { className: "flex items-center gap-2 bg-[#ff6b00] text-background font-condensed font-bold uppercase tracking-widest text-sm px-7 py-3.5 rounded-sm hover:bg-[#ff6b00]/90 transition-colors shadow-lg shadow-[#ff6b00]/20 group", children: [
           "Request Free Quote",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
         ] }) }),
@@ -740,7 +827,7 @@ function Footer() {
     /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] border-t border-white/5 pt-20 pb-10 text-left", children: [
       /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 items-start", children: [
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4", children: [
-          /* @__PURE__ */ jsxs(Link$1, { href: "/", className: "flex items-center gap-3 mb-6", children: [
+          /* @__PURE__ */ jsxs(Link, { href: "/", className: "flex items-center gap-3 mb-6", children: [
             /* @__PURE__ */ jsx(
               "img",
               {
@@ -751,10 +838,10 @@ function Footer() {
             ),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Xelent" }),
-              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Masters" })
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block", children: "Huntgear" })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("p", { className: "text-white/85 text-sm leading-relaxed mb-8 max-w-sm", children: "Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, technical apparel, tactical gear, and martial arts uniforms for global brands." }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/85 text-sm leading-relaxed mb-8 max-w-sm", children: "Xelent Huntgear: The pinnacle of performance hunting apparel. Engineered for the extreme, designed for the hunt, and manufactured with technical precision for global elite brands." }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 mb-8", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm", children: [
               /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs", children: "🏅" }),
@@ -783,7 +870,7 @@ function Footer() {
             "Embroidery & DTF",
             "Cut & Sew",
             "Tech Pack Design"
-          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link$1, { href: "/services", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item }) }, item)) })
+          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { href: "/services", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item }) }, item)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2", children: [
           /* @__PURE__ */ jsxs("h3", { className: "text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2", children: [
@@ -796,7 +883,7 @@ function Footer() {
             { label: "Hunting Wear", href: "/products#hunting" },
             { label: "Tech Wear", href: "/products#techwear" },
             { label: "Security Uniforms", href: "/products#security" }
-          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link$1, { href: item.href, className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item.label }) }, item.label)) })
+          ].map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { href: item.href, className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors block", children: item.label }) }, item.label)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4", children: [
           /* @__PURE__ */ jsxs("h3", { className: "text-white font-condensed font-bold text-sm tracking-widest uppercase mb-6 flex items-center gap-2", children: [
@@ -828,7 +915,7 @@ function Footer() {
               /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsx(Mail, { className: "w-4 h-4 text-[#ff6b00]" }) }),
               /* @__PURE__ */ jsxs("div", { children: [
                 /* @__PURE__ */ jsx("p", { className: "text-white font-semibold text-sm mb-1", children: "Email inquiries" }),
-                /* @__PURE__ */ jsx("a", { href: "mailto:info@sialkotsamplemasters.com", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "info@sialkotsamplemasters.com" })
+                /* @__PURE__ */ jsx("a", { href: "mailto:info@xelenthuntgear.com", className: "text-white/85 hover:text-[#ff6b00] text-sm transition-colors", children: "info@xelenthuntgear.com" })
               ] })
             ] })
           ] })
@@ -841,16 +928,16 @@ function Footer() {
           " Xelent Huntgear. Premium Hunting Apparel Manufacturer. All rights reserved."
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
-          /* @__PURE__ */ jsx(Link$1, { href: "/privacy", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Privacy Policy" }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/terms", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Terms of Manufacturing" }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/shipping", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Shipping & Returns" })
+          /* @__PURE__ */ jsx(Link, { href: "/privacy", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Privacy Policy" }),
+          /* @__PURE__ */ jsx(Link, { href: "/terms", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Terms of Manufacturing" }),
+          /* @__PURE__ */ jsx(Link, { href: "/shipping", className: "text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors", children: "Shipping & Returns" })
         ] })
       ] }) })
     ] }),
     /* @__PURE__ */ jsx(
       "a",
       {
-        href: "https://wa.me/923022922242?text=Hello%20Sialkot%20Sample%20Masters!%20I'm%20interested%20in%20custom%20apparel%20manufacturing.",
+        href: "https://wa.me/923022922242?text=Hello%20Xelent%20Huntgear!%20I'm%20interested%20in%20custom%20hunting%20apparel%20manufacturing.",
         target: "_blank",
         rel: "noopener noreferrer",
         className: "fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-black/40 hover:scale-110 transition-transform",
@@ -954,7 +1041,7 @@ function CartDrawer() {
       /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-white/70 opacity-30 mb-4" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/70 font-serif text-lg mb-2", children: "Your cart is empty" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-6", children: "Browse our catalog to add products" }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
     ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-4 space-y-4", children: items.map((item) => /* @__PURE__ */ jsxs("div", { className: "flex gap-3 p-3 bg-secondary/50 rounded-lg border border-white/10", children: [
         /* @__PURE__ */ jsx(
@@ -1024,11 +1111,11 @@ function CartDrawer() {
           ] })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-white/70", children: "Shipping calculated at checkout based on your country" }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/checkout", onClick: closeCart, children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider py-5 text-base", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/checkout", onClick: closeCart, children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider py-5 text-base", children: [
           "Proceed to Checkout ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/shop", onClick: closeCart, children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
       ] })
     ] })
   ] }) });
@@ -1387,6 +1474,131 @@ function PageWrapper({ children, className }) {
     }
   );
 }
+function FeaturedProductCarousel() {
+  const containerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const { data: dbProducts, isLoading } = trpc.product.list.useQuery();
+  const products2 = dbProducts?.filter((p) => p.isFeatured).map((p) => ({
+    id: p.id.toString(),
+    slug: p.slug,
+    name: p.title || "Elite Gear",
+    category: p.category || "General",
+    image: p.mainImage || IMAGES.catHunting,
+    tag: "Custom Built",
+    specs: [
+      { label: "Material", value: p.material || "High Performance", icon: Shield },
+      { label: "Weight", value: p.weight || "TBD", icon: Scale },
+      { label: "Protection", value: "Professional Grade", icon: Droplets }
+    ]
+  })) || [];
+  const displayProducts = products2.length > 0 ? products2 : [];
+  const scroll = (direction) => {
+    if (containerRef.current) {
+      const scrollAmount = direction === "left" ? -400 : 400;
+      containerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+  return /* @__PURE__ */ jsx("section", { className: "py-24 bg-[#0a0a0a] border-t border-b border-white/[0.05] overflow-hidden", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-8", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+          /* @__PURE__ */ jsx("span", { className: "w-8 h-[1px] bg-[#ff6b00]" }),
+          /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-[10px] font-condensed font-bold uppercase tracking-[0.3em]", children: "Precision Engineering" })
+        ] }),
+        /* @__PURE__ */ jsxs("h2", { className: "text-4xl md:text-5xl font-serif font-black text-white tracking-tighter", children: [
+          "FEATURED ",
+          /* @__PURE__ */ jsx("span", { className: "text-white/40 italic", children: "GEAR." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: () => scroll("left"),
+            disabled: !canScrollLeft,
+            className: `p-3 rounded-full border border-white/10 transition-all ${canScrollLeft ? "hover:bg-white/5 text-white" : "opacity-30 text-white/40 cursor-not-allowed"}`,
+            children: /* @__PURE__ */ jsx(ChevronLeft, { className: "w-5 h-5" })
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: () => scroll("right"),
+            disabled: !canScrollRight,
+            className: `p-3 rounded-full border border-white/10 transition-all ${canScrollRight ? "hover:bg-white/5 text-white" : "opacity-30 text-white/40 cursor-not-allowed"}`,
+            children: /* @__PURE__ */ jsx(ChevronRight, { className: "w-5 h-5" })
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs(
+      "div",
+      {
+        ref: containerRef,
+        onScroll: handleScroll,
+        className: "flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory min-h-[400px]",
+        children: [
+          isLoading ? /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-center justify-center py-20 space-y-4", children: [
+            /* @__PURE__ */ jsx(Loader2, { className: "w-8 h-8 text-[#ff6b00] animate-spin" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed tracking-widest uppercase text-xs", children: "Accessing Arsenal..." })
+          ] }) : displayProducts.length === 0 ? /* @__PURE__ */ jsx("div", { className: "flex-1 flex flex-col items-center justify-center py-20 bg-[#111111]/50 border border-white/5 rounded", children: /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed tracking-widest uppercase text-xs", children: "No Featured Gear Available" }) }) : displayProducts.map((product) => /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              className: "min-w-[280px] md:min-w-[300px] group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden",
+              children: [
+                /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-[#1a1a1a]", children: [
+                  /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: product.image,
+                      alt: product.name,
+                      className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 ease-in-out"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("div", { className: "absolute top-6 left-6 z-20", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[9px] font-condensed font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-[0_0_20px_rgba(255,107,0,0.3)]", children: product.tag }) }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" }),
+                  /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0", children: [
+                    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 gap-4 mb-6", children: product.specs.map((spec, idx) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center", children: /* @__PURE__ */ jsx(spec.icon, { className: "w-3.5 h-3.5 text-[#ff6b00]" }) }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("div", { className: "text-[9px] text-white/40 uppercase tracking-widest", children: spec.label }),
+                        /* @__PURE__ */ jsx("div", { className: "text-xs text-white font-bold", children: spec.value })
+                      ] })
+                    ] }, idx)) }),
+                    /* @__PURE__ */ jsx(Link, { href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs("button", { className: "w-full py-4 bg-white text-black font-condensed font-bold uppercase tracking-wider text-xs hover:bg-[#ff6b00] hover:text-black transition-colors flex items-center justify-center gap-2", children: [
+                      "View Technical Data ",
+                      /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+                    ] }) })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "p-6 border-t border-white/[0.05] bg-[#0d0d0d] group-hover:bg-[#111111] transition-colors", children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-[10px] text-[#ff6b00] font-condensed font-bold uppercase tracking-[0.15em] mb-1", children: product.category }),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-serif font-bold text-white group-hover:text-[#ff6b00] transition-colors leading-tight", children: product.name })
+                ] })
+              ]
+            },
+            product.id
+          )),
+          /* @__PURE__ */ jsx("div", { className: "min-w-[280px] md:min-w-[300px] h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all", children: /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 cursor-pointer", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#ff6b00] transition-colors", children: /* @__PURE__ */ jsx(ArrowRight, { className: "w-5 h-5 text-white/40 group-hover:text-[#ff6b00] transform transition-transform group-hover:translate-x-1" }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-white/40 font-condensed font-bold uppercase tracking-widest text-[10px] group-hover:text-white transition-colors", children: "Explore Full Arsenal" })
+          ] }) }) })
+        ]
+      }
+    )
+  ] }) });
+}
 const stats$1 = [
   { value: 15, suffix: "+", label: "Years", sublabel: "Excellence" },
   { value: 500, suffix: "+", label: "Brands", sublabel: "Served" },
@@ -1527,13 +1739,13 @@ function Home() {
         /* @__PURE__ */ jsx(
           "img",
           {
-            src: IMAGES.heroCustomBg,
-            alt: "Professional Hunter in Xelent technical gear - Durable, waterproof performance apparel",
-            className: "w-full h-full object-cover opacity-60"
+            src: IMAGES.heroAlpineExtreme,
+            alt: "Alpine Extreme - Precision Hunting Apparel Systems by Xelent",
+            className: "w-full h-full object-cover opacity-80"
           }
         ),
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
-        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" })
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 z-10" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: [
         /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
@@ -1543,10 +1755,10 @@ function Home() {
               initial: { opacity: 0, x: -20 },
               animate: { opacity: 1, x: 0 },
               transition: { duration: 0.6 },
-              className: "inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 px-4 py-2 mb-8",
+              className: "inline-flex items-center gap-3 glass-vibe px-4 py-2 mb-8",
               children: [
-                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] animate-pulse" }),
-                /* @__PURE__ */ jsx("span", { className: "text-white text-xs font-condensed uppercase tracking-[0.2em]", children: "Now Accepting SS2026 Orders" })
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 bg-[#ff6b00] rounded-full animate-vibe-pulse shadow-[0_0_12px_#ff6b00]" }),
+                /* @__PURE__ */ jsx("span", { className: "text-white text-[10px] font-heading font-medium uppercase tracking-[0.3em]", children: "Premium B2B OEM Partner" })
               ]
             }
           ),
@@ -1556,73 +1768,48 @@ function Home() {
               initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
               transition: { duration: 0.8, delay: 0.2 },
-              className: "text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[0.9] mb-6",
+              className: "text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-serif font-black text-white leading-[0.85] mb-8 tracking-tighter text-vibe-glow",
               children: [
-                "Built for",
-                /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "the Hunt." })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            motion.p,
-            {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6, delay: 0.4 },
-              className: "text-xl sm:text-2xl text-white font-light mb-4",
-              children: "Premium Hunting Apparel Manufacturer"
-            }
-          ),
-          /* @__PURE__ */ jsxs(
-            motion.p,
-            {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6, delay: 0.5 },
-              className: "text-white/80 text-base sm:text-lg max-w-xl mb-6 leading-relaxed",
-              children: [
-                "B2B manufacturing for hunting brands worldwide. Specialist in ",
-                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ISO 811 certified 20,000mm waterproofing" }),
-                " and ",
-                /* @__PURE__ */ jsx("span", { className: "text-white font-semibold", children: "ASTM E96 breathable" }),
-                " membranes. REACH & OEKO-TEX compliant production. Low MOQ 50pcs."
+                "PRECISION",
+                /* @__PURE__ */ jsx("br", {}),
+                /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00]", children: "AT THE EDGE." })
               ]
             }
           ),
           /* @__PURE__ */ jsxs(
             motion.div,
             {
-              initial: { opacity: 0, scale: 0.95 },
-              animate: { opacity: 1, scale: 1 },
-              transition: { duration: 0.5, delay: 0.55 },
-              className: "bg-white/5 backdrop-blur-sm border-l-4 border-[#ff6b00] p-6 mb-10 max-w-xl",
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.4 },
+              className: "mb-8",
               children: [
-                /* @__PURE__ */ jsx("h3", { className: "text-[#ff6b00] font-condensed font-bold uppercase tracking-widest text-xs mb-3", children: "Key Manufacturing Takeaways" }),
-                /* @__PURE__ */ jsxs("ul", { className: "text-white/70 text-sm space-y-2 font-light", children: [
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Specialization" }),
-                    ": Technical Hunting Apparel & Tactical Security Uniforms"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Benchmarks" }),
-                    ": 20K Waterproofing / 15K Breathability (ISO/ASTM)"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Compliance" }),
-                    ": OEKO-TEX Standard 100 & REACH (EU) Certified"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    "• ",
-                    /* @__PURE__ */ jsx("span", { className: "text-white font-medium", children: "Capability" }),
-                    ": 3D Pattern Development, Laser Cutting, Ultrasonic Sealing"
-                  ] })
-                ] })
+                /* @__PURE__ */ jsx("p", { className: "text-lg sm:text-xl text-white font-heading font-semibold uppercase tracking-[0.25em] mb-2", children: "Technical Hunting Systems" }),
+                /* @__PURE__ */ jsx("div", { className: "w-12 h-1 bg-[#ff6b00] mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-white/60 text-base sm:text-lg max-w-xl leading-relaxed italic border-l-2 border-white/20 pl-4", children: "Engineered for the most unforgiving environments on Earth." })
               ]
             }
           ),
+          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12", children: [
+            { label: "Waterproof", value: "20,000mm", icon: Droplets },
+            { label: "Breathable", value: "ASTM E96", icon: Wind },
+            { label: "Certified", value: "OEKO-TEX", icon: Shield },
+            { label: "Response", value: "24h Quote", icon: Zap }
+          ].map((spec, i) => /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { delay: 0.5 + i * 0.1 },
+              className: "glass-vibe p-4 transition-all duration-300 hover:bg-white/10 group/spec",
+              children: [
+                /* @__PURE__ */ jsx(spec.icon, { className: "w-4 h-4 text-[#ff6b00] mb-2 vibe-glow-orange group-hover/spec:scale-110 transition-transform" }),
+                /* @__PURE__ */ jsx("div", { className: "text-[10px] text-white/40 uppercase tracking-widest mb-1", children: spec.label }),
+                /* @__PURE__ */ jsx("div", { className: "text-xs text-white font-bold", children: spec.value })
+              ]
+            },
+            spec.label
+          )) }),
           /* @__PURE__ */ jsxs(
             motion.div,
             {
@@ -1631,11 +1818,11 @@ function Home() {
               transition: { duration: 0.6, delay: 0.6 },
               className: "flex flex-wrap gap-4",
               children: [
-                /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "group bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 shadow-[0_0_30px_rgba(255,107,0,0.4)] hover:shadow-[0_0_50px_rgba(255,107,0,0.6)]", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "group bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 shadow-[0_0_30px_rgba(255,107,0,0.4)] hover:shadow-[0_0_50px_rgba(255,107,0,0.6)]", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-3", children: [
                   "Get Free Quote",
                   /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
                 ] }) }) }),
-                /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx("button", { className: "border border-white/40 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 backdrop-blur-sm bg-black/30", children: "View Portfolio" }) })
+                /* @__PURE__ */ jsx(Link, { href: "/portfolio", children: /* @__PURE__ */ jsx("button", { className: "border border-white/40 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-8 py-4 transition-all duration-300 backdrop-blur-sm bg-black/30", children: "View Portfolio" }) })
               ]
             }
           )
@@ -1669,6 +1856,7 @@ function Home() {
         }
       )
     ] }),
+    /* @__PURE__ */ jsx(FeaturedProductCarousel, {}),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-12", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-xs font-condensed uppercase tracking-[0.2em]", children: "Pursuit-Driven Manufacturing" }),
@@ -1835,7 +2023,7 @@ function Home() {
             /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: "Quote Response" })
           ] })
         ] }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/about", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00] hover:text-black font-condensed font-bold uppercase tracking-wider px-8 py-3", children: "Our Story" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/about", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00] hover:text-black font-condensed font-bold uppercase tracking-wider px-8 py-3", children: "Our Story" }) })
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
@@ -1886,8 +2074,8 @@ function Home() {
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Get a free quote for custom manufacturing. Low MOQ 50pcs. Fast sample turnaround. Premium quality guaranteed." }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: "Request Free Quote" }) }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx("button", { className: "border border-white/30 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all bg-black/30 backdrop-blur", children: "Contact Sales" }) })
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx("button", { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: "Request Free Quote" }) }),
+          /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx("button", { className: "border border-white/30 hover:border-[#ff6b00] text-white hover:text-[#ff6b00] font-condensed font-bold uppercase tracking-wider px-10 py-4 transition-all bg-black/30 backdrop-blur", children: "Contact Sales" }) })
         ] })
       ] })
     ] })
@@ -1923,7 +2111,7 @@ function Breadcrumb({ items, className = "" }) {
             ]
           }
         ) : /* @__PURE__ */ jsxs(
-          Link$1,
+          Link,
           {
             href: item.href || "/",
             className: "text-white/50 hover:text-[#ff6b00] transition-colors font-medium flex items-center",
@@ -1960,7 +2148,7 @@ const predefinedBreadcrumbs = {
   ]
 };
 const milestones = [
-  { year: "2009", title: "Founded", desc: "Started as a specialist sample house for hunting apparel manufacturers in Sialkot." },
+  { year: "2009", title: "Founded", desc: "Started as a specialist technical manufacturing unit for hunting apparel in Sialkot." },
   { year: "2012", title: "OEM Expansion", desc: "Transitioned into full-scale OEM manufacturing for US and European hunting brands." },
   { year: "2016", title: "ISO Certification", desc: "Achieved ISO 9001:2015 certification for quality management systems." },
   { year: "2019", title: "Tech Upgrade", desc: "Installed 50+ specialized machines for waterproof hunting gear production." },
@@ -2085,13 +2273,13 @@ function About() {
           /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "For Hunters" })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "w-16 h-1 bg-[#ff6b00] mb-6" }),
-        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Founded in Sialkot — Pakistan's manufacturing hub — Xelent Huntgear began as a specialist sample house for hunting apparel brands. Today, we're a vertically integrated manufacturer serving 500+ global brands." }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/80 text-lg leading-relaxed mb-6", children: "Founded in Sialkot — the global heart of technical apparel manufacturing — Xelent Huntgear was established to engineer the highest-performing hunting gear on the planet. Today, we are a vertically integrated technical facility serving 500+ elite global brands." }),
         /* @__PURE__ */ jsx("p", { className: "text-white/60 leading-relaxed mb-8", children: "Our facility features 50+ specialized machines for waterproof construction, seam sealing, and camo pattern printing. We understand what hunters need because we work with brands that live the hunting lifestyle." }),
         /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-4 mb-8", children: capabilities$1.map((cap) => /* @__PURE__ */ jsxs("div", { className: "border-l-2 border-[#ff6b00] pl-4", children: [
           /* @__PURE__ */ jsx("div", { className: "text-xl font-condensed font-bold text-white", children: cap.value }),
           /* @__PURE__ */ jsx("div", { className: "text-white/50 text-sm", children: cap.label })
         ] }, cap.label)) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
           "Work With Us ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) })
@@ -2159,7 +2347,7 @@ function About() {
           /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Xelent Huntgear?" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Let's discuss your hunting apparel manufacturing needs. Get a free quote with 7-day sample turnaround." }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)] hover:shadow-[0_0_60px_rgba(255,107,0,0.6)]", children: [
           "Request Free Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
         ] }) })
@@ -2357,7 +2545,7 @@ function Services() {
           /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Manufacturing Project" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Get a free quote for your hunting apparel line. Low MOQ 50pcs, 7-day samples, and premium quality guaranteed." }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
           "Request Free Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
         ] }) })
@@ -2602,11 +2790,11 @@ function Products() {
               ] }, f)) })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 justify-start", children: [
-              /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: [
+              /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: [
                 "Get a Quote ",
                 /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
               ] }) }),
-              /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent", children: "View in Shop" }) })
+              /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm bg-transparent", children: "View in Shop" }) })
             ] })
           ] })
         ]
@@ -2616,8 +2804,8 @@ function Products() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl font-bold text-white mb-4", children: "Build Your Hunting Brand" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-8", children: "From concept to field-ready gear — we help hunting brands bring their vision to life. Tech pack development, prototyping, licensed camo patterns, and full-scale production. Your brand, built for the hunt." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm", children: "Start Your Line" }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: "Talk to Our Team" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm", children: "Start Your Line" }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-[#ff6b00]/30 text-[#ff6b00] hover:bg-[#ff6b00]/5 font-condensed font-semibold tracking-widest uppercase text-sm px-8 py-3 h-auto rounded-sm bg-transparent", children: "Talk to Our Team" }) })
       ] })
     ] }) }) })
   ] });
@@ -2764,7 +2952,7 @@ function Portfolio() {
           /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00]", children: "Next Collection?" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg sm:text-xl mb-10 max-w-2xl mx-auto", children: "Let's discuss your hunting apparel manufacturing needs. Get a free quote with 7-day sample turnaround." }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider text-lg px-12 py-4 h-auto shadow-[0_0_40px_rgba(255,107,0,0.4)]", children: [
           "Start Your Project ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-5 h-5" })
         ] }) })
@@ -2866,7 +3054,7 @@ const posts = [
   {
     slug: "calculate-cmt-costs-export-shipment",
     title: "How to Calculate CMT Costs for Your Next Export Shipment",
-    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for streetwear exports. Learn how to optimize your production budget with Sialkot Sample Masters.",
+    excerpt: "A definitive guide to calculating Cut, Make, Trim (CMT) costs for technical apparel exports. Learn how to optimize your production budget with Xelent Huntgear.",
     date: "March 14, 2026",
     category: "Manufacturing strategy",
     image: "/cmt_cost_breakdown_pie_1773440983080.png",
@@ -2971,8 +3159,8 @@ function Blog() {
     /* @__PURE__ */ jsx(
       SEOHead,
       {
-        title: "Blog | Apparel Manufacturing Insights & B2B Guides | Sialkot Sample Masters Pakistan",
-        description: "Expert insights on custom apparel manufacturing — Hunting Wear, Sports Wear, Ski Wear, Tech Wear, Streetwear & Martial Arts. B2B guides from Sialkot Sample Masters, Pakistan's leading apparel manufacturer.",
+        title: "Technical Blog | Hunting Apparel Manufacturing Insights | Xelent Huntgear",
+        description: "Expert insights on high-performance hunting apparel manufacturing — Technical Shells, Insulation, Base Layers & Camo Systems. B2B guides from Xelent Huntgear, a leading technical apparel manufacturer.",
         keywords: "apparel manufacturing blog, hunting wear manufacturer guide, ski wear manufacturer Pakistan, techwear manufacturer insights, B2B apparel guide Pakistan, martial arts wear manufacturer guide",
         canonical: "/blog",
         breadcrumbs: [
@@ -2984,11 +3172,11 @@ function Blog() {
     /* @__PURE__ */ jsx("section", { className: "relative pt-16 pb-16 bg-[#111111] border-b border-white/10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center", children: [
       /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-sm mb-3", children: "Insights & Guides" }),
       /* @__PURE__ */ jsxs("h1", { className: "font-serif text-5xl sm:text-6xl font-bold text-foreground mb-6", children: [
-        "The Sialkot Sample Masters",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Manufacturing Blog" })
+        "The Xelent Huntgear",
+        /* @__PURE__ */ jsx("span", { className: "text-gradient-gold italic", children: " Technical Journal" })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "gold-divider mx-auto" }),
-      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-xl mx-auto mt-6", children: "Expert guides, industry insights, and manufacturing knowledge for brand owners and B2B buyers across Hunting, Sports, Ski, Tech, Streetwear & Martial Arts." })
+      /* @__PURE__ */ jsx("p", { className: "text-white/70 text-lg max-w-xl mx-auto mt-6", children: "Expert guides, technical insights, and manufacturing knowledge for high-performance hunting apparel brands and B2B buyers." })
     ] }) }),
     /* @__PURE__ */ jsx("section", { className: "border-b border-white/10 bg-[#111111]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4", children: /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide", children: categories.map((cat) => /* @__PURE__ */ jsx(
       "button",
@@ -3001,7 +3189,7 @@ function Blog() {
     /* @__PURE__ */ jsx("section", { className: "section-padding", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
       featured && /* @__PURE__ */ jsxs("div", { className: "mb-16", children: [
         /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] font-condensed font-semibold tracking-widest uppercase text-xs mb-6", children: "Featured Article" }),
-        /* @__PURE__ */ jsx(Link$1, { href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer", children: [
+        /* @__PURE__ */ jsx(Link, { href: `/blog/${featured.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer", children: [
           /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden aspect-[16/9] lg:aspect-auto", children: [
             /* @__PURE__ */ jsx(
               "img",
@@ -3040,7 +3228,7 @@ function Blog() {
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link$1, { href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { className: "group bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer h-full flex flex-col", children: [
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6", children: rest.map((post) => /* @__PURE__ */ jsx(Link, { href: `/blog/${post.slug}`, children: /* @__PURE__ */ jsxs("article", { className: "group bg-[#111111] border border-white/10 rounded-sm overflow-hidden hover:border-[#ff6b00]/30 transition-all cursor-pointer h-full flex flex-col", children: [
         /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden aspect-[16/9]", children: [
           /* @__PURE__ */ jsx(
             "img",
@@ -3195,7 +3383,7 @@ function BlogPost() {
     return /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center pt-20", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
       /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl font-bold text-foreground mb-4", children: "Article Not Found" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-6", children: "The article you're looking for doesn't exist." }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/blog", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: "Back to Blog" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/blog", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm px-6 py-3 h-auto rounded-sm", children: "Back to Blog" }) })
     ] }) });
   }
   const renderContent = (content) => {
@@ -3227,7 +3415,7 @@ function BlogPost() {
           parts.push(line.slice(lastIndex, match.index));
         }
         parts.push(
-          /* @__PURE__ */ jsx(Link$1, { href: match[2], className: "text-[#ff6b00] hover:underline", children: match[1] }, match.index)
+          /* @__PURE__ */ jsx(Link, { href: match[2], className: "text-[#ff6b00] hover:underline", children: match[1] }, match.index)
         );
         lastIndex = match.index + match[0].length;
       }
@@ -3256,7 +3444,7 @@ function BlogPost() {
         children: [
           /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#0d0d0d]/85" }),
           /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8", children: [
-            /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-6", children: [
+            /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-6", children: [
               /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
               " Back to Blog"
             ] }),
@@ -3284,14 +3472,14 @@ function BlogPost() {
         /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-sm p-6", children: [
           /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Ready to Manufacture?" }),
           /* @__PURE__ */ jsx("p", { className: "text-white/70 text-sm mb-4", children: "Get a free quote from Pakistan's leading custom streetwear manufacturer." }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "w-full bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold tracking-widest uppercase text-sm py-3 h-auto rounded-sm", children: [
             "Request Quote ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-sm p-6", children: [
           /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-foreground uppercase tracking-widest text-xs mb-4", children: "Our Services" }),
-          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Custom Manufacturing", "Private Label", "Low MOQ (50 pcs)", "Bulk Orders", "Design Consultation"].map((s2) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(Link$1, { href: "/services", className: "text-white/70 hover:text-[#ff6b00] text-sm transition-colors flex items-center gap-2", children: [
+          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: ["Custom Manufacturing", "Private Label", "Low MOQ (50 pcs)", "Bulk Orders", "Design Consultation"].map((s2) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(Link, { href: "/services", className: "text-white/70 hover:text-[#ff6b00] text-sm transition-colors flex items-center gap-2", children: [
             /* @__PURE__ */ jsx("span", { className: "w-3 h-px bg-border" }),
             s2
           ] }) }, s2)) })
@@ -4049,20 +4237,20 @@ const SHOP_CATEGORIES = [
     ]
   }
 ];
-const sampleProducts = [
-  { id: 1, name: "Pro Hunter Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "20K Waterproof" },
-  { id: 2, name: "Tactical Cargo Pants", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Reinforced" },
-  { id: 3, name: "Digital Camo Shell", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Custom Pattern" },
-  { id: 4, name: "Merino Base Layer", category: "Base Layers", price: "Contact", image: IMAGES.catSecurityUniforms, badge: "Odor Control" },
-  { id: 5, name: "Insulated Parka", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "800 Fill" },
-  { id: 6, name: "Softshell Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catTechwear, badge: "Windproof" },
-  { id: 7, name: "Bib Overalls", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Insulated" },
-  { id: 8, name: "Woodland Camo Set", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Pattern Design" }
-];
 function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredProducts = sampleProducts.filter((product) => {
+  const { data: dbProducts, isLoading } = trpc.product.list.useQuery();
+  const products2 = dbProducts?.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    name: p.title || "Unnamed Gear",
+    category: p.category || "General",
+    price: p.samplePrice ? `$${p.samplePrice}` : "Contact for Quote",
+    image: p.mainImage || IMAGES.catHunting,
+    badge: p.isFeatured ? "Featured" : "New"
+  })) || [];
+  const filteredProducts = products2.filter((product) => {
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -4167,8 +4355,11 @@ function Shop() {
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", stagger: 0.08, children: filteredProducts.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(Link$1, { href: `/product/${product.id}`, children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300 cursor-pointer", children: [
-        /* @__PURE__ */ jsxs("div", { className: "relative aspect-square overflow-hidden", children: [
+      isLoading ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center py-32 space-y-4", children: [
+        /* @__PURE__ */ jsx(Loader2, { className: "w-10 h-10 text-[#ff6b00] animate-spin" }),
+        /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed tracking-widest uppercase text-sm", children: "Loading Arsenal..." })
+      ] }) : /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", stagger: 0.08, children: filteredProducts.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(Link, { href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300 cursor-pointer", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative aspect-square overflow-hidden bg-[#1a1a1a]", children: [
           /* @__PURE__ */ jsx(
             "img",
             {
@@ -4181,7 +4372,7 @@ function Shop() {
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "p-5", children: [
           /* @__PURE__ */ jsx("p", { className: "text-white/40 text-xs uppercase tracking-wider mb-1", children: product.category }),
-          /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-lg uppercase group-hover:text-[#ff6b00] transition-colors", children: product.name }),
+          /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-lg uppercase group-hover:text-[#ff6b00] transition-colors line-clamp-1", children: product.name }),
           /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center justify-between", children: [
             /* @__PURE__ */ jsx("span", { className: "text-white/60 text-sm", children: product.price }),
             /* @__PURE__ */ jsxs("span", { className: "text-[#ff6b00] text-xs font-bold uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
@@ -4191,7 +4382,7 @@ function Shop() {
           ] })
         ] })
       ] }) }) }, product.id)) }),
-      filteredProducts.length === 0 && /* @__PURE__ */ jsxs("div", { className: "text-center py-20", children: [
+      !isLoading && filteredProducts.length === 0 && /* @__PURE__ */ jsxs("div", { className: "text-center py-20", children: [
         /* @__PURE__ */ jsx("p", { className: "text-white/50 text-lg", children: "No products found matching your criteria." }),
         /* @__PURE__ */ jsx(
           "button",
@@ -4208,7 +4399,7 @@ function Shop() {
       /* @__PURE__ */ jsxs("div", { className: "mt-16 text-center p-12 bg-[#111111] border border-white/10", children: [
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Need Custom Manufacturing?" }),
         /* @__PURE__ */ jsx("p", { className: "text-white/60 mb-6 max-w-2xl mx-auto", children: "All products shown can be manufactured with your branding, custom patterns, and specific technical requirements. Low MOQ 50pcs per style." }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
           "Request Custom Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) })
@@ -4970,7 +5161,7 @@ function ProductDetail() {
     return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
       /* @__PURE__ */ jsx(Package, { className: "w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" }),
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl text-white mb-4", children: "Product Not Found" }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", children: "Back to Catalog" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", children: "Back to Catalog" }) })
     ] }) });
   }
   const images = product?.images ?? [];
@@ -5048,11 +5239,11 @@ function ProductDetail() {
     } }),
     /* @__PURE__ */ jsxs("main", { className: "min-h-screen bg-[#0d0d0d]", children: [
       /* @__PURE__ */ jsx("div", { className: "bg-[#111111] border-b border-white/10 text-xs py-3 px-4 sm:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-[1400px] mx-auto flex items-center gap-2 text-white/70", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/", className: "hover:text-white", children: "Home" }),
+        /* @__PURE__ */ jsx(Link, { href: "/", className: "hover:text-white", children: "Home" }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/shop", className: "hover:text-white", children: "Apparel Manufacturing" }),
+        /* @__PURE__ */ jsx(Link, { href: "/shop", className: "hover:text-white", children: "Apparel Manufacturing" }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
-        /* @__PURE__ */ jsx(Link$1, { href: `/shop?category=${product.category}`, className: "hover:text-white", children: product.category }),
+        /* @__PURE__ */ jsx(Link, { href: `/shop?category=${product.category}`, className: "hover:text-white", children: product.category }),
         /* @__PURE__ */ jsx("span", { children: ">" }),
         /* @__PURE__ */ jsx("span", { className: "text-white font-medium truncate", children: product.title })
       ] }) }),
@@ -5329,11 +5520,11 @@ function GeoLanding() {
           " with door-to-door delivery."
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 rounded-sm", children: [
             "Get Your Quote ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-zinc-700 text-white hover:bg-white/10 px-8 py-6 rounded-sm backdrop-blur-sm", children: "View Our Work" }) })
+          /* @__PURE__ */ jsx(Link, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-zinc-700 text-white hover:bg-white/10 px-8 py-6 rounded-sm backdrop-blur-sm", children: "View Our Work" }) })
         ] })
       ] })
     ] }),
@@ -5421,7 +5612,7 @@ function GeoLanding() {
         data.name,
         " brands sourcing directly from the source. Response guaranteed within 24 hours."
       ] }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsx(Button, { size: "lg", className: "bg-black text-white hover:bg-zinc-800 px-12 py-8 text-xl font-bold uppercase tracking-tighter", children: "Start Your Tech Pack Inquiry" }) })
     ] }) })
   ] });
 }
@@ -5460,7 +5651,7 @@ function BlogCMTGuide() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -5625,11 +5816,11 @@ function BlogCMTGuide() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl md:text-5xl font-bold text-background mb-8", children: "Ready to Scale Your Production?" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/80 text-lg mb-10 max-w-2xl mx-auto", children: "Book a factory visit or request a custom CMT quote for your next export order. Our specialists are ready to assist." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Get a CMT Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Contact Our Branch" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-10 py-6 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Contact Our Branch" }) })
       ] })
     ] }) })
   ] });
@@ -5674,7 +5865,7 @@ function BlogSublimationGuide() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -5852,11 +6043,11 @@ function BlogSublimationGuide() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Level Up Your Sportswear Brand" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Ready to see the difference premium Italian ink makes? Request a sample kit featuring our latest sublimated performance fabrics." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
           "Request Sample Kit ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Speak to a Print Expert" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Speak to a Print Expert" }) })
       ] })
     ] }) })
   ] });
@@ -5886,7 +6077,7 @@ function BlogCADvsManual() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -6015,11 +6206,11 @@ function BlogCADvsManual() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Digitize Your Pattern Library Today" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/60 text-lg mb-12 max-w-2xl mx-auto", children: "Stop wasting fabric and risking rejection. Our pattern masters can convert your existing paper patterns into high-precision digital assets." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-light px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-light px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Get a Digitizing Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold text-gold hover:bg-gold hover:text-background px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request a Live Demo" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-gold text-gold hover:bg-gold hover:text-background px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request a Live Demo" }) })
       ] })
     ] }) })
   ] });
@@ -6070,7 +6261,7 @@ function BlogQCChecklist() {
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-        /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+        /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Blog"
         ] }),
@@ -6152,7 +6343,7 @@ function BlogQCChecklist() {
           /* @__PURE__ */ jsx("strong", { children: "4.0 for Minor Defects" }),
           "."
         ] }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Download our full QA Handbook (PDF)" })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Download our full QA Handbook (PDF)" })
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-background border-t border-border", children: /* @__PURE__ */ jsx("div", { className: "container max-w-3xl", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center text-center", children: [
@@ -6185,11 +6376,11 @@ function BlogQCChecklist() {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto", children: "Experience the peace of mind that comes with a manufacturing partner who cares about your reputation as much as you do." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Inquire About QC Services ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Audit Samples" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Audit Samples" }) })
       ] })
     ] }) })
   ] });
@@ -6229,7 +6420,7 @@ function BlogOutsourcingBenefits() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -6359,7 +6550,7 @@ function BlogOutsourcingBenefits() {
           /* @__PURE__ */ jsx("strong", { children: "one thing." }),
           " If your brand sells high-performance joggers, don't use a unit that mostly switches between hoodies and t-shirts. Specialized units have custom folders and machine settings specifically for heavy stretch/interlock seams."
         ] }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Request a tour of our specialized production lines" })
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", className: "text-gold font-bold text-sm underline underline-offset-4 hover:text-gold-light transition-colors", children: "Request a tour of our specialized production lines" })
       ] })
     ] }) }) }),
     /* @__PURE__ */ jsxs("section", { className: "py-24 bg-gold relative overflow-hidden", children: [
@@ -6368,11 +6559,11 @@ function BlogOutsourcingBenefits() {
         /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Scale Your Brand Without the Stress" }),
         /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Ready to transition to a lean, profitable manufacturing model? Let’s discuss how our CMT unit can become your brand's secret competitive advantage." }),
         /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
             "Get a Custom Audit ",
             /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
           ] }) }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Discuss Strategy" }) })
+          /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Discuss Strategy" }) })
         ] })
       ] })
     ] })
@@ -6418,7 +6609,7 @@ function BlogSublimationRedFlags() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -6484,7 +6675,7 @@ function BlogSublimationRedFlags() {
           /* @__PURE__ */ jsx(ShieldAlert, { className: "w-12 h-12 text-gold mb-4" }),
           /* @__PURE__ */ jsx("h4", { className: "font-serif text-xl font-bold mb-2", children: "Feeling Unsure?" }),
           /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-xs leading-relaxed mb-6", children: "Receive a free technical audit of your current production samples." }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/contact", className: "text-gold font-bold text-xs underline uppercase tracking-widest", children: "Book Audit" })
+          /* @__PURE__ */ jsx(Link, { href: "/contact", className: "text-gold font-bold text-xs underline uppercase tracking-widest", children: "Book Audit" })
         ] })
       ] })
     ] }) }),
@@ -6522,11 +6713,11 @@ function BlogSublimationRedFlags() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-4xl md:text-5xl font-bold text-background mb-8", children: "Stop Settling for Second-Best" }),
       /* @__PURE__ */ jsx("p", { className: "text-background/90 text-lg mb-12 max-w-2xl mx-auto", children: "Experience what true Italian-ink sublimation looks like. Request a tech-pack audit and a free sample of our performance-grade printing today." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-background text-foreground hover:bg-background/90 px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl", children: [
           "Get a Printing Quote ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Samples" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-background text-background hover:bg-background hover:text-foreground px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Samples" }) })
       ] })
     ] }) })
   ] });
@@ -6566,7 +6757,7 @@ function BlogPuffEmbroidery() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -6674,11 +6865,11 @@ function BlogPuffEmbroidery() {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto", children: "Ready to add that luxury three-dimensional touch to your next production run? Our embroidery masters are ready to digitize your vision." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: [
           "Inquire About Embroidery ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Swatch Samples" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm", children: "Request Swatch Samples" }) })
       ] })
     ] }) })
   ] });
@@ -6718,7 +6909,7 @@ function BlogCADGrading() {
       }
     ),
     /* @__PURE__ */ jsx("section", { className: "relative pt-32 pb-20 overflow-hidden bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container relative z-10", children: [
-      /* @__PURE__ */ jsxs(Link$1, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
+      /* @__PURE__ */ jsxs(Link, { href: "/blog", className: "inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors text-sm mb-8", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
         " Back to Blog"
       ] }),
@@ -6834,11 +7025,11 @@ function BlogCADGrading() {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-12 max-w-2xl mx-auto leading-relaxed", children: "Ensure your next export order fits perfectly in every market. Leverage our advanced CAD grading services for your technical apparel manufacturing." }),
       /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl transition-all hover:-translate-y-1", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold text-background hover:bg-gold-dark px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm shadow-xl transition-all hover:-translate-y-1", children: [
           "Start Tech-Pack Consultation ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm transition-all hover:-translate-y-1", children: "Request Sample Sizes" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "border-border text-foreground hover:bg-muted px-12 py-7 h-auto font-condensed font-bold tracking-widest uppercase text-sm rounded-sm transition-all hover:-translate-y-1", children: "Request Sample Sizes" }) })
       ] })
     ] }) })
   ] });
@@ -7381,7 +7572,7 @@ function BlogRealtreeVsMossyOak() {
               /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
               /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
             ] }, i)) }),
-            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+            /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
               "Request Camo Manufacturing Quote",
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
             ] }) })
@@ -7534,11 +7725,11 @@ function BlogRealtreeVsMossyOak() {
             /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.desc })
           ] }, i)) }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+            /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
               "Get Your Free Quote",
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
             ] }) }),
-            /* @__PURE__ */ jsx(Link$1, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Camo Work" }) })
+            /* @__PURE__ */ jsx(Link, { href: "/portfolio", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Camo Work" }) })
           ] })
         ] }) }) }),
         /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs(FadeIn, { children: [
@@ -7547,7 +7738,7 @@ function BlogRealtreeVsMossyOak() {
             { title: "Scent-Control Technology: Silver-Ion vs Carbon", slug: "scent-control-technology", readTime: "8 min" },
             { title: "Waterproof Ratings Explained: 10K vs 20K", slug: "waterproof-ratings-guide", readTime: "6 min" },
             { title: "Hunting Apparel Manufacturing: Pakistan vs China", slug: "manufacturing-comparison", readTime: "10 min" }
-          ].map((article, i) => /* @__PURE__ */ jsx(Link$1, { href: `/blog/${article.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-4 hover:border-[#ff6b00]/50 transition-colors group", children: [
+          ].map((article, i) => /* @__PURE__ */ jsx(Link, { href: `/blog/${article.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "bg-[#111111] border border-white/10 rounded-lg p-4 hover:border-[#ff6b00]/50 transition-colors group", children: [
             /* @__PURE__ */ jsx("h4", { className: "text-white font-medium group-hover:text-[#ff6b00] transition-colors mb-2", children: article.title }),
             /* @__PURE__ */ jsxs("span", { className: "text-white/40 text-sm", children: [
               article.readTime,
@@ -7934,7 +8125,7 @@ function BlogScentControl() {
             /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
             /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
           ] }, i)) }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
             "Discuss Scent-Control Manufacturing",
             /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
           ] }) })
@@ -7966,11 +8157,11 @@ function BlogScentControl() {
           /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Ready to Add Scent-Control to Your Line?" }),
           /* @__PURE__ */ jsx("p", { className: "text-white/70 max-w-2xl mx-auto mb-8", children: "Our technical team can help you choose the right scent-control technology for your target market and price point. We provide fabric samples with different treatments so you can test before committing." }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+            /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
               "Request Fabric Samples",
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
             ] }) }),
-            /* @__PURE__ */ jsx(Link$1, { href: "/services", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View All Services" }) })
+            /* @__PURE__ */ jsx(Link, { href: "/services", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View All Services" }) })
           ] })
         ] }) }) })
       ] })
@@ -8239,7 +8430,7 @@ function BlogWaterproofRatings() {
             /* @__PURE__ */ jsx("div", { className: "text-[#ff6b00] font-bold", children: stat.value }),
             /* @__PURE__ */ jsx("div", { className: "text-white/50 text-xs", children: stat.label })
           ] }, i)) }),
-          /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
+          /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold", children: [
             "Discuss Waterproof Manufacturing",
             /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
           ] }) })
@@ -8271,11 +8462,11 @@ function BlogWaterproofRatings() {
           /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-4", children: "Need Help Choosing the Right Rating?" }),
           /* @__PURE__ */ jsx("p", { className: "text-white/70 max-w-2xl mx-auto mb-8", children: "Our technical team can recommend the optimal waterproof/breathability combination based on your target market and price point. We provide fabric samples for testing." }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: [
-            /* @__PURE__ */ jsx(Link$1, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
+            /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { size: "lg", className: "bg-[#ff6b00] hover:bg-[#ff8533] text-black font-bold px-8", children: [
               "Request Waterproof Samples",
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2" })
             ] }) }),
-            /* @__PURE__ */ jsx(Link$1, { href: "/products", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Capabilities" }) })
+            /* @__PURE__ */ jsx(Link, { href: "/products", children: /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", className: "border-[#ff6b00] text-[#ff6b00] hover:bg-[#ff6b00]/10", children: "View Our Capabilities" }) })
           ] })
         ] }) }) })
       ] })
@@ -8682,8 +8873,8 @@ function OrderConfirmation({ orderNumber }) {
       " to confirm production details, payment, and shipping timeline."
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
+      /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
     ] })
   ] }) });
 }
@@ -8749,7 +8940,7 @@ function Checkout() {
     return /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
       /* @__PURE__ */ jsx(ShoppingBag, { className: "w-16 h-16 text-white/70 mx-auto mb-4 opacity-40" }),
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-2xl text-foreground mb-2", children: "Your cart is empty" }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "mt-4 bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
+      /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "mt-4 bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Browse Catalog" }) })
     ] }) });
   }
   return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -8762,7 +8953,7 @@ function Checkout() {
     ),
     /* @__PURE__ */ jsx("main", { className: "min-h-screen bg-[#0d0d0d] py-12", children: /* @__PURE__ */ jsxs("div", { className: "container max-w-5xl", children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
-        /* @__PURE__ */ jsxs(Link$1, { href: "/shop", className: "flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-4", children: [
+        /* @__PURE__ */ jsxs(Link, { href: "/shop", className: "flex items-center gap-2 text-white/70 hover:text-[#ff6b00] transition-colors text-sm mb-4", children: [
           /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4" }),
           " Back to Shop"
         ] }),
@@ -8983,8 +9174,8 @@ function CheckoutSuccess() {
         /* @__PURE__ */ jsx("p", { className: "font-condensed font-bold text-2xl text-[#ff6b00]", children: orderNumber })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Continue Shopping" }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Contact Us" }) })
       ] })
     ] }) })
   ] });
@@ -8997,8 +9188,8 @@ function CheckoutCancel() {
       /* @__PURE__ */ jsx("h1", { className: "font-serif text-3xl font-bold text-foreground mb-4", children: "Payment Cancelled" }),
       /* @__PURE__ */ jsx("p", { className: "text-white/70 mb-8", children: "Your payment was cancelled and your order has not been placed. Your cart items are still saved if you wish to try again." }),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/checkout", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Return to Checkout" }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
+        /* @__PURE__ */ jsx(Link, { href: "/checkout", children: /* @__PURE__ */ jsx(Button, { className: "w-full bg-[#ff6b00] text-black hover:bg-[#ff6b00]-light font-condensed font-bold uppercase tracking-wider", children: "Return to Checkout" }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsx(Button, { variant: "outline", className: "w-full font-condensed font-semibold uppercase tracking-wider", children: "Continue Shopping" }) })
       ] })
     ] }) })
   ] });
@@ -9170,10 +9361,10 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         fixed lg:sticky top-0 left-0 z-50 h-screen w-[260px] bg-[#0c0c0e] flex flex-col transition-transform duration-300 ease-out
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `, children: [
-      /* @__PURE__ */ jsx("div", { className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer group", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { className: "text-black font-extrabold text-sm", children: "S" }) }),
+      /* @__PURE__ */ jsx("div", { className: "h-[72px] flex items-center px-5 border-b border-white/[0.06] shrink-0", children: /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 cursor-pointer group", children: [
+        /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow", children: /* @__PURE__ */ jsx("span", { className: "text-black font-extrabold text-sm", children: "XH" }) }),
         /* @__PURE__ */ jsxs("div", { className: "leading-none", children: [
-          /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Sialkot Sample" }),
+          /* @__PURE__ */ jsx("span", { className: "text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block", children: "Xelent Huntgear" }),
           /* @__PURE__ */ jsx("span", { className: "text-gold/80 font-condensed font-semibold text-[11px] tracking-[0.12em] uppercase block mt-0.5", children: "Admin Panel" })
         ] })
       ] }) }) }),
@@ -9181,7 +9372,7 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         /* @__PURE__ */ jsx("p", { className: "text-[10px] font-condensed font-bold uppercase tracking-[0.2em] text-white/30 px-3 mb-3", children: "Main Menu" }),
         NAVIGATION.map((item) => {
           const active = isActive(item.href, item.exact);
-          return /* @__PURE__ */ jsx(Link$1, { href: item.href, children: /* @__PURE__ */ jsxs(
+          return /* @__PURE__ */ jsx(Link, { href: item.href, children: /* @__PURE__ */ jsxs(
             "div",
             {
               className: `
@@ -9200,7 +9391,7 @@ function AdminSidebar({ isMobileOpen, setMobileOpen }) {
         })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "border-t border-white/[0.06] p-3 shrink-0 space-y-2", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-white/70 cursor-pointer transition-all group", children: [
           /* @__PURE__ */ jsx(Store, { className: "w-[18px] h-[18px] text-white/30 group-hover:text-white/50" }),
           /* @__PURE__ */ jsx("span", { children: "Visit Store" }),
           /* @__PURE__ */ jsx(ChevronRight, { className: "w-3 h-3 ml-auto text-white/20" })
@@ -9383,11 +9574,11 @@ function AdminDashboard() {
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mt-1", children: "Welcome back. Here's what's happening with your store." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-condensed font-bold uppercase tracking-wider text-xs h-9 px-4", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs(Button, { className: "bg-gold hover:bg-gold/90 text-black font-condensed font-bold uppercase tracking-wider text-xs h-9 px-4", children: [
           /* @__PURE__ */ jsx(Plus, { className: "w-4 h-4 mr-1.5" }),
           " New Product"
         ] }) }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", size: "sm", className: "text-xs font-medium gap-1.5", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", size: "sm", className: "text-xs font-medium gap-1.5", children: [
           /* @__PURE__ */ jsx(ExternalLink, { className: "w-3.5 h-3.5" }),
           " View Store"
         ] }) })
@@ -9412,13 +9603,13 @@ function AdminDashboard() {
       kpi.label
     )) }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3", children: [
-      (stats2?.pendingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-amber-500/20 transition-colors", children: [
+      (stats2?.pendingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-amber-500/20 transition-colors", children: [
         /* @__PURE__ */ jsx(Clock, { className: "w-3.5 h-3.5" }),
         stats2?.pendingCount,
         " Pending Orders",
         /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
       ] }) }),
-      (stats2?.processingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 text-violet-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-violet-500/20 transition-colors", children: [
+      (stats2?.processingCount ?? 0) > 0 && /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 text-violet-500 rounded-full px-4 py-2 text-xs font-bold cursor-pointer hover:bg-violet-500/20 transition-colors", children: [
         /* @__PURE__ */ jsx(Truck, { className: "w-3.5 h-3.5" }),
         stats2?.processingCount,
         " Processing",
@@ -9431,7 +9622,7 @@ function AdminDashboard() {
           /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground", children: "Recent Orders" }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: "Latest activity in your store" })
         ] }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
           "View All ",
           /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
         ] }) })
@@ -9468,7 +9659,7 @@ function AdminDashboard() {
             ] }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Badge, { className: `border text-[10px] font-bold ${STATUS_COLORS$3[order.status] || ""}`, children: order.status.charAt(0).toUpperCase() + order.status.slice(1) }) }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-muted-foreground text-xs whitespace-nowrap", children: new Date(order.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }) }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link$1, { href: `/admin-saad/orders/${order.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(Eye, { className: "w-4 h-4 text-muted-foreground" }) }) }) })
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link, { href: `/admin-saad/orders/${order.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(Eye, { className: "w-4 h-4 text-muted-foreground" }) }) }) })
           ] }, order.id);
         }) })
       ] }) })
@@ -9479,7 +9670,7 @@ function AdminDashboard() {
           /* @__PURE__ */ jsx("h2", { className: "font-condensed font-bold text-sm uppercase tracking-[0.12em] text-foreground", children: "Recent Inquiries" }),
           /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: "Latest quote requests from your website" })
         ] }),
-        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
+        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "ghost", size: "sm", className: "text-xs text-gold hover:text-gold/80 gap-1", children: [
           "View All ",
           /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-3 h-3" })
         ] }) })
@@ -9503,17 +9694,17 @@ function AdminDashboard() {
       ] }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-3 gap-4", children: [
-      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/product/new", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Plus, { className: "w-5 h-5 text-gold" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Add Product" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "Create a new product listing" })
       ] }) }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(ShoppingBag, { className: "w-5 h-5 text-blue-500" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Manage Orders" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "View and process customer orders" })
       ] }) }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/products", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5 transition-all cursor-pointer group", children: [
+      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/products", children: /* @__PURE__ */ jsxs("div", { className: "bg-card border border-border rounded-2xl p-5 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5 transition-all cursor-pointer group", children: [
         /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Package, { className: "w-5 h-5 text-violet-500" }) }),
         /* @__PURE__ */ jsx("h3", { className: "font-condensed font-bold text-sm uppercase tracking-wider text-foreground mb-1", children: "Product Catalog" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "Edit products, images & pricing" })
@@ -9799,7 +9990,7 @@ function AdminOrderDetail() {
   if (!order) {
     return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "text-center py-24", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-foreground mb-2", children: "Order not found" }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
+      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
         " Back to Orders"
       ] }) })
@@ -9813,7 +10004,7 @@ function AdminOrderDetail() {
   return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto space-y-6", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/orders", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("h1", { className: "font-serif text-2xl font-bold text-foreground flex items-center gap-3", children: [
             "Order ",
@@ -10093,7 +10284,7 @@ function AdminInquiries() {
               inq.status.charAt(0).toUpperCase() + inq.status.slice(1)
             ] }) }),
             /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-muted-foreground text-xs whitespace-nowrap", children: new Date(inq.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) }),
-            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link$1, { href: `/admin-saad/inquiries/${inq.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-4 h-4 text-gold" }) }) }) })
+            /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx(Link, { href: `/admin-saad/inquiries/${inq.id}`, children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8", children: /* @__PURE__ */ jsx(ArrowUpRight, { className: "w-4 h-4 text-gold" }) }) }) })
           ]
         },
         inq.id
@@ -10178,7 +10369,7 @@ function AdminInquiryDetail() {
   if (!inquiry) {
     return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "text-center py-24", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-xl font-bold text-foreground mb-2", children: "Inquiry not found" }),
-      /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
+      /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsxs(Button, { variant: "outline", children: [
         /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
         " Back to Inquiries"
       ] }) })
@@ -10187,7 +10378,7 @@ function AdminInquiryDetail() {
   return /* @__PURE__ */ jsx(AdminLayout, { children: /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto space-y-5", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/admin-saad/inquiries", children: /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "icon", className: "shrink-0", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }) }) }),
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
             /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold tracking-tight text-foreground", children: inquiry.companyName }),
@@ -10731,7 +10922,7 @@ function AdminProducts() {
       ] }),
       /* @__PURE__ */ jsxs(DialogFooter, { children: [
         /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: () => setQuickEditOpen(false), children: [
-          /* @__PURE__ */ jsx(X$1, { className: "w-4 h-4 mr-2" }),
+          /* @__PURE__ */ jsx(X, { className: "w-4 h-4 mr-2" }),
           " Cancel"
         ] }),
         /* @__PURE__ */ jsxs(
@@ -11200,7 +11391,7 @@ It is now shown in your product preview and will be displayed alongside the stor
         ),
         logoFile && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 bg-secondary border border-border rounded-full px-2 py-1 text-xs", children: [
           /* @__PURE__ */ jsx("span", { className: "text-muted-foreground truncate max-w-24", children: logoFile.name }),
-          /* @__PURE__ */ jsx("button", { onClick: () => setLogoFile(null), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X$1, { className: "w-3 h-3" }) })
+          /* @__PURE__ */ jsx("button", { onClick: () => setLogoFile(null), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X, { className: "w-3 h-3" }) })
         ] }),
         /* @__PURE__ */ jsx("input", { ref: fileInputRef, type: "file", accept: "image/*", onChange: handleLogoUpload, className: "hidden" }),
         /* @__PURE__ */ jsxs(
@@ -11224,7 +11415,7 @@ It is now shown in your product preview and will be displayed alongside the stor
           /* @__PURE__ */ jsx(Settings, { className: "w-4 h-4 text-muted-foreground" }),
           /* @__PURE__ */ jsx("span", { className: "font-condensed font-bold uppercase tracking-wider text-xs text-foreground", children: "Gemini API Key Settings" })
         ] }),
-        /* @__PURE__ */ jsx("button", { onClick: () => setShowSettings(false), className: "text-muted-foreground hover:text-foreground", children: /* @__PURE__ */ jsx(X$1, { className: "w-4 h-4" }) })
+        /* @__PURE__ */ jsx("button", { onClick: () => setShowSettings(false), className: "text-muted-foreground hover:text-foreground", children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" }) })
       ] }),
       apiKeyQuery.data?.hasKey && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-xs", children: [
         /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-green-500" }),
@@ -11610,7 +11801,7 @@ function AIImageOptimizer() {
             {
               onClick: handleClear,
               className: "absolute top-2 right-2 bg-black/60 hover:bg-destructive/80 text-white rounded-full p-1.5 transition-colors",
-              children: /* @__PURE__ */ jsx(X$1, { className: "w-4 h-4" })
+              children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" })
             }
           )
         ] }),
@@ -12180,7 +12371,7 @@ function VirtualTryOnAgent({
                   setHasUnsavedModel(false);
                 },
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X$1, { className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X, { className: "w-3 h-3" })
               }
             )
           ] }) : /* @__PURE__ */ jsxs(
@@ -12256,7 +12447,7 @@ function VirtualTryOnAgent({
               {
                 onClick: () => setReferenceImages((prev) => prev.filter((_, idx) => idx !== i)),
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X$1, { className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X, { className: "w-3 h-3" })
               }
             )
           ] }, i)),
@@ -12301,7 +12492,7 @@ function VirtualTryOnAgent({
               {
                 onClick: () => setLogoImage(null),
                 className: "absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md",
-                children: /* @__PURE__ */ jsx(X$1, { className: "w-3 h-3" })
+                children: /* @__PURE__ */ jsx(X, { className: "w-3 h-3" })
               }
             )
           ] }) : /* @__PURE__ */ jsx(
@@ -13529,7 +13720,7 @@ function SizeChartEditor({ value, onChange }) {
       ] }) }),
       /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-border", children: rows.map((row, i) => /* @__PURE__ */ jsxs("tr", { className: "hover:bg-secondary/20 transition-colors", children: [
         columns.map((col) => /* @__PURE__ */ jsx("td", { className: "px-2 py-2", children: /* @__PURE__ */ jsx(Input, { value: row[col] ?? "", onChange: (e) => updateCell(i, col, e.target.value), className: "bg-background border-border" }) }, col)),
-        /* @__PURE__ */ jsx("td", { className: "px-2 py-2 text-center", children: /* @__PURE__ */ jsx(Button, { type: "button", variant: "ghost", size: "icon", onClick: () => removeRow(i), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X$1, { className: "w-4 h-4" }) }) })
+        /* @__PURE__ */ jsx("td", { className: "px-2 py-2 text-center", children: /* @__PURE__ */ jsx(Button, { type: "button", variant: "ghost", size: "icon", onClick: () => removeRow(i), className: "text-muted-foreground hover:text-destructive", children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" }) }) })
       ] }, i)) })
     ] }) }),
     /* @__PURE__ */ jsx("div", { className: "flex justify-between items-center", children: /* @__PURE__ */ jsxs(Button, { type: "button", size: "sm", variant: "outline", onClick: addRow, children: [
@@ -18511,7 +18702,7 @@ function Customize() {
         zIndex: 100
       }, children: [
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
-          /* @__PURE__ */ jsx(Link$1, { href: "/", style: { color: "#c9a84c", fontWeight: 700, fontSize: "13px", textDecoration: "none", letterSpacing: "0.05em" }, children: "← Back" }),
+          /* @__PURE__ */ jsx(Link, { href: "/", style: { color: "#c9a84c", fontWeight: 700, fontSize: "13px", textDecoration: "none", letterSpacing: "0.05em" }, children: "← Back" }),
           /* @__PURE__ */ jsx("span", { style: { color: "rgba(255,255,255,0.15)", fontSize: "18px" }, children: "|" }),
           /* @__PURE__ */ jsx("span", { style: { color: "#fff", fontWeight: 600, fontSize: "13px", letterSpacing: "0.1em", textTransform: "uppercase" }, children: "3D Product Customizer" })
         ] }),
@@ -19704,7 +19895,7 @@ function BrandingStudio() {
     ),
     /* @__PURE__ */ jsxs("header", { className: "flex-shrink-0 h-14 bg-[#1a1a1a] border-b border-white/10 flex items-center justify-between px-4 z-30", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(Link$1, { href: "/", children: /* @__PURE__ */ jsx("button", { className: "w-9 h-9 rounded-full flex items-center justify-center bg-white/8 hover:bg-white/15 transition-colors", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 text-white" }) }) }),
+        /* @__PURE__ */ jsx(Link, { href: "/", children: /* @__PURE__ */ jsx("button", { className: "w-9 h-9 rounded-full flex items-center justify-center bg-white/8 hover:bg-white/15 transition-colors", children: /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 text-white" }) }) }),
         /* @__PURE__ */ jsxs("div", { className: "leading-tight", children: [
           /* @__PURE__ */ jsx("div", { className: "text-sm font-bold text-white", children: "Woven Label Studio" }),
           /* @__PURE__ */ jsxs("div", { className: "text-[10px] text-white/40 hidden sm:block", children: [

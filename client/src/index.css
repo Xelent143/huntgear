@@ -41,12 +41,15 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-serif: 'Oswald', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
   --font-condensed: 'Barlow Condensed', sans-serif;
   /* Gold brand color — enables bg-gold, text-gold, border-gold, fill-gold as Tailwind utilities */
   --color-gold: oklch(0.68 0.13 72);
   --color-gold-light: oklch(0.78 0.11 72);
   --color-gold-dark: oklch(0.55 0.13 72);
+  --color-vibe-orange: oklch(0.68 0.13 72);
+  --shadow-vibe: 0 0 25px oklch(0.68 0.13 72 / 0.4);
 }
 
 :root {
@@ -176,7 +179,8 @@
   h1,
   h2,
   h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
   }
 
   button:not(:disabled),
@@ -195,7 +199,11 @@
 /* Custom Sialkot Sample Masters Utilities — using direct CSS values, not @apply, to avoid circular dependency */
 @layer utilities {
   .font-serif {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .font-heading {
+    font-family: 'Montserrat', sans-serif;
   }
 
   .font-condensed {
@@ -223,6 +231,39 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* ── Vibe Coding Utilities ────────────────────────────────────────────────── */
+  .vibe-glow-orange {
+    filter: drop-shadow(0 0 15px oklch(0.68 0.13 72 / 0.4));
+  }
+
+  .text-vibe-glow {
+    text-shadow: 0 0 20px oklch(0.68 0.13 72 / 0.6);
+  }
+
+  .glass-vibe {
+    background-color: oklch(1 0 0 / 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid oklch(1 0 0 / 0.1);
+  }
+
+  .animate-vibe-pulse {
+    animation: vibe-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes vibe-pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+
+    50% {
+      opacity: 0.8;
+      filter: brightness(1.2) drop-shadow(0 0 10px oklch(0.68 0.13 72 / 0.5));
+    }
   }
 
   /* Layout helpers */
@@ -253,33 +294,80 @@
      ═══════════════════════════════════════════════════════════════════════════ */
 
   /* Hunter Orange - Primary Brand Color */
-  .text-hunter-orange { color: #ff6b00; }
-  .bg-hunter-orange { background-color: #ff6b00; }
-  .border-hunter-orange { border-color: #ff6b00; }
-  .hover\:text-hunter-orange:hover { color: #ff6b00; }
-  .hover\:bg-hunter-orange:hover { background-color: #ff6b00; }
-  .hover\:border-hunter-orange:hover { border-color: #ff6b00; }
+  .text-hunter-orange {
+    color: #ff6b00;
+  }
+
+  .bg-hunter-orange {
+    background-color: #ff6b00;
+  }
+
+  .border-hunter-orange {
+    border-color: #ff6b00;
+  }
+
+  .hover\:text-hunter-orange:hover {
+    color: #ff6b00;
+  }
+
+  .hover\:bg-hunter-orange:hover {
+    background-color: #ff6b00;
+  }
+
+  .hover\:border-hunter-orange:hover {
+    border-color: #ff6b00;
+  }
 
   /* Orange Glow Effects */
-  .orange-glow { box-shadow: 0 0 20px rgba(255, 107, 0, 0.3); }
-  .orange-glow-lg { box-shadow: 0 0 40px rgba(255, 107, 0, 0.5); }
-  .orange-glow-xl { box-shadow: 0 0 60px rgba(255, 107, 0, 0.6); }
+  .orange-glow {
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+  }
+
+  .orange-glow-lg {
+    box-shadow: 0 0 40px rgba(255, 107, 0, 0.5);
+  }
+
+  .orange-glow-xl {
+    box-shadow: 0 0 60px rgba(255, 107, 0, 0.6);
+  }
 
   /* Text Shadows for Readability on Images */
-  .text-shadow-sm { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); }
-  .text-shadow-md { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); }
-  .text-shadow-lg { text-shadow: 0 4px 8px rgba(0, 0, 0, 1); }
-  .text-shadow-xl { text-shadow: 0 0 20px rgba(0, 0, 0, 0.8); }
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+
+  .text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  }
+
+  .text-shadow-xl {
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  }
 
   /* High Contrast Text - Maximum Readability */
-  .text-primary-white { color: #ffffff; }
-  .text-secondary-white { color: rgba(255, 255, 255, 0.9); }
-  .text-tertiary-white { color: rgba(255, 255, 255, 0.7); }
-  .text-muted-white { color: rgba(255, 255, 255, 0.5); }
+  .text-primary-white {
+    color: #ffffff;
+  }
+
+  .text-secondary-white {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .text-tertiary-white {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .text-muted-white {
+    color: rgba(255, 255, 255, 0.5);
+  }
 
   /* Hunting Brand Typography */
   .font-hunting-display {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -297,6 +385,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
   }
+
   .card-hunting:hover {
     border-color: rgba(255, 107, 0, 0.5);
     background: #161616;
@@ -315,6 +404,7 @@
     transition: all 0.3s ease;
     box-shadow: 0 0 30px rgba(255, 107, 0, 0.4);
   }
+
   .btn-hunting-primary:hover {
     background: #ff8533;
     box-shadow: 0 0 50px rgba(255, 107, 0, 0.6);
@@ -332,6 +422,7 @@
     padding: 1rem 2rem;
     transition: all 0.3s ease;
   }
+
   .btn-hunting-secondary:hover {
     border-color: #ff6b00;
     color: #ff6b00;
@@ -346,15 +437,16 @@
 
   /* Gradient Overlays */
   .gradient-hero {
-    background: linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
   }
+
   .gradient-bottom {
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
   }
 
   /* Grid Pattern Background */
   .bg-grid-pattern {
-    background-image: radial-gradient(circle at 1px 1px, rgba(255,107,0,0.1) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255, 107, 0, 0.1) 1px, transparent 0);
     background-size: 40px 40px;
   }
 
@@ -554,7 +646,8 @@ html {
 
 /* ── Quote decoration ────────────────────────────────────────────────────── */
 .quote-mark {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
   font-size: 6rem;
   line-height: 0;
   color: oklch(0.68 0.13 72 / 0.15);

@@ -87,7 +87,7 @@ export interface GeneratedProductData {
 
 export async function generateProductData(
     userDescription: string,
-    brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
+    brandContext: string = "Xelent Huntgear, a premium manufacturer of high-performance technical hunting apparel and outdoor gear from Pakistan",
     apiKey?: string,
     modelId: string = "gemini-3.1-pro-preview",
 ): Promise<GeneratedProductData> {
@@ -275,7 +275,7 @@ export async function analyzeImageForSeo(
         },
     });
 
-    const prompt = `You are an expert SEO and B2B apparel consultant for Sialkot Sample Masters, a premium Pakistan-based manufacturer.
+    const prompt = `You are an expert SEO and B2B hunting apparel consultant for Xelent Huntgear, a premium Pakistan-based manufacturer.
 Analyze this raw image and return a JSON object with strictly these three properties:
 1. "filename": A highly SEO-optimized, lowercase, kebab-case filename (ending in .jpg) that describes the apparel item perfectly. Include localized B2B keywords where appropriate (e.g. "wholesale-bjj-kimono-manufacturer-pakistan.jpg"). Keep it under 60 characters if possible.
 2. "altText": Highly descriptive Alt Text for blind users and search bots. Describe exactly what the apparel item looks like (e.g. "White pearl weave Brazilian Jiu Jitsu Kimono jacket with custom embroidery on the shoulder").
@@ -305,7 +305,7 @@ Important: Return ONLY valid JSON, no markdown, no explanation.`;
 export async function analyzeUploadedProductImageBase64(
     base64: string,
     mimeType: string,
-    brandContext: string = "Sialkot Sample Masters, a premium B2B eco-friendly apparel manufacturer from Pakistan",
+    brandContext: string = "Xelent Huntgear, a premium manufacturer of high-performance technical hunting apparel and outdoor gear from Pakistan",
     apiKey?: string,
     modelId: string = "gemini-3.1-pro-preview",
 ): Promise<GeneratedProductData> {
@@ -634,7 +634,7 @@ export async function prefillProductDataFromGrid(
         },
     });
 
-    const prompt = `Act as an elite SEO Expert and E-commerce Manager for Sialkot Sample Masters (a premium B2B custom apparel manufacturer in Pakistan).
+    const prompt = `Act as an elite SEO Expert and E-commerce Manager for Xelent Huntgear (a premium B2B custom hunting and technical apparel manufacturer in Pakistan).
 I am providing you the original design prompt ("${imagePrompt}") and the generated multi-view design grid image.
 Generate a complete, highly-optimized product listing based on this apparel item.
 Return ONLY valid JSON matching this exact structure:

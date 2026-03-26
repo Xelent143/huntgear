@@ -48,10 +48,10 @@ export default function AdminSidebar({ isMobileOpen, setMobileOpen }: { isMobile
                     <Link href="/">
                         <div className="flex items-center gap-3 cursor-pointer group">
                             <div className="w-9 h-9 bg-gradient-to-br from-gold to-gold/70 rounded-lg flex items-center justify-center shadow-lg shadow-gold/20 group-hover:shadow-gold/40 transition-shadow">
-                                <span className="text-black font-extrabold text-sm">S</span>
+                                <span className="text-black font-extrabold text-sm">XH</span>
                             </div>
                             <div className="leading-none">
-                                <span className="text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block">Sialkot Sample</span>
+                                <span className="text-white font-condensed font-bold text-sm tracking-[0.08em] uppercase block">Xelent Huntgear</span>
                                 <span className="text-gold/80 font-condensed font-semibold text-[11px] tracking-[0.12em] uppercase block mt-0.5">Admin Panel</span>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, Clock, Calendar, ShieldCheck, Search, ClipboardCheck, Truck, AlertCircle, Info } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock, Calendar, ShieldCheck, Search, ClipboardCheck, Truck, AlertCircle, Info, X } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";

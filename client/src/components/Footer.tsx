@@ -54,11 +54,11 @@ export default function Footer() {
                 />
                 <div>
                   <span className="text-white font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Xelent</span>
-                  <span className="text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Masters</span>
+                  <span className="text-[#ff6b00] font-condensed font-bold text-lg tracking-[0.08em] uppercase leading-none block">Huntgear</span>
                 </div>
               </Link>
               <p className="text-white/85 text-sm leading-relaxed mb-8 max-w-sm">
-                Pakistan's premier custom apparel manufacturer. Specializing in high-performance sportswear, technical apparel, tactical gear, and martial arts uniforms for global brands.
+                Xelent Huntgear: The pinnacle of performance hunting apparel. Engineered for the extreme, designed for the hunt, and manufactured with technical precision for global elite brands.
               </p>
 
               {/* Trust Badges */}
@@ -171,8 +171,8 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm mb-1">Email inquiries</p>
-                    <a href="mailto:info@sialkotsamplemasters.com" className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors">
-                      info@sialkotsamplemasters.com
+                    <a href="mailto:info@xelenthuntgear.com" className="text-white/85 hover:text-[#ff6b00] text-sm transition-colors">
+                      info@xelenthuntgear.com
                     </a>
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export default function Footer() {
 
       {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/923022922242?text=Hello%20Sialkot%20Sample%20Masters!%20I'm%20interested%20in%20custom%20apparel%20manufacturing."
+        href="https://wa.me/923022922242?text=Hello%20Xelent%20Huntgear!%20I'm%20interested%20in%20custom%20hunting%20apparel%20manufacturing."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-black/40 hover:scale-110 transition-transform"

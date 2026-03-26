@@ -9,11 +9,11 @@ import { motion, AnimatePresence } from "framer-motion";
 // ── Announcement Bar ─────────────────────────────────────────────────────────
 function AnnouncementBar() {
   const [visible, setVisible] = useState(() => {
-    try { return !sessionStorage.getItem("ssm-ann-dismissed"); } catch { return true; }
+    try { return !sessionStorage.getItem("xh-ann-dismissed"); } catch { return true; }
   });
 
-  const dismiss = () => {
-    try { sessionStorage.setItem("ssm-ann-dismissed", "1"); } catch { /* noop */ }
+  const dismissAnnouncement = () => {
+    try { sessionStorage.setItem("xh-ann-dismissed", "1"); } catch { /* noop */ }
     setVisible(false);
   };
 
@@ -41,7 +41,7 @@ function AnnouncementBar() {
           </Link>
         </div>
         <button
-          onClick={dismiss}
+          onClick={dismissAnnouncement}
           className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors p-1"
           aria-label="Dismiss announcement"
         >
@@ -54,14 +54,20 @@ function AnnouncementBar() {
 
 
 
-// ── Megamenu: Product Categories ─────────────────────────────────────────────
-const productCategories = [
-  { name: "Sportswear & Team Kits", image: IMAGES.catSports, href: "/products#sportswear", tag: "Athletic" },
-  { name: "Hunting Wear", image: IMAGES.catHunting, href: "/products#hunting-wear", tag: "MIL-SPEC" },
-  { name: "Technical Apparel", image: IMAGES.catHuntingGear, href: "/products#technical-gear", tag: "Lifestyle" },
-  { name: "Security Uniforms", image: IMAGES.catSecurityUniforms, href: "/products#security-uniforms", tag: "Guard" },
-  { name: "Tech Wear", image: IMAGES.catTechwear, href: "/products#techwear", tag: "Utility" },
-  { name: "Ski Wear", image: IMAGES.catSki, href: "/products#ski-wear", tag: "Alpine" },
+// ── Megamenu: Species ───────────────────────────────────────────────────────
+const speciesCategories = [
+  { name: "Whitetail", image: IMAGES.navSpecWhitetail, href: "/products?category=Whitetail", tag: "Hardwoods" },
+  { name: "Big Game", image: IMAGES.navSpecBigGame, href: "/products?category=Big+Game", tag: "Alpine" },
+  { name: "Waterfowl", image: IMAGES.navSpecWaterfowl, href: "/products?category=Waterfowl", tag: "Marsh" },
+  { name: "Turkey", image: IMAGES.navSpecTurkey, href: "/products?category=Turkey", tag: "Spring" },
+];
+
+// ── Megamenu: Systems ────────────────────────────────────────────────────────
+const systemCategories = [
+  { name: "Base Layers", image: IMAGES.navSysBase, href: "/products?system=Base+Layer", tag: "Next-to-Skin" },
+  { name: "Insulation", image: IMAGES.navSysInsulation, href: "/products?system=Insulation", tag: "Thermal" },
+  { name: "Outerwear", image: IMAGES.navSysShell, href: "/products?system=Outerwear", tag: "Protection" },
+  { name: "Rain Gear", image: IMAGES.navSysRain, href: "/products?system=Rain+Gear", tag: "Waterproof" },
 ];
 
 // ── Megamenu: Company links ────────────────────────────────────────────────────
@@ -73,80 +79,113 @@ const companyLinks = [
   { label: "Blog & Insights", href: "/blog", icon: BarChart2, desc: "Hunting tips & gear guides" },
 ];
 
-type MegamenuKey = "company" | "products" | null;
+type MegamenuKey = "species" | "systems" | "company" | null;
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Company", href: "#", megamenu: "company" as MegamenuKey },
-  { label: "Products", href: "#", megamenu: "products" as MegamenuKey },
+  { label: "Shop by Species", href: "#", megamenu: "species" as MegamenuKey },
+  { label: "Shop by System", href: "#", megamenu: "systems" as MegamenuKey },
   { label: "Shop", href: "/shop" },
+  { label: "Innovation", href: "#", megamenu: "company" as MegamenuKey },
   { label: "3D Design", href: "/customize" },
-  { label: "Brand Studio", href: "/branding-studio" },
   { label: "Contact", href: "/contact" },
 ];
 
-// ── Products Megamenu ──────────────────────────────────────────────────────────
-function ProductsMegamenu({ onClose }: { onClose: () => void }) {
+// ── Species Megamenu ──────────────────────────────────────────────────────────
+function SpeciesMegamenu({ onClose }: { onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden"
+      className="absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden"
       style={{ zIndex: 200 }}
     >
-      {/* Invisible hit bridge to prevent menu from closing when moving mouse from button to menu */}
       <div className="absolute -top-3 left-0 right-0 h-3 pointer-events-auto" />
-      {/* Header row */}
-      <div className="bg-[#161616] px-6 py-3 border-b border-white/10 flex items-center justify-between">
-        <div>
-          <p className="font-condensed font-bold text-xs tracking-widest uppercase text-[#ff6b00]">Product Catalog</p>
-          <p className="text-white text-sm font-semibold">Premium Hunting Gear Categories</p>
-        </div>
-        <Link href="/products" onClick={onClose}>
-          <Button size="sm" className="bg-[#ff6b00] text-background hover:bg-[#ff6b00]/90 font-condensed font-bold uppercase tracking-wider text-xs rounded-sm h-8 px-4 gap-1">
-            View All <ArrowRight className="w-3 h-3" />
-          </Button>
-        </Link>
-      </div>
-
-      {/* Category grid */}
-      <div className="grid grid-cols-6 gap-0 p-4">
-        {productCategories.map((cat) => (
-          <Link key={cat.href} href={cat.href} onClick={onClose}>
-            <div className="group relative overflow-hidden rounded-sm cursor-pointer m-1">
-              <div className="aspect-[3/4] overflow-hidden bg-[#0d0d0d]">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              </div>
-              {/* Tag */}
-              <div className="absolute top-2 left-2 bg-[#ff6b00] text-black text-[9px] font-condensed font-bold tracking-widest uppercase px-1.5 py-0.5 rounded-sm">
-                {cat.tag}
-              </div>
-              {/* Name */}
-              <div className="absolute bottom-0 left-0 right-0 p-2">
-                <p className="text-white font-condensed font-bold text-xs uppercase leading-tight group-hover:text-[#ff6b00] transition-colors">
-                  {cat.name}
-                </p>
-              </div>
-            </div>
+      <div className="max-w-7xl mx-auto">
+        <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between text-left">
+          <div>
+            <p className="font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1">Shop by Species</p>
+            <h3 className="text-white text-2xl font-heading font-bold tracking-tight">Engineered Systems for Every Environment</h3>
+          </div>
+          <Link href="/products" onClick={onClose}>
+            <Button size="sm" className="bg-[#ff6b00] text-black hover:bg-white transition-all font-serif font-black uppercase tracking-widest text-xs rounded-none h-11 px-8 gap-3 vibe-glow-orange group">
+              Explore All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </Link>
-        ))}
-      </div>
+        </div>
 
-      {/* Footer strip */}
-      <div className="bg-[#161616]/40 border-t border-white/10 px-6 py-2.5 flex items-center gap-6 text-xs text-white/70">
-        {["Low MOQ from 20 pcs", "ISO 9001 Certified", "Sample in 7 Days", "Ships Worldwide"].map((item) => (
-          <span key={item} className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00]" />
-            {item}
-          </span>
-        ))}
+        <div className="grid grid-cols-4 gap-8 p-10 pb-12">
+          {speciesCategories.map((cat) => (
+            <Link key={cat.href} href={cat.href} onClick={onClose}>
+              <div className="group relative overflow-hidden cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden bg-black">
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                </div>
+                <div className="absolute top-4 left-4 border border-white/20 bg-black/40 backdrop-blur-md text-white text-[9px] font-serif font-black tracking-[0.2em] uppercase px-2 py-1">
+                  {cat.tag}
+                </div>
+                <div className="absolute bottom-6 left-6 right-6 text-left">
+                  <p className="text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors mb-1">
+                    {cat.name}
+                  </p>
+                  <div className="w-0 group-hover:w-full h-0.5 bg-[#ff6b00] transition-all duration-300" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ── Systems Megamenu ──────────────────────────────────────────────────────────
+function SystemsMegamenu({ onClose }: { onClose: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="absolute top-full left-0 w-full bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/90 overflow-hidden"
+      style={{ zIndex: 200 }}
+    >
+      <div className="absolute -top-3 left-0 right-0 h-3 pointer-events-auto" />
+      <div className="max-w-7xl mx-auto">
+        <div className="px-8 py-6 border-b border-white/5 text-left">
+          <p className="font-serif font-black text-[10px] tracking-[0.4em] uppercase text-[#ff6b00] mb-1">Shop by System</p>
+          <h3 className="text-white text-2xl font-heading font-bold tracking-tight">Technical Layering for Peak Performance</h3>
+        </div>
+
+        <div className="grid grid-cols-4 gap-8 p-10 pb-12">
+          {systemCategories.map((cat) => (
+            <Link key={cat.href} href={cat.href} onClick={onClose}>
+              <div className="group relative overflow-hidden cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden bg-black">
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                </div>
+                <div className="absolute bottom-6 left-6 right-6 text-left">
+                  <p className="text-[10px] text-[#ff6b00] font-serif font-black tracking-widest uppercase mb-1">{cat.tag}</p>
+                  <p className="text-white font-serif font-black text-xl uppercase tracking-tighter leading-none group-hover:text-[#ff6b00] transition-colors">
+                    {cat.name}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </motion.div>
   );
@@ -160,7 +199,7 @@ function CompanyMegamenu({ onClose }: { onClose: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-0 w-72 bg-[#111111] border border-white/10 shadow-2xl shadow-black/50 overflow-hidden"
+      className="absolute top-full left-0 w-72 bg-[#0a0a0a] border-t-2 border-[#ff6b00] shadow-2xl shadow-black/50 overflow-hidden"
       style={{ zIndex: 200 }}
     >
       {/* Invisible hit bridge to prevent menu from closing when moving mouse from button to menu */}
@@ -277,7 +316,7 @@ export default function Navbar() {
                 link.megamenu ? (
                   <div
                     key={link.label}
-                    className="relative"
+                    className={(link.megamenu === "species" || link.megamenu === "systems") ? "" : "relative"}
                     onMouseEnter={() => handleMouseEnter(link.megamenu as MegamenuKey)}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -300,8 +339,10 @@ export default function Navbar() {
                           onMouseEnter={() => handleMouseEnter(link.megamenu as MegamenuKey)}
                           onMouseLeave={handleMouseLeave}
                         >
-                          {link.megamenu === "products" ? (
-                            <ProductsMegamenu onClose={closeMegamenu} />
+                          {link.megamenu === "species" ? (
+                            <SpeciesMegamenu onClose={closeMegamenu} />
+                          ) : link.megamenu === "systems" ? (
+                            <SystemsMegamenu onClose={closeMegamenu} />
                           ) : (
                             <CompanyMegamenu onClose={closeMegamenu} />
                           )}
@@ -392,23 +433,59 @@ export default function Navbar() {
                   </div>
                 </div>
 
+                {/* Shop by Species (Mobile) */}
+                <div className="space-y-4">
+                  <p className="text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3">Shop by Species</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {speciesCategories.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm"
+                      >
+                        <span className="text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight">{link.name}</span>
+                        <span className="text-[8px] text-[#ff6b00] font-serif font-bold uppercase tracking-[0.2em]">{link.tag}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Shop by System (Mobile) */}
+                <div className="space-y-4 pt-4">
+                  <p className="text-[10px] font-black text-[#ff6b00]/70 uppercase tracking-[0.3em] border-b border-white/10 pb-3">Technical Systems</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {systemCategories.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="flex flex-col gap-2 p-3 bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 transition-all rounded-sm"
+                      >
+                        <span className="text-[10px] font-serif font-black uppercase tracking-widest text-white leading-tight">{link.name}</span>
+                        <span className="text-[8px] text-white/40 font-serif font-bold uppercase tracking-[0.2em]">{link.tag}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Quick Links */}
                 <div className="space-y-4 pt-4">
                   <p className="text-[10px] font-black text-white/50 uppercase tracking-[0.2em] border-b border-white/10 pb-3">Quick Links</p>
                   <div className="grid grid-cols-2 gap-3">
                     {[
                       { label: "Home", href: "/" },
-                      { label: "Shop", href: "/shop" },
-                      { label: "Products", href: "/products" },
-                      { label: "3D Design", href: "/customize" },
-                      { label: "Brand Studio", href: "/branding-studio" },
+                      { label: "Shop All", href: "/shop" },
+                      { label: "3D Custom", href: "/customize" },
+                      { label: "Our Story", href: "/about" },
+                      { label: "Services", href: "/services" },
                       { label: "Contact", href: "/contact" },
                     ].map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`flex justify-center items-center text-center p-4 text-xs font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"
+                        className={`flex justify-center items-center text-center p-4 text-[10px] font-black uppercase tracking-widest transition-all active:scale-[0.98] ${location === link.href ? "bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/30" : "bg-[#111111] border border-white/10 hover:border-[#ff6b00]/30 hover:bg-[#161616] text-white"
                           }`}
                       >
                         {link.label}
