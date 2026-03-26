@@ -104,7 +104,7 @@ export default function FeaturedProductCarousel() {
                 <div
                     ref={containerRef}
                     onScroll={handleScroll}
-                    className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory min-h-[400px]"
+                    className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory min-h-[400px] max-w-7xl mx-auto"
                 >
                     {isLoading ? (
                         <div className="flex-1 flex flex-col items-center justify-center py-20 space-y-4">
@@ -122,10 +122,10 @@ export default function FeaturedProductCarousel() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="w-[300px] flex-shrink-0 group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden"
+                                className="w-[300px] flex-none group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden"
                             >
                                 {/* Product Image */}
-                                <div className="aspect-[3/4] overflow-hidden bg-[#1a1a1a]">
+                                <div className="overflow-hidden bg-[#1a1a1a]" style={{ aspectRatio: '3/4' }}>
                                     <img
                                         src={product.image}
                                         alt={product.name}
@@ -178,7 +178,7 @@ export default function FeaturedProductCarousel() {
                         )))}
 
                     {/* See More Card */}
-                    <div className="w-[300px] flex-shrink-0 h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all">
+                    <div className="w-[300px] flex-none h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all">
                         <Link href="/shop">
                             <div className="flex flex-col items-center gap-4 cursor-pointer">
                                 <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#ff6b00] transition-colors">

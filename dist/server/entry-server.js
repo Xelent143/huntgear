@@ -1544,7 +1544,7 @@ function FeaturedProductCarousel() {
       {
         ref: containerRef,
         onScroll: handleScroll,
-        className: "flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory min-h-[400px]",
+        className: "flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory min-h-[400px] max-w-7xl mx-auto",
         children: [
           isLoading ? /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-center justify-center py-20 space-y-4", children: [
             /* @__PURE__ */ jsx(Loader2, { className: "w-8 h-8 text-[#ff6b00] animate-spin" }),
@@ -1555,9 +1555,9 @@ function FeaturedProductCarousel() {
               initial: { opacity: 0, y: 20 },
               whileInView: { opacity: 1, y: 0 },
               viewport: { once: true },
-              className: "w-[300px] flex-shrink-0 group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden",
+              className: "w-[300px] flex-none group relative bg-[#111111] border border-white/[0.05] snap-start hover:border-[#ff6b00]/30 transition-all duration-500 overflow-hidden",
               children: [
-                /* @__PURE__ */ jsxs("div", { className: "aspect-[3/4] overflow-hidden bg-[#1a1a1a]", children: [
+                /* @__PURE__ */ jsxs("div", { className: "overflow-hidden bg-[#1a1a1a]", style: { aspectRatio: "3/4" }, children: [
                   /* @__PURE__ */ jsx(
                     "img",
                     {
@@ -1590,7 +1590,7 @@ function FeaturedProductCarousel() {
             },
             product.id
           )),
-          /* @__PURE__ */ jsx("div", { className: "w-[300px] flex-shrink-0 h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all", children: /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 cursor-pointer", children: [
+          /* @__PURE__ */ jsx("div", { className: "w-[300px] flex-none h-full flex flex-col items-center justify-center bg-[#0d0d0d] border border-dashed border-white/10 group hover:border-[#ff6b00]/30 transition-all", children: /* @__PURE__ */ jsx(Link, { href: "/shop", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center gap-4 cursor-pointer", children: [
             /* @__PURE__ */ jsx("div", { className: "w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#ff6b00] transition-colors", children: /* @__PURE__ */ jsx(ArrowRight, { className: "w-5 h-5 text-white/40 group-hover:text-[#ff6b00] transform transition-transform group-hover:translate-x-1" }) }),
             /* @__PURE__ */ jsx("span", { className: "text-white/40 font-condensed font-bold uppercase tracking-widest text-[10px] group-hover:text-white transition-colors", children: "Explore Full Arsenal" })
           ] }) }) })
