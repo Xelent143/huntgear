@@ -8,27 +8,18 @@ import SEOHead from "@/components/SEOHead";
 import { IMAGES } from "@/lib/images";
 import { motion } from "framer-motion";
 import { FadeIn, StaggerChildren, AnimatedChild, PageWrapper } from "@/components/animations";
-import { SHOP_CATEGORIES } from "@/lib/shop-categories";
 import { Breadcrumb, predefinedBreadcrumbs } from "@/components/Breadcrumb";
 
-// Sample products - in real app, fetch from API
-const sampleProducts = [
-  { id: 1, name: "Pro Hunter Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "20K Waterproof" },
-  { id: 2, name: "Tactical Cargo Pants", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Reinforced" },
-  { id: 3, name: "Digital Camo Shell", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Custom Pattern" },
-  { id: 4, name: "Merino Base Layer", category: "Base Layers", price: "Contact", image: IMAGES.catSecurityUniforms, badge: "Odor Control" },
-  { id: 5, name: "Insulated Parka", category: "Hunting Jackets", price: "Contact", image: IMAGES.catHunting, badge: "800 Fill" },
-  { id: 6, name: "Softshell Jacket", category: "Hunting Jackets", price: "Contact", image: IMAGES.catTechwear, badge: "Windproof" },
-  { id: 7, name: "Bib Overalls", category: "Hunting Pants", price: "Contact", image: IMAGES.catSports, badge: "Insulated" },
-  { id: 8, name: "Woodland Camo Set", category: "Camo Gear", price: "Contact", image: IMAGES.catStreetwear, badge: "Pattern Design" },
-];
-
 export default function Shop() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState<number | "all">("all");
+  const [selectedSubcategory, setSelectedSubcategory] = useState<number | "all">("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch live products from the database
   const { data: dbProducts, isLoading } = trpc.product.list.useQuery();
+
+  // Fetch dynamic categories and subcategories
+  const { data: categoryTree, isLoading: isLoadingCats } = trpc.category.listWithSubs.useQuery();
 
   // Map database products to the UI format
   const products = dbProducts?.map(p => ({
@@ -36,15 +27,18 @@ export default function Shop() {
     slug: p.slug,
     name: p.title || "Unnamed Gear",
     category: p.category || "General",
+    categoryId: p.categoryId,
+    subcategoryId: p.subcategoryId,
     price: p.samplePrice ? `$${p.samplePrice}` : "Contact for Quote",
     image: p.mainImage || IMAGES.catHunting,
     badge: p.isFeatured ? "Featured" : "New",
   })) || [];
 
   const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || product.categoryId === selectedCategory;
+    const matchesSubcategory = selectedSubcategory === "all" || product.subcategoryId === selectedSubcategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesSubcategory && matchesSearch;
   });
 
   return (
@@ -66,174 +60,214 @@ export default function Shop() {
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════════════
-          HERO SECTION
-          ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[45vh] bg-black overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[40vh] bg-black overflow-hidden flex items-center">
         <div className="absolute inset-0">
-          <img src={IMAGES.shopBg} alt="Xelent Huntgear Shop - B2B Hunting Apparel Catalog with Waterproof Jackets Camo Gear and Tactical Pants" className="w-full h-full object-cover opacity-40" />
+          <img src={IMAGES.shopBg} alt="Xelent Huntgear Shop" className="w-full h-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" />
         </div>
 
-        <div className="relative z-10 min-h-[50vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
               className="text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4"
             >
-              Product Catalog
+              Elite Technical Systems
             </motion.p>
-
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6"
+              className="text-5xl sm:text-6xl font-bold text-white leading-tight mb-4"
             >
-              Hunting Gear
-              <span className="block text-[#ff6b00] italic font-light">Collection</span>
+              HUNTING <span className="text-[#ff6b00] italic font-light">CATALOG.</span>
             </motion.h1>
-
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="w-20 h-1 bg-[#ff6b00] origin-left mb-6"
-            />
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-white/80 text-lg max-w-2xl leading-relaxed"
-            >
-              Browse our hunting apparel catalog. All products available for custom manufacturing
-              with your branding. Low MOQ 50pcs per style.
-            </motion.p>
+            <div className="w-20 h-1 bg-[#ff6b00] mb-6" />
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════════════════
-          SHOP SECTION
-          ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="py-20 bg-[#0a0a0a]">
+      {/* Shop Main Area */}
+      <section className="py-12 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Filters & Search */}
-          <div className="flex flex-col md:flex-row gap-6 mb-12">
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className={`px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === "all"
-                  ? "bg-[#ff6b00] text-black"
-                  : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"
-                  }`}
-              >
-                All Products
-              </button>
-              {SHOP_CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.name)}
-                  className={`px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === cat.name
-                    ? "bg-[#ff6b00] text-black"
-                    : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"
-                    }`}
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-col lg:flex-row gap-12">
 
-            {/* Search */}
-            <div className="relative md:ml-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full md:w-64 bg-[#161616] border border-white/10 pl-10 pr-4 py-2 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
-              />
-            </div>
-          </div>
+            {/* Sidebar: Categories */}
+            <aside className="lg:w-64 flex-shrink-0">
+              <div className="sticky top-24">
+                <div className="flex items-center gap-2 mb-8 border-b border-white/10 pb-4">
+                  <Filter className="w-4 h-4 text-[#ff6b00]" />
+                  <h2 className="text-white font-condensed font-bold uppercase tracking-widest text-sm">Sort By Arsenal</h2>
+                </div>
 
-          {/* Products Grid */}
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-32 space-y-4">
-              <Loader2 className="w-10 h-10 text-[#ff6b00] animate-spin" />
-              <p className="text-white/40 font-condensed tracking-widest uppercase text-sm">Loading Arsenal...</p>
-            </div>
-          ) : (
-            <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.08}>
-              {filteredProducts.map((product: any) => (
-                <AnimatedChild key={product.id} direction="up">
-                  <Link href={`/shop/${product.slug}`}>
-                    <div className="group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300 cursor-pointer">
-                      {/* Image */}
-                      <div className="relative aspect-square overflow-hidden bg-[#1a1a1a]">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                        />
-                        {/* Badge */}
-                        <div className="absolute top-3 left-3">
-                          <span className="bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1">
-                            {product.badge}
-                          </span>
-                        </div>
-                      </div>
+                <div className="space-y-6">
+                  {/* All Products Link */}
+                  <button
+                    onClick={() => { setSelectedCategory("all"); setSelectedSubcategory("all"); }}
+                    className={`block w-full text-left font-condensed uppercase tracking-wider text-xs px-4 py-3 border transition-all ${selectedCategory === "all"
+                        ? "bg-[#ff6b00] text-black border-[#ff6b00]"
+                        : "text-white/40 border-white/5 hover:border-[#ff6b00]/30 hover:text-white"
+                      }`}
+                  >
+                    All Collections
+                  </button>
 
-                      {/* Content */}
-                      <div className="p-5">
-                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">{product.category}</p>
-                        <h3 className="text-white font-condensed font-bold text-lg uppercase group-hover:text-[#ff6b00] transition-colors line-clamp-1">
-                          {product.name}
-                        </h3>
-                        <div className="mt-4 flex items-center justify-between">
-                          <span className="text-white/60 text-sm">{product.price}</span>
-                          <span className="text-[#ff6b00] text-xs font-bold uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            Details <ArrowRight className="w-3 h-3" />
-                          </span>
-                        </div>
-                      </div>
+                  {isLoadingCats ? (
+                    <div className="space-y-4">
+                      {[1, 2, 3, 4].map(i => (
+                        <div key={i} className="h-10 bg-white/5 animate-pulse rounded" />
+                      ))}
                     </div>
+                  ) : (
+                    categoryTree?.map((cat) => (
+                      <div key={cat.id} className="space-y-2">
+                        <button
+                          onClick={() => { setSelectedCategory(cat.id); setSelectedSubcategory("all"); }}
+                          className={`w-full text-left flex items-center justify-between group py-1 ${selectedCategory === cat.id ? "text-[#ff6b00]" : "text-white/60 hover:text-white"
+                            }`}
+                        >
+                          <span className="font-condensed font-bold uppercase tracking-widest text-sm">{cat.name}</span>
+                          <ChevronDown className={`w-3 h-3 transition-transform ${selectedCategory === cat.id ? "rotate-180 text-[#ff6b00]" : "text-white/20"}`} />
+                        </button>
+
+                        {selectedCategory === cat.id && cat.subcategories && cat.subcategories.length > 0 && (
+                          <div className="pl-4 space-y-1 border-l border-white/5 mt-2 ml-1">
+                            {cat.subcategories.map((sub: any) => (
+                              <button
+                                key={sub.id}
+                                onClick={() => setSelectedSubcategory(sub.id)}
+                                className={`block w-full text-left py-1.5 text-xs font-medium transition-colors ${selectedSubcategory === sub.id ? "text-white" : "text-white/30 hover:text-white"
+                                  }`}
+                              >
+                                {sub.name}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Technical Support Box */}
+                <div className="mt-12 p-6 bg-[#111111] border border-white/5">
+                  <h4 className="text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Technical Support</h4>
+                  <p className="text-white/40 text-[10px] leading-relaxed mb-4 uppercase tracking-wider">
+                    Need a custom built technical apparel solution? Our engineering team is ready to assist.
+                  </p>
+                  <Link href="/contact">
+                    <span className="text-[#ff6b00] text-[10px] font-bold uppercase tracking-widest hover:underline cursor-pointer">
+                      Consult Specialist →
+                    </span>
                   </Link>
-                </AnimatedChild>
-              ))}
-            </StaggerChildren>
-          )}
+                </div>
+              </div>
+            </aside>
 
-          {/* Empty State */}
-          {!isLoading && filteredProducts.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-white/50 text-lg">No products found matching your criteria.</p>
-              <button
-                onClick={() => { setSelectedCategory("all"); setSearchQuery(""); }}
-                className="mt-4 text-[#ff6b00] hover:underline"
-              >
-                Clear filters
-              </button>
+            {/* Main Content: Products */}
+            <div className="flex-1">
+              {/* Search & Stats Bar */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 bg-[#111111] p-4 border border-white/5">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                  <input
+                    type="text"
+                    placeholder="Search Technical Arsenal..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-transparent border-none pl-10 pr-4 py-1 text-white text-sm focus:ring-0 placeholder:text-white/10"
+                  />
+                </div>
+
+                <div className="flex items-center gap-4 text-white/20 font-condensed text-[10px] font-bold uppercase tracking-widest border-l border-white/10 pl-6">
+                  Showing <span className="text-white">{filteredProducts.length}</span> Built Results
+                </div>
+              </div>
+
+              {/* Products Grid */}
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center py-32 space-y-4">
+                  <Loader2 className="w-10 h-10 text-[#ff6b00] animate-spin" />
+                  <p className="text-white/40 font-condensed tracking-widest uppercase text-sm">Synchronizing Arsenal...</p>
+                </div>
+              ) : (
+                <>
+                  <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" stagger={0.08}>
+                    {filteredProducts.map((product) => (
+                      <AnimatedChild key={product.id} direction="up">
+                        <Link href={`/shop/${product.slug}`}>
+                          <div className="group bg-[#111111] border border-white/5 overflow-hidden hover:border-[#ff6b00]/30 transition-all duration-500 cursor-pointer">
+                            {/* Image Container */}
+                            <div className="relative aspect-[3/4] overflow-hidden bg-[#1a1a1a]">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                              />
+                              {/* Overlay Gradient */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                              {/* Badge */}
+                              <div className="absolute top-4 left-4">
+                                <span className="bg-[#ff6b00] text-black text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl">
+                                  {product.badge}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Info */}
+                            <div className="p-6 border-t border-white/5 bg-gradient-to-b from-transparent to-black/20">
+                              <p className="text-[#ff6b00] text-[9px] font-bold uppercase tracking-[0.3em] mb-2">{product.category}</p>
+                              <h3 className="text-white font-condensed font-bold text-xl uppercase tracking-wider group-hover:text-white transition-colors line-clamp-1 mb-4">
+                                {product.name}
+                              </h3>
+                              <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                <span className="text-white/40 text-xs font-bold font-condensed tracking-widest">{product.price}</span>
+                                <span className="text-white text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 group-hover:text-[#ff6b00] transition-colors">
+                                  Inspect <ArrowRight className="w-3" />
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      </AnimatedChild>
+                    ))}
+                  </StaggerChildren>
+
+                  {/* Empty State */}
+                  {filteredProducts.length === 0 && (
+                    <div className="text-center py-32 border border-white/5 bg-[#111111]">
+                      <Search className="w-12 h-12 text-white/5 mx-auto mb-6" />
+                      <p className="text-white/40 font-condensed uppercase tracking-[0.3em] text-sm">No Arsenal Found Matching Selection</p>
+                      <button
+                        onClick={() => { setSelectedCategory("all"); setSelectedSubcategory("all"); setSearchQuery(""); }}
+                        className="mt-8 text-[#ff6b00] text-xs font-bold uppercase tracking-widest border border-[#ff6b00]/30 px-6 py-2 hover:bg-[#ff6b00] hover:text-black transition-all"
+                      >
+                        Reset All Deployments
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* B2B CTA */}
+              <div className="mt-20 p-12 bg-[#111111] border border-white/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#ff6b00]/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-[#ff6b00]/10 transition-colors duration-700" />
+                <div className="relative z-10 text-center max-w-2xl mx-auto">
+                  <h3 className="text-3xl font-bold text-white mb-6 uppercase tracking-wider font-condensed">Custom Manufacturing Arsenal</h3>
+                  <p className="text-white/40 text-sm leading-relaxed mb-8 uppercase tracking-widest font-medium">
+                    All products in our technical catalog are available for white-label manufacturing, custom camo patterns (Optifade, Mossy Oak, RealTree compatible), and private label branding.
+                  </p>
+                  <Link href="/rfq">
+                    <Button className="bg-[#ff6b00] text-black hover:bg-white transition-all duration-300 font-condensed font-bold uppercase tracking-[0.2em] px-10 py-4 h-auto rounded-none">
+                      Request Technical Quote <ArrowRight className="ml-3 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
-          )}
-
-          {/* CTA */}
-          <div className="mt-16 text-center p-12 bg-[#111111] border border-white/10">
-            <h3 className="text-2xl font-bold text-white mb-4">Need Custom Manufacturing?</h3>
-            <p className="text-white/60 mb-6 max-w-2xl mx-auto">
-              All products shown can be manufactured with your branding, custom patterns,
-              and specific technical requirements. Low MOQ 50pcs per style.
-            </p>
-            <Link href="/rfq">
-              <Button className="bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3">
-                Request Custom Quote <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, Shield, Scale, Droplets, ChevronLeft, ChevronRight, Loader2, Wind, Zap, Users, Target, Thermometer, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
+import { AlertCircle, Home as Home$1, AlertTriangle, RotateCcw, ChevronDown, X, Menu, Award, Factory, Globe, BarChart2, ArrowRight, ShoppingCart, Instagram, Linkedin, Facebook, MapPin, Phone, Mail, XIcon, ShoppingBag, Minus, Plus, Trash2, Shield, Scale, Droplets, ChevronLeft, ChevronRight, Loader2, Wind, Zap, Users, Target, Thermometer, Layers, CheckCircle, Scissors, Printer, Box, ExternalLink, Clock, Calendar, ArrowLeft, Send, Filter, Search, Package, Truck, ZoomIn, Ruler, ShieldCheck, CheckCircle2, Check, Info, Laptop, Cpu, FileJson, TrendingUp, ClipboardCheck, BarChart3, Rocket, ShieldAlert, Palette, Maximize, Calculator, TrendingDown, FileWarning, XCircle, TreePine, Mountain, Camera, DollarSign, Microscope, Waves, ChevronDownIcon, CheckIcon, ChevronUpIcon, CircleIcon, CreditCard, Receipt, LayoutDashboard, MessageSquare, FolderTree, Image as Image$1, Wand2, Settings, Store, LogOut, Bell, ArrowUpRight, Eye, RefreshCw, Download, User, FileText, BookOpen, Building2, Save, Sparkles, Copy, Edit, Bot, Key, Upload, EyeOff, ChevronUp, ImagePlus, Paintbrush, ScanFace, Shirt, Plane, Folder, Edit2, Tag, Star, Type, Dumbbell } from "lucide-react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
@@ -3923,337 +3923,28 @@ function Contact() {
     ) })
   ] });
 }
-const SHOP_CATEGORIES = [
-  {
-    "id": "hunting-jackets",
-    "name": "Hunting Jackets",
-    "slug": "hunting-jackets",
-    "description": "Waterproof, insulated, and camouflage hunting jackets for all weather conditions",
-    "icon": "🧥",
-    "showInNav": true,
-    "sortOrder": 1,
-    "seo": {
-      "title": "Custom Hunting Jackets Manufacturer | Camo & Waterproof | Xelent Huntgear Pakistan",
-      "description": "Premium custom hunting jackets manufacturing. Waterproof camo jackets, insulated parkas, softshell jackets. Low MOQ 50pcs. B2B export to USA, Europe, Australia.",
-      "keywords": "custom hunting jacket manufacturer, camo jacket supplier, waterproof hunting jacket Pakistan, insulated parka manufacturer, hunting apparel wholesale"
-    },
-    "subCategories": [
-      {
-        "id": "camo-jackets",
-        "name": "Camo Jackets",
-        "slug": "camo-jackets",
-        "description": "Camouflage pattern hunting jackets"
-      },
-      {
-        "id": "waterproof-jackets",
-        "name": "Waterproof Jackets",
-        "slug": "waterproof-jackets",
-        "description": "Rainproof hunting outerwear"
-      },
-      {
-        "id": "insulated-parkas",
-        "name": "Insulated Parkas",
-        "slug": "insulated-parkas",
-        "description": "Heavy winter hunting coats"
-      },
-      {
-        "id": "softshell-jackets",
-        "name": "Softshell Jackets",
-        "slug": "softshell-jackets",
-        "description": "Lightweight flexible jackets"
-      },
-      {
-        "id": "blaze-orange",
-        "name": "Blaze Orange",
-        "slug": "blaze-orange",
-        "description": "High-visibility safety jackets"
-      },
-      {
-        "id": "vests",
-        "name": "Hunting Vests",
-        "slug": "vests",
-        "description": "Game and tactical vests"
-      }
-    ]
-  },
-  {
-    "id": "hunting-pants",
-    "name": "Hunting Pants",
-    "slug": "hunting-pants",
-    "description": "Durable cargo pants, bibs, and trousers for hunting and outdoor activities",
-    "icon": "👖",
-    "showInNav": true,
-    "sortOrder": 2,
-    "seo": {
-      "title": "Custom Hunting Pants Manufacturer | Cargo & Bibs | Xelent Huntgear Pakistan",
-      "description": "High-quality custom hunting pants manufacturing. Waterproof cargo pants, insulated bibs, tactical trousers. Durable fabrics. MOQ from 50 pieces.",
-      "keywords": "custom hunting pants manufacturer, cargo pants supplier, hunting bib manufacturer Pakistan, tactical trousers, outdoor apparel wholesale"
-    },
-    "subCategories": [
-      {
-        "id": "cargo-pants",
-        "name": "Cargo Pants",
-        "slug": "cargo-pants",
-        "description": "Multi-pocket hunting trousers"
-      },
-      {
-        "id": "bib-overalls",
-        "name": "Bib Overalls",
-        "slug": "bib-overalls",
-        "description": "Insulated hunting bibs"
-      },
-      {
-        "id": "waterproof-pants",
-        "name": "Waterproof Pants",
-        "slug": "waterproof-pants",
-        "description": "Rain gear bottoms"
-      },
-      {
-        "id": "softshell-pants",
-        "name": "Softshell Pants",
-        "slug": "softshell-pants",
-        "description": "Flexible movement pants"
-      },
-      {
-        "id": "convertible-pants",
-        "name": "Convertible Pants",
-        "slug": "convertible-pants",
-        "description": "Zip-off shorts/pants"
-      },
-      {
-        "id": "base-layer-bottoms",
-        "name": "Base Layer Bottoms",
-        "slug": "base-layer-bottoms",
-        "description": "Thermal underwear pants"
-      }
-    ]
-  },
-  {
-    "id": "camo-gear",
-    "name": "Camo Gear",
-    "slug": "camo-gear",
-    "description": "Full camouflage clothing and accessories for concealment",
-    "icon": "🌿",
-    "showInNav": true,
-    "sortOrder": 3,
-    "seo": {
-      "title": "Custom Camo Gear Manufacturer | Camouflage Clothing | Xelent Huntgear Pakistan",
-      "description": "Custom camouflage apparel manufacturing. Digital camo, woodland, desert patterns. Ghillie suits, camo accessories. Low MOQ. Export quality.",
-      "keywords": "custom camo manufacturer, camouflage clothing supplier, digital camo Pakistan, ghillie suit manufacturer, camo gear wholesale"
-    },
-    "subCategories": [
-      {
-        "id": "woodland-camo",
-        "name": "Woodland Camo",
-        "slug": "woodland-camo",
-        "description": "Traditional forest patterns"
-      },
-      {
-        "id": "digital-camo",
-        "name": "Digital Camo",
-        "slug": "digital-camo",
-        "description": "Modern pixelated patterns"
-      },
-      {
-        "id": "desert-camo",
-        "name": "Desert Camo",
-        "slug": "desert-camo",
-        "description": "Arid environment patterns"
-      },
-      {
-        "id": "snow-camo",
-        "name": "Snow Camo",
-        "slug": "snow-camo",
-        "description": "Winter white patterns"
-      },
-      {
-        "id": "ghillie-suits",
-        "name": "Ghillie Suits",
-        "slug": "ghillie-suits",
-        "description": "Full concealment suits"
-      },
-      {
-        "id": "camo-accessories",
-        "name": "Camo Accessories",
-        "slug": "camo-accessories",
-        "description": "Hats, gloves, face paint"
-      }
-    ]
-  },
-  {
-    "id": "hunting-shirts",
-    "name": "Hunting Shirts",
-    "slug": "hunting-shirts",
-    "description": "Performance hunting shirts, flannels, and base layers",
-    "icon": "👕",
-    "showInNav": true,
-    "sortOrder": 4,
-    "seo": {
-      "title": "Custom Hunting Shirts Manufacturer | Flannel & Performance | Xelent Huntgear",
-      "description": "Custom hunting shirts manufacturing. Performance flannels, moisture-wicking shirts, thermal base layers. Scent control technology. B2B export.",
-      "keywords": "custom hunting shirt manufacturer, flannel shirt supplier, performance hunting shirt Pakistan, base layer manufacturer, outdoor apparel"
-    },
-    "subCategories": [
-      {
-        "id": "flannel-shirts",
-        "name": "Flannel Shirts",
-        "slug": "flannel-shirts",
-        "description": "Heavy cotton flannels"
-      },
-      {
-        "id": "performance-shirts",
-        "name": "Performance Shirts",
-        "slug": "performance-shirts",
-        "description": "Moisture-wicking tops"
-      },
-      {
-        "id": "long-sleeve",
-        "name": "Long Sleeve",
-        "slug": "long-sleeve",
-        "description": "Sun protection shirts"
-      },
-      {
-        "id": "base-layer-tops",
-        "name": "Base Layer Tops",
-        "slug": "base-layer-tops",
-        "description": "Thermal underwear tops"
-      },
-      {
-        "id": "hunting-polo",
-        "name": "Hunting Polo",
-        "slug": "hunting-polo",
-        "description": "Quick-dry polo shirts"
-      },
-      {
-        "id": "quarter-zip",
-        "name": "Quarter Zip",
-        "slug": "quarter-zip",
-        "description": "Mid-layer pullovers"
-      }
-    ]
-  },
-  {
-    "id": "outdoor-accessories",
-    "name": "Outdoor Accessories",
-    "slug": "outdoor-accessories",
-    "description": "Hunting hats, gloves, gaiters, and essential gear",
-    "icon": "🎒",
-    "showInNav": true,
-    "sortOrder": 5,
-    "seo": {
-      "title": "Hunting Accessories Manufacturer | Hats, Gloves & Gear | Xelent Huntgear",
-      "description": "Custom hunting accessories manufacturing. Camo hats, insulated gloves, neck gaiters, boot gaiters. OEM & private label. Low MOQ.",
-      "keywords": "hunting accessories manufacturer, camo hat supplier, hunting glove manufacturer Pakistan, neck gaiter, outdoor gear wholesale"
-    },
-    "subCategories": [
-      {
-        "id": "hunting-hats",
-        "name": "Hunting Hats",
-        "slug": "hunting-hats",
-        "description": "Caps, beanies, boonie hats"
-      },
-      {
-        "id": "gloves",
-        "name": "Gloves",
-        "slug": "gloves",
-        "description": "Insulated and shooting gloves"
-      },
-      {
-        "id": "neck-gaiters",
-        "name": "Neck Gaiters",
-        "slug": "neck-gaiters",
-        "description": "Face and neck protection"
-      },
-      {
-        "id": "boot-gaiters",
-        "name": "Boot Gaiters",
-        "slug": "boot-gaiters",
-        "description": "Snake and debris protection"
-      },
-      {
-        "id": "belts",
-        "name": "Hunting Belts",
-        "slug": "belts",
-        "description": "Shell belts and tactical belts"
-      },
-      {
-        "id": "socks",
-        "name": "Hunting Socks",
-        "slug": "socks",
-        "description": "Merino wool and cushioned socks"
-      }
-    ]
-  },
-  {
-    "id": "tactical-gear",
-    "name": "Tactical Gear",
-    "slug": "tactical-gear",
-    "description": "Tactical vests, packs, and survival equipment",
-    "icon": "🎯",
-    "showInNav": true,
-    "sortOrder": 6,
-    "seo": {
-      "title": "Tactical Gear Manufacturer | Vests, Packs & Equipment | Xelent Huntgear",
-      "description": "Custom tactical gear manufacturing. Hunting vests, tactical backpacks, survival equipment. MOLLE compatible. Durable construction.",
-      "keywords": "tactical gear manufacturer, hunting vest supplier, tactical backpack Pakistan, survival equipment, MOLLE gear wholesale"
-    },
-    "subCategories": [
-      {
-        "id": "hunting-vests",
-        "name": "Hunting Vests",
-        "slug": "hunting-vests",
-        "description": "Game and utility vests"
-      },
-      {
-        "id": "tactical-backpacks",
-        "name": "Tactical Backpacks",
-        "slug": "tactical-backpacks",
-        "description": "Hunting daypacks and packs"
-      },
-      {
-        "id": "shell-bags",
-        "name": "Shell Bags",
-        "slug": "shell-bags",
-        "description": "Ammo and shot shell holders"
-      },
-      {
-        "id": "range-bags",
-        "name": "Range Bags",
-        "slug": "range-bags",
-        "description": "Shooting equipment bags"
-      },
-      {
-        "id": "slings",
-        "name": "Rifle Slings",
-        "slug": "slings",
-        "description": "Gun carrying straps"
-      },
-      {
-        "id": "survival-gear",
-        "name": "Survival Gear",
-        "slug": "survival-gear",
-        "description": "Emergency equipment"
-      }
-    ]
-  }
-];
 function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const { data: dbProducts, isLoading } = trpc.product.list.useQuery();
+  const { data: categoryTree, isLoading: isLoadingCats } = trpc.category.listWithSubs.useQuery();
   const products2 = dbProducts?.map((p) => ({
     id: p.id,
     slug: p.slug,
     name: p.title || "Unnamed Gear",
     category: p.category || "General",
+    categoryId: p.categoryId,
+    subcategoryId: p.subcategoryId,
     price: p.samplePrice ? `$${p.samplePrice}` : "Contact for Quote",
     image: p.mainImage || IMAGES.catHunting,
     badge: p.isFeatured ? "Featured" : "New"
   })) || [];
   const filteredProducts = products2.filter((product) => {
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || product.categoryId === selectedCategory;
+    const matchesSubcategory = selectedSubcategory === "all" || product.subcategoryId === selectedSubcategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesSubcategory && matchesSearch;
   });
   return /* @__PURE__ */ jsxs(PageWrapper, { children: [
     /* @__PURE__ */ jsx(
@@ -4269,21 +3960,20 @@ function Shop() {
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "bg-[#0a0a0a] border-b border-white/5 relative z-20", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: predefinedBreadcrumbs.shop }) }) }),
-    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[45vh] bg-black overflow-hidden", children: [
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-[40vh] bg-black overflow-hidden flex items-center", children: [
       /* @__PURE__ */ jsxs("div", { className: "absolute inset-0", children: [
-        /* @__PURE__ */ jsx("img", { src: IMAGES.shopBg, alt: "Xelent Huntgear Shop - B2B Hunting Apparel Catalog with Waterproof Jackets Camo Gear and Tactical Pants", className: "w-full h-full object-cover opacity-40" }),
+        /* @__PURE__ */ jsx("img", { src: IMAGES.shopBg, alt: "Xelent Huntgear Shop", className: "w-full h-full object-cover opacity-40" }),
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" }),
         /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "relative z-10 min-h-[50vh] flex flex-col justify-center max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+      /* @__PURE__ */ jsx("div", { className: "relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
         /* @__PURE__ */ jsx(
           motion.p,
           {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6 },
             className: "text-[#ff6b00] font-condensed font-semibold tracking-[0.2em] uppercase text-sm mb-4",
-            children: "Product Catalog"
+            children: "Elite Technical Systems"
           }
         ),
         /* @__PURE__ */ jsxs(
@@ -4291,120 +3981,146 @@ function Shop() {
           {
             initial: { opacity: 0, y: 30 },
             animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.8, delay: 0.1 },
-            className: "text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[0.95] mb-6",
+            className: "text-5xl sm:text-6xl font-bold text-white leading-tight mb-4",
             children: [
-              "Hunting Gear",
-              /* @__PURE__ */ jsx("span", { className: "block text-[#ff6b00] italic font-light", children: "Collection" })
+              "HUNTING ",
+              /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] italic font-light", children: "CATALOG." })
             ]
           }
         ),
-        /* @__PURE__ */ jsx(
-          motion.div,
-          {
-            initial: { scaleX: 0 },
-            animate: { scaleX: 1 },
-            transition: { duration: 0.8, delay: 0.3 },
-            className: "w-20 h-1 bg-[#ff6b00] origin-left mb-6"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          motion.p,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.4 },
-            className: "text-white/80 text-lg max-w-2xl leading-relaxed",
-            children: "Browse our hunting apparel catalog. All products available for custom manufacturing with your branding. Low MOQ 50pcs per style."
-          }
-        )
+        /* @__PURE__ */ jsx("div", { className: "w-20 h-1 bg-[#ff6b00] mb-6" })
       ] }) })
     ] }),
-    /* @__PURE__ */ jsx("section", { className: "py-20 bg-[#0a0a0a]", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row gap-6 mb-12", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-2", children: [
+    /* @__PURE__ */ jsx("section", { className: "py-12 bg-[#0a0a0a]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col lg:flex-row gap-12", children: [
+      /* @__PURE__ */ jsx("aside", { className: "lg:w-64 flex-shrink-0", children: /* @__PURE__ */ jsxs("div", { className: "sticky top-24", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-8 border-b border-white/10 pb-4", children: [
+          /* @__PURE__ */ jsx(Filter, { className: "w-4 h-4 text-[#ff6b00]" }),
+          /* @__PURE__ */ jsx("h2", { className: "text-white font-condensed font-bold uppercase tracking-widest text-sm", children: "Sort By Arsenal" })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
           /* @__PURE__ */ jsx(
             "button",
             {
-              onClick: () => setSelectedCategory("all"),
-              className: `px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === "all" ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"}`,
-              children: "All Products"
+              onClick: () => {
+                setSelectedCategory("all");
+                setSelectedSubcategory("all");
+              },
+              className: `block w-full text-left font-condensed uppercase tracking-wider text-xs px-4 py-3 border transition-all ${selectedCategory === "all" ? "bg-[#ff6b00] text-black border-[#ff6b00]" : "text-white/40 border-white/5 hover:border-[#ff6b00]/30 hover:text-white"}`,
+              children: "All Collections"
             }
           ),
-          SHOP_CATEGORIES.map((cat) => /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: () => setSelectedCategory(cat.name),
-              className: `px-4 py-2 text-sm font-condensed uppercase tracking-wider transition-all ${selectedCategory === cat.name ? "bg-[#ff6b00] text-black" : "bg-[#161616] text-white/70 border border-white/10 hover:border-[#ff6b00]/50"}`,
-              children: cat.name
-            },
-            cat.id
-          ))
+          isLoadingCats ? /* @__PURE__ */ jsx("div", { className: "space-y-4", children: [1, 2, 3, 4].map((i) => /* @__PURE__ */ jsx("div", { className: "h-10 bg-white/5 animate-pulse rounded" }, i)) }) : categoryTree?.map((cat) => /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+            /* @__PURE__ */ jsxs(
+              "button",
+              {
+                onClick: () => {
+                  setSelectedCategory(cat.id);
+                  setSelectedSubcategory("all");
+                },
+                className: `w-full text-left flex items-center justify-between group py-1 ${selectedCategory === cat.id ? "text-[#ff6b00]" : "text-white/60 hover:text-white"}`,
+                children: [
+                  /* @__PURE__ */ jsx("span", { className: "font-condensed font-bold uppercase tracking-widest text-sm", children: cat.name }),
+                  /* @__PURE__ */ jsx(ChevronDown, { className: `w-3 h-3 transition-transform ${selectedCategory === cat.id ? "rotate-180 text-[#ff6b00]" : "text-white/20"}` })
+                ]
+              }
+            ),
+            selectedCategory === cat.id && cat.subcategories && cat.subcategories.length > 0 && /* @__PURE__ */ jsx("div", { className: "pl-4 space-y-1 border-l border-white/5 mt-2 ml-1", children: cat.subcategories.map((sub) => /* @__PURE__ */ jsx(
+              "button",
+              {
+                onClick: () => setSelectedSubcategory(sub.id),
+                className: `block w-full text-left py-1.5 text-xs font-medium transition-colors ${selectedSubcategory === sub.id ? "text-white" : "text-white/30 hover:text-white"}`,
+                children: sub.name
+              },
+              sub.id
+            )) })
+          ] }, cat.id))
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "relative md:ml-auto", children: [
-          /* @__PURE__ */ jsx(Search, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" }),
-          /* @__PURE__ */ jsx(
-            "input",
-            {
-              type: "text",
-              placeholder: "Search products...",
-              value: searchQuery,
-              onChange: (e) => setSearchQuery(e.target.value),
-              className: "w-full md:w-64 bg-[#161616] border border-white/10 pl-10 pr-4 py-2 text-white focus:border-[#ff6b00] focus:outline-none transition-colors"
-            }
-          )
+        /* @__PURE__ */ jsxs("div", { className: "mt-12 p-6 bg-[#111111] border border-white/5", children: [
+          /* @__PURE__ */ jsx("h4", { className: "text-white text-[10px] font-bold uppercase tracking-[0.2em] mb-3", children: "Technical Support" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/40 text-[10px] leading-relaxed mb-4 uppercase tracking-wider", children: "Need a custom built technical apparel solution? Our engineering team is ready to assist." }),
+          /* @__PURE__ */ jsx(Link, { href: "/contact", children: /* @__PURE__ */ jsx("span", { className: "text-[#ff6b00] text-[10px] font-bold uppercase tracking-widest hover:underline cursor-pointer", children: "Consult Specialist →" }) })
         ] })
-      ] }),
-      isLoading ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center py-32 space-y-4", children: [
-        /* @__PURE__ */ jsx(Loader2, { className: "w-10 h-10 text-[#ff6b00] animate-spin" }),
-        /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed tracking-widest uppercase text-sm", children: "Loading Arsenal..." })
-      ] }) : /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", stagger: 0.08, children: filteredProducts.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(Link, { href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/10 overflow-hidden hover:border-[#ff6b00]/50 transition-all duration-300 cursor-pointer", children: [
-        /* @__PURE__ */ jsxs("div", { className: "relative aspect-square overflow-hidden bg-[#1a1a1a]", children: [
-          /* @__PURE__ */ jsx(
-            "img",
-            {
-              src: product.image,
-              alt: product.name,
-              className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-            }
-          ),
-          /* @__PURE__ */ jsx("div", { className: "absolute top-3 left-3", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1", children: product.badge }) })
+      ] }) }),
+      /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 bg-[#111111] p-4 border border-white/5", children: [
+          /* @__PURE__ */ jsxs("div", { className: "relative flex-1 max-w-md", children: [
+            /* @__PURE__ */ jsx(Search, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                type: "text",
+                placeholder: "Search Technical Arsenal...",
+                value: searchQuery,
+                onChange: (e) => setSearchQuery(e.target.value),
+                className: "w-full bg-transparent border-none pl-10 pr-4 py-1 text-white text-sm focus:ring-0 placeholder:text-white/10"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-white/20 font-condensed text-[10px] font-bold uppercase tracking-widest border-l border-white/10 pl-6", children: [
+            "Showing ",
+            /* @__PURE__ */ jsx("span", { className: "text-white", children: filteredProducts.length }),
+            " Built Results"
+          ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { className: "p-5", children: [
-          /* @__PURE__ */ jsx("p", { className: "text-white/40 text-xs uppercase tracking-wider mb-1", children: product.category }),
-          /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-lg uppercase group-hover:text-[#ff6b00] transition-colors line-clamp-1", children: product.name }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center justify-between", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-white/60 text-sm", children: product.price }),
-            /* @__PURE__ */ jsxs("span", { className: "text-[#ff6b00] text-xs font-bold uppercase tracking-wider flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: [
-              "Details ",
-              /* @__PURE__ */ jsx(ArrowRight, { className: "w-3 h-3" })
+        isLoading ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center py-32 space-y-4", children: [
+          /* @__PURE__ */ jsx(Loader2, { className: "w-10 h-10 text-[#ff6b00] animate-spin" }),
+          /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed tracking-widest uppercase text-sm", children: "Synchronizing Arsenal..." })
+        ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(StaggerChildren, { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8", stagger: 0.08, children: filteredProducts.map((product) => /* @__PURE__ */ jsx(AnimatedChild, { direction: "up", children: /* @__PURE__ */ jsx(Link, { href: `/shop/${product.slug}`, children: /* @__PURE__ */ jsxs("div", { className: "group bg-[#111111] border border-white/5 overflow-hidden hover:border-[#ff6b00]/30 transition-all duration-500 cursor-pointer", children: [
+            /* @__PURE__ */ jsxs("div", { className: "relative aspect-[3/4] overflow-hidden bg-[#1a1a1a]", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: product.image,
+                  alt: product.name,
+                  className: "w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" }),
+              /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-4", children: /* @__PURE__ */ jsx("span", { className: "bg-[#ff6b00] text-black text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl", children: product.badge }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "p-6 border-t border-white/5 bg-gradient-to-b from-transparent to-black/20", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[#ff6b00] text-[9px] font-bold uppercase tracking-[0.3em] mb-2", children: product.category }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-condensed font-bold text-xl uppercase tracking-wider group-hover:text-white transition-colors line-clamp-1 mb-4", children: product.name }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between pt-4 border-t border-white/5", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-white/40 text-xs font-bold font-condensed tracking-widest", children: product.price }),
+                /* @__PURE__ */ jsxs("span", { className: "text-white text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 group-hover:text-[#ff6b00] transition-colors", children: [
+                  "Inspect ",
+                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-3" })
+                ] })
+              ] })
             ] })
+          ] }) }) }, product.id)) }),
+          filteredProducts.length === 0 && /* @__PURE__ */ jsxs("div", { className: "text-center py-32 border border-white/5 bg-[#111111]", children: [
+            /* @__PURE__ */ jsx(Search, { className: "w-12 h-12 text-white/5 mx-auto mb-6" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/40 font-condensed uppercase tracking-[0.3em] text-sm", children: "No Arsenal Found Matching Selection" }),
+            /* @__PURE__ */ jsx(
+              "button",
+              {
+                onClick: () => {
+                  setSelectedCategory("all");
+                  setSelectedSubcategory("all");
+                  setSearchQuery("");
+                },
+                className: "mt-8 text-[#ff6b00] text-xs font-bold uppercase tracking-widest border border-[#ff6b00]/30 px-6 py-2 hover:bg-[#ff6b00] hover:text-black transition-all",
+                children: "Reset All Deployments"
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-20 p-12 bg-[#111111] border border-white/5 relative overflow-hidden group", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-[#ff6b00]/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-[#ff6b00]/10 transition-colors duration-700" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10 text-center max-w-2xl mx-auto", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-3xl font-bold text-white mb-6 uppercase tracking-wider font-condensed", children: "Custom Manufacturing Arsenal" }),
+            /* @__PURE__ */ jsx("p", { className: "text-white/40 text-sm leading-relaxed mb-8 uppercase tracking-widest font-medium", children: "All products in our technical catalog are available for white-label manufacturing, custom camo patterns (Optifade, Mossy Oak, RealTree compatible), and private label branding." }),
+            /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-white transition-all duration-300 font-condensed font-bold uppercase tracking-[0.2em] px-10 py-4 h-auto rounded-none", children: [
+              "Request Technical Quote ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "ml-3 w-4" })
+            ] }) })
           ] })
         ] })
-      ] }) }) }, product.id)) }),
-      !isLoading && filteredProducts.length === 0 && /* @__PURE__ */ jsxs("div", { className: "text-center py-20", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-white/50 text-lg", children: "No products found matching your criteria." }),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: () => {
-              setSelectedCategory("all");
-              setSearchQuery("");
-            },
-            className: "mt-4 text-[#ff6b00] hover:underline",
-            children: "Clear filters"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-16 text-center p-12 bg-[#111111] border border-white/10", children: [
-        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Need Custom Manufacturing?" }),
-        /* @__PURE__ */ jsx("p", { className: "text-white/60 mb-6 max-w-2xl mx-auto", children: "All products shown can be manufactured with your branding, custom patterns, and specific technical requirements. Low MOQ 50pcs per style." }),
-        /* @__PURE__ */ jsx(Link, { href: "/rfq", children: /* @__PURE__ */ jsxs(Button, { className: "bg-[#ff6b00] text-black hover:bg-[#ff8533] font-condensed font-bold uppercase tracking-wider px-8 py-3", children: [
-          "Request Custom Quote ",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 w-4 h-4" })
-        ] }) })
       ] })
-    ] }) })
+    ] }) }) })
   ] });
 }
 const DialogCompositionContext = React.createContext({
